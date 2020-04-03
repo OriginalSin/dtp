@@ -13,6 +13,7 @@ const map = L.map(document.body, {
 	zoomAnimation: true,
 	distanceUnit: 'auto',
 	squareUnit: 'auto',
+	renderer: L.canvas()
 });
 var baseLayers = {
 	OpenStreetMap: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -23,6 +24,7 @@ var overlays = {
 	Marker: L.marker([55.758031, 37.611694])
 		.bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		.openPopup(),
+	polygon: L.polygon([[55.05, 37],[55.03, 41],[52.05, 41],[52.04, 37]], {color: 'red'})
 };
 
 L.control.layers(baseLayers, overlays).addTo(map)
