@@ -64,3 +64,258 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+.mvsPopup .featureCont {
+    min-height: 200px;
+    max-height: 80vh;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.mvsPopup .pLine {
+    text-align: center;
+    margin-bottom: 14px;
+    font-size: larger;
+}
+.mvsPopup .item {
+    font-weight: bold;
+}
+.mvsPopup .featureCont .first {
+    width: auto;
+    font-weight: bold;
+}
+
+.mvsPopup .ant-tabs-nav {
+    cursor: pointer;
+}
+
+.mvsPopup .featureCont td {
+    border-bottom: 1px solid #ddd;
+    height: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+	text-align: left;
+}
+.mvsPopup .buttonCont {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.mvsPopup .stitle {
+    font-style: italic;
+	font-weight: bold;
+}
+.mvsPopup .sval {
+    padding-left: 10px;
+}
+
+.mvsPopup ul {
+    padding: 0px;
+}
+
+.mvsPopup ul ol {
+    padding: 8px;
+}
+
+.mvsPopup .tableDirections ul {
+    margin-left: 24px;
+}
+.mvsPopup .featureCont td.center {
+    text-align: center;
+}
+
+
+.leaflet-gmx-icon {
+    width: 30px;
+    height: 30px;
+	background-color: white;
+    cursor: pointer;
+}
+.leaflet-gmx-icon.leaflet-gmx-icon-active {
+    background-color: lightgray;
+}
+.leaflet-gmx-icon-filters::after, .leaflet-gmx-icon-clearfilters::after, .leaflet-gmx-icon-footer::after, .leaflet-gmx-icon-permalink::after, .leaflet-gmx-icon-measure::after, .leaflet-gmx-icon-clusters::after, .leaflet-gmx-icon-selectedItems::after, .leaflet-gmx-icon-todtp::after {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+
+.leaflet-gmx-icon-selectedItems::after {
+    cursor: pointer;
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" width="26" height="26" focusable="false"><path d="M690 405h-46.9c-10.2 0-19.9 4.9-25.9 13.2L512 563.6 406.8 418.2c-6-8.3-15.6-13.2-25.9-13.2H334c-6.5 0-10.3 7.4-6.5 12.7l178 246c3.2 4.4 9.7 4.4 12.9 0l178-246c3.9-5.3.1-12.7-6.4-12.7z"/><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"/></svg>');
+}
+.leaflet-gmx-icon-selectedItems .win {
+    position: absolute;
+    left: 40px;
+	min-width: 120px;
+	max-width: 308px;
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+}
+.leaflet-gmx-icon-selectedItems .win .route {
+    text-align: center;
+}
+.leaflet-gmx-icon-selectedItems .win .contragents {
+    text-align: left;
+}
+.leaflet-gmx-icon-selectedItems .win .contragents .select {
+    margin-left: 24px;
+}
+.leaflet-gmx-icon-selectedItems .win .contragents .select .ant-spin-spinning {
+    top: -20px;
+    left: 0;
+    position: relative;
+}
+.leaflet-gmx-icon-selectedItems .win .contragents .contragentsButton {
+    text-align: center;
+	margin: 10px;
+}
+.leaflet-gmx-icon-selectedItems .win .title a.leaflet-popup-close-button {
+	right: -8px!important;
+    top: -2px!important;
+}
+.leaflet-gmx-icon-selectedItems .win .title {
+    font-size: 14px;
+}
+
+.leaflet-gmx-icon-selectedItems .win .tags {
+	margin-top: 4px;
+    margin-bottom: 4px;
+	max-height: 114px;
+    overflow-y: scroll;
+}
+.leaflet-gmx-icon-selectedItems .win .qrcode {
+    text-align: center;
+    margin-top: 4px;
+}
+.leaflet-gmx-icon-todtp::after {
+    cursor: pointer;
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" width="26" height="26" focusable="false"><path d="M917 211.1l-199.2 24c-6.6.8-9.4 8.9-4.7 13.6l59.3 59.3-226 226-101.8-101.7c-6.3-6.3-16.4-6.2-22.6 0L100.3 754.1a8.03 8.03 0 0 0 0 11.3l45 45.2c3.1 3.1 8.2 3.1 11.3 0L433.3 534 535 635.7c6.3 6.2 16.4 6.2 22.6 0L829 364.5l59.3 59.3a8.01 8.01 0 0 0 13.6-4.7l24-199.2c.7-5.1-3.7-9.5-8.9-8.8z"></path></svg>');
+}
+
+.leaflet-gmx-icon-copy::after {
+	position: absolute;
+    margin-top: -3px;
+    cursor: pointer;
+	content: url('data:image/svg+xml;utf8,<svg viewBox="0 0 22 22" width="22" height="22" xmlns="http://www.w3.org/2000/svg"><path d="M7 8h2v1h-1v6h4v-1h1v2h-6v-8zm5.7-2l2.3 2.3v5.7h-6v-8h3.7zm-2.7 1v6h4v-3.993h-2v-2.007h-2z"></path></svg>');
+}
+
+.leaflet-gmx-icon-clusters::after {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" class="" data-icon="filter" width="26" height="26" fill="currentColor" focusable="false"><path d="M699 353h-46.9c-10.2 0-19.9 4.9-25.9 13.3L469 584.3l-71.2-98.8c-6-8.3-15.6-13.3-25.9-13.3H325c-6.5 0-10.3 7.4-6.5 12.7l124.6 172.8a31.8 31.8 0 0 0 51.7 0l210.6-292c3.9-5.3.1-12.7-6.4-12.7z"/><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"/></svg>');
+}
+.leaflet-gmx-icon-clearfilters::after {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" class="" data-icon="filter" width="26" height="26" fill="currentColor" focusable="false"><path d="M296 256c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H296zm192 200v-48c0-4.4-3.6-8-8-8H296c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8zm-48 396H208V148h560v344c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V108c0-17.7-14.3-32-32-32H168c-17.7 0-32 14.3-32 32v784c0 17.7 14.3 32 32 32h272c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm104.1-115.6c1.8-34.5 16.2-66.8 40.8-91.4 26.2-26.2 62-41 99.1-41 37.4 0 72.6 14.6 99.1 41 3.2 3.2 6.3 6.6 9.2 10.1L769.2 673a8 8 0 0 0 3 14.1l93.3 22.5c5 1.2 9.8-2.6 9.9-7.7l.6-95.4a8 8 0 0 0-12.9-6.4l-20.3 15.8C805.4 569.6 748.1 540 684 540c-109.9 0-199.6 86.9-204 195.7-.2 4.5 3.5 8.3 8 8.3h48.1c4.3 0 7.8-3.3 8-7.6zM880 744h-48.1c-4.3 0-7.8 3.3-8 7.6-1.8 34.5-16.2 66.8-40.8 91.4-26.2 26.2-62 41-99.1 41-37.4 0-72.6-14.6-99.1-41-3.2-3.2-6.3-6.6-9.2-10.1l23.1-17.9a8 8 0 0 0-3-14.1l-93.3-22.5c-5-1.2-9.8 2.6-9.9 7.7l-.6 95.4a8 8 0 0 0 12.9 6.4l20.3-15.8C562.6 918.4 619.9 948 684 948c109.9 0 199.6-86.9 204-195.7.2-4.5-3.5-8.3-8-8.3z"/></svg>');
+}
+.leaflet-gmx-icon-filters::after {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" class="" data-icon="filter" width="26" height="26" fill="currentColor" focusable="false"><path d="M880.1 154H143.9c-24.5 0-39.8 26.7-27.5 48L349 597.4V838c0 17.7 14.2 32 31.8 32h262.4c17.6 0 31.8-14.3 31.8-32V597.4L907.7 202c12.2-21.3-3.1-48-27.6-48zM603.4 798H420.6V642h182.9v156zm9.6-236.6l-9.5 16.6h-183l-9.5-16.6L212.7 226h598.6L613 561.4z"></path></svg>');
+}
+.leaflet-gmx-icon-footer::after {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" class="" data-icon="table" width="26" height="26" fill="currentColor" focusable="false"><path d="M928 160H96c-17.7 0-32 14.3-32 32v640c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32zm-40 208H676V232h212v136zm0 224H676V432h212v160zM412 432h200v160H412V432zm200-64H412V232h200v136zm-476 64h212v160H136V432zm0-200h212v136H136V232zm0 424h212v136H136V656zm276 0h200v136H412V656zm476 136H676V656h212v136z"></path></svg>');
+}
+.leaflet-gmx-icon-permalink::after {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" focusable="false" class="" data-icon="dingding" width="26" height="26" fill="currentColor"><path d="M573.7 252.5C422.5 197.4 201.3 96.7 201.3 96.7c-15.7-4.1-17.9 11.1-17.9 11.1-5 61.1 33.6 160.5 53.6 182.8 19.9 22.3 319.1 113.7 319.1 113.7S326 357.9 270.5 341.9c-55.6-16-37.9 17.8-37.9 17.8 11.4 61.7 64.9 131.8 107.2 138.4 42.2 6.6 220.1 4 220.1 4s-35.5 4.1-93.2 11.9c-42.7 5.8-97 12.5-111.1 17.8-33.1 12.5 24 62.6 24 62.6 84.7 76.8 129.7 50.5 129.7 50.5 33.3-10.7 61.4-18.5 85.2-24.2L565 743.1h84.6L603 928l205.3-271.9H700.8l22.3-38.7c.3.5.4.8.4.8S799.8 496.1 829 433.8l.6-1h-.1c5-10.8 8.6-19.7 10-25.8 17-71.3-114.5-99.4-265.8-154.5z"></path></svg>');
+}
+
+.leaflet-gmx-icon-measure::after {
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" focusable="false" class="" data-icon="dingding" width="26" height="26" fill="currentColor"><g><g><path d="M503.467,290.133H8.533c-4.719,0-8.533,3.814-8.533,8.533v102.4c0,4.719,3.814,8.533,8.533,8.533h494.933 c4.719,0,8.533-3.814,8.533-8.533v-102.4C512,293.948,508.186,290.133,503.467,290.133z M494.933,392.533H17.067V307.2h25.6 l-0.009,17.067c0,4.71,3.814,8.533,8.533,8.533c4.71,0,8.533-3.814,8.533-8.533l0.009-17.067h34.133v34.133 c0,4.719,3.814,8.533,8.533,8.533s8.533-3.814,8.533-8.533V307.2h34.133v17.067c0,4.719,3.814,8.533,8.533,8.533 c4.719,0,8.533-3.814,8.533-8.533V307.2h34.133v34.133c0,4.719,3.814,8.533,8.533,8.533s8.533-3.814,8.533-8.533V307.2h34.133 v17.067c0,4.719,3.814,8.533,8.533,8.533s8.533-3.814,8.533-8.533V307.2h34.133v34.133c0,4.719,3.814,8.533,8.533,8.533 s8.533-3.814,8.533-8.533V307.2h34.133v17.067c0,4.719,3.814,8.533,8.533,8.533s8.533-3.814,8.533-8.533V307.2h34.133v34.133 c0,4.719,3.814,8.533,8.533,8.533s8.533-3.814,8.533-8.533V307.2h34.15l-0.009,17.067c0,4.71,3.814,8.533,8.533,8.533 c4.71,0,8.533-3.814,8.533-8.533l0.009-17.067h25.583V392.533z"/></g></g><g><g><path d="M8.533,102.4C3.814,102.4,0,106.214,0,110.933V256c0,4.719,3.814,8.533,8.533,8.533s8.533-3.814,8.533-8.533v-68.267 v-76.8C17.067,106.214,13.252,102.4,8.533,102.4z"/></g></g><g><g><path d="M503.467,102.4c-4.719,0-8.533,3.814-8.533,8.533v76.8V256c0,4.719,3.814,8.533,8.533,8.533 c4.719,0,8.533-3.814,8.533-8.533V110.933C512,106.214,508.186,102.4,503.467,102.4z"/></g></g><g><g><path d="M476.032,182.263l-39.62-51.2c-2.142-2.765-5.658-3.763-8.789-2.56c-3.132,1.229-5.222,4.437-5.222,8.03V179.2H89.6 v-42.675c0-3.593-2.091-6.801-5.222-8.021c-3.132-1.22-6.639-0.213-8.789,2.56l-39.62,51.208c-1.22,1.579-1.835,3.524-1.835,5.461 s0.614,3.883,1.835,5.47l39.62,51.2c1.536,1.98,3.78,3.063,6.084,3.063c0.905,0,1.818-0.171,2.697-0.512 c3.132-1.229,5.222-4.437,5.222-8.021v-42.667h332.8v42.667c0,3.593,2.091,6.801,5.222,8.021c0.879,0.341,1.792,0.512,2.697,0.512 c2.304,0,4.548-1.084,6.093-3.063l39.62-51.2c1.229-1.587,1.843-3.524,1.843-5.47S477.252,183.851,476.032,182.263z M73.754,215.364l-21.385-27.631l21.385-27.631V215.364z M438.246,215.364v-55.262l21.385,27.631L438.246,215.364z"/></g></g></svg>');
+}
+
+.leaflet-gmx-icon-panorama::after {
+    margin: 2px;
+    position: absolute;
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" focusable="false" class="" data-icon="dingding" width="26" height="26" fill="currentColor"><path d="M926.8 397.1l-396-288a31.81 31.81 0 0 0-37.6 0l-396 288a31.99 31.99 0 0 0-11.6 35.8l151.3 466a32 32 0 0 0 30.4 22.1h489.5c13.9 0 26.1-8.9 30.4-22.1l151.3-466c4.2-13.2-.5-27.6-11.7-35.8zM838.6 417l-98.5 32-200-144.7V199.9L838.6 417zM466 567.2l-89.1 122.3-55.2-169.2L466 567.2zm-116.3-96.8L484 373.3v140.8l-134.3-43.7zM512 599.2l93.9 128.9H418.1L512 599.2zm28.1-225.9l134.2 97.1L540.1 514V373.3zM558 567.2l144.3-46.9-55.2 169.2L558 567.2zm-74-367.3v104.4L283.9 449l-98.5-32L484 199.9zM169.3 470.8l86.5 28.1 80.4 246.4-53.8 73.9-113.1-348.4zM327.1 853l50.3-69h269.3l50.3 69H327.1zm414.5-33.8l-53.8-73.9 80.4-246.4 86.5-28.1-113.1 348.4z"></path></svg>');
+}
+
+.leaflet-gmx-icon-round::after {
+    margin: 2px;
+    position: absolute;
+	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="64 64 896 896" focusable="false" class="" data-icon="dingding" width="26" height="26" fill="currentColor"><path d="M512 96C282.6 96 96 282.6 96 512s186.6 416 416 416 416-186.6 416-416S741.4 96 512 96zm275.1 191.8c49.5 60.5 79.5 137.5 80.2 221.4-11.7-2.5-129.2-26.3-247.4-11.4-2.5-6.1-5-12.2-7.6-18.3-7.4-17.3-15.3-34.6-23.6-51.5C720 374.3 779.6 298 787.1 287.8zM512 157.2c90.3 0 172.8 33.9 235.5 89.5-6.4 9.1-59.9 81-186.2 128.4-58.2-107-122.7-194.8-132.6-208 27.3-6.6 55.2-9.9 83.3-9.9zM360.9 191c9.4 12.8 72.9 100.9 131.7 205.5C326.4 440.6 180 440 164.1 439.8c23.1-110.3 97.4-201.9 196.8-248.8zM156.7 512.5c0-3.6.1-7.3.2-10.9 15.5.3 187.7 2.5 365.2-50.6 10.2 19.9 19.9 40.1 28.8 60.3-4.7 1.3-9.4 2.7-14 4.2C353.6 574.9 256.1 736.4 248 750.1c-56.7-63-91.3-146.3-91.3-237.6zM512 867.8c-82.2 0-157.9-28-218.1-75 6.4-13.1 78.3-152 278.7-221.9l2.3-.8c49.9 129.6 70.5 238.3 75.8 269.5A350.46 350.46 0 0 1 512 867.8zm198.5-60.7c-3.6-21.6-22.5-125.6-69-253.3C752.9 536 850.7 565.2 862.8 569c-15.8 98.8-72.5 184.2-152.3 238.1z"></path></svg>');
+}
+
+
+.leaflet-gmx-fitcenter.leaflet-control {
+    border: 1px solid;
+	height: 30px;
+	z-index: 5000;
+}
+.leaflet-gmx-fitcenter .results.active {
+    padding: 8px 0;
+    border-top: 1px solid #c6c6c6;
+}
+.leaflet-gmx-fitcenter:hover .results {
+	display: block;
+}
+.leaflet-gmx-fitcenter .results > *:hover {
+	border: 1px solid #c6c6c6;
+	cursor: pointer;
+}
+.leaflet-gmx-fitcenter .results > * {
+    line-height: 24px;
+    padding: 0 8px;
+	margin: 0 6px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.leaflet-gmx-fitcenter.leaflet-control input {
+    /*
+	text-align: center;
+    background-color: lightgrey;
+	*/
+    vertical-align: top;
+    border-style: none;
+    text-indent: 10px;
+    text-overflow: ellipsis;
+	padding: 0px;
+	width: 300px;
+    height: 30px;
+}
+.leaflet-gmx-fitcenter.leaflet-control button {
+	cursor: pointer;
+    background-color: white;
+    border: 0;
+	outline: none;
+	padding: 0px;
+    height: 30px;
+}
+.leaflet-gmx-fitcenter.leaflet-control button:after {
+  	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" focusable="false"><path d="M15.44 14.06h-.73l-.26-.25a6 6 0 1 0-.64.64l.25.26v.72L18.64 20 20 18.64zm-5.49 0a4.12 4.12 0 1 1 4.12-4.12 4.11 4.11 0 0 1-4.12 4.12z"></path></svg>');
+}
+.leaflet-gmx-fitcenter.leaflet-control .results {
+/*
+	background-color: lightgray;
+	height: 24px;
+	*/
+    background-color: white;
+	width: calc(100% + 2px);
+	left: -1px;
+	top: 29px;
+	border: 1px solid;
+	border-top: 1px solid #c6c6c6;
+	display: block;
+    text-align: center;
+    vertical-align: middle;
+	position: absolute;
+}
+.leaflet-gmx-center {
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    position: absolute;
+}
+.leaflet-gmx-center div {
+    height: 18px;
+    width: 18px;
+    bottom: 50%;
+    right: 50%;
+    position: absolute;
+}
+.leaflet-pane.leaflet-overlay-pane {
+	width: 100%;
+	height: 100%;
+}
+
