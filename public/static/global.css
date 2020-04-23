@@ -319,3 +319,24 @@ button:focus {
 	height: 100%;
 }
 
+/* .leaflet-control { */
+    /* clear: none; */
+/* } */
+/* leaflet-gmx-icon leaflet-gmx-icon-filters leaflet-bar leaflet-gmx-icon-img leaflet-gmx-icon-sprite leaflet-control leaflet-gmx-icon-active leaflet-gmx-icon-filters-active */
+
+.leaflet-gmx-icon-filters .win {
+    position: absolute;
+    left: 40px;
+    min-width: 120px;
+    max-width: 308px;
+    padding: 6px 10px 6px 6px;
+    color: #333;
+    background: #fff;
+}
+.hidden {
+    display: none;
+}
+
+.leaflet-map-pane .leaflet-overlay-pane canvas {
+    /* z-index: 500; */
+}

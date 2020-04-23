@@ -53,10 +53,8 @@ L.Control.FitCenter = L.Control.extend({
 			}
 		}, this);
 		L.DomEvent.on(button, 'click', function () {
-			let arr = input.value.match(/[+-]?([0-9]*[.])?[0-9]+/g),
-				lat = Number(arr[0]),
-				lng = Number(arr[1]);
-			if (lat && lng) { map.setView([lat, lng]); }
+			let arr = input.value.match(/[+-]?([0-9]*[.])?[0-9]+/g);
+			if (arr && arr.length > 1) { map.setView([Number(arr[0]), Number(arr[1])]); }
 		});
 		L.DomEvent.disableClickPropagation(container);
 

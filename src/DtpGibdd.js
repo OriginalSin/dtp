@@ -1,15 +1,13 @@
 import {MarkerPoint, CirclePoint} from './CirclePoint';
-import DtpPopup from './DtpPopupSkpdi.svelte';
+import DtpPopup from './DtpPopupGibdd.svelte';
 
 const L = window.L;
 
 const popup = L.popup();
 let argFilters;
-
 const setPopup = function (id) {
-	let url = 'https://dtp.mvs.group/scripts/index.php?request=get_dtp_id&id=' + id + '&type=skpdi';
+	let url = 'https://dtp.mvs.group/scripts/index.php?request=get_dtp_id&id=' + id + '&type=gibdd';
 	fetch(url, {})
-	// fetch('/static/data/dtpexample.json', {})
 		.then(req => req.json())
 		.then(json => {
 // console.log('bindPopup', layer, json, DtpPopup);
@@ -24,18 +22,18 @@ const setPopup = function (id) {
 			popup.setContent(cont);
 		});
 	return '';
-	// return layer.feature.properties.id || '';
 }
 
-export const DtpSkpdi = L.featureGroup([]);
-DtpSkpdi.setFilter = arg => {
+// let renderer = L.canvas();
+export const DtpGibdd = L.featureGroup([]);
+DtpGibdd.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
-	DtpSkpdi.clearLayers();
+	DtpGibdd.clearLayers();
 	argFilters = arg;
 
 	let arr = [];
-	if (DtpSkpdi._group) {
-		DtpSkpdi._group.getLayers().forEach(it => {
+	if (DtpGibdd._group) {
+		DtpGibdd._group.getLayers().forEach(it => {
 			let prp = it.options.props,
 				cnt = 0;
 			argFilters.forEach(ft => {
@@ -53,17 +51,16 @@ DtpSkpdi.setFilter = arg => {
 				arr.push(it);
 			}
 		});
-		DtpSkpdi.addLayer(L.layerGroup(arr));
+		DtpGibdd.addLayer(L.layerGroup(arr));
 	}
 };
 
-DtpSkpdi.on('remove', () => {
-	DtpSkpdi.clearLayers();
+DtpGibdd.on('remove', () => {
+	DtpGibdd.clearLayers();
 }).on('add', ev => {
 	// console.log('/static/data/dtpskpdi.geojson', ev);
 	
-	fetch('https://dtp.mvs.group/scripts/index.php?request=get_skpdi', {})
-	// fetch('https://dtp.mvs.group/static/data/json_stat.json', {})
+	fetch('https://dtp.mvs.group/scripts/index.php?request=get_stat_gipdd', {})
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}};
@@ -85,7 +82,6 @@ DtpSkpdi.on('remove', () => {
 						fillColor = '#2F4F4F'; //  17-18
 					}
 				}
-
 if (!prp.lat || !prp.lon) {
 console.log('_______', prp);
 	prp.lat = prp.lon = 0;
@@ -100,7 +96,7 @@ console.log('_______', prp);
 				return new CirclePoint(L.latLng(prp.lat, prp.lon), {
 					props: prp,
 					radius: 6,
-					box: true,
+					// box: true,
 					stroke: stroke,
 					fillColor: fillColor,
 					// renderer: renderer
@@ -116,14 +112,13 @@ console.log('_______', prp);
 						}
 					});
 			});
-			
-			DtpSkpdi._opt = opt;
-			DtpSkpdi._group = L.layerGroup(arr);
-			// DtpSkpdi.addLayer(L.layerGroup(arr));
+
+			DtpGibdd._opt = opt;
+			DtpGibdd._group = L.layerGroup(arr);
 			if (argFilters) {
-				DtpSkpdi.setFilter(argFilters);
+				DtpGibdd.setFilter(argFilters);
 			} else {
-				DtpSkpdi.addLayer(DtpSkpdi._group);
+				DtpGibdd.addLayer(DtpGibdd._group);
 			}
 		});
 });

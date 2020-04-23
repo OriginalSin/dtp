@@ -77,7 +77,18 @@ L.Canvas.include({
 	ctx.beginPath();
 	ctx.globalAlpha = 1;
 	ctx.fillStyle = options.fillColor || 'red';
-	if (options.box) {
+	if (options.triangle) {
+		ctx.moveTo(p.x, p.y + r);
+		ctx.lineTo(p.x + r, p.y - r);
+		ctx.lineTo(p.x - r, p.y - r);
+		ctx.lineTo(p.x, p.y + r);
+	} else if (options.rhomb) {
+		ctx.moveTo(p.x + r, p.y);
+		ctx.lineTo(p.x, p.y + r);
+		ctx.lineTo(p.x - r, p.y);
+		ctx.lineTo(p.x, p.y - r);
+		ctx.lineTo(p.x + r, p.y);
+	} else if (options.box) {
 		ctx.fillRect(p.x - r, p.y - r, r2, r2);
 	} else {
 		ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
@@ -85,7 +96,16 @@ L.Canvas.include({
 	ctx.fill();
 	if (options.stroke) {
 		ctx.stroke();
-		if (options.box) { ctx.strokeRect(p.x - r, p.y - r, r2, r2); }
+		if (options.triangle) {
+			ctx.moveTo(p.x, p.y + r);
+			ctx.lineTo(p.x + r, p.y - r);
+			ctx.lineTo(p.x - r, p.y - r);
+			ctx.lineTo(p.x, p.y + r);
+		} else if (options.box) {
+			ctx.strokeRect(p.x - r, p.y - r, r2, r2);
+		} else {
+			ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
+		}
 	}
 	ctx.closePath();
 	ctx.restore();
@@ -104,4 +124,9 @@ export const CirclePoint = L.CircleMarker.extend({
   _updatePath: function () {
     this._renderer._updateCirclePoint(this);
   }
+});
+export const Bbox = L.Rectangle.extend({
+	options: {
+		renderer: renderer
+	}
 });

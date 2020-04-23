@@ -7,15 +7,16 @@
 	export let prp;
 	let modal;
 
-	let disabled = prp.skpdiFiles ? '' : 'disabled';
+	let disabled = prp.files && prp.files.length ? '' : 'disabled';
 
 	afterUpdate(() => {
 		// console.log('the component just updated', showModal, modal);
+		disabled = prp.files && prp.files.length ? '' : 'disabled';
 		if (showModal) {
 			modal = new Modal({
 				target: document.body,
 				props: {
-					data: prp.skpdiFiles
+					data: prp.files
 				}
 			});
 			modal.$on('close', (ev) => {
@@ -24,8 +25,11 @@
 			});
 		}
 	});
-		// console.log('_____', prp);
-
+    const copyParent = (ev) => {
+		navigator.clipboard.writeText(ev.target.parentNode.textContent).catch(err => {
+			console.log('Something went wrong', err);
+		});
+	};
 
 </script>
 
@@ -38,7 +42,7 @@
 			<tbody>
 			<tr>
 			  <td class="first">Координаты:</td>
-			  <td>{prp.lat} {prp.lon}</td>
+			  <td>{prp.lat} {prp.lon} <span on:click={copyParent} title="Скопировать в буфер обмена" class="leaflet-gmx-icon-copy"></span></td>
 			</tr>
 			<tr>
 			  <td class="first">Дата/время:</td>
@@ -53,21 +57,25 @@
             <tr>
               <td class="first">Нарушения:</td>
               <td>
-				<!-- ul>
-					{#each prp.collisions as pt}
+				<ul>
+					{#if prp.collisionTypes && prp.collisionTypes.length}
+					{#each prp.collisionTypes as pt}
 					<li>{pt.collisionType || ''}</li>
 					{/each}
-				</ul -->
+					{/if}
+				</ul>
 			  </td>
             </tr>
             <tr>
               <td class="first">Участники:</td>
               <td>
-				<!-- ul>
+				<ul>
+					{#if prp.uchs && prp.uchs.length}
 					{#each prp.uchs as pt}
-					<li>{pt.collisionPartyCategory || ''} <b><i>({pt.collisionPartyCond})</i></b></li>
+					<li>{pt.collisionPartyCategory || ''} <b><i>({pt.collisionPartyCond || ''})</i></b></li>
 					{/each}
-				</ul -->
+					{/if}
+				</ul>
 			  </td>
             </tr>
 
