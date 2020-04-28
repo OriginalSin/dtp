@@ -45,22 +45,43 @@ DtpHearths.setFilter = arg => {
 	let arr = [];
 	if (DtpHearths._group) {
 		DtpHearths._group.getLayers().forEach(it => {
-			let prp = it.options.props,
+			let prp = it.options.cluster,
 				cnt = 0;
 			argFilters.forEach(ft => {
 				if (ft.type === 'quarter') {
-					if (ft.zn === prp.quarter && ft.year === prp.year) {
+					if (ft.zn === prp.quarter) {
 						cnt++;
 					}
-				} else if (ft.type === 'date') {
-					if (prp.date >= ft.zn[0] && prp.date < ft.zn[1]) {
+				} else if (ft.type === 'str_icon_type') {
+					if (ft.zn === prp.str_icon_type) {
 						cnt++;
 					}
+				} else if (ft.type === 'stricken') {
+					let zn = ft.zn;
+					if (!zn) {
+						cnt++;
+					} else if (zn === 1 && prp.count_lost) {
+						cnt++;								// Только с погибшими
+					} else if (zn === 2 && prp.count_stricken) {
+						cnt++;								// Только с пострадавшими
+					} else if (zn === 3 && (prp.count_stricken || prp.count_lost)) {
+						cnt++;								// С пострадавшими или погибшими
+					} else if (zn === 3 && prp.count_stricken && prp.count_lost) {
+						cnt++;								// С пострадавшими и погибшими
+					}
+				} else if (ft.type === 'year') {
+					if (ft.zn === prp.year) {
+						cnt++;
+					}
+				// } else if (ft.type === 'date') {
+					// if (prp.date >= ft.zn[0] && prp.date < ft.zn[1]) {
+						// cnt++;
+					// }
 				}
 			});
 			if (cnt === argFilters.length) {
 				arr.push(it);
-				arr = arr.concat(it.options.items);
+				// arr = arr.concat(it.options.items);
 				// DtpHearths._heatData.push({lat: prp.lat, lng: prp.lon, count: prp.iconType});
 			}
 		});
@@ -75,7 +96,7 @@ DtpHearths.setFilter = arg => {
 DtpHearths.on('remove', () => {
 	DtpHearths.clearLayers();
 }).on('add', ev => {
-	let opt = {collision_type: {}, years: {}},
+	let opt = {str_icon_type: {}, years: {}, dtps: {}},
 		arr = [],
 		max_quarter = 0,
 		prefix = 'https://dtp.mvs.group/scripts/hearths/';
@@ -110,12 +131,18 @@ DtpHearths.on('remove', () => {
 						}
 						year[it.quarter] = quarter;
 						
-						// opt.years[it.year] = year;
+						let cTypeCount = opt.str_icon_type[it.str_icon_type];
+						if (!cTypeCount) {
+							cTypeCount = 1;
+						} else {
+							cTypeCount++;
+						}
+						opt.str_icon_type[it.str_icon_type] = cTypeCount;
 				
 						if (iconType) {
 							stroke = iconType % 2 === 0 ? true : false; //  - смертельные ДТП
-							if (iconType === 1 && iconType === 2) {
-								fillColor = '#8B4513';
+							if (iconType === 1 || iconType === 2) {
+								fillColor = '#FFA500';
 							} else if (iconType === 3 || iconType === 4) {
 								fillColor = '#B8860B';
 							} else if (iconType === 5 || iconType === 6) {
@@ -146,14 +173,18 @@ DtpHearths.on('remove', () => {
 							if (prp.id_stat) { cur.push({type: 'gibdd', id: prp.id_stat}); }
 							prp._cur = cur;
 
-							let cTypeCount = opt.collision_type[prp.collision_type];
-							if (!cTypeCount) {
-								cTypeCount = 1;
+							let dtps = opt.dtps[prp.id];
+							if (!dtps) {
+								dtps = {};
+								dtps[it.id] = 1;
+							} else if (!dtps[it.id]) {
+								dtps[it.id] = 1;
 							} else {
-								cTypeCount++;
+								dtps[it.id]++;
 							}
-							opt.collision_type[prp.collision_type] = cTypeCount;
+							opt.dtps[prp.id] = dtps;
 							return new CirclePoint(L.latLng(coords.lat, coords.lon), {
+									cluster: it,
 									props: prp,
 									radius: 6,
 									zIndexOffset: 50000,
@@ -173,13 +204,27 @@ DtpHearths.on('remove', () => {
 									}
 								});
 						});
-						it._bounds = L.rectangle(list_bounds, {items: arr1, props: it, fill: true, color: fillColor, dashArray: '8 3 1'})
+						it._bounds = L.rectangle(list_bounds, {items: arr1, cluster: it, fill: true, color: fillColor, dashArray: '8 3 1'})
+							.on('mouseover', (ev) => {
+								let target = ev.target;
+								target._color = target.options.color;
+								target.options.color = 'red';
+								target._renderer._updateStyle(target);
+							})
+							.on('mouseout', (ev) => {
+								let target = ev.target;
+								target.options.color = target._color;
+								target._renderer._updateStyle(target);
+							})
 							.on('click', (ev) => {
 								L.DomEvent.stopPropagation(ev);
 								let dist = 1000,
+									target = ev.target,
 									latlng = ev.latlng,
+									ctrlKey = ev.originalEvent.ctrlKey,
 									dtp;
-								ev.target.options.items.forEach(pt => {
+								if (ctrlKey) { target.bringToBack(); }
+								target.options.items.forEach(pt => {
 									let cd = pt._latlng.distanceTo(latlng);
 									if (cd < dist) {
 										dist = cd;
@@ -194,17 +239,17 @@ DtpHearths.on('remove', () => {
 									popup1.setLatLng(latlng).openOn(DtpHearths._map);
 								}
 								
-								console.log('popu666popen', dist, dtp);
+								// console.log('popu666popen', dist, dtp);
 							});
 						arr.push(it._bounds);
 						arr = arr.concat(arr1);
 					}
 				});
 				
-				let y = Math.floor(max_quarter),
-					q = 1 + 4 * (max_quarter - y);
-				argFilters = [{type: 'quarter', year: y, zn: q}];
-									// console.log('opt', opt);
+				// let y = Math.floor(max_quarter),
+					// q = 1 + 4 * (max_quarter - y);
+				// argFilters = [{type: 'quarter', year: y, zn: q}];
+// console.log('opt', opt);
 				DtpHearths._opt = opt;
 				DtpHearths._group = L.layerGroup(arr);
 				if (argFilters) {
@@ -213,7 +258,7 @@ DtpHearths.on('remove', () => {
 					DtpHearths.addLayer(DtpHearths._group);
 				}
 			});
-console.log('__allJson_____', allJson);
+console.log('__allJson_____', allJson, DtpHearths._opt);
 		});
 });
 

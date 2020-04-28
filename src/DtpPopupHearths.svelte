@@ -1,13 +1,12 @@
 <script>
-	// import { afterUpdate } from 'svelte';
-	// import DtpPopupGibdd from './DtpPopupGibdd.svelte';
-	// import DtpPopupSkpdi from './DtpPopupSkpdi.svelte';
-
-	// export let showModal = false;
-
 	export let prp;
-	// export let popup;
 
+    const moveTo = (nm) => {
+		let obj = prp._bounds.options.items[nm];
+		if (obj && obj._map) {
+			obj._map.panTo(obj._latlng);
+		}
+	};
 
 </script>
 	<div class="mvsPopup">
@@ -35,8 +34,8 @@
 			<tr>
 			  <td class="first" colspan=2>
 				<ul>
-				{#each prp.list_dtp as pt1}
-					<li>{new Date(1000 * pt1.date).toLocaleDateString()} {new Date(1000 * pt1.date).toLocaleTimeString()}</li>
+				{#each prp.list_dtp as pt1, index}
+					<li on:click={() => {moveTo(index);}} title={'id: ' + pt1.id}>{new Date(1000 * pt1.date).toLocaleDateString()} {new Date(1000 * pt1.date).toLocaleTimeString()}</li>
 				{/each}
 				</ul>
 			  </td>
@@ -47,6 +46,9 @@
 	</div>
 
 <style>
+.mvsPopup li {
+    cursor: pointer;
+}
 .mvsPopup .table {
     width: 100%;
 }

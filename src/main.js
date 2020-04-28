@@ -4,6 +4,7 @@
 import './GmxIcon';
 import './GmxCenter';
 import './FitCenter';
+import {proxy, hrefParams} from './Config';
 import {MarkerPoint, CirclePoint} from './CirclePoint';
 import {DtpGibdd} from './DtpGibdd';
 import {DtpSkpdi} from './DtpSkpdi';
@@ -75,11 +76,65 @@ var heatmapLayer = new HeatmapOverlay(cfg);
 // map.addLayer(heatmapLayer);
 DtpVerifyed._heat = heatmapLayer;
 */
-let baseLayers = {
-	OpenStreetMap: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-	}).addTo(map)
-}
+var Mercator = L.TileLayer.extend({
+	options: {
+		tilesCRS: L.CRS.EPSG3395
+	},
+	_getTiledPixelBounds: function (center) {
+		var pixelBounds = L.TileLayer.prototype._getTiledPixelBounds.call(this, center);
+		this._shiftY = this._getShiftY(this._tileZoom);
+		pixelBounds.min.y += this._shiftY;
+		pixelBounds.max.y += this._shiftY;
+		return pixelBounds;
+	},
+	_tileOnError: function (done, tile, e) {
+		var file = tile.getAttribute('src'),
+			pos = file.indexOf('/mapcache/');
+
+		if (pos > -1) {
+			var searchParams = new URL('http:' + file).searchParams,
+				arr = file.substr(pos + 1).split('/'),
+				pItem  = proxy[arr[1]];
+
+			tile.src = L.Util.template(pItem.errorTileUrlPrefix + pItem.postfix, {
+				z: searchParams.get('z'),
+				x: searchParams.get('x'),
+				y: searchParams.get('y')
+			});
+		}
+		done(e, tile);
+	},
+	_getTilePos: function (coords) {
+		var tilePos = L.TileLayer.prototype._getTilePos.call(this, coords);
+		return tilePos.subtract([0, this._shiftY]);
+	},
+
+	_getShiftY: function(zoom) {
+		var map = this._map,
+			pos = map.getCenter(),
+			shift = (map.options.crs.project(pos).y - this.options.tilesCRS.project(pos).y);
+
+		return Math.floor(L.CRS.scale(zoom) * shift / 40075016.685578496);
+	}
+});
+L.TileLayer.Mercator = Mercator;
+L.tileLayer.Mercator = function (url, options) {
+	return new Mercator(url, options);
+};
+
+let baseLayers = {};
+if (!hrefParams.b) { hrefParams.b = 'm2'; }
+['m2', 'm3'].forEach(key => {
+	let it = proxy[key],
+		lit = L.tileLayer.Mercator(it.prefix + it.postfix, it.options);
+	baseLayers[it.title] = lit;
+	if (hrefParams.b === it.options.key) { lit.addTo(map); }
+});
+baseLayers.OpenStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	maxZoom: 21,
+	maxNativeZoom: 18
+});
 
 let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
@@ -91,7 +146,13 @@ let overlays = {
 	'ДТП ГИБДД': DtpGibdd,
 	// polygon: L.polygon([[55.05, 37],[55.03, 41],[52.05, 41],[52.04, 37]], {color: 'red'})
 };
-
+// let ovHash = hrefParams.o ? hrefParams.o.split(',').reduce((p, c) => {p[c] = true; return p;}, {}) : {};
+// ['m1', 'm4', 'm5', 'm6'].forEach(key => {
+	// let it = proxy[key],
+		// lit = L.tileLayer.Mercator(it.prefix + it.postfix, it.options);
+	// overlays[it.title] = lit;
+	// if (ovHash[it.options.key]) { lit.addTo(map); }
+// });
 L.control.layers(baseLayers, overlays).addTo(map);
 
 let filtersControl = L.control.gmxIcon({
