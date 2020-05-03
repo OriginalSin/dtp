@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	export let DtpVerifyed;
+	export let DtpHearthsTmp;
 	export let DtpHearths;
 	export let DtpSkpdi;
 	export let DtpGibdd;
@@ -25,9 +26,12 @@
 	let optCollisionSkpdiKeys = optDataSkpdi.collision_type ? Object.keys(optDataSkpdi.collision_type).sort((a, b) => optDataSkpdi.collision_type[b] - optDataSkpdi.collision_type[a]) : [];
 	let optDataGibdd = DtpGibdd._opt || {};
 	let optCollisionGibddKeys = optDataGibdd.collision_type ? Object.keys(optDataGibdd.collision_type).sort((a, b) => optDataGibdd.collision_type[b] - optDataGibdd.collision_type[a]) : [];
-	
+
 	let optDataHearths = DtpHearths._opt || {};
 	let optTypeHearthsKeys = optDataHearths.str_icon_type ? Object.keys(optDataHearths.str_icon_type).sort((a, b) => optDataHearths.str_icon_type[b] - optDataHearths.str_icon_type[a]) : [];
+
+	let optDataHearthsTmp = DtpHearthsTmp._opt || {};
+	let optTypeHearthsTmpKeys = optDataHearthsTmp.str_icon_type ? Object.keys(optDataHearthsTmp.str_icon_type).sort((a, b) => optDataHearthsTmp.str_icon_type[b] - optDataHearthsTmp.str_icon_type[a]) : [];
 	
 	let collision_type;
 	let collision_type_skpdi;
@@ -38,6 +42,11 @@
 	let hearths_quarter;
 	let hearths_stricken;
 	let str_icon_type;
+
+	let hearths_yearTmp;
+	let hearths_quarterTmp;
+	let hearths_strickenTmp;
+	let str_icon_typeTmp;
 
 	const setFilter = () => {
 		let opt = [
@@ -78,6 +87,25 @@
 		// console.log('opt', collision_type, opt);
 		DtpSkpdi.setFilter(opt);
 	};
+
+    const setFilterHearthsTmp = (ev) => {
+		// console.log('setFilterYear', hearths_year, hearths_quarter, ev);
+		let arg = [];
+		if (hearths_yearTmp) {
+			arg.push({type: 'year', zn: Number(hearths_yearTmp)});
+		}
+		if (hearths_quarterTmp) {
+			arg.push({type: 'quarter', zn: Number(hearths_quarterTmp)});
+		}
+		if (hearths_strickenTmp) {
+			arg.push({type: 'stricken', zn: Number(hearths_strickenTmp)});
+		}
+		if (str_icon_typeTmp) {
+			arg.push({type: 'str_icon_type', zn: str_icon_typeTmp});
+		}
+		
+		DtpHearthsTmp.setFilter(arg);
+ 	};
 
     const setFilterHearths = (ev) => {
 		console.log('setFilterYear', hearths_year, hearths_quarter, ev);
@@ -214,6 +242,50 @@
 
 	  <div class="mvsFilters">
 
+		{#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}
+		<div class="pLine">Фильтры - <b>ДТП Очаги (TMP)</b></div>
+		<div class="filtersCont">
+			<div class="pLine nowrap">
+				<select bind:value={hearths_yearTmp} on:change="{setFilterHearthsTmp}">
+					<option value=''>Все года</option>
+					{#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
+						<option value={key}>{key}</option>
+					{/each}
+				</select>
+
+				<select bind:value={hearths_quarterTmp} on:change="{setFilterHearthsTmp}">
+					<option value=''>Все кварталы</option>
+					<option value=1>1 квартал</option>
+					<option value=2>2 квартал</option>
+					<option value=3>3 квартал</option>
+					<option value=4>4 квартал</option>
+				</select>
+			</div>
+			<div class="pLine">
+				<select bind:value={str_icon_typeTmp} on:change="{setFilterHearthsTmp}">
+					<option value=''>
+						Все типы ({optTypeHearthsTmpKeys.reduce((p, c) => { p += optDataHearthsTmp.str_icon_type[c]; return p; }, 0)})
+					</option>
+					{#each optTypeHearthsTmpKeys as key}
+						<option value={key}>
+							{key} ({optDataHearthsTmp.str_icon_type[key]})
+						</option>
+					{/each}
+				</select>
+			</div>
+			<div class="pLine">
+				<select bind:value={hearths_strickenTmp} on:change="{setFilterHearthsTmp}">
+					<option value=''>Очаги все</option>
+					<option value=1>Только с погибшими</option>
+					<option value=2>Только с пострадавшими</option>
+					<option value=3>С пострадавшими или погибшими</option>
+					<option value=4>С пострадавшими и погибшими</option>
+				</select>
+			</div>
+		</div>
+		{/if}
+
+
 		{#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги</b></div>
 		<div class="filtersCont">
@@ -254,14 +326,6 @@
 					<option value=4>С пострадавшими и погибшими</option>
 				</select>
 			</div>
-<!--
-			{#each Object.keys(DtpHearths._opt.str_icon_type).sort() as key}
-			<div class="pLine">{key}</div>
-			{#each Object.keys(DtpHearths._opt.str_icon_type[key]).sort() as key1}
-				<div class="pLine"><input type="radio" id="k{key}{key1}" name="quarter" value={key1} _year={key} checked on:click={oncheckDtpHearths}><label for="k{key}{key1}">{key1} квартал</label></div>
-			{/each}
-			{/each}
-			-->
 		</div>
 		{/if}
 
@@ -273,7 +337,7 @@
 			<input type="text" class="endDate" bind:this={endDate} />
 			<button class="pika-next" on:click={onNext}></button>
 		</div>
-		{:else if !DtpHearths._map}
+		{:else if !DtpHearths._map && !DtpHearthsTmp._map}
 			<div class="pLine">Нет включенных слоев</div>
 		{/if}
 

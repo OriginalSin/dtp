@@ -12,11 +12,12 @@ const proxy = {
 	m1: {
 		title: 'Дороги',
 		prefix: prefix + 'm1/',
-		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=104,301135,301750,302526,5300026,5400046,70300482,70300490,70300627',
-		errorTileUrlPrefix: '//04.core-nmaps-renderer-nmaps.maps.yandex.net/',
+		postfix: '?x={x}&y={y}&z={z}&l=mrcss',
+		// errorTileUrlPrefix: '//04.core-nmaps-renderer-nmaps.maps.yandex.net/',
+		errorTileUrlPrefix: '//core-nmaps-mrc-browser.maps.yandex.ru/tiles',
 		options: {
 			key: 'm1',
-			minZoom: 8,
+			minZoom: 10,
 			maxZoom: 19,
 			attribution: yandex,
 		}
@@ -48,9 +49,8 @@ const proxy = {
 	m4: {
 		title: 'Скорость(Народная карта)',
 		prefix: prefix + 'm4/',
-		//postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=104,301135,301750,302526,302827,5300026,5400046,70300236,70300638',
-		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=302827',
-		errorTileUrlPrefix: '//01.core-nmaps-renderer-nmaps.maps.yandex.net/',
+		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=104,301135,302526,302827,5300026,5400046,70300236,70300638',
+		errorTileUrlPrefix: '//04.core-nmaps-renderer-nmaps.maps.yandex.net/tile',
 		options: {
 			key: 'm4',
 			minZoom: 8,
@@ -62,7 +62,8 @@ const proxy = {
 		title: 'Светофоры',
 		prefix: prefix + 'm5/',
 		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=301750',
-		errorTileUrlPrefix: '//01.core-nmaps-renderer-nmaps.maps.yandex.net/',
+		errorTileUrlPrefix: '//04.core-nmaps-renderer-nmaps.maps.yandex.net/tile',
+		// errorTileUrlPrefix: '//01.core-nmaps-renderer-nmaps.maps.yandex.net/',
 		options: {
 			key: 'm4',
 			minZoom: 12,

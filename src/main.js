@@ -11,6 +11,7 @@ import {DtpSkpdi} from './DtpSkpdi';
 import {DtpVerifyed} from './DtpVerifyed';
 import DtpVerifyedFilters from './DtpVerifyedFilters.svelte';
 import {DtpHearths} from './DtpHearths';
+import {DtpHearthsTmp} from './DtpHearthsTmp';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -140,19 +141,20 @@ let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
+	'ДТП Очаги(tmp)': DtpHearthsTmp,
 	'ДТП Очаги': DtpHearths,
 	'ДТП Сводный': DtpVerifyed,
 	'ДТП СКПДИ': DtpSkpdi,
 	'ДТП ГИБДД': DtpGibdd,
 	// polygon: L.polygon([[55.05, 37],[55.03, 41],[52.05, 41],[52.04, 37]], {color: 'red'})
 };
-// let ovHash = hrefParams.o ? hrefParams.o.split(',').reduce((p, c) => {p[c] = true; return p;}, {}) : {};
-// ['m1', 'm4', 'm5', 'm6'].forEach(key => {
-	// let it = proxy[key],
-		// lit = L.tileLayer.Mercator(it.prefix + it.postfix, it.options);
-	// overlays[it.title] = lit;
-	// if (ovHash[it.options.key]) { lit.addTo(map); }
-// });
+let ovHash = hrefParams.o ? hrefParams.o.split(',').reduce((p, c) => {p[c] = true; return p;}, {}) : {};
+['m1', 'm4', 'm5'].forEach(key => {
+	let it = proxy[key],
+		lit = L.tileLayer.Mercator(it.prefix + it.postfix, it.options);
+	overlays[it.title] = lit;
+	if (ovHash[it.options.key]) { lit.addTo(map); }
+});
 L.control.layers(baseLayers, overlays).addTo(map);
 
 let filtersControl = L.control.gmxIcon({
@@ -177,6 +179,7 @@ let filtersControl = L.control.gmxIcon({
 			props: {
 				DtpGibdd: DtpGibdd,
 				DtpSkpdi: DtpSkpdi,
+				DtpHearthsTmp: DtpHearthsTmp,
 				DtpHearths: DtpHearths,
 				DtpVerifyed: DtpVerifyed
 			}
