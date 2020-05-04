@@ -170,31 +170,53 @@ let filtersControl = L.control.gmxIcon({
 		cont1 = target._win,
 		isActive = target.options.isActive;
 		
-	if (!cont1) {
-		cont1 = target._win = L.DomUtil.create('div', 'win leaflet-control-layers hidden', cont);
-		// cont1.innerHTML = 'Слой "ДТП Сводный"';
-		L.DomEvent.disableScrollPropagation(cont1);
-		cont1._Filters = new DtpVerifyedFilters({
-			target: cont1,
-			props: {
-				DtpGibdd: DtpGibdd,
-				DtpSkpdi: DtpSkpdi,
-				DtpHearthsTmp: DtpHearthsTmp,
-				DtpHearths: DtpHearths,
-				DtpVerifyed: DtpVerifyed
-			}
-		});
-	}
-
 	if (isActive) {
-		// MapUtils.GroupItems(map._selectedItems);
-		target._win.classList.remove('hidden');
+		if (!cont1) {
+			cont1 = target._win = L.DomUtil.create('div', 'win leaflet-control-layers', cont);
+			// cont1.innerHTML = 'Слой "ДТП Сводный"';
+			L.DomEvent.disableScrollPropagation(cont1);
+			cont1._Filters = new DtpVerifyedFilters({
+				target: cont1,
+				props: {
+					DtpGibdd: DtpGibdd,
+					DtpSkpdi: DtpSkpdi,
+					DtpHearthsTmp: DtpHearthsTmp,
+					DtpHearths: DtpHearths,
+					DtpVerifyed: DtpVerifyed
+				}
+			});
+		}
+
+		// target._win.classList.remove('hidden');
 	} else {
-		target._win.classList.add('hidden');
+		target._win.parentNode.removeChild(target._win);
+		// target._win.classList.add('hidden');
 		target._win = null;
 	}
 
 }).addTo(map);
+
+const refreshFilters = () => {
+	setTimeout(() => {
+		if (filtersControl.options.isActive) {
+			filtersControl.setActive(false);
+			filtersControl._win = null;
+			filtersControl.setActive(true);
+		}
+	});
+};
+DtpGibdd._refreshFilters =
+DtpSkpdi._refreshFilters =
+DtpVerifyed._refreshFilters =
+DtpHearths._refreshFilters =
+DtpHearthsTmp._refreshFilters = refreshFilters;
+
+const eventsStr = 'remove';
+DtpGibdd.on(eventsStr, refreshFilters);
+DtpSkpdi.on(eventsStr, refreshFilters);
+DtpVerifyed.on(eventsStr, refreshFilters);
+DtpHearths.on(eventsStr, refreshFilters);
+DtpHearthsTmp.on(eventsStr, refreshFilters);
 
 // var sidebar = L.control.sidebar({
     // autopan: false,       // whether to maintain the centered map point when opening the sidebar

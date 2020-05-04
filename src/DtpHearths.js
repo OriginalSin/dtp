@@ -257,6 +257,7 @@ DtpHearths.on('remove', () => {
 				} else {
 					DtpHearths.addLayer(DtpHearths._group);
 				}
+				DtpHearths._refreshFilters();
 			});
 console.log('__allJson_____', allJson, DtpHearths._opt);
 		});

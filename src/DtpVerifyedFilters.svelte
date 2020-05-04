@@ -32,7 +32,8 @@
 
 	let optDataHearthsTmp = DtpHearthsTmp._opt || {};
 	let optTypeHearthsTmpKeys = optDataHearthsTmp.str_icon_type ? Object.keys(optDataHearthsTmp.str_icon_type).sort((a, b) => optDataHearthsTmp.str_icon_type[b] - optDataHearthsTmp.str_icon_type[a]) : [];
-	
+ console.log('optDataHearthsTmp', optDataHearthsTmp)
+
 	let collision_type;
 	let collision_type_skpdi;
 	let collision_type_gibdd;
@@ -46,7 +47,6 @@
 	let hearths_yearTmp;
 	let hearths_quarterTmp;
 	let hearths_strickenTmp;
-	let str_icon_typeTmp;
 
 	const setFilter = () => {
 		let opt = [
@@ -87,25 +87,6 @@
 		// console.log('opt', collision_type, opt);
 		DtpSkpdi.setFilter(opt);
 	};
-
-    const setFilterHearthsTmp = (ev) => {
-		// console.log('setFilterYear', hearths_year, hearths_quarter, ev);
-		let arg = [];
-		if (hearths_yearTmp) {
-			arg.push({type: 'year', zn: Number(hearths_yearTmp)});
-		}
-		if (hearths_quarterTmp) {
-			arg.push({type: 'quarter', zn: Number(hearths_quarterTmp)});
-		}
-		if (hearths_strickenTmp) {
-			arg.push({type: 'stricken', zn: Number(hearths_strickenTmp)});
-		}
-		if (str_icon_typeTmp) {
-			arg.push({type: 'str_icon_type', zn: str_icon_typeTmp});
-		}
-		
-		DtpHearthsTmp.setFilter(arg);
- 	};
 
     const setFilterHearths = (ev) => {
 		console.log('setFilterYear', hearths_year, hearths_quarter, ev);
@@ -238,6 +219,76 @@
 		setFilter();
  // console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
 	};
+
+	let str_icon_typeTmp = [''];
+	let hearths_period_type_tmp = 1;
+	let hearths_year_tmp = {};
+	let hearths_quarter_tmp = {};
+	let last_quarter_tmp;
+	Object.keys(optDataHearthsTmp.years || {}).sort().forEach(key => {
+		hearths_year_tmp[key] = true;
+		Object.keys(optDataHearthsTmp.years[key]).sort().forEach(key1 => {
+			last_quarter_tmp = {};
+			last_quarter_tmp[key] = {};
+			last_quarter_tmp[key][key1] = true;
+		});
+	});
+	hearths_quarter_tmp = last_quarter_tmp || {};
+	
+	const setFilterHearthsTmpPeriodType = (ev) => {
+ console.log('setFilterHearthsTmpPeriodType', hearths_period_type_tmp, ev)
+	};
+
+    const setFilterHearthsTmp = (ev) => {
+		let arg = [],
+			target = ev.target || {},
+			checked = target.checked,
+			id = target.id,
+			name = target.name;
+		// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
+		
+		if (id === 'hearths_period_type_tmp2') {
+			hearths_period_type_tmp = 2;
+		} else if (id === 'hearths_period_type_tmp1') {
+			hearths_period_type_tmp = 1;
+		} else if (id === 'hearths_year_tmp') {
+			if (checked) {
+				hearths_year_tmp[name] = true;
+			} else {
+				delete hearths_year_tmp[name];
+			}
+		} else if (id === 'hearths_quarter_tmp') {
+			let arr = name.split('_');
+			if (checked) {
+				if (!hearths_quarter_tmp[arr[0]]) { hearths_quarter_tmp[arr[0]] = {}; }
+				hearths_quarter_tmp[arr[0]][arr[1]] = true;
+			} else {
+				if (hearths_quarter_tmp[arr[0]]) {
+					delete hearths_quarter_tmp[arr[0]][arr[1]];
+				}
+				if (Object.keys(hearths_quarter_tmp[arr[0]]).length === 0) {
+					delete hearths_quarter_tmp[arr[0]];
+				}
+			}
+		}
+
+		if (hearths_period_type_tmp === 1) {
+			if (Object.keys(hearths_year_tmp).length) {
+				arg.push({type: 'year', zn: hearths_year_tmp});
+			}
+		} else if (Object.keys(hearths_quarter_tmp).length) {
+			arg.push({type: 'quarter', zn: hearths_quarter_tmp});
+		}
+		if (hearths_strickenTmp) {
+			arg.push({type: 'stricken', zn: Number(hearths_strickenTmp)});
+		}
+		if (str_icon_typeTmp.length > 0 && str_icon_typeTmp[0]) {
+			arg.push({type: 'str_icon_type', zn: str_icon_typeTmp});
+		}
+		
+		DtpHearthsTmp.setFilter(arg);
+ 	};
+
 </script>
 
 	  <div class="mvsFilters">
@@ -246,7 +297,28 @@
 		<div class="pLine">Фильтры - <b>ДТП Очаги (TMP)</b></div>
 		<div class="filtersCont">
 			<div class="pLine nowrap">
-				<select bind:value={hearths_yearTmp} on:change="{setFilterHearthsTmp}">
+			<fieldset>
+				<legend>Фильтрация по периодам:</legend>
+				<div class="pLine type">
+					<input type="radio" on:change={setFilterHearthsTmp} bind:group={hearths_period_type_tmp} value={1} checked={hearths_period_type_tmp === 1} id="hearths_period_type_tmp1" name="hearths_period_type_tmp"><label for="hearths_period_type_tmp1">Фильтрация по годам</label>
+					<div class="pLine margin">
+					{#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
+						<input type="checkbox" on:change={setFilterHearthsTmp} id="hearths_year_tmp" checked={hearths_year_tmp[key]} disabled={hearths_period_type_tmp === 2} name="{key}"><label for="hearths_year_tmp_{key}">{key}</label>
+					{/each}
+					</div>
+				</div>
+				<div class="pLine type">
+				<input type="radio" on:change={setFilterHearthsTmp} bind:group={hearths_period_type_tmp} value={2} id="hearths_period_type_tmp2" name="hearths_period_type_tmp"><label for="hearths_period_type_tmp2">Фильтрация по кварталам</label>
+					<div class="pLine margin">
+					{#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
+						{#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}
+							<input type="checkbox" on:change={setFilterHearthsTmp} id="hearths_quarter_tmp" checked={hearths_quarter_tmp[key] && hearths_quarter_tmp[key][key1]} disabled={hearths_period_type_tmp === 1} name="{key}_{key1}"><label for="hearths_quarter_tmp_{key}_{key1}">{key1} кв. {key}</label>
+						{/each}
+						<br />
+					{/each}
+					</div>
+				</div>
+				<!-- select bind:value={hearths_yearTmp} on:change="{setFilterHearthsTmp}">
 					<option value=''>Все года</option>
 					{#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
 						<option value={key}>{key}</option>
@@ -259,10 +331,11 @@
 					<option value=2>2 квартал</option>
 					<option value=3>3 квартал</option>
 					<option value=4>4 квартал</option>
-				</select>
+				</select -->
+			</fieldset>
 			</div>
 			<div class="pLine">
-				<select bind:value={str_icon_typeTmp} on:change="{setFilterHearthsTmp}">
+				<select class="multiple_icon_typeTmp" bind:value={str_icon_typeTmp} on:change="{setFilterHearthsTmp}" multiple>
 					<option value=''>
 						Все типы ({optTypeHearthsTmpKeys.reduce((p, c) => { p += optDataHearthsTmp.str_icon_type[c]; return p; }, 0)})
 					</option>
@@ -410,8 +483,25 @@
 	  </div>
 
 <style>
+.multiple_icon_typeTmp option::before {
+	font-family: 'Font Awesome 5 Free';
+	content: "\2610";
+	width: 1.3em;
+	display: inline-block;
+	margin-left: 2px;
+}
+.multiple_icon_typeTmp option:checked::before {
+	content: "\2611";
+}
+
+.pLine select {
+	max-width: 300px;
+}
+.pLine.margin {
+    margin-left: 12px;
+}
 .filtersCont select {
-    max-width: 147px;
+   /* max-width: 147px;*/
 }
 .endDate, .begDate {
     width: 72px;
@@ -419,13 +509,14 @@
 .pikaday {
     white-space: nowrap;
 	min-width: 188px;
+	max-width: 200px;
     text-align: center;
 }
 .pikaday input {
     margin: unset;
 }
 .nowrap {
-    width: 196px;
+    width: 362px;
     white-space: nowrap;
 }
 .pLine {

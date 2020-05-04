@@ -120,6 +120,7 @@ console.log('_______', prp);
 			} else {
 				DtpGibdd.addLayer(DtpGibdd._group);
 			}
+			DtpGibdd._refreshFilters();
 		});
 });
 

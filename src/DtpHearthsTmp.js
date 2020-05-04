@@ -49,11 +49,15 @@ DtpHearthsTmp.setFilter = arg => {
 				cnt = 0;
 			argFilters.forEach(ft => {
 				if (ft.type === 'quarter') {
-					if (ft.zn === prp.quarter) {
+					if (ft.zn[prp.year] && ft.zn[prp.year][prp.quarter]) {
+						cnt++;
+					}
+				} else if (ft.type === 'year') {
+					if (ft.zn[prp.year]) {
 						cnt++;
 					}
 				} else if (ft.type === 'str_icon_type') {
-					if (ft.zn === prp.str_icon_type) {
+					if (ft.zn.filter(pt => pt === prp.str_icon_type).length) {
 						cnt++;
 					}
 				} else if (ft.type === 'stricken') {
@@ -69,14 +73,6 @@ DtpHearthsTmp.setFilter = arg => {
 					} else if (zn === 3 && prp.count_stricken && prp.count_lost) {
 						cnt++;								// С пострадавшими и погибшими
 					}
-				} else if (ft.type === 'year') {
-					if (ft.zn === prp.year) {
-						cnt++;
-					}
-				// } else if (ft.type === 'date') {
-					// if (prp.date >= ft.zn[0] && prp.date < ft.zn[1]) {
-						// cnt++;
-					// }
 				}
 			});
 			if (cnt === argFilters.length) {
@@ -231,7 +227,7 @@ DtpHearthsTmp.on('remove', () => {
 										dtp = pt;
 									}
 								});
-								if (dist < 10) {
+								if (dist < 5) {
 									setPopup(dtp.options.props);
 									popup.setLatLng(dtp._latlng).openOn(DtpHearthsTmp._map);
 								} else {
@@ -257,6 +253,7 @@ DtpHearthsTmp.on('remove', () => {
 				} else {
 					DtpHearthsTmp.addLayer(DtpHearthsTmp._group);
 				}
+				DtpHearthsTmp._refreshFilters();
 			});
 console.log('__allJson_____', allJson, DtpHearthsTmp._opt);
 		});

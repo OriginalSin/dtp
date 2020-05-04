@@ -125,6 +125,7 @@ console.log('_______', prp);
 			} else {
 				DtpSkpdi.addLayer(DtpSkpdi._group);
 			}
+			DtpSkpdi._refreshFilters();
 		});
 });
 

@@ -39,9 +39,9 @@ DtpVerifyed.setFilter = arg => {
 						cnt++;
 					} else if (ft.zn === 1 && prp.id_stat && prp.id_skpdi) {
 						cnt++;
-					} else if (ft.zn === 2 && prp.id_skpdi) {
+					} else if (ft.zn === 2 && (prp.id_skpdi && !prp.id_stat)) {
 						cnt++;
-					} else if (ft.zn === 3 && prp.id_stat) {
+					} else if (ft.zn === 3 && (prp.id_stat && !prp.id_skpdi)) {
 						cnt++;
 					}
 				} else if (ft.type === 'collision_type') {
@@ -144,6 +144,7 @@ console.log('_______', prp);
 			} else {
 				DtpVerifyed.addLayer(DtpVerifyed._group);
 			}
+			DtpVerifyed._refreshFilters();
 			// DtpVerifyed._heat.setData({
 				// max: 8,
 				// data: DtpVerifyed._heatData

@@ -1,11 +1,17 @@
 <script>
+	import DtpPopup from './DtpPopupVerifyed.svelte';
 	export let prp;
+	let current;
 
     const moveTo = (nm) => {
 		let obj = prp._bounds.options.items[nm];
 		if (obj && obj._map) {
 			obj._map.panTo(obj._latlng);
 		}
+	};
+
+    const showDtpInfo = (ev) => {
+console.log('showDtpInfo ', ev);
 	};
 
 </script>
@@ -31,21 +37,47 @@
 			  <td class="first">Раненых:</td>
 			  <td>{prp.count_stricken}</td>
 			</tr>
+				{#each prp.list_dtp as pt1, index}
 			<tr>
 			  <td class="first" colspan=2>
 				<ul>
-				{#each prp.list_dtp as pt1, index}
-					<li on:click={() => {moveTo(index);}} title={'id: ' + pt1.id}>{new Date(1000 * pt1.date).toLocaleDateString()} {new Date(1000 * pt1.date).toLocaleTimeString()}</li>
-				{/each}
+					<li on:click={() => {moveTo(index);}} title={'id: ' + pt1.id}>{new Date(1000 * pt1.date).toLocaleDateString()} погибших {pt1.lost}, раненых {pt1.stricken}</li>
 				</ul>
 			  </td>
 			</tr>
+			<tr>
+			  <td class="first">Адрес:</td>
+			  <td>{pt1.address}<br /><span class="link" on:click={() => {current = index;}}>подробнее</span>
+				{#if current === index}
+				<div class="win leaflet-popup-content-wrapper ">
+					<DtpPopup prp={pt1} />
+				</div>
+				{/if}
+
+			  </td>
+			</tr>
+				{/each}
 		   </tbody>
 		  </table>
 		</div>
 	</div>
 
 <style>
+.win {
+    position: absolute;
+    right: -300px;
+    left: 360px;
+    top: 76px;
+}
+span.link {
+    cursor: pointer;
+    color: blue;
+    display: block;
+    margin-top: 6px;
+}
+.mvsPopup {
+    min-width: 220px;
+}
 .mvsPopup li {
     cursor: pointer;
 }
