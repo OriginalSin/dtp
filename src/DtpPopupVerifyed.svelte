@@ -6,7 +6,7 @@
 	// export let showModal = false;
 
 	export let prp;
-	// export let popup;
+	export let closeMe = () => {};
 
 	let curNum = 0;
 	let data = {};
@@ -38,6 +38,10 @@
 
 </script>
 	<div class="mvsPopup">
+		<div class="close">
+			<a class="leaflet-popup-close-button" href="#close" on:click|preventDefault={closeMe}>×</a>
+		</div>
+
 		<div class="pLine">
 			{#each prp._cur as pt, i}
 			<button class="{curNum === i ? 'current' : ''}" value={i} on:click={onclick}>{pt.type === 'gibdd' ? 'ГИБДД' : 'СКПДИ'}</button>

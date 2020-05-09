@@ -35,16 +35,16 @@ const setPopup1 = function (props) {
 }
 
 // let renderer = L.canvas();
-export const DtpHearths = L.featureGroup([]);
-DtpHearths.setFilter = arg => {
+export const DtpHearthsStat = L.featureGroup([]);
+DtpHearthsStat.setFilter = arg => {
 // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
-	DtpHearths.clearLayers();
+	DtpHearthsStat.clearLayers();
 	// DtpHearths._heatData = [];
 	argFilters = arg;
 
 	let arr = [];
-	if (DtpHearths._group) {
-		DtpHearths._group.getLayers().forEach(it => {
+	if (DtpHearthsStat._group) {
+		DtpHearthsStat._group.getLayers().forEach(it => {
 			let prp = it.options.cluster,
 				cnt = 0;
 			argFilters.forEach(ft => {
@@ -81,7 +81,7 @@ DtpHearths.setFilter = arg => {
 				// DtpHearths._heatData.push({lat: prp.lat, lng: prp.lon, count: prp.iconType});
 			}
 		});
-		DtpHearths.addLayer(L.layerGroup(arr));
+		DtpHearthsStat.addLayer(L.layerGroup(arr));
 		// DtpHearths._heat.setData({
 			// max: 8,
 			// data: DtpHearths._heatData
@@ -89,13 +89,13 @@ DtpHearths.setFilter = arg => {
 	}
 };
 
-DtpHearths.on('remove', () => {
-	DtpHearths.clearLayers();
+DtpHearthsStat.on('remove', () => {
+	DtpHearthsStat.clearLayers();
 }).on('add', ev => {
 	let opt = {str_icon_type: {}, iconType: {}, years: {}, dtps: {}},
 		arr = [],
 		max_quarter = 0,
-		prefix = 'https://dtp.mvs.group/scripts/hearths/';
+		prefix = 'https://dtp.mvs.group/scripts/hearthsstat/';
 
 	Promise.all([2019, 2020].map(key => fetch(prefix + key + '.txt', {}).then(req => req.json())))
 		.then(allJson => {
@@ -218,11 +218,12 @@ DtpHearths.on('remove', () => {
 								let dist = 1000,
 									target = ev.target,
 									latlng = ev.latlng,
+									layerPoint = ev.layerPoint,
 									ctrlKey = ev.originalEvent.ctrlKey,
 									dtp;
 								if (ctrlKey) { target.bringToBack(); }
 								target.options.items.forEach(pt => {
-									let cd = pt._latlng.distanceTo(latlng);
+									let cd = pt._point.distanceTo(layerPoint);
 									if (cd < dist) {
 										dist = cd;
 										dtp = pt;
@@ -230,10 +231,10 @@ DtpHearths.on('remove', () => {
 								});
 								if (dist < 10) {
 									setPopup(dtp.options.props);
-									popup.setLatLng(dtp._latlng).openOn(DtpHearths._map);
+									popup.setLatLng(dtp._latlng).openOn(DtpHearthsStat._map);
 								} else {
 									setPopup1(it);
-									popup1.setLatLng(latlng).openOn(DtpHearths._map);
+									popup1.setLatLng(latlng).openOn(DtpHearthsStat._map);
 								}
 								
 								// console.log('popu666popen', dist, dtp);
@@ -247,16 +248,16 @@ DtpHearths.on('remove', () => {
 					// q = 1 + 4 * (max_quarter - y);
 				// argFilters = [{type: 'quarter', year: y, zn: q}];
 // console.log('opt', opt);
-				DtpHearths._opt = opt;
-				DtpHearths._group = L.layerGroup(arr);
+				DtpHearthsStat._opt = opt;
+				DtpHearthsStat._group = L.layerGroup(arr);
 				if (argFilters) {
-					DtpHearths.setFilter(argFilters);
+					DtpHearthsStat.setFilter(argFilters);
 				} else {
-					DtpHearths.addLayer(DtpHearths._group);
+					DtpHearthsStat.addLayer(DtpHearthsStat._group);
 				}
-				DtpHearths._refreshFilters();
+				DtpHearthsStat._refreshFilters();
 			});
-console.log('__allJson_____', allJson, DtpHearths._opt);
+console.log('__allJson_____', allJson, DtpHearthsStat._opt);
 		});
 });
 

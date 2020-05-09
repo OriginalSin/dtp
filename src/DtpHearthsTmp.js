@@ -92,7 +92,7 @@ DtpHearthsTmp.setFilter = arg => {
 DtpHearthsTmp.on('remove', () => {
 	DtpHearthsTmp.clearLayers();
 }).on('add', ev => {
-	let opt = {str_icon_type: {}, years: {}, dtps: {}},
+	let opt = {str_icon_type: {}, iconType: {}, years: {}, dtps: {}},
 		arr = [],
 		max_quarter = 0,
 		prefix = 'https://dtp.mvs.group/scripts/hearthstmp/';
@@ -134,7 +134,8 @@ DtpHearthsTmp.on('remove', () => {
 							cTypeCount++;
 						}
 						opt.str_icon_type[it.str_icon_type] = cTypeCount;
-				
+						opt.iconType[it.str_icon_type] = iconType;
+
 						if (iconType) {
 							stroke = iconType % 2 === 0 ? true : false; //  - смертельные ДТП
 							if (iconType === 1 || iconType === 2) {
@@ -227,7 +228,7 @@ DtpHearthsTmp.on('remove', () => {
 										dtp = pt;
 									}
 								});
-								if (dist < 5) {
+								if (dist < 10) {
 									setPopup(dtp.options.props);
 									popup.setLatLng(dtp._latlng).openOn(DtpHearthsTmp._map);
 								} else {

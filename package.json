@@ -1,8 +1,11 @@
 {
   "name": "dtp",
   "browser": "public/build/main.js",
+  "arm": "public/build/arm.js",
   "version": "1.0.0",
   "scripts": {
+    "build:arm": "rollup -c rollup.config.arm.js",
+    "dev:arm": "rollup -c rollup.config.arm.js -w",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public"

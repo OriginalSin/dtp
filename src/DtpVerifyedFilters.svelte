@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	export let DtpVerifyed;
+	export let DtpHearthsStat;
 	export let DtpHearthsTmp;
 	export let DtpHearths;
 	export let DtpSkpdi;
@@ -22,6 +23,8 @@
 	let dateInterval = [bd.getTime()/1000, ed.getTime()/1000];
 	let optData = DtpVerifyed._opt || {};
 	let optCollisionKeys = optData.collision_type ? Object.keys(optData.collision_type).sort((a, b) => optData.collision_type[b] - optData.collision_type[a]) : [];
+ console.log('optData', optData)
+
 	let optDataSkpdi = DtpSkpdi._opt || {};
 	let optCollisionSkpdiKeys = optDataSkpdi.collision_type ? Object.keys(optDataSkpdi.collision_type).sort((a, b) => optDataSkpdi.collision_type[b] - optDataSkpdi.collision_type[a]) : [];
 	let optDataGibdd = DtpGibdd._opt || {};
@@ -32,21 +35,15 @@
 
 	let optDataHearthsTmp = DtpHearthsTmp._opt || {};
 	let optTypeHearthsTmpKeys = optDataHearthsTmp.str_icon_type ? Object.keys(optDataHearthsTmp.str_icon_type).sort((a, b) => optDataHearthsTmp.str_icon_type[b] - optDataHearthsTmp.str_icon_type[a]) : [];
- console.log('optDataHearthsTmp', optDataHearthsTmp)
 
-	let collision_type;
-	let collision_type_skpdi;
-	let collision_type_gibdd;
+	let optDataHearthsStat = DtpHearthsStat._opt || {};
+	let optTypeHearthsStatKeys = optDataHearthsStat.str_icon_type ? Object.keys(optDataHearthsStat.str_icon_type).sort((a, b) => optDataHearthsStat.str_icon_type[b] - optDataHearthsStat.str_icon_type[a]) : [];
+
+	let collision_type = [''];
+	let collision_type_skpdi = [''];
+	let collision_type_gibdd = [''];
 	let beg;
 	let end;
-	let hearths_year;
-	let hearths_quarter;
-	let hearths_stricken;
-	let str_icon_type;
-
-	let hearths_yearTmp;
-	let hearths_quarterTmp;
-	let hearths_strickenTmp;
 
 	const setFilter = () => {
 		let opt = [
@@ -88,35 +85,7 @@
 		DtpSkpdi.setFilter(opt);
 	};
 
-    const setFilterHearths = (ev) => {
-		console.log('setFilterYear', hearths_year, hearths_quarter, ev);
-		let arg = [];
-		if (hearths_year) {
-			arg.push({type: 'year', zn: Number(hearths_year)});
-		}
-		if (hearths_quarter) {
-			arg.push({type: 'quarter', zn: Number(hearths_quarter)});
-		}
-		if (hearths_stricken) {
-			arg.push({type: 'stricken', zn: Number(hearths_stricken)});
-		}
-		if (str_icon_type) {
-			arg.push({type: 'str_icon_type', zn: str_icon_type});
-		}
-		
-		DtpHearths.setFilter(arg);
- 	};
-
-    const oncheckDtpHearths = (ev) => {
-		let target = ev.target;
-		currentFilterDtpHearths = Number(target.value);
-		let year = Number(target.getAttribute('_year'));
-		
-		// console.log('oncheck', currentFilter, DtpVerifyed._opt);
-		// setFilter();
-		let arg = {type: 'quarter', year: Number(target.getAttribute('_year')), zn: currentFilterDtpHearths};
-		DtpHearths.setFilter([{type: 'quarter', year: Number(target.getAttribute('_year')), zn: currentFilterDtpHearths}]);
-	};
+	// date filter
     const oncheck = (ev) => {
 		let target = ev.target;
 		currentFilter = Number(target.value);
@@ -220,6 +189,79 @@
  // console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
 	};
 
+	// ДТП Очаги (Stat)
+	let hearths_strickenStat;
+	let str_icon_typeStat = [''];
+	let hearths_period_type_Stat = 1;
+	let hearths_year_Stat = {};
+	let hearths_quarter_Stat = {};
+	let last_quarter_Stat;
+	Object.keys(optDataHearthsStat.years || {}).sort().forEach(key => {
+		hearths_year_Stat[key] = true;
+		Object.keys(optDataHearthsStat.years[key]).sort().forEach(key1 => {
+			last_quarter_Stat = {};
+			last_quarter_Stat[key] = {};
+			last_quarter_Stat[key][key1] = true;
+		});
+	});
+	hearths_quarter_Stat = last_quarter_Stat || {};
+	// const setFilterHearthsTmpPeriodType = (ev) => {
+ // console.log('setFilterHearthsTmpPeriodType', hearths_period_type_tmp, ev)
+	// };
+
+    const setFilterHearthsStat = (ev) => {
+		let arg = [],
+			target = ev.target || {},
+			checked = target.checked,
+			id = target.id,
+			name = target.name;
+		// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
+
+		if (id === 'hearths_period_type_Stat2') {
+			hearths_period_type_Stat = 2;
+		} else if (id === 'hearths_period_type_Stat1') {
+			hearths_period_type_Stat = 1;
+		} else if (id === 'hearths_year_Stat') {
+			if (checked) {
+				hearths_year_Stat[name] = true;
+			} else {
+				delete hearths_year_Stat[name];
+			}
+		} else if (id === 'hearths_quarter_Stat') {
+			let arr = name.split('_');
+			if (checked) {
+				if (!hearths_quarter_Stat[arr[0]]) { hearths_quarter_Stat[arr[0]] = {}; }
+				hearths_quarter_Stat[arr[0]][arr[1]] = true;
+			} else {
+				if (hearths_quarter_Stat[arr[0]]) {
+					delete hearths_quarter_Stat[arr[0]][arr[1]];
+				}
+				if (Object.keys(hearths_quarter_Stat[arr[0]]).length === 0) {
+					delete hearths_quarter_Stat[arr[0]];
+				}
+			}
+		}
+
+		if (hearths_period_type_Stat === 1) {
+			// if (Object.keys(hearths_year_Stat).length) {
+				arg.push({type: 'year', zn: hearths_year_Stat});
+			// }
+		} else if (hearths_period_type_Stat === 2) {
+		// } else if (Object.keys(hearths_quarter_Stat).length) {
+			arg.push({type: 'quarter', zn: hearths_quarter_Stat});
+		}
+		if (hearths_strickenStat) {
+			arg.push({type: 'stricken', zn: Number(hearths_strickenStat)});
+		}
+		if (str_icon_typeStat.length > 0 && str_icon_typeStat[0]) {
+			arg.push({type: 'str_icon_type', zn: str_icon_typeStat});
+		}
+		
+		DtpHearthsStat.setFilter(arg);
+ 	};
+
+	// ДТП Очаги (TMP)
+	let hearths_strickenTmp;
 	let str_icon_typeTmp = [''];
 	let hearths_period_type_tmp = 1;
 	let hearths_year_tmp = {};
@@ -234,10 +276,9 @@
 		});
 	});
 	hearths_quarter_tmp = last_quarter_tmp || {};
-	
-	const setFilterHearthsTmpPeriodType = (ev) => {
- console.log('setFilterHearthsTmpPeriodType', hearths_period_type_tmp, ev)
-	};
+	// const setFilterHearthsTmpPeriodType = (ev) => {
+ // console.log('setFilterHearthsTmpPeriodType', hearths_period_type_tmp, ev)
+	// };
 
     const setFilterHearthsTmp = (ev) => {
 		let arg = [],
@@ -273,10 +314,11 @@
 		}
 
 		if (hearths_period_type_tmp === 1) {
-			if (Object.keys(hearths_year_tmp).length) {
+			// if (Object.keys(hearths_year_tmp).length) {
 				arg.push({type: 'year', zn: hearths_year_tmp});
-			}
-		} else if (Object.keys(hearths_quarter_tmp).length) {
+			// }
+		} else if (hearths_period_type_tmp === 2) {
+		// } else if (Object.keys(hearths_quarter_tmp).length) {
 			arg.push({type: 'quarter', zn: hearths_quarter_tmp});
 		}
 		if (hearths_strickenTmp) {
@@ -289,9 +331,125 @@
 		DtpHearthsTmp.setFilter(arg);
  	};
 
+	// ДТП Очаги
+	let hearths_stricken;
+	let str_icon_type = [''];
+	let hearths_period_type = 1;
+	let hearths_year = {};
+	let hearths_quarter = {};
+	let last_quarter;
+	Object.keys(optDataHearths.years || {}).sort().forEach(key => {
+		hearths_year[key] = true;
+		Object.keys(optDataHearths.years[key]).sort().forEach(key1 => {
+			last_quarter = {};
+			last_quarter[key] = {};
+			last_quarter[key][key1] = true;
+		});
+	});
+	hearths_quarter = last_quarter || {};
+
+    const setFilterHearths = (ev) => {
+		let arg = [],
+			target = ev.target || {},
+			checked = target.checked,
+			id = target.id,
+			name = target.name;
+		console.log('setFilterHearths', checked, id, name, ev);
+		if (id === 'hearths_period_type2') {
+			hearths_period_type = 2;
+		} else if (id === 'hearths_period_type1') {
+			hearths_period_type = 1;
+		} else if (id === 'hearths_year') {
+			if (checked) {
+				hearths_year[name] = true;
+			} else {
+				delete hearths_year[name];
+			}
+		} else if (id === 'hearths_quarter') {
+			let arr = name.split('_');
+			if (checked) {
+				if (!hearths_quarter[arr[0]]) { hearths_quarter[arr[0]] = {}; }
+				hearths_quarter[arr[0]][arr[1]] = true;
+			} else {
+				if (hearths_quarter[arr[0]]) {
+					delete hearths_quarter[arr[0]][arr[1]];
+				}
+				if (Object.keys(hearths_quarter[arr[0]]).length === 0) {
+					delete hearths_quarter[arr[0]];
+				}
+			}
+		}
+
+		if (hearths_period_type === 1) {
+			arg.push({type: 'year', zn: hearths_year});
+		} else if (hearths_period_type === 2) {
+		// } else if (Object.keys(hearths_quarter).length) {
+			arg.push({type: 'quarter', zn: hearths_quarter});
+		}
+		if (hearths_stricken) {
+			arg.push({type: 'stricken', zn: Number(hearths_stricken)});
+		}
+		if (str_icon_type.length > 0 && str_icon_type[0]) {
+			arg.push({type: 'str_icon_type', zn: str_icon_type});
+		}
+
+		DtpHearths.setFilter(arg);
+ 	};
+
 </script>
 
 	  <div class="mvsFilters">
+
+		{#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}
+		<div class="pLine">Фильтры - <b>ДТП Очаги (Stat)</b></div>
+		<div class="filtersCont">
+			<div class="pLine nowrap">
+			<fieldset>
+				<legend>Фильтрация по периодам:</legend>
+				<div class="pLine type">
+					<input type="radio" on:change={setFilterHearthsStat} bind:group={hearths_period_type_Stat} value={1} checked={hearths_period_type_Stat === 1} id="hearths_period_type_Stat1" name="hearths_period_type_Stat"><label for="hearths_period_type_Stat1">Фильтрация по годам</label>
+					<div class="pLine margin">
+					{#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
+						<input type="checkbox" on:change={setFilterHearthsStat} id="hearths_year_Stat" checked={hearths_year_Stat[key]} disabled={hearths_period_type_Stat === 2} name="{key}"><label for="hearths_year_Stat">{key}</label>
+					{/each}
+					</div>
+				</div>
+				<div class="pLine type">
+				<input type="radio" on:change={setFilterHearthsStat} bind:group={hearths_period_type_Stat} value={2} id="hearths_period_type_Stat2" name="hearths_period_type_Stat"><label for="hearths_period_type_Stat2">Фильтрация по кварталам</label>
+					<div class="pLine margin">
+					{#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
+						{#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}
+							<input type="checkbox" on:change={setFilterHearthsStat} id="hearths_quarter_Stat" checked={hearths_quarter_Stat[key] && hearths_quarter_Stat[key][key1]} disabled={hearths_period_type_Stat === 1} name="{key}_{key1}"><label for="hearths_quarter_Stat_{key}_{key1}">{key1} кв. {key}</label>
+						{/each}
+						<br />
+					{/each}
+					</div>
+				</div>
+			</fieldset>
+			</div>
+			<div class="pLine">
+				<select class="multiple_icon_typeTmp" bind:value={str_icon_typeStat} on:change="{setFilterHearthsStat}" multiple>
+					<option value=''>
+						Все типы ({optTypeHearthsStatKeys.reduce((p, c) => { p += optDataHearthsStat.str_icon_type[c]; return p; }, 0)})
+					</option>
+					{#each optTypeHearthsStatKeys as key}
+						<option value={key} class="icon_type_{optDataHearthsStat.iconType[key]}">
+							{key} ({optDataHearthsStat.str_icon_type[key]})
+						</option>
+					{/each}
+				</select>
+			</div>
+			<div class="pLine">
+				<select bind:value={hearths_strickenStat} on:change="{setFilterHearthsStat}">
+					<option value=''>Очаги все</option>
+					<option value=1>Только с погибшими</option>
+					<option value=2>Только с пострадавшими</option>
+					<option value=3>С пострадавшими или погибшими</option>
+					<option value=4>С пострадавшими и погибшими</option>
+				</select>
+			</div>
+		</div>
+		{/if}
 
 		{#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги (TMP)</b></div>
@@ -303,7 +461,7 @@
 					<input type="radio" on:change={setFilterHearthsTmp} bind:group={hearths_period_type_tmp} value={1} checked={hearths_period_type_tmp === 1} id="hearths_period_type_tmp1" name="hearths_period_type_tmp"><label for="hearths_period_type_tmp1">Фильтрация по годам</label>
 					<div class="pLine margin">
 					{#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
-						<input type="checkbox" on:change={setFilterHearthsTmp} id="hearths_year_tmp" checked={hearths_year_tmp[key]} disabled={hearths_period_type_tmp === 2} name="{key}"><label for="hearths_year_tmp_{key}">{key}</label>
+						<input type="checkbox" on:change={setFilterHearthsTmp} id="hearths_year_tmp" checked={hearths_year_tmp[key]} disabled={hearths_period_type_tmp === 2} name="{key}"><label for="hearths_year_tmp">{key}</label>
 					{/each}
 					</div>
 				</div>
@@ -340,7 +498,7 @@
 						Все типы ({optTypeHearthsTmpKeys.reduce((p, c) => { p += optDataHearthsTmp.str_icon_type[c]; return p; }, 0)})
 					</option>
 					{#each optTypeHearthsTmpKeys as key}
-						<option value={key}>
+						<option value={key} class="icon_type_{optDataHearthsTmp.iconType[key]}">
 							{key} ({optDataHearthsTmp.str_icon_type[key]})
 						</option>
 					{/each}
@@ -358,33 +516,41 @@
 		</div>
 		{/if}
 
-
 		{#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}
+		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП Очаги</b></div>
 		<div class="filtersCont">
 			<div class="pLine nowrap">
-				<select bind:value={hearths_year} on:change="{setFilterHearths}">
-					<option value=''>Все года</option>
+			<fieldset>
+				<legend>Фильтрация по периодам:</legend>
+				<div class="pLine type">
+					<input type="radio" on:change={setFilterHearths} bind:group={hearths_period_type} value={1} checked={hearths_period_type === 1} id="hearths_period_type1" name="hearths_period_type"><label for="hearths_period_type1">Фильтрация по годам</label>
+					<div class="pLine margin">
 					{#each Object.keys(DtpHearths._opt.years).sort() as key}
-						<option value={key}>{key}</option>
+						<input type="checkbox" on:change={setFilterHearths} id="hearths_year" checked={hearths_year[key]} disabled={hearths_period_type === 2} name="{key}"><label for="hearths_year{key}">{key}</label>
 					{/each}
-				</select>
-
-				<select bind:value={hearths_quarter} on:change="{setFilterHearths}">
-					<option value=''>Все кварталы</option>
-					<option value=1>1 квартал</option>
-					<option value=2>2 квартал</option>
-					<option value=3>3 квартал</option>
-					<option value=4>4 квартал</option>
-				</select>
+					</div>
+				</div>
+				<div class="pLine type">
+				<input type="radio" on:change={setFilterHearths} bind:group={hearths_period_type} value={2} id="hearths_period_type2" name="hearths_period_type"><label for="hearths_period_type2">Фильтрация по кварталам</label>
+					<div class="pLine margin">
+					{#each Object.keys(DtpHearths._opt.years).sort() as key}
+						{#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}
+							<input type="checkbox" on:change={setFilterHearths} id="hearths_quarter" checked={hearths_quarter[key] && hearths_quarter[key][key1]} disabled={hearths_period_type === 1} name="{key}_{key1}"><label for="hearths_quarter_{key}_{key1}">{key1} кв. {key}</label>
+						{/each}
+						<br />
+					{/each}
+					</div>
+				</div>
+			</fieldset>
 			</div>
 			<div class="pLine">
-				<select bind:value={str_icon_type} on:change="{setFilterHearths}">
+				<select class="multiple_icon_typeTmp" bind:value={str_icon_type} on:change="{setFilterHearths}" multiple>
 					<option value=''>
 						Все типы ({optTypeHearthsKeys.reduce((p, c) => { p += optDataHearths.str_icon_type[c]; return p; }, 0)})
 					</option>
 					{#each optTypeHearthsKeys as key}
-						<option value={key}>
+						<option value={key} class="icon_type_{optDataHearths.iconType[key]}">
 							{key} ({optDataHearths.str_icon_type[key]})
 						</option>
 					{/each}
@@ -419,17 +585,21 @@
 		<div class="pLine">Фильтры - <b>ДТП Сводный</b></div>
 		<div class="filtersCont">
 			<div class="pLine"><input type="radio" id="d0" name="drone" value=0 checked on:click={oncheck}><label for="d0">Все</label></div>
+			{#if DtpVerifyed._arm}
+			<div class="pLine"><input type="radio" id="d1" name="drone" value=1 on:click={oncheck}><label for="d1">Только Пересечения ГИБДД и СКПДИ</label></div>
+			{:else}
 			<div class="pLine"><input type="radio" id="d1" name="drone" value=1 on:click={oncheck}><label for="d1">Только Пересечения</label></div>
 			<div class="pLine"><input type="radio" id="d2" name="drone" value="2" on:click={oncheck}><label for="d2">Только СКПДИ</label></div>
+			{/if}
 			<div class="pLine"><input type="radio" id="d3" name="drone" value="3" on:click={oncheck}><label for="d3">Только ГИБДД</label></div>
 			{#if optData.collision_type}
 			<div class="pLine">
-				<select bind:value={collision_type} on:change="{setFilter}">
+				<select class="multiple_icon_type" bind:value={collision_type} on:change="{setFilter}" multiple>
 					<option value=''>
 						Все типы ({optCollisionKeys.reduce((p, c) => { p += optData.collision_type[c]; return p; }, 0)})
 					</option>
 					{#each optCollisionKeys as key}
-						<option value={key}>
+						<option value={key} class="icon_type_{optData.iconType[key]}">
 							{key} ({optData.collision_type[key]})
 						</option>
 					{/each}
@@ -445,12 +615,12 @@
 		<div class="filtersCont">
 			{#if optDataSkpdi.collision_type}
 			<div class="pLine">
-				<select bind:value={collision_type_skpdi} on:change="{setFilterSkpdi}">
+				<select class="multiple_icon_type" bind:value={collision_type_skpdi} on:change="{setFilterSkpdi}" multiple>
 					<option value=''>
 						Все типы ({optCollisionSkpdiKeys.reduce((p, c) => { p += optDataSkpdi.collision_type[c]; return p; }, 0)})
 					</option>
 					{#each optCollisionSkpdiKeys as key}
-						<option value={key}>
+						<option value={key} class="icon_type_{optDataSkpdi.iconType[key]}">
 							{key} ({optDataSkpdi.collision_type[key]})
 						</option>
 					{/each}
@@ -466,12 +636,12 @@
 		<div class="filtersCont">
 			{#if optDataGibdd.collision_type}
 			<div class="pLine">
-				<select bind:value={collision_type_gibdd} on:change="{setFilterGibdd}">
+				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibdd}" multiple>
 					<option value=''>
 						Все типы ({optCollisionGibddKeys.reduce((p, c) => { p += optDataGibdd.collision_type[c]; return p; }, 0)})
 					</option>
 					{#each optCollisionGibddKeys as key}
-						<option value={key}>
+						<option value={key} class="icon_type_{optDataGibdd.iconType[key]}">
 							{key} ({optDataGibdd.collision_type[key]})
 						</option>
 					{/each}
@@ -483,15 +653,79 @@
 	  </div>
 
 <style>
-.multiple_icon_typeTmp option::before {
+
+.multiple_icon_typeTmp option:checked::before, .multiple_icon_type option:checked::before {
+	content: "\2611";
+}
+.multiple_icon_type option.icon_type_14::before,
+.multiple_icon_type option.icon_type_13::before,
+.multiple_icon_type option.icon_type_12::before,
+.multiple_icon_type option.icon_type_11::before,
+.multiple_icon_type option.icon_type_10::before,
+.multiple_icon_type option.icon_type_9::before,
+.multiple_icon_type option.icon_type_6::before,
+.multiple_icon_type option.icon_type_5::before,
+.multiple_icon_type option.icon_type_4::before,
+.multiple_icon_type option.icon_type_3::before,
+.multiple_icon_type option.icon_type_2::before,
+.multiple_icon_type option.icon_type_1::before {
+    background-color: #8B4513;
+}
+.multiple_icon_type option.icon_type_7::before, .multiple_icon_type option.icon_type_8::before {
+    background-color: #228B22;
+}
+.multiple_icon_type option.icon_type_15::before, .multiple_icon_type option.icon_type_16::before {
+    background-color: #7B68EE;
+}
+.multiple_icon_type option.icon_type_17::before, .multiple_icon_type option.icon_type_18::before {
+    background-color: #2F4F4F;
+}
+
+.multiple_icon_typeTmp option.icon_type_1::before, .multiple_icon_typeTmp option.icon_type_2::before {
+    background-color: #FFA500;
+}
+.multiple_icon_typeTmp option.icon_type_3::before, .multiple_icon_typeTmp option.icon_type_4::before {
+    background-color: #B8860B;
+}
+.multiple_icon_typeTmp option.icon_type_5::before, .multiple_icon_typeTmp option.icon_type_6::before {
+    background-color: #CD853F;
+}
+.multiple_icon_typeTmp option.icon_type_7::before, .multiple_icon_typeTmp option.icon_type_8::before {
+    background-color: #228B22;
+}
+.multiple_icon_typeTmp option.icon_type_9::before, .multiple_icon_typeTmp option.icon_type_10::before {
+    background-color: #FF8C00;
+}
+.multiple_icon_typeTmp option.icon_type_11::before, .multiple_icon_typeTmp option.icon_type_12::before {
+    background-color: #D2691E;
+}
+.multiple_icon_typeTmp option.icon_type_13::before, .multiple_icon_typeTmp option.icon_type_14::before {
+    background-color: #DEB887;
+}
+.multiple_icon_typeTmp option.icon_type_15::before, .multiple_icon_typeTmp option.icon_type_16::before {
+    background-color: #7B68EE;
+}
+.multiple_icon_typeTmp option.icon_type_17::before, .multiple_icon_typeTmp option.icon_type_18::before {
+    background-color: #2F4F4F;
+}
+.multiple_icon_typeTmp option.icon_type_19::before, .multiple_icon_typeTmp option.icon_type_20::before {
+    background-color: #FF0000;
+}
+.multiple_icon_typeTmp option::before, .multiple_icon_type option::before {
 	font-family: 'Font Awesome 5 Free';
 	content: "\2610";
 	width: 1.3em;
+	/*width: 12px;
+    height: 12px;
+    background-color: red;
+	*/
 	display: inline-block;
-	margin-left: 2px;
+	margin-right: 2px;
+    padding-left: 5px;
+    color: white;
 }
-.multiple_icon_typeTmp option:checked::before {
-	content: "\2611";
+.multiple_icon_typeTmp option {
+	/*margin-left: 22px;*/
 }
 
 .pLine select {

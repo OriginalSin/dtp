@@ -50,7 +50,7 @@ console.log('showDtpInfo ', ev);
 			  <td>{pt1.address}<br /><span class="link" on:click={() => {current = index;}}>подробнее</span>
 				{#if current === index}
 				<div class="win leaflet-popup-content-wrapper ">
-					<DtpPopup prp={pt1} />
+					<DtpPopup prp={pt1} closeMe={() => {current = null;}} />
 				</div>
 				{/if}
 
@@ -65,7 +65,7 @@ console.log('showDtpInfo ', ev);
 <style>
 .win {
     position: absolute;
-    right: -300px;
+    min-width: 280px;
     left: 360px;
     top: 76px;
 }

@@ -1,6 +1,3 @@
-// import 'leaflet-sidebar-v2';
-// import 'leaflet-sidebar-v2/style';
-
 import './GmxIcon';
 import './GmxCenter';
 import './FitCenter';
@@ -138,15 +135,16 @@ baseLayers.OpenStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{
 	maxNativeZoom: 18
 });
 
+DtpVerifyed._arm = {};
 let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
-	'ДТП Очаги(Stat)': DtpHearthsStat,
-	'ДТП Очаги(tmp)': DtpHearthsTmp,
-	'ДТП Очаги': DtpHearths,
+	'Очаги ГИБДД': DtpHearthsStat.addTo(map),
+	// 'ДТП Очаги(tmp)': DtpHearthsTmp,
+	// 'ДТП Очаги': DtpHearths,
 	'ДТП Сводный': DtpVerifyed,
-	'ДТП СКПДИ': DtpSkpdi,
+	// 'ДТП СКПДИ': DtpSkpdi,
 	'ДТП ГИБДД': DtpGibdd,
 	// polygon: L.polygon([[55.05, 37],[55.03, 41],[52.05, 41],[52.04, 37]], {color: 'red'})
 };

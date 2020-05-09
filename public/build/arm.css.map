@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "file": "main.css",
+  "file": "arm.css",
   "sources": [
     "..\\..\\DtpPopupGibdd.svelte",
     "..\\..\\DtpPopupHearths.svelte",

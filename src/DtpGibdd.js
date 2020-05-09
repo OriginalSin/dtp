@@ -38,7 +38,8 @@ DtpGibdd.setFilter = arg => {
 				cnt = 0;
 			argFilters.forEach(ft => {
 				if (ft.type === 'collision_type') {
-					if (prp.collision_type === ft.zn) {
+					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.collision_type).length) {
+					// if (prp.collision_type === ft.zn) {
 						cnt++;
 					}
 				} else if (ft.type === 'date') {
@@ -63,7 +64,7 @@ DtpGibdd.on('remove', () => {
 	fetch('https://dtp.mvs.group/scripts/index.php?request=get_stat_gipdd', {})
 		.then(req => req.json())
 		.then(json => {
-			let opt = {collision_type: {}};
+			let opt = {collision_type: {}, iconType: {}};
 			let arr = json.map(prp => {
 				let iconType = prp.iconType || 0,
 					stroke = false,
@@ -93,6 +94,8 @@ console.log('_______', prp);
 					cTypeCount++;
 				}
 				opt.collision_type[prp.collision_type] = cTypeCount;
+				opt.iconType[prp.collision_type] = iconType;
+
 				return new CirclePoint(L.latLng(prp.lat, prp.lon), {
 					props: prp,
 					radius: 6,
