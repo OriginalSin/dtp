@@ -1,6 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	export let DtpVerifyed;
+	export let DtpHearths5;
+	export let DtpHearths3;
 	export let DtpHearthsStat;
 	export let DtpHearthsTmp;
 	export let DtpHearths;
@@ -38,6 +40,12 @@
 
 	let optDataHearthsStat = DtpHearthsStat._opt || {};
 	let optTypeHearthsStatKeys = optDataHearthsStat.str_icon_type ? Object.keys(optDataHearthsStat.str_icon_type).sort((a, b) => optDataHearthsStat.str_icon_type[b] - optDataHearthsStat.str_icon_type[a]) : [];
+
+	let optDataHearths3 = DtpHearths3._opt || {};
+	let optTypeHearths3Keys = optDataHearths3.str_icon_type ? Object.keys(optDataHearths3.str_icon_type).sort((a, b) => optDataHearths3.str_icon_type[b] - optDataHearths3.str_icon_type[a]) : [];
+
+	let optDataHearths5 = DtpHearths5._opt || {};
+	let optTypeHearths5Keys = optDataHearths5.str_icon_type ? Object.keys(optDataHearths5.str_icon_type).sort((a, b) => optDataHearths5.str_icon_type[b] - optDataHearths5.str_icon_type[a]) : [];
 
 	let collision_type = [''];
 	let collision_type_skpdi = [''];
@@ -188,6 +196,148 @@
 		setFilter();
  // console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
 	};
+
+	// ДТП Очаги (5)
+	let hearths_stricken5;
+	let str_icon_type5 = [''];
+	let hearths_period_type_5 = 1;
+	let hearths_year_5 = {};
+	let hearths_quarter_5 = {};
+	let last_quarter_5;
+	Object.keys(optDataHearths5.years || {}).sort().forEach(key => {
+		hearths_year_5[key] = true;
+		Object.keys(optDataHearths5.years[key]).sort().forEach(key1 => {
+			last_quarter_5 = {};
+			last_quarter_5[key] = {};
+			last_quarter_5[key][key1] = true;
+		});
+	});
+	hearths_quarter_5 = last_quarter_5 || {};
+	// const setFilterHearthsTmpPeriodType = (ev) => {
+ // console.log('setFilterHearthsTmpPeriodType', hearths_period_type_tmp, ev)
+	// };
+
+    const setFilterHearths5 = (ev) => {
+		let arg = [],
+			target = ev.target || {},
+			checked = target.checked,
+			id = target.id,
+			name = target.name;
+		// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
+
+		if (id === 'hearths_period_type_52') {
+			hearths_period_type_5 = 2;
+		} else if (id === 'hearths_period_type_51') {
+			hearths_period_type_5 = 1;
+		} else if (id === 'hearths_year_5') {
+			if (checked) {
+				hearths_year_5[name] = true;
+			} else {
+				delete hearths_year_5[name];
+			}
+		} else if (id === 'hearths_quarter_5') {
+			let arr = name.split('_');
+			if (checked) {
+				if (!hearths_quarter_5[arr[0]]) { hearths_quarter_5[arr[0]] = {}; }
+				hearths_quarter_5[arr[0]][arr[1]] = true;
+			} else {
+				if (hearths_quarter_5[arr[0]]) {
+					delete hearths_quarter_5[arr[0]][arr[1]];
+				}
+				if (Object.keys(hearths_quarter_5[arr[0]]).length === 0) {
+					delete hearths_quarter_5[arr[0]];
+				}
+			}
+		}
+
+		if (hearths_period_type_5 === 1) {
+			// if (Object.keys(hearths_year_5).length) {
+				arg.push({type: 'year', zn: hearths_year_5});
+			// }
+		} else if (hearths_period_type_5 === 2) {
+		// } else if (Object.keys(hearths_quarter_5).length) {
+			arg.push({type: 'quarter', zn: hearths_quarter_5});
+		}
+		if (hearths_stricken5) {
+			arg.push({type: 'stricken', zn: Number(hearths_stricken5)});
+		}
+		if (str_icon_type5.length > 0 && str_icon_type5[0]) {
+			arg.push({type: 'str_icon_type', zn: str_icon_type5});
+		}
+		
+		DtpHearths5.setFilter(arg);
+ 	};
+
+	// ДТП Очаги (3)
+	let hearths_stricken3;
+	let str_icon_type3 = [''];
+	let hearths_period_type_3 = 1;
+	let hearths_year_3 = {};
+	let hearths_quarter_3 = {};
+	let last_quarter_3;
+	Object.keys(optDataHearths3.years || {}).sort().forEach(key => {
+		hearths_year_3[key] = true;
+		Object.keys(optDataHearths3.years[key]).sort().forEach(key1 => {
+			last_quarter_3 = {};
+			last_quarter_3[key] = {};
+			last_quarter_3[key][key1] = true;
+		});
+	});
+	hearths_quarter_3 = last_quarter_3 || {};
+	// const setFilterHearthsTmpPeriodType = (ev) => {
+ // console.log('setFilterHearthsTmpPeriodType', hearths_period_type_tmp, ev)
+	// };
+
+    const setFilterHearths3 = (ev) => {
+		let arg = [],
+			target = ev.target || {},
+			checked = target.checked,
+			id = target.id,
+			name = target.name;
+		// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
+
+		if (id === 'hearths_period_type_32') {
+			hearths_period_type_3 = 2;
+		} else if (id === 'hearths_period_type_31') {
+			hearths_period_type_3 = 1;
+		} else if (id === 'hearths_year_3') {
+			if (checked) {
+				hearths_year_3[name] = true;
+			} else {
+				delete hearths_year_3[name];
+			}
+		} else if (id === 'hearths_quarter_3') {
+			let arr = name.split('_');
+			if (checked) {
+				if (!hearths_quarter_3[arr[0]]) { hearths_quarter_3[arr[0]] = {}; }
+				hearths_quarter_3[arr[0]][arr[1]] = true;
+			} else {
+				if (hearths_quarter_3[arr[0]]) {
+					delete hearths_quarter_3[arr[0]][arr[1]];
+				}
+				if (Object.keys(hearths_quarter_3[arr[0]]).length === 0) {
+					delete hearths_quarter_3[arr[0]];
+				}
+			}
+		}
+
+		if (hearths_period_type_3 === 1) {
+			// if (Object.keys(hearths_year_3).length) {
+				arg.push({type: 'year', zn: hearths_year_3});
+			// }
+		} else if (hearths_period_type_3 === 2) {
+		// } else if (Object.keys(hearths_quarter_3).length) {
+			arg.push({type: 'quarter', zn: hearths_quarter_3});
+		}
+		if (hearths_stricken3) {
+			arg.push({type: 'stricken', zn: Number(hearths_stricken3)});
+		}
+		if (str_icon_type3.length > 0 && str_icon_type3[0]) {
+			arg.push({type: 'str_icon_type', zn: str_icon_type3});
+		}
+		
+		DtpHearths3.setFilter(arg);
+ 	};
 
 	// ДТП Очаги (Stat)
 	let hearths_strickenStat;
@@ -399,6 +549,86 @@
 </script>
 
 	  <div class="mvsFilters">
+
+		{#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}
+		<div class="pLine">Фильтры - <b>ДТП Очаги (5)</b></div>
+		<div class="filtersCont">
+			<div class="pLine nowrap">
+			<fieldset>
+				<legend>Фильтрация по периодам:</legend>
+				<div class="pLine type">
+					<input type="radio" on:change={setFilterHearths5} bind:group={hearths_period_type_5} value={1} checked={hearths_period_type_5 === 1} id="hearths_period_type_51" name="hearths_period_type_5"><label for="hearths_period_type_51">Фильтрация по годам</label>
+					<div class="pLine margin">
+					{#each Object.keys(DtpHearths5._opt.years).sort() as key}
+						<input type="checkbox" on:change={setFilterHearths5} id="hearths_year_5" checked={hearths_year_5[key]} disabled={hearths_period_type_5 === 2} name="{key}"><label for="hearths_year_5">{key}</label>
+					{/each}
+					</div>
+				</div>
+			</fieldset>
+			</div>
+			<div class="pLine">
+				<select class="multiple_icon_typeTmp" bind:value={str_icon_type5} on:change="{setFilterHearths5}" multiple>
+					<option value=''>
+						Все типы ({optTypeHearths5Keys.reduce((p, c) => { p += optDataHearths5.str_icon_type[c]; return p; }, 0)})
+					</option>
+					{#each optTypeHearths5Keys as key}
+						<option value={key} class="icon_type_{optDataHearths5.iconType[key]}">
+							{key} ({optDataHearths5.str_icon_type[key]})
+						</option>
+					{/each}
+				</select>
+			</div>
+			<div class="pLine">
+				<select bind:value={hearths_stricken5} on:change="{setFilterHearths5}">
+					<option value=''>Очаги все</option>
+					<option value=1>Только с погибшими</option>
+					<option value=2>Только с пострадавшими</option>
+					<option value=3>С пострадавшими или погибшими</option>
+					<option value=4>С пострадавшими и погибшими</option>
+				</select>
+			</div>
+		</div>
+		{/if}
+
+		{#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}
+		<div class="pLine">Фильтры - <b>ДТП Очаги (3)</b></div>
+		<div class="filtersCont">
+			<div class="pLine nowrap">
+			<fieldset>
+				<legend>Фильтрация по периодам:</legend>
+				<div class="pLine type">
+					<input type="radio" on:change={setFilterHearths3} bind:group={hearths_period_type_3} value={1} checked={hearths_period_type_3 === 1} id="hearths_period_type_31" name="hearths_period_type_3"><label for="hearths_period_type_31">Фильтрация по годам</label>
+					<div class="pLine margin">
+					{#each Object.keys(DtpHearths3._opt.years).sort() as key}
+						<input type="checkbox" on:change={setFilterHearths3} id="hearths_year_3" checked={hearths_year_3[key]} disabled={hearths_period_type_3 === 2} name="{key}"><label for="hearths_year_3">{key}</label>
+					{/each}
+					</div>
+				</div>
+			</fieldset>
+			</div>
+			<div class="pLine">
+				<select class="multiple_icon_typeTmp" bind:value={str_icon_type3} on:change="{setFilterHearths3}" multiple>
+					<option value=''>
+						Все типы ({optTypeHearths3Keys.reduce((p, c) => { p += optDataHearths3.str_icon_type[c]; return p; }, 0)})
+					</option>
+					{#each optTypeHearths3Keys as key}
+						<option value={key} class="icon_type_{optDataHearths3.iconType[key]}">
+							{key} ({optDataHearths3.str_icon_type[key]})
+						</option>
+					{/each}
+				</select>
+			</div>
+			<div class="pLine">
+				<select bind:value={hearths_stricken3} on:change="{setFilterHearths3}">
+					<option value=''>Очаги все</option>
+					<option value=1>Только с погибшими</option>
+					<option value=2>Только с пострадавшими</option>
+					<option value=3>С пострадавшими или погибшими</option>
+					<option value=4>С пострадавшими и погибшими</option>
+				</select>
+			</div>
+		</div>
+		{/if}
 
 		{#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги (Stat)</b></div>

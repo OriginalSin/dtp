@@ -17,7 +17,7 @@ console.log('showDtpInfo ', ev);
 </script>
 	<div class="mvsPopup">
 		<div class="pLine">Очаг ДТП (id: {prp.id})</div>
-		<div class="pLine">{prp.quarter} кв. {prp.year}г.</div>
+		<div class="pLine">{prp.quarter ? prp.quarter + ' кв.': ''} {prp.year}г.</div>
 		<div class="featureCont">
 		  <table class="table">
 			<tbody>
@@ -76,7 +76,7 @@ span.link {
     margin-top: 6px;
 }
 .mvsPopup {
-    min-width: 220px;
+    min-width: 260px;
 }
 .mvsPopup li {
     cursor: pointer;

@@ -105,13 +105,14 @@ L.Control.GmxIcon = L.Control.extend({
             }
         };
         var stop = L.DomEvent.stopPropagation;
+        var prevent = L.DomEvent.preventDefault;
         L.DomEvent
-            // .on(this._iconClick, 'click', stop)
+            // .on(this._iconClick, 'click', prevent)
             .on(container, 'mousemove', stop)
             .on(container, 'touchstart', stop)
             .on(container, 'mousedown', stop)
             .on(container, 'dblclick', stop)
-            // .on(container, 'click', stop)
+            .on(container, 'click', stop)
             .on(container, 'click', this._iconClick, this);
         if (options.onAdd) {
             options.onAdd(this);

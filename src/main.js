@@ -13,6 +13,8 @@ import DtpVerifyedFilters from './DtpVerifyedFilters.svelte';
 import {DtpHearths} from './DtpHearths';
 import {DtpHearthsTmp} from './DtpHearthsTmp';
 import {DtpHearthsStat} from './DtpHearthsStat';
+import {DtpHearths3} from './DtpHearths3';
+import {DtpHearths5} from './DtpHearths5';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -28,6 +30,10 @@ const map = L.map(document.body, {
 	distanceUnit: 'auto',
 	squareUnit: 'auto',
 });
+map
+	.on('zoomend', () => {
+		map._crpx = 0;
+	});
 
 var corners = map._controlCorners,
 	parent = map._controlContainer,
@@ -142,6 +148,8 @@ let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
+	'ДТП Очаги(5)': DtpHearths5,
+	'ДТП Очаги(3)': DtpHearths3,
 	'ДТП Очаги(Stat)': DtpHearthsStat,
 	'ДТП Очаги(tmp)': DtpHearthsTmp,
 	'ДТП Очаги': DtpHearths,
@@ -182,6 +190,8 @@ let filtersControl = L.control.gmxIcon({
 				props: {
 					DtpGibdd: DtpGibdd,
 					DtpSkpdi: DtpSkpdi,
+					DtpHearths5: DtpHearths5,
+					DtpHearths3: DtpHearths3,
 					DtpHearthsStat: DtpHearthsStat,
 					DtpHearthsTmp: DtpHearthsTmp,
 					DtpHearths: DtpHearths,
@@ -199,6 +209,121 @@ let filtersControl = L.control.gmxIcon({
 
 }).addTo(map);
 
+const distVincenty = (latlng1, latlng2) => {
+	var rd = Math.PI / 180.0,
+		p1 = { lon: rd * latlng1.lng, lat: rd * latlng1.lat },
+		p2 = { lon: rd * latlng2.lng, lat: rd * latlng2.lat },
+		a = 6378137,
+		b = 6356752.3142,
+		f = 1 / 298.257223563;  // WGS-84 ellipsiod
+
+	var L1 = p2.lon - p1.lon,
+		U1 = Math.atan((1 - f) * Math.tan(p1.lat)),
+		U2 = Math.atan((1 - f) * Math.tan(p2.lat)),
+		sinU1 = Math.sin(U1), cosU1 = Math.cos(U1),
+		sinU2 = Math.sin(U2), cosU2 = Math.cos(U2),
+		lambda = L1,
+		lambdaP = 2 * Math.PI,
+		iterLimit = 20;
+	while (Math.abs(lambda - lambdaP) > 1e-12 && --iterLimit > 0) {
+			var sinLambda = Math.sin(lambda), cosLambda = Math.cos(lambda),
+				sinSigma = Math.sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) +
+				(cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
+			if (sinSigma === 0) { return 0; }
+			var cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambda,
+				sigma = Math.atan2(sinSigma, cosSigma),
+				sinAlpha = cosU1 * cosU2 * sinLambda / sinSigma,
+				cosSqAlpha = 1 - sinAlpha * sinAlpha,
+				cos2SigmaM = cosSigma - 2 * sinU1 * sinU2 / cosSqAlpha;
+			if (isNaN(cos2SigmaM)) { cos2SigmaM = 0; }
+			var C = f / 16 * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
+			lambdaP = lambda;
+			lambda = L1 + (1 - C) * f * sinAlpha *
+				(sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+	}
+	if (iterLimit === 0) { return NaN; }
+
+	var uSq = cosSqAlpha * ((a * a) / (b * b) - 1),
+		A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq))),
+		B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq))),
+		deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 * (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) -
+			B / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM))),
+		s = b * A * (sigma - deltaSigma);
+
+	//s = s.toFixed(3);
+	return s;
+};
+
+const getLatLngsLength = (latlngs) => {
+	latlngs = latlngs || [];
+	let	dist = 0,
+		latlng = latlngs[0];
+	latlngs.forEach( it => {
+		dist += distVincenty(it, latlng);
+		latlng = it;
+	});
+	return dist;
+};
+
+map.pm.setLang('customName', {
+	tooltips: {
+		finishLine: 'Щелкните любой существующий маркер для завершения',
+	}
+}, 'ru');
+map.pm.setLang('ru');
+
+let isMeasureActive, lineActionNode;
+map
+.on('pm:create', (ev) => {
+	map.removeLayer(ev.layer);
+	measureControl.setActive(false);
+})
+.on('pm:drawstart', (ev) => {
+	let workingLayer =  ev.workingLayer;
+	if (ev.shape === 'Line') {
+		let _hintMarker = map.pm.Draw.Line._hintMarker;
+		if (_hintMarker) {
+			_hintMarker.on('move', function(e) {
+				var latlngs = workingLayer.getLatLngs();
+				if (latlngs.length) {
+					var	dist = getLatLngsLength(latlngs),
+						last = distVincenty(latlngs[latlngs.length - 1], e.latlng);
+
+					dist += last;
+					var distStr = dist > 1000 ? (dist  / 1000).toFixed(2) + ' км' : Math.ceil(dist) + ' м';
+					var lastStr = last > 1000 ? (last  / 1000).toFixed(2) + ' км' : Math.ceil(last) + ' м';
+
+				  _hintMarker._tooltip.setContent('Отрезок <b>(' + lastStr + ')</b>участка <b>(' + distStr + ')</b>')
+				}
+			});
+		}
+		if (isMeasureActive && ev.target.pm.Toolbar.buttons.drawPolyline.buttonsDomNode) {
+			lineActionNode = ev.target.pm.Toolbar.buttons.drawPolyline.buttonsDomNode.children[1];
+			lineActionNode.style.display = 'none';
+		}
+	}
+});
+
+let measureControl = L.control.gmxIcon({
+  id: 'measure',
+  className: 'leaflet-bar',
+  togglable: true,
+  title: 'Включить/Отключить режим измерения расстояний'
+})
+.on('statechange', function (ev) {
+	isMeasureActive = ev.target.options.isActive;
+	// ev.stopPropagation();
+	// L.DomEvent.stopPropagation(ev);
+	if (isMeasureActive) {
+		map.pm.enableDraw('Line', { finishOn: 'dblclick' });
+	} else {
+		map.pm.disableDraw('Line');
+		if (lineActionNode) {
+			lineActionNode.style.display = '';
+		}
+	}
+}).addTo(map);
+
 const refreshFilters = () => {
 	setTimeout(() => {
 		if (filtersControl.options.isActive) {
@@ -213,6 +338,8 @@ DtpSkpdi._refreshFilters =
 DtpVerifyed._refreshFilters =
 DtpHearths._refreshFilters =
 DtpHearthsStat._refreshFilters =
+DtpHearths3._refreshFilters =
+DtpHearths5._refreshFilters =
 DtpHearthsTmp._refreshFilters = refreshFilters;
 
 const eventsStr = 'remove';
@@ -222,6 +349,8 @@ DtpVerifyed.on(eventsStr, refreshFilters);
 DtpHearths.on(eventsStr, refreshFilters);
 DtpHearthsTmp.on(eventsStr, refreshFilters);
 DtpHearthsStat.on(eventsStr, refreshFilters);
+DtpHearths3.on(eventsStr, refreshFilters);
+DtpHearths5.on(eventsStr, refreshFilters);
 
 // var sidebar = L.control.sidebar({
     // autopan: false,       // whether to maintain the centered map point when opening the sidebar
