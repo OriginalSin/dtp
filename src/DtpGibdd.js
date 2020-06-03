@@ -26,12 +26,21 @@ const setPopup = function (id) {
 
 // let renderer = L.canvas();
 export const DtpGibdd = L.featureGroup([]);
+DtpGibdd.checkZoom = z => {
+	if (Object.keys(DtpGibdd._layers).length) {
+		if (z < 12) {
+			DtpGibdd.setFilter(argFilters);
+		}
+	} else if (z > 11) {
+		DtpGibdd.setFilter(argFilters);
+	}
+};
 DtpGibdd.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
 	DtpGibdd.clearLayers();
 	argFilters = arg;
 
-	let arr = [];
+	let arr = [], heat = [];
 	if (DtpGibdd._group) {
 		DtpGibdd._group.getLayers().forEach(it => {
 			let prp = it.options.props,
@@ -50,17 +59,41 @@ DtpGibdd.setFilter = arg => {
 			});
 			if (cnt === argFilters.length) {
 				arr.push(it);
+				heat.push(it._latlng);
 			}
 		});
-		DtpGibdd.addLayer(L.layerGroup(arr));
+		if (DtpGibdd._needHeat) {
+			DtpGibdd._map.addLayer(DtpGibdd._heat);
+			DtpGibdd._heat.setLatLngs(heat);
+			DtpGibdd._heat.setOptions(DtpGibdd._needHeat);
+			if (DtpGibdd._map._zoom > 11) {
+				DtpGibdd.addLayer(L.layerGroup(arr));
+			}
+		} else {
+			DtpGibdd.addLayer(L.layerGroup(arr));
+			DtpGibdd._map.removeLayer(DtpGibdd._heat);
+		}
+
 	}
 };
 
-DtpGibdd.on('remove', () => {
+DtpGibdd.on('remove', (ev) => {
+	DtpGibdd._needHeat = null;
+	DtpGibdd._map.removeLayer(DtpGibdd._heat);
 	DtpGibdd.clearLayers();
 }).on('add', ev => {
 	// console.log('/static/data/dtpskpdi.geojson', ev);
-	
+	DtpGibdd._heat = L.heatLayer([], {
+		// blur: 50,
+		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
+	});
+	// DtpGibdd._heat = L.heatLayer([], {radius: 25});
+	// var heat = L.heatLayer([
+	// [50.5, 30.5, 0.2], // lat, lng, intensity
+	// [50.6, 30.4, 0.5],
+	// ...
+// ], {radius: 25}).addTo(map);
+
 	fetch('https://dtp.mvs.group/scripts/index.php?request=get_stat_gipdd', {})
 		.then(req => req.json())
 		.then(json => {
@@ -107,7 +140,7 @@ console.log('_______', prp);
 						setPopup(ev.target.options.props.id);
 						// console.log('popupopen', ev);
 					}).on('popupclose', (ev) => {
-						console.log('popupclose', ev);
+						// console.log('popupclose', ev);
 						// ev.popup.setContent('');
 						if (ev.popup._svObj) {
 							ev.popup._svObj.$destroy();

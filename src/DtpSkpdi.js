@@ -28,12 +28,21 @@ const setPopup = function (id) {
 }
 
 export const DtpSkpdi = L.featureGroup([]);
+DtpSkpdi.checkZoom = z => {
+	if (Object.keys(DtpSkpdi._layers).length) {
+		if (z < 12) {
+			DtpSkpdi.setFilter(argFilters);
+		}
+	} else if (z > 11) {
+		DtpSkpdi.setFilter(argFilters);
+	}
+};
 DtpSkpdi.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
 	DtpSkpdi.clearLayers();
 	argFilters = arg;
 
-	let arr = [];
+	let arr = [], heat = [];
 	if (DtpSkpdi._group) {
 		DtpSkpdi._group.getLayers().forEach(it => {
 			let prp = it.options.props,
@@ -52,16 +61,31 @@ DtpSkpdi.setFilter = arg => {
 			});
 			if (cnt === argFilters.length) {
 				arr.push(it);
+				heat.push(it._latlng);
 			}
 		});
-		DtpSkpdi.addLayer(L.layerGroup(arr));
+		// DtpSkpdi.addLayer(L.layerGroup(arr));
+		if (DtpSkpdi._needHeat) {
+			DtpSkpdi._map.addLayer(DtpSkpdi._heat);
+			DtpSkpdi._heat.setLatLngs(heat);
+			DtpSkpdi._heat.setOptions(DtpSkpdi._needHeat);
+			if (DtpSkpdi._map._zoom > 11) {
+				DtpSkpdi.addLayer(L.layerGroup(arr));
+			}
+		} else {
+			DtpSkpdi.addLayer(L.layerGroup(arr));
+			DtpSkpdi._map.removeLayer(DtpSkpdi._heat);
+		}
 	}
 };
 
 DtpSkpdi.on('remove', () => {
+	DtpSkpdi._needHeat = null;
+	DtpSkpdi._map.removeLayer(DtpSkpdi._heat);
 	DtpSkpdi.clearLayers();
 }).on('add', ev => {
 	// console.log('/static/data/dtpskpdi.geojson', ev);
+	DtpSkpdi._heat = L.heatLayer([]);
 	
 	fetch('https://dtp.mvs.group/scripts/index.php?request=get_skpdi', {})
 	// fetch('https://dtp.mvs.group/static/data/json_stat.json', {})

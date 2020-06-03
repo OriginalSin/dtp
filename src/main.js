@@ -30,10 +30,6 @@ const map = L.map(document.body, {
 	distanceUnit: 'auto',
 	squareUnit: 'auto',
 });
-map
-	.on('zoomend', () => {
-		map._crpx = 0;
-	});
 
 var corners = map._controlCorners,
 	parent = map._controlContainer,
@@ -58,32 +54,7 @@ for (var key in classNames) {
 
 map.addControl(L.control.gmxCenter())
 	.addControl(L.control.fitCenter());
-/*
-var cfg = {
-	// radius should be small ONLY if scaleRadius is true (or small radius is intended)
-	// "radius": 2,
-	"radius": 15,
-	// "radius": 5,
-	"maxOpacity": .8, 
-	// scales the radius based on map zoom
-	// "scaleRadius": true, 
-	// if set to false the heatmap uses the global maximum for colorization
-	// if activated: uses the data maximum within the current map boundaries 
-	//   (there will always be a red spot with useLocalExtremas true)
-	"useLocalExtrema": true,
-	// which field name in your data represents the latitude - default "lat"
-	latField: 'lat',
-	// which field name in your data represents the longitude - default "lng"
-	lngField: 'lng',
-	// which field name in your data represents the data value - default "value"
-	valueField: 'count'
-};
 
-var heatmapLayer = new HeatmapOverlay(cfg);
-// heatmapLayer.setData(testData);
-// map.addLayer(heatmapLayer);
-DtpVerifyed._heat = heatmapLayer;
-*/
 var Mercator = L.TileLayer.extend({
 	options: {
 		tilesCRS: L.CRS.EPSG3395
@@ -174,7 +145,7 @@ let filtersControl = L.control.gmxIcon({
   title: 'Фильтры'
 })
 .on('statechange', function (ev) {
-	console.log({filtersIcon: ev.target.options.isActive});
+	// console.log({filtersIcon: ev.target.options.isActive});
 	let target = ev.target,
 		cont = target._container,
 		cont1 = target._win,
@@ -352,11 +323,19 @@ DtpHearthsStat.on(eventsStr, refreshFilters);
 DtpHearths3.on(eventsStr, refreshFilters);
 DtpHearths5.on(eventsStr, refreshFilters);
 
-// var sidebar = L.control.sidebar({
-    // autopan: false,       // whether to maintain the centered map point when opening the sidebar
-    // closeButton: true,    // whether t add a close button to the panes
-    // container: 'sidebar', // the DOM container or #ID of a predefined sidebar container that should be used
-    // position: 'left',     // left or right
-// }).addTo(map);
+map
+	.on('zoomend', (ev) => {
+		map._crpx = 0;
+// console.log('zoomend ', ev, map._zoom);
+		if (DtpVerifyed._map) {
+			DtpVerifyed.checkZoom(map._zoom);
+		}
+		if (DtpSkpdi._map) {
+			DtpSkpdi.checkZoom(map._zoom);
+		}
+		if (DtpGibdd._map) {
+			DtpGibdd.checkZoom(map._zoom);
+		}
+	});
 
 export default map;

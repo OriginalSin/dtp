@@ -342,3 +342,7 @@ button:focus {
 .leaflet-map-pane .leaflet-overlay-pane canvas {
     /* z-index: 500; */
 }
+.leaflet-map-pane canvas.leaflet-heatmap-layer {
+	pointer-events: none;
+	z-index: 99;
+}

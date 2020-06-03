@@ -22,13 +22,23 @@ const setPopup = function (props) {
 
 // let renderer = L.canvas();
 export const DtpVerifyed = L.featureGroup([]);
+DtpVerifyed.checkZoom = z => {
+	if (Object.keys(DtpVerifyed._layers).length) {
+		if (z < 12) {
+			DtpVerifyed.setFilter(argFilters);
+		}
+	} else if (z > 11) {
+		DtpVerifyed.setFilter(argFilters);
+	}
+};
+
 DtpVerifyed.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
 	DtpVerifyed.clearLayers();
 	// DtpVerifyed._heatData = [];
 	argFilters = arg;
 
-	let arr = [];
+	let arr = [], heat = [];
 	if (DtpVerifyed._group) {
 		DtpVerifyed._group.getLayers().forEach(it => {
 			let prp = it.options.props,
@@ -57,20 +67,30 @@ DtpVerifyed.setFilter = arg => {
 			});
 			if (cnt === argFilters.length) {
 				arr.push(it);
-				// DtpVerifyed._heatData.push({lat: prp.lat, lng: prp.lon, count: prp.iconType});
+				heat.push(it._latlng);
 			}
 		});
-		DtpVerifyed.addLayer(L.layerGroup(arr));
-		// DtpVerifyed._heat.setData({
-			// max: 8,
-			// data: DtpVerifyed._heatData
-		// });
+		// DtpVerifyed.addLayer(L.layerGroup(arr));
+		if (DtpVerifyed._needHeat) {
+			DtpVerifyed._map.addLayer(DtpVerifyed._heat);
+			DtpVerifyed._heat.setLatLngs(heat);
+			DtpVerifyed._heat.setOptions(DtpVerifyed._needHeat);
+			if (DtpVerifyed._map._zoom > 11) {
+				DtpVerifyed.addLayer(L.layerGroup(arr));
+			}
+		} else {
+			DtpVerifyed.addLayer(L.layerGroup(arr));
+			DtpVerifyed._map.removeLayer(DtpVerifyed._heat);
+		}
 	}
 };
 
 DtpVerifyed.on('remove', () => {
+	DtpVerifyed._needHeat = null;
+	DtpVerifyed._map.removeLayer(DtpVerifyed._heat);
 	DtpVerifyed.clearLayers();
 }).on('add', ev => {
+	DtpVerifyed._heat = L.heatLayer([], {interactive: false});
 	fetch('https://dtp.mvs.group/scripts/index.php?request=get_collision', {})
 		.then(req => req.json())
 		.then(json => {
