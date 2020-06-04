@@ -22,6 +22,7 @@ const setPopup = function (props) {
 
 // let renderer = L.canvas();
 export const DtpVerifyed = L.featureGroup([]);
+DtpVerifyed._needHeat = {radius: 19, blur: 11.26, minOpacity: 0.34};
 DtpVerifyed.checkZoom = z => {
 	if (Object.keys(DtpVerifyed._layers).length) {
 		if (z < 12) {
@@ -35,8 +36,7 @@ DtpVerifyed.checkZoom = z => {
 DtpVerifyed.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
 	DtpVerifyed.clearLayers();
-	// DtpVerifyed._heatData = [];
-	argFilters = arg;
+	argFilters = arg || [];
 
 	let arr = [], heat = [];
 	if (DtpVerifyed._group) {
@@ -86,7 +86,7 @@ DtpVerifyed.setFilter = arg => {
 };
 
 DtpVerifyed.on('remove', () => {
-	DtpVerifyed._needHeat = null;
+	// DtpVerifyed._needHeat = null;
 	DtpVerifyed._map.removeLayer(DtpVerifyed._heat);
 	DtpVerifyed.clearLayers();
 }).on('add', ev => {
@@ -96,6 +96,7 @@ DtpVerifyed.on('remove', () => {
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};
 			// DtpVerifyed._heatData = [];
+			let heat = [];
 			let arr = json.map(prp => {
 				let iconType = prp.iconType || 0,
 					cur = [],
@@ -137,7 +138,10 @@ console.log('_______', prp);
 				opt.collision_type[prp.collision_type] = cTypeCount;
 				opt.iconType[prp.collision_type] = iconType;
 
-				return new CirclePoint(L.latLng(prp.lat, prp.lon), {
+				let latLng = L.latLng(prp.lat, prp.lon);
+				heat.push(latLng);
+
+				return new CirclePoint(latLng, {
 					props: prp,
 					radius: 6,
 					triangle: cur.length > 1 ? true : false,
@@ -159,7 +163,10 @@ console.log('_______', prp);
 					}
 				});
 			});
-			
+			DtpVerifyed.addLayer(DtpVerifyed._heat);
+			DtpVerifyed._heat.setLatLngs(heat);
+			DtpVerifyed._heat.setOptions(DtpVerifyed._needHeat);
+
 			DtpVerifyed._opt = opt;
 			DtpVerifyed._group = L.layerGroup(arr);
 			if (argFilters) {
@@ -167,14 +174,8 @@ console.log('_______', prp);
 			} else {
 				DtpVerifyed.addLayer(DtpVerifyed._group);
 			}
+			DtpVerifyed.checkZoom(DtpVerifyed._map._zoom);
 			DtpVerifyed._refreshFilters();
-			// DtpVerifyed._heat.setData({
-				// max: 8,
-				// data: DtpVerifyed._heatData
-			// });
-			// if (!DtpVerifyed._heat._map) {
-				// DtpVerifyed._map.addLayer(DtpVerifyed._heat);
-			// }
 		});
 });
 

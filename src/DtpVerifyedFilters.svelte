@@ -53,70 +53,39 @@
 	let beg;
 	let end;
 
-	let heat;
+	let heat = {radius: 19, blur: 11.26, minOpacity: 0.34};
 	let heatName;
-	let radius = 19; // 25;
+	let radius = heat.radius; // 25;
 	let blur = 11.26; // 15;
 	let minOpacity = 0.34; // 0.05;
+	let heatElement;
 	let heatElementDtpGibdd;
 	let heatElementDtpSkpdi;
 	let heatElementDtpVerifyed;
 
 	const setHeat = (ev) => {
-		let oldHeatName;
-		if (ev) {
-			let target = ev.target;
-			// if (heatName) {
-// console.log('dss', target.value);
-			// }
-			heat = target.checked;
-			oldHeatName = heatName;
-			heatName = target.value;
-		}
-		if (heat) {
-			heat = {radius: radius, blur: blur, minOpacity: minOpacity}
-		}
-		if (heatName === 'DtpGibdd') {
-			DtpGibdd._needHeat = heat;
-			setFilterGibdd();
-			DtpSkpdi._needHeat = DtpVerifyed._needHeat = null;
-			if (heatElementDtpSkpdi) heatElementDtpSkpdi.checked = false;
-			if (heatElementDtpVerifyed) heatElementDtpVerifyed.checked = false;
-		} else if (heatName === 'DtpSkpdi') {
-			DtpSkpdi._needHeat = heat;
-			setFilterSkpdi();
-			DtpGibdd._needHeat = DtpVerifyed._needHeat = null;
-			if (heatElementDtpGibdd) heatElementDtpGibdd.checked = false;
-			if (heatElementDtpVerifyed) heatElementDtpVerifyed.checked = false;
-		} else if (heatName === 'DtpVerifyed') {
-			DtpVerifyed._needHeat = heat;
-			setFilter();
-			DtpGibdd._needHeat = DtpSkpdi._needHeat = null;
-			if (heatElementDtpGibdd) heatElementDtpGibdd.checked = false;
-			if (heatElementDtpSkpdi) heatElementDtpSkpdi.checked = false;
-		}
-// console.log('dss', oldHeatName);
-		if (oldHeatName === 'DtpGibdd') { setFilterGibdd(); }
-		else if (oldHeatName === 'DtpSkpdi') { setFilterSkpdi(); }
-		else if (oldHeatName === 'DtpVerifyed') { setFilter(); }
+		let target = ev.target;
+
+		DtpGibdd._needHeat = DtpSkpdi._needHeat = DtpVerifyed._needHeat = target.checked ? heat : false;
+		setFilterGibdd();
+		// DtpSkpdi._needHeat = _needHeat;
+		setFilterSkpdi();
+		// DtpVerifyed._needHeat = _needHeat;
+		setFilter();
 	};
 	const setMinOpacity = () => {
-		// setHeat();
 		let opt = {radius: radius, blur: blur, minOpacity: minOpacity};
-		if (heatName === 'DtpGibdd') {
+		if (DtpGibdd._heat) {
+			DtpGibdd._heat.setOptions(opt);
+		}
+		if (DtpSkpdi._heat) {
 			DtpSkpdi._heat.setOptions(opt);
-		} else if (heatName === 'DtpSkpdi') {
-			DtpSkpdi._heat.setOptions(opt);
-		} else if (heatName === 'DtpVerifyed') {
+		}
+		if (DtpVerifyed._heat) {
 			DtpVerifyed._heat.setOptions(opt);
 		}
 	};
-	const setBlur = () => {
-		setHeat();
-	};
-	const setRadius = () => {
-		setHeat();
-	};
+
 	const setFilter = () => {
 		let opt = [
 			{type: 'itemType', zn: currentFilter}
@@ -883,7 +852,10 @@
 				<label>
 					<input bind:value={blur} on:input={setMinOpacity} type="range" min="0" max="15" step="0.01" disabled={!heat}><span>Размытие ({blur})</span>
 				</label>
-		</div>
+			</div>
+			<div class="pLine">
+				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked name="heat"><label for="heat"> - тепловая карта</label>
+			</div>
 		{:else if !DtpHearths._map && !DtpHearthsTmp._map}
 			<div class="pLine">Нет включенных слоев</div>
 		{/if}
@@ -891,9 +863,6 @@
 		{#if DtpVerifyed._map}
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП Сводный</b></div>
-			<div class="pLine">
-				<input type="checkbox" bind:this={heatElementDtpVerifyed} on:change={setHeat} value="DtpVerifyed" name="heatDtpVerifyed"><label for="heatDtpVerifyed"> - тепловая карта</label>
-			</div>
 		<div class="filtersCont">
 			<div class="pLine"><input type="radio" id="d0" name="drone" value=0 checked on:click={oncheck}><label for="d0">Все</label></div>
 			{#if DtpVerifyed._arm}
@@ -924,9 +893,6 @@
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП СКПДИ</b></div>
 		<div class="filtersCont">
-			<div class="pLine">
-				<input type="checkbox" bind:this={heatElementDtpSkpdi} on:change={setHeat} value="DtpSkpdi" name="heatDtpSkpdi"><label for="heatDtpSkpdi"> - тепловая карта</label>
-			</div>
 			{#if optDataSkpdi.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_skpdi} on:change="{setFilterSkpdi}" multiple>
@@ -948,9 +914,6 @@
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП ГИБДД</b></div>
 		<div class="filtersCont">
-			<div class="pLine">
-				<input type="checkbox" bind:this={heatElementDtpGibdd} on:change={setHeat} value="DtpGibdd" name="heatDtpGibdd"><label for="heatDtpGibdd"> - тепловая карта</label>
-			</div>
 			{#if optDataGibdd.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibdd}" multiple>

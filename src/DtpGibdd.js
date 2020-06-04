@@ -26,6 +26,7 @@ const setPopup = function (id) {
 
 // let renderer = L.canvas();
 export const DtpGibdd = L.featureGroup([]);
+DtpGibdd._needHeat = {radius: 19, blur: 11.26, minOpacity: 0.34};
 DtpGibdd.checkZoom = z => {
 	if (Object.keys(DtpGibdd._layers).length) {
 		if (z < 12) {
@@ -38,7 +39,7 @@ DtpGibdd.checkZoom = z => {
 DtpGibdd.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
 	DtpGibdd.clearLayers();
-	argFilters = arg;
+	argFilters = arg || [];
 
 	let arr = [], heat = [];
 	if (DtpGibdd._group) {
@@ -78,7 +79,7 @@ DtpGibdd.setFilter = arg => {
 };
 
 DtpGibdd.on('remove', (ev) => {
-	DtpGibdd._needHeat = null;
+	// DtpGibdd._needHeat = null;
 	DtpGibdd._map.removeLayer(DtpGibdd._heat);
 	DtpGibdd.clearLayers();
 }).on('add', ev => {
@@ -87,17 +88,12 @@ DtpGibdd.on('remove', (ev) => {
 		// blur: 50,
 		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
 	});
-	// DtpGibdd._heat = L.heatLayer([], {radius: 25});
-	// var heat = L.heatLayer([
-	// [50.5, 30.5, 0.2], // lat, lng, intensity
-	// [50.6, 30.4, 0.5],
-	// ...
-// ], {radius: 25}).addTo(map);
 
 	fetch('https://dtp.mvs.group/scripts/index.php?request=get_stat_gipdd', {})
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};
+			let heat = [];
 			let arr = json.map(prp => {
 				let iconType = prp.iconType || 0,
 					stroke = false,
@@ -129,7 +125,10 @@ console.log('_______', prp);
 				opt.collision_type[prp.collision_type] = cTypeCount;
 				opt.iconType[prp.collision_type] = iconType;
 
-				return new CirclePoint(L.latLng(prp.lat, prp.lon), {
+				let latLng = L.latLng(prp.lat, prp.lon);
+				heat.push(latLng);
+
+				return new CirclePoint(latLng, {
 					props: prp,
 					radius: 6,
 					// box: true,
@@ -148,12 +147,21 @@ console.log('_______', prp);
 						}
 					});
 			});
+			// let out = {arr: arr, heat: heat, opt: opt};
+			// target._data = out;
+			// return out;
+			// if (target._heat) {
+				DtpGibdd.addLayer(DtpGibdd._heat);
+				DtpGibdd._heat.setLatLngs(heat);
+				DtpGibdd._heat.setOptions(DtpGibdd._needHeat);
+			// }
 
 			DtpGibdd._opt = opt;
 			DtpGibdd._group = L.layerGroup(arr);
+
 			if (argFilters) {
 				DtpGibdd.setFilter(argFilters);
-			} else {
+			} else if (DtpGibdd._map._zoom > 11) {
 				DtpGibdd.addLayer(DtpGibdd._group);
 			}
 			DtpGibdd._refreshFilters();

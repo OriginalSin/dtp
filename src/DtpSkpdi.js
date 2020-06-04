@@ -28,6 +28,7 @@ const setPopup = function (id) {
 }
 
 export const DtpSkpdi = L.featureGroup([]);
+DtpSkpdi._needHeat = {radius: 19, blur: 11.26, minOpacity: 0.34};
 DtpSkpdi.checkZoom = z => {
 	if (Object.keys(DtpSkpdi._layers).length) {
 		if (z < 12) {
@@ -40,7 +41,7 @@ DtpSkpdi.checkZoom = z => {
 DtpSkpdi.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
 	DtpSkpdi.clearLayers();
-	argFilters = arg;
+	argFilters = arg || [];
 
 	let arr = [], heat = [];
 	if (DtpSkpdi._group) {
@@ -64,7 +65,6 @@ DtpSkpdi.setFilter = arg => {
 				heat.push(it._latlng);
 			}
 		});
-		// DtpSkpdi.addLayer(L.layerGroup(arr));
 		if (DtpSkpdi._needHeat) {
 			DtpSkpdi._map.addLayer(DtpSkpdi._heat);
 			DtpSkpdi._heat.setLatLngs(heat);
@@ -80,7 +80,7 @@ DtpSkpdi.setFilter = arg => {
 };
 
 DtpSkpdi.on('remove', () => {
-	DtpSkpdi._needHeat = null;
+	// DtpSkpdi._needHeat = null;
 	DtpSkpdi._map.removeLayer(DtpSkpdi._heat);
 	DtpSkpdi.clearLayers();
 }).on('add', ev => {
@@ -92,6 +92,7 @@ DtpSkpdi.on('remove', () => {
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};
+			let heat = [];
 			let arr = json.map(prp => {
 				let iconType = prp.iconType || 0,
 					stroke = false,
@@ -124,12 +125,16 @@ console.log('_______', prp);
 				opt.collision_type[prp.collision_type] = cTypeCount;
 				opt.iconType[prp.collision_type] = iconType;
 
-				return new CirclePoint(L.latLng(prp.lat, prp.lon), {
+				let latLng = L.latLng(prp.lat, prp.lon);
+				heat.push(latLng);
+
+				return new CirclePoint(latLng, {
 					props: prp,
 					radius: 6,
 					box: true,
 					stroke: stroke,
-					fillColor: fillColor,
+					fillColor: fillColor
+					// ,
 					// renderer: renderer
 				}).bindPopup(popup).on('popupopen', (ev) => {
 						setPopup(ev.target.options.props.id);
@@ -143,7 +148,10 @@ console.log('_______', prp);
 						}
 					});
 			});
-			
+			DtpSkpdi.addLayer(DtpSkpdi._heat);
+			DtpSkpdi._heat.setLatLngs(heat);
+			DtpSkpdi._heat.setOptions(DtpSkpdi._needHeat);
+
 			DtpSkpdi._opt = opt;
 			DtpSkpdi._group = L.layerGroup(arr);
 			// DtpSkpdi.addLayer(L.layerGroup(arr));
@@ -152,6 +160,7 @@ console.log('_______', prp);
 			} else {
 				DtpSkpdi.addLayer(DtpSkpdi._group);
 			}
+			DtpSkpdi.checkZoom(DtpSkpdi._map._zoom);
 			DtpSkpdi._refreshFilters();
 		});
 });
