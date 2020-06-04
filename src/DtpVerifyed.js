@@ -138,7 +138,7 @@ console.log('_______', prp);
 				opt.collision_type[prp.collision_type] = cTypeCount;
 				opt.iconType[prp.collision_type] = iconType;
 
-				let latLng = L.latLng(prp.lat, prp.lon);
+				let latLng = L.latLng(prp.lat, prp.lon, stroke ? 1 : 0.5);
 				heat.push(latLng);
 
 				return new CirclePoint(latLng, {
