@@ -15,6 +15,7 @@ import {DtpHearthsTmp} from './DtpHearthsTmp';
 import {DtpHearthsStat} from './DtpHearthsStat';
 import {DtpHearths3} from './DtpHearths3';
 import {DtpHearths5} from './DtpHearths5';
+import {DtpHearthsPicket} from './DtpHearthsPicket';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -119,6 +120,7 @@ let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
+	'ДТП Очаги(Picket)': DtpHearthsPicket,
 	'ДТП Очаги(5)': DtpHearths5,
 	'ДТП Очаги(3)': DtpHearths3,
 	'ДТП Очаги(Stat)': DtpHearthsStat,
@@ -161,6 +163,7 @@ let filtersControl = L.control.gmxIcon({
 				props: {
 					DtpGibdd: DtpGibdd,
 					DtpSkpdi: DtpSkpdi,
+					DtpHearthsPicket: DtpHearthsPicket,
 					DtpHearths5: DtpHearths5,
 					DtpHearths3: DtpHearths3,
 					DtpHearthsStat: DtpHearthsStat,
@@ -311,6 +314,7 @@ DtpHearths._refreshFilters =
 DtpHearthsStat._refreshFilters =
 DtpHearths3._refreshFilters =
 DtpHearths5._refreshFilters =
+DtpHearthsPicket._refreshFilters =
 DtpHearthsTmp._refreshFilters = refreshFilters;
 
 const eventsStr = 'remove';
@@ -322,11 +326,12 @@ DtpHearthsTmp.on(eventsStr, refreshFilters);
 DtpHearthsStat.on(eventsStr, refreshFilters);
 DtpHearths3.on(eventsStr, refreshFilters);
 DtpHearths5.on(eventsStr, refreshFilters);
+DtpHearthsPicket.on(eventsStr, refreshFilters);
 
 map
 	.on('zoomend', (ev) => {
 		map._crpx = 0;
-// console.log('zoomend ', ev, map._zoom);
+console.log('zoomend ', map._zoom);
 		if (DtpVerifyed._map) {
 			DtpVerifyed.checkZoom(map._zoom);
 		}
@@ -337,5 +342,5 @@ map
 			DtpGibdd.checkZoom(map._zoom);
 		}
 	});
-
+window._map = map;
 export default map;

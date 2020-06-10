@@ -16,11 +16,17 @@ console.log('showDtpInfo ', ev);
 
 </script>
 	<div class="mvsPopup">
-		<div class="pLine">Очаг ДТП (id: {prp.id})</div>
+		<div class="pLine">Очаг ДТП (id: {prp.id || prp.id_hearth})</div>
 		<div class="pLine">{prp.quarter ? prp.quarter + ' кв.': ''} {prp.year}г.</div>
 		<div class="featureCont">
 		  <table class="table">
 			<tbody>
+				{#if prp.piketaj_start_km}
+			<tr>
+			  <td class="first">Пикетаж:</td>
+			  <td>От: <b>{prp.piketaj_start_km || 0}</b> км. до: <b>{prp.piketaj_finish_km || 0}</b> км.</td>
+			</tr>
+				{/if}
 			<tr>
 			  <td class="first">Тип ДТП:</td>
 			  <td>{prp.str_icon_type || ''}</td>
@@ -41,7 +47,9 @@ console.log('showDtpInfo ', ev);
 			<tr>
 			  <td class="first" colspan=2>
 				<ul>
+					<li>Пикетаж: {Math.floor(pt1.piketaj_m / 1000)} км. {pt1.piketaj_m % 1000} м.</li>
 					<li on:click={() => {moveTo(index);}} title={'id: ' + pt1.id}>{new Date(1000 * pt1.date).toLocaleDateString()} погибших {pt1.lost}, раненых {pt1.stricken}</li>
+					
 				</ul>
 			  </td>
 			</tr>

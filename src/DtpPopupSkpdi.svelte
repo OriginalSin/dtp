@@ -30,6 +30,7 @@
 			console.log('Something went wrong', err);
 		});
 	};
+//console.log('the component just updated', prp);
 
 </script>
 
@@ -40,6 +41,15 @@
 		<div class="featureCont">
 		  <table class="table">
 			<tbody>
+			<tr>
+			  <td class="first">ID:</td>
+			  <td>{prp.sid || prp.id_stat || prp.id_skpdi || ''}</td>
+			</tr>
+			<tr>
+			  <td class="first">Пикетаж:</td>
+			  <td><b>{prp.km || 0}</b> км. <b>{prp.m || 0}</b> м.</td>
+			</tr>
+
 			<tr>
 			  <td class="first">Координаты:</td>
 			  <td>{prp.lat} {prp.lon} <span on:click={copyParent} title="Скопировать в буфер обмена" class="leaflet-gmx-icon-copy"></span></td>
