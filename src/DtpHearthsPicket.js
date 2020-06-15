@@ -168,7 +168,6 @@ DtpHearthsPicket.on('remove', () => {
 					}
 				}
 				let head;
-				let dor_k;
 				let arr1 = list_dtp.map(prp => {
 					let iconType = prp.iconType || 0,
 						coords = prp.coords || {lat: 0, lon: 0},
@@ -179,14 +178,12 @@ DtpHearthsPicket.on('remove', () => {
 					latlngs.push(latlng);
 
 					if (prp.id === it.head) { head = prp; }
-					dor_k = prp.dor_k;
 
 					if (prp.id_skpdi) { cur.push({type: 'skpdi', id: prp.id_skpdi}); }
 					if (prp.id_stat) { cur.push({type: 'gibdd', id: prp.id_stat}); }
 					prp._cur = cur;
 
-					if (!opt.dtps[dor_k]) { opt.dtps[dor_k] = {}; }
-					let dtps = opt.dtps[dor_k][prp.id];
+					let dtps = opt.dtps[prp.id] || {};
 					let idHearth = it.id || it.id_hearth;
 					if (!dtps) {
 						dtps = {};
@@ -196,7 +193,7 @@ DtpHearthsPicket.on('remove', () => {
 					} else {
 						dtps[idHearth]++;
 					}
-					opt.dtps[dor_k][prp.id] = dtps;
+					opt.dtps[prp.id] = dtps;
 					return new CirclePoint(L.latLng(coords.lat, coords.lon), {
 							cluster: it,
 							props: prp,
@@ -221,7 +218,6 @@ DtpHearthsPicket.on('remove', () => {
 				if (head) {
 					it._bounds = L.circle(L.latLng(head.coords.lat, head.coords.lon), {radius: it.radius || 500, items: arr1, cluster: it, color: fillColor, });
 				} else if (latlngs.length) {
-					if (dor_k === 4) { fillColor = 'blue'; }
 					it._bounds = L.polyline(latlngs, {items: arr1, cluster: it, color: fillColor, weight: 4});
 				} else {
 					it._bounds = L.rectangle(list_bounds, {items: arr1, cluster: it, fill: true, color: fillColor, dashArray: '8 3 1'})
