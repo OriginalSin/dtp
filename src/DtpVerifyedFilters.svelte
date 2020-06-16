@@ -630,13 +630,12 @@
 
 		{#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги(Picket)</b></div>
-
 		<div class="filtersCont">
 			<div class="pLine">ID Очага: <input type="text" on:input={oncheckIdHearth} value={id_hearth} /></div>
 			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			<div class="pLine">
-				<input type="checkbox" on:change={oncheckHt} id="ht_3" checked={ht.hearth3} name="hearth3"><label for="ht_3">Hearths3</label>
-				<input type="checkbox" on:change={oncheckHt} id="ht_5" checked={ht.hearth5} name="hearth5"><label for="ht_5">Hearths5</label>
+				<input type="checkbox" on:change={oncheckHt} id="ht_3" checked={ht.hearth3} name="hearth3"><label for="ht_3">одного типа</label>
+				<input type="checkbox" on:change={oncheckHt} id="ht_5" checked={ht.hearth5} name="hearth5"><label for="ht_5">разного типа</label>
 			</div>
 			<div class="pLine">
 				<select class="multiple_icon_typeTmp" bind:value={roads} on:change="{setFilterHearthsPicket}" multiple>

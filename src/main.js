@@ -120,17 +120,23 @@ let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
-	'ДТП Очаги(Picket)': DtpHearthsPicket,
-	'ДТП Очаги(5)': DtpHearths5,
-	'ДТП Очаги(3)': DtpHearths3,
+	'Очаги ГИБДД по пикетажу': DtpHearthsPicket,
+	'Очаги ГИБДД разные типы, геометрия': DtpHearths5,
+	'Очаги ГИБДД одного типа, геометрия': DtpHearths3,
 	'ДТП Очаги(Stat)': DtpHearthsStat,
 	'ДТП Очаги(tmp)': DtpHearthsTmp,
-	'ДТП Очаги': DtpHearths,
-	'ДТП Сводный': DtpVerifyed,
-	'ДТП СКПДИ': DtpSkpdi,
-	'ДТП ГИБДД': DtpGibdd,
-	// polygon: L.polygon([[55.05, 37],[55.03, 41],[52.05, 41],[52.04, 37]], {color: 'red'})
+	'Очаги ГИБДД+СКПДИ по кварталам геометрия': DtpHearths,
+	'ДТП  ГИБДД+СКПДИ (объединение)': DtpVerifyed,
+	'ДТП СКПДИ + тепловая карта': DtpSkpdi,
+	'ДТП ГИБДД + тепловая карта': DtpGibdd,
 };
+
+// let comp = L.DomUtil.create('div', 'layerInfo');
+// comp.innerHTML = 'df<b>df</b>df';
+// let info = L.DomUtil.create('div', '', comp);
+// L.DomEvent.on(info, 'mouseover', (ev) => console.log);
+// overlays[comp] = DtpHearths5;
+
 let ovHash = hrefParams.o ? hrefParams.o.split(',').reduce((p, c) => {p[c] = true; return p;}, {}) : {};
 ['m1', 'm4', 'm5'].forEach(key => {
 	let it = proxy[key],
