@@ -16,6 +16,7 @@ import {DtpHearthsStat} from './DtpHearthsStat';
 import {DtpHearths3} from './DtpHearths3';
 import {DtpHearths5} from './DtpHearths5';
 import {DtpHearthsPicket} from './DtpHearthsPicket';
+import {Rub} from './Rub';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -120,6 +121,7 @@ let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
+	'Рубежи (json)': Rub,
 	'Очаги ГИБДД по пикетажу': DtpHearthsPicket,
 	'Очаги ГИБДД разные типы, геометрия': DtpHearths5,
 	'Очаги ГИБДД одного типа, геометрия': DtpHearths3,
@@ -169,6 +171,7 @@ let filtersControl = L.control.gmxIcon({
 				props: {
 					DtpGibdd: DtpGibdd,
 					DtpSkpdi: DtpSkpdi,
+					Rub: Rub,
 					DtpHearthsPicket: DtpHearthsPicket,
 					DtpHearths5: DtpHearths5,
 					DtpHearths3: DtpHearths3,
@@ -321,6 +324,7 @@ DtpHearthsStat._refreshFilters =
 DtpHearths3._refreshFilters =
 DtpHearths5._refreshFilters =
 DtpHearthsPicket._refreshFilters =
+Rub._refreshFilters =
 DtpHearthsTmp._refreshFilters = refreshFilters;
 
 const eventsStr = 'remove';
@@ -333,6 +337,7 @@ DtpHearthsStat.on(eventsStr, refreshFilters);
 DtpHearths3.on(eventsStr, refreshFilters);
 DtpHearths5.on(eventsStr, refreshFilters);
 DtpHearthsPicket.on(eventsStr, refreshFilters);
+Rub.on(eventsStr, refreshFilters);
 
 map
 	.on('zoomend', (ev) => {
