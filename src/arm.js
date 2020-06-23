@@ -10,6 +10,8 @@ import DtpVerifyedFilters from './DtpVerifyedFilters.svelte';
 import {DtpHearths} from './DtpHearths';
 import {DtpHearthsTmp} from './DtpHearthsTmp';
 import {DtpHearthsStat} from './DtpHearthsStat';
+import {TestGraphQl} from './TestGraphQl';
+import {Itc} from './Itc';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -137,10 +139,9 @@ baseLayers.OpenStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{
 
 DtpVerifyed._arm = {};
 let overlays = {
-	// Marker: L.marker([55.758031, 37.611694])
-		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-		// .openPopup(),
-	'Очаги ГИБДД': DtpHearthsStat.addTo(map),
+	'Камеры ИТС': Itc,
+	'TestGraphQl': TestGraphQl,
+	'Очаги ГИБДД': DtpHearthsStat, //.addTo(map),
 	// 'ДТП Очаги(tmp)': DtpHearthsTmp,
 	// 'ДТП Очаги': DtpHearths,
 	'ДТП Сводный': DtpVerifyed,

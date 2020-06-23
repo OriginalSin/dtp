@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Камера",
+    "nm": "017",
+    "cams": [
+		{"name": "aps017_c1", "video": "//172.16.74.29/aps017_c1/index.mpd"},
+		{"name": "aps017_c2", "video": "//172.16.74.29/aps017_c2/index.mpd"}
+	],
+    "lat": 56.30795,
+    "lon": 38.14563
+  },
+  {
+    "name": "Камера",
+    "nm": "002",
+    "cams": [
+		{"name": "aps002_c1", "video": "//172.16.74.29/aps002_c1/index.mpd"},
+		{"name": "aps002_c2", "video": "//172.16.74.29/aps002_c2/index.mpd"}
+	],
+    "lat": 56.2768,
+    "lon": 38.1225
+  },
+  {
+    "name": "Камера",
+    "nm": "007",
+    "cams": [
+		{"name": "aps007_c1", "video": "//172.16.74.29/aps007_c1/index.mpd"},
+		{"name": "aps007_c2", "video": "//172.16.74.29/aps007_c2/index.mpd"}
+	],
+    "lat": 56.313602,
+    "lon": 38.135762
+  },
+
+  {
+    "name": "Камера",
+    "nm": "004",
+    "cams": [
+		{"name": "aps004_c1", "video": "//172.16.74.29/aps004_c1/index.mpd"},
+		{"name": "aps004_c2", "video": "//172.16.74.29/aps004_c2/index.mpd"}
+	],
+    "lat": 56.296861,
+    "lon": 38.128659
+  }
+]

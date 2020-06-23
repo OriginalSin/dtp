@@ -8,29 +8,25 @@ const popup = L.popup();
 const popup1 = L.popup({minWidth: 200});
 let argFilters;
 let collision_type;
+let prefix = 'https://dtp.mvs.group/scripts/rubez/';
 
 const setPopup = function (props) {
-	let cont = L.DomUtil.create('div');
-	new DtpPopupRub({
-		target: cont,
-		props: {
-			// popup: popup,
-			prp: props
-		}
-	});
-	popup.setContent(cont);
-	return cont;
-}
+	let cont = L.DomUtil.create('div'),
+		id = props.line_sid;
+	
+	fetch(prefix + 'rubez-complex-' + id + '.txt', {}).then(req => req.json())
+		.then(json => {
+			// console.log('json', json);
+			new DtpPopupRub({
+				target: cont,
+				props: {
+					prp: json[0]
+				}
+			});
+			popup.setContent(cont);
+		});
 
-const setPopup1 = function (props) {
-	let cont = L.DomUtil.create('div');
-	new DtpPopupRub({
-		target: cont,
-		props: {
-			prp: props
-		}
-	});
-	popup1.setContent(cont);
+	popup.setContent(cont);
 	return cont;
 }
 
@@ -38,44 +34,23 @@ const setPopup1 = function (props) {
 export const Rub = L.featureGroup([]);
 Rub.setFilter = arg => {
 // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
+	if (!Rub._map) { return; }
 	Rub.clearLayers();
 	// DtpHearths._heatData = [];
 	argFilters = arg;
+	Rub._argFilters = argFilters;
 
 	let arr = [];
 	if (Rub._group) {
 		Rub._group.getLayers().forEach(it => {
-			let prp = it.options.cluster,
+			let prp = it.options.props,
 				cnt = 0;
 			argFilters.forEach(ft => {
-				if (ft.type === 'ht') {
-					if (ft.zn[prp.ht]) {
-						cnt++;
-					}
-				} else if (ft.type === 'roads') {
-					if (ft.zn.filter(pt => pt === prp.road).length || (ft.zn.length === 1 && ft.zn[0] === '')) {
-						cnt++;
-					}
-				} else if (ft.type === 'id_dtp') {
-					if (prp.list_dtp.filter(pt => pt.id == ft.zn).length || !ft.zn.length) {
-						cnt++;
-					}
-				} else if (ft.type === 'id_hearth') {
-					if (ft.zn == prp.id_hearth) {
-						cnt++;
-					}
-				} else if (ft.type === 'stricken') {
-					let zn = ft.zn;
-					if (!zn) {
-						cnt++;
-					} else if (zn === 1 && !prp.count_stricken && prp.count_lost) {
-						cnt++;								// Только с погибшими
-					} else if (zn === 2 && prp.count_stricken && !prp.count_lost) {
-						cnt++;								// Только с пострадавшими
-					} else if (zn === 3 && (prp.count_stricken || prp.count_lost)) {
-						cnt++;								// С пострадавшими или погибшими
-					} else if (zn === 3 && prp.count_stricken && prp.count_lost) {
-						cnt++;								// С пострадавшими и погибшими
+				if (ft.type === 'comp') {
+					if (prp.rub_flag) {
+						if (ft.zn.on) { cnt++; }
+					} else {
+						if (ft.zn.off) { cnt++; }
 					}
 				}
 			});
@@ -96,24 +71,29 @@ Rub.setFilter = arg => {
 Rub.on('remove', () => {
 	Rub.clearLayers();
 }).on('add', ev => {
-	let opt = {road: {}, str_icon_type: {}, iconType: {}, years: {}, dtps: {}},
+	let opt = {road: {}, bad: []},
 		arr = [],
-		max_quarter = 0,
-		prefix = 'https://dtp.mvs.group/scripts/hearths_picket/',
+		line_sid = {},
 		parseItem = (prp) => {
 			let iconType = 1,
 				list_bounds = L.latLngBounds(),
 				// latlngs = [],
 				stroke = false,
-				fillColor = '#FF0000'; //   19-20
+				fillColor = 'gray';
 
-
-			if (prp.complexes) {
-				if (prp.complexes.length === 1) {
-					fillColor = '#FFA500';
-				} else if (prp.complexes.length > 1) {
-					fillColor = '#0000FF';
-				}
+			if (prp.rub_flag) {
+				fillColor = '#00FF00';
+			}
+			if (line_sid[prp.line_sid]) {
+				console.log('___Дубль____', prp);
+			} else {
+				line_sid[prp.line_sid] = prp
+			}
+			if (!prp.lat || !prp.lon) {
+				opt.bad.push(prp);
+				// console.log('_______', prp);
+				return;
+				// prp.lat = prp.lon = 0;
 			}
 
 			let coords = prp.coords || {lat: prp.lat, lon: prp.lon},
@@ -122,12 +102,12 @@ Rub.on('remove', () => {
 
 			list_bounds.extend(latlng);
 
-			return new CirclePoint(L.latLng(coords.lat, coords.lon), {
+			arr.push(new CirclePoint(L.latLng(coords.lat, coords.lon), {
 					// cluster: it,
 					props: prp,
 					radius: 6,
 					zIndexOffset: 50000,
-					// rhomb: true,
+					path: 'camera',
 					stroke: stroke,
 					fillColor: fillColor,
 					// renderer: renderer
@@ -141,15 +121,16 @@ Rub.on('remove', () => {
 						ev.popup._svObj.$destroy();
 						delete ev.popup._svObj;
 					}
-				});
+				})
+			);
 		};
 
-	fetch('./static/rub.geojson', {}).then(req => req.json())
+	fetch(prefix + 'rubez.txt', {}).then(req => req.json())
 		.then(json => {
-			let arr = json.map(parseItem);
+			json.forEach(parseItem);
 			Rub._group = L.layerGroup(arr);
 			Rub.addLayer(Rub._group);
-// console.log('json', json);
+			console.log('opt', opt);
 
 		});
 });

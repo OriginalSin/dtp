@@ -9,6 +9,8 @@
 	export let DtpVerifyed;
 	export let DtpSkpdi;
 	export let DtpGibdd;
+	export let DtpGibddRub;
+	export let Rub;
 
 	let currentFilter = 0;
 	let currentFilterDtpHearths = 0;
@@ -32,6 +34,8 @@
 	let optCollisionSkpdiKeys = optDataSkpdi.collision_type ? Object.keys(optDataSkpdi.collision_type).sort((a, b) => optDataSkpdi.collision_type[b] - optDataSkpdi.collision_type[a]) : [];
 	let optDataGibdd = DtpGibdd._opt || {};
 	let optCollisionGibddKeys = optDataGibdd.collision_type ? Object.keys(optDataGibdd.collision_type).sort((a, b) => optDataGibdd.collision_type[b] - optDataGibdd.collision_type[a]) : [];
+	let optDataGibddRub = DtpGibddRub._opt || {};
+	let optCollisionGibddRubKeys = optDataGibddRub.collision_type ? Object.keys(optDataGibddRub.collision_type).sort((a, b) => optDataGibddRub.collision_type[b] - optDataGibddRub.collision_type[a]) : [];
 
 	let optDataHearths = DtpHearths._opt || {};
 	let optTypeHearthsKeys = optDataHearths.str_icon_type ? Object.keys(optDataHearths.str_icon_type).sort((a, b) => optDataHearths.str_icon_type[b] - optDataHearths.str_icon_type[a]) : [];
@@ -59,6 +63,7 @@
 	let collision_type = [''];
 	let collision_type_skpdi = [''];
 	let collision_type_gibdd = [''];
+	let collision_type_gibddRub = [''];
 	let beg;
 	let end;
 
@@ -72,7 +77,21 @@
 	let heatElementDtpSkpdi;
 	let heatElementDtpVerifyed;
 
+	let _comps = Rub._argFilters ? Rub._argFilters[0] : {type: 'comp', zn: {on: true, off: true}};
+	let compOn = _comps.zn.on;
+	let comp1On = _comps.zn.off;
+
 		// console.log('optDataHearthsPicket', optRoadTypes, optDataHearthsPicket);
+
+	// const setListRub = (ev) => {
+		// let opt = [{type: 'comp', zn: {on: compOn, off: comp1On}}];
+		// Rub.setFilter(opt);
+	// };
+	const setComp = (ev) => {
+		let opt = [{type: 'comp', zn: {on: compOn, off: comp1On}}];
+		Rub.setFilter(opt);
+	};
+
     const setFilterHearthsPicket = () => {
 		let opt = [];
 		if (id_dtp) {
@@ -111,7 +130,8 @@
 	const setHeat = (ev) => {
 		let target = ev.target;
 
-		DtpGibdd._needHeat = DtpSkpdi._needHeat = DtpVerifyed._needHeat = target.checked ? heat : false;
+		DtpGibddRub._needHeat = DtpGibdd._needHeat = DtpSkpdi._needHeat = DtpVerifyed._needHeat = target.checked ? heat : false;
+		setFilterGibddRub();
 		setFilterGibdd();
 		// DtpSkpdi._needHeat = _needHeat;
 		setFilterSkpdi();
@@ -143,6 +163,24 @@
 		}
 		// console.log('opt', collision_type, opt);
 		DtpVerifyed.setFilter(opt);
+	};
+
+	let _list_rub = DtpGibddRub._argFilters ? DtpGibddRub._argFilters[0] : {type: 'list_rub', zn: {on: true, off: true}};
+	let list_rubOn = _list_rub.zn.on;
+	let list_rubOff = _list_rub.zn.off;
+
+    const setFilterGibddRub = () => {
+		let opt = [
+			{type: 'list_rub', zn: {on: list_rubOn, off: list_rubOff}}
+		];
+		if (dateInterval) {
+			opt.push({type: 'date', zn: dateInterval});
+		}
+		if (collision_type_gibddRub) {
+			opt.push({type: 'collision_type', zn: collision_type_gibddRub});
+		}
+		// console.log('opt', collision_type, opt);
+		DtpGibddRub.setFilter(opt);
 	};
 
     const setFilterGibdd = () => {
@@ -644,7 +682,7 @@
 					</option>
 					{#each optRoadTypes as key}
 						<option value={key} class="road_{key}">
-							{key} ({optDataHearthsPicket.road[key]})
+							({optDataHearthsPicket.road[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -675,7 +713,7 @@
 					</option>
 					{#each optTypeHearths5Keys as key}
 						<option value={key} class="icon_type_{optDataHearths5.iconType[key]}">
-							{key} ({optDataHearths5.str_icon_type[key]})
+							({optDataHearths5.str_icon_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -715,7 +753,7 @@
 					</option>
 					{#each optTypeHearths3Keys as key}
 						<option value={key} class="icon_type_{optDataHearths3.iconType[key]}">
-							{key} ({optDataHearths3.str_icon_type[key]})
+							({optDataHearths3.str_icon_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -766,7 +804,7 @@
 					</option>
 					{#each optTypeHearthsStatKeys as key}
 						<option value={key} class="icon_type_{optDataHearthsStat.iconType[key]}">
-							{key} ({optDataHearthsStat.str_icon_type[key]})
+							({optDataHearthsStat.str_icon_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -831,7 +869,7 @@
 					</option>
 					{#each optTypeHearthsTmpKeys as key}
 						<option value={key} class="icon_type_{optDataHearthsTmp.iconType[key]}">
-							{key} ({optDataHearthsTmp.str_icon_type[key]})
+							({optDataHearthsTmp.str_icon_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -883,7 +921,7 @@
 					</option>
 					{#each optTypeHearthsKeys as key}
 						<option value={key} class="icon_type_{optDataHearths.iconType[key]}">
-							{key} ({optDataHearths.str_icon_type[key]})
+							({optDataHearths.str_icon_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -900,7 +938,7 @@
 		</div>
 		{/if}
 
-		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map}
+		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}
 		<div class="pLine"><hr></div>
 		<div class="pikaday pLine">
 			<button class="pika-prev" on:click={onPrev}></button>
@@ -925,7 +963,7 @@
 			<div class="pLine">
 				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked name="heat"><label for="heat"> - тепловая карта</label>
 			</div>
-		{:else if !DtpHearths._map && !DtpHearthsTmp._map && !DtpHearthsPicket._map}
+		{:else if !DtpHearths._map && !DtpHearthsTmp._map && !DtpHearthsPicket._map && !Rub._map}
 			<div class="pLine">Нет включенных слоев</div>
 		{/if}
 
@@ -949,7 +987,7 @@
 					</option>
 					{#each optCollisionKeys as key}
 						<option value={key} class="icon_type_{optData.iconType[key]}">
-							{key} ({optData.collision_type[key]})
+							({optData.collision_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -970,7 +1008,7 @@
 					</option>
 					{#each optCollisionSkpdiKeys as key}
 						<option value={key} class="icon_type_{optDataSkpdi.iconType[key]}">
-							{key} ({optDataSkpdi.collision_type[key]})
+							({optDataSkpdi.collision_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -991,7 +1029,7 @@
 					</option>
 					{#each optCollisionGibddKeys as key}
 						<option value={key} class="icon_type_{optDataGibdd.iconType[key]}">
-							{key} ({optDataGibdd.collision_type[key]})
+							({optDataGibdd.collision_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>
@@ -999,6 +1037,44 @@
 			{/if}
 		</div>
 		{/if}
+
+		{#if DtpGibddRub._map}
+		<div class="pLine"><hr></div>
+		<div class="pLine">Фильтры - <b>ДТП ГИБДД + Рубежи</b></div>
+		<div class="pLine">
+			<input type="checkbox" bind:checked={list_rubOn} on:change={setFilterGibddRub} name="list_rubOn"><label for="list_rubOn"> - с рубежами</label>
+			<input type="checkbox" bind:checked={list_rubOff} on:change={setFilterGibddRub} name="list_rubOff"><label for="list_rubOff"> - без рубежей</label>
+		</div>
+		list_rub
+		<div class="filtersCont">
+			{#if optDataGibddRub.collision_type}
+			<div class="pLine">
+				<select class="multiple_icon_type" bind:value={collision_type_gibddRub} on:change="{setFilterGibddRub}" multiple>
+					<option value=''>
+						Все типы ({optCollisionGibddRubKeys.reduce((p, c) => { p += optDataGibddRub.collision_type[c]; return p; }, 0)})
+					</option>
+					{#each optCollisionGibddRubKeys as key}
+						<option value={key} class="icon_type_{optDataGibddRub.iconType[key]}">
+							({optDataGibddRub.collision_type[key]}) - {key}
+						</option>
+					{/each}
+				</select>
+			</div>
+			{/if}
+		</div>
+		{/if}
+
+		{#if Rub._map}
+		<div class="pLine"><hr></div>
+		<div class="pLine">Фильтры - <b>Рубежей</b></div>
+		<div class="filtersCont">
+			<div class="pLine">
+				<input type="checkbox" bind:checked={compOn} on:change={setComp} name="comp1"><label for="comp1"> - есть комплексы</label>
+				<input type="checkbox" bind:checked={comp1On} on:change={setComp} name="comp"><label for="comp"> -  нет комплексов</label>
+			</div>
+		</div>
+		{/if}
+
 	  </div>
 
 <style>

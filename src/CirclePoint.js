@@ -54,6 +54,21 @@ const getScaleBarDistance = function(z, pos) {
 	return metersPerPixel;
 }
 
+const matrix = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix();
+const icon2path = (str, dx, dy) => {
+	let sc = 20 / 832,
+		p = new Path2D(str),
+		p1 = new Path2D();
+
+	p1.addPath(p, matrix.translate(dx, dy).rotate(180).scale(-sc, -sc));
+	return p1;
+};
+
+
+const icons = {
+	camera: icon2path('M864 260H728l-32.4-90.8a32.07 32.07 0 0 0-30.2-21.2H358.6c-13.5 0-25.6 8.5-30.1 21.2L296 260H160c-44.2 0-80 35.8-80 80v456c0 44.2 35.8 80 80 80h704c44.2 0 80-35.8 80-80V340c0-44.2-35.8-80-80-80zM512 716c-88.4 0-160-71.6-160-160s71.6-160 160-160 160 71.6 160 160-71.6 160-160 160zm-96-160a96 96 0 1 0 192 0 96 96 0 1 0-192 0z', -12, -13)
+};
+
 const myRenderer = L.canvas({padding: 0.5});
 L.Canvas.include({
   _updateMarkerPoint: function (layer) {
@@ -166,6 +181,11 @@ L.Canvas.include({
 		ctx.lineTo(p.x + r, p.y);
 	} else if (options.box) {
 		ctx.fillRect(p.x - r, p.y - r, r2, r2);
+	} else if (options.path) {
+		let icon = icons[options.path];
+		ctx.translate(p.x, p.y);
+		ctx.fill(icon);
+		ctx.stroke(icon);
 	} else {
 		ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
 	}

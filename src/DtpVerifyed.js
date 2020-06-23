@@ -35,6 +35,7 @@ DtpVerifyed.checkZoom = z => {
 
 DtpVerifyed.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
+	if (!DtpVerifyed._map) { return; }
 	DtpVerifyed.clearLayers();
 	argFilters = arg || [];
 

@@ -37,6 +37,7 @@ const setPopup1 = function (props) {
 // let renderer = L.canvas();
 export const DtpHearthsPicket = L.featureGroup([]);
 DtpHearthsPicket.setFilter = arg => {
+	if (!DtpHearthsPicket._map) { return; }
 // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
 	DtpHearthsPicket.clearLayers();
 	// DtpHearths._heatData = [];

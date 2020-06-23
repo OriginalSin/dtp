@@ -38,6 +38,7 @@ DtpGibdd.checkZoom = z => {
 };
 DtpGibdd.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
+	if (!DtpGibdd._map) { return; }
 	DtpGibdd.clearLayers();
 	argFilters = arg || [];
 

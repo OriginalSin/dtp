@@ -346,3 +346,19 @@ button:focus {
 	pointer-events: none;
 	z-index: 199;
 }
+
+.leaflet-popup-content .contVideo {
+	width: 740px;
+}
+
+
+.leaflet-popup-content .contVideo .video {
+    width: 100%;
+}
+.leaflet-popup-content .contVideo button {
+    cursor: pointer;
+    padding: 10px;
+}
+.leaflet-popup-content .contVideo button.active {
+    background-color: lightblue;
+}

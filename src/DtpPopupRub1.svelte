@@ -1,4 +1,5 @@
 <script>
+	import DtpPopup from './DtpPopupVerifyed.svelte';
 	export let prp;
 	let current = 0;
 
@@ -28,21 +29,17 @@
 		// let target = ev.target.classList.remove
 // console.log('setComplex ', prn.childNodes);
 	};
-	let complexes = prp && prp.list_complex ? prp.list_complex : [];
+	let complexes = prp && prp.complexes ? prp.complexes : [];
 console.log('complexes ', complexes);
 </script>
 	<div class="mvsPopup">
-		<div class="pLine">Рубеж (id: {prp.id || prp.line_id})</div>
+		<div class="pLine">Рубеж (id: {prp.id || prp.lineSid})</div>
 		<div class="featureCont">
 		  <table class="table">
 			<tbody>
 			<tr>
-			  <td class="first">Этап:</td>
-			  <td>{prp.stage_name || ''}</td>
-			</tr>
-			<tr>
 			  <td class="first">Дорога:</td>
-			  <td>{prp.road_name || ''}</td>
+			  <td>{prp.roadName || ''}</td>
 			</tr>
 			<tr>
 			  <td class="first">Координаты:</td>
@@ -50,7 +47,7 @@ console.log('complexes ', complexes);
 			</tr>
 			<tr>
 			  <td class="first">Адрес:</td>
-			  <td>{prp.address || ''}</td>
+			  <td>{prp.lineAddress || ''}</td>
 			</tr>
 			<tr>
 			  <td class="first">Комплексов:</td>
@@ -59,14 +56,17 @@ console.log('complexes ', complexes);
 			<tr>
 			  <td class="tabs" colspan=2>
 				{#each complexes as pt1, index}
-					<button class="tab {index} {index === 0 ? 'active' : ''}" on:click={onClick}>{pt1.complex_name}</button>
+					<button class="tab {index} {index === 0 ? 'active' : ''}" on:click={onClick}>{pt1.complexName}</button>
 				{/each}
 				{#each complexes as pt1, index}
 					<table class="tabCont {index} {index === 0 ? '' : 'hidden'}">
-						<tr><td class="first">Комплекс:</td><td>{pt1.complex_name} (id: {pt1.complex_sid})</td></tr>
-						<tr><td class="first">Модель:</td><td>{pt1.complex_model_name}</td></tr>
-						<tr><td class="first">Тип:</td><td>{pt1.complex_type_name}</td></tr>
-						<tr><td class="first">Работоспособность:</td><td>{pt1.cafap_status || ''}</td></tr>
+						<tr><td class="first">Комплекс:</td><td>{pt1.complexName} (id: {pt1.complexSid})</td></tr>
+						<tr><td class="first">Модель:</td><td>{pt1.complexModelName}</td></tr>
+						<tr><td class="first">Тип:</td><td>{pt1.complexTypeName}</td></tr>
+						<tr><td class="first">Этап:</td><td>{pt1.complexStageName}</td></tr>
+						<tr><td class="first">Работоспособность:</td><td>{pt1.kvfStatus || ''}</td></tr>
+						<!-- tr><td class="first">Координаты:</td><td>{prp.lat} {prp.lon} <span on:click={copyParent} title="Скопировать в буфер обмена" class="leaflet-gmx-icon-copy"></span></td></tr -->
+						<tr><td class="first">Дорога:</td><td>{pt1.roadName || prp.roadName || ''}</td></tr>
 					</table>
 				{/each}
 			  </td>

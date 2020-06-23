@@ -16,7 +16,10 @@ import {DtpHearthsStat} from './DtpHearthsStat';
 import {DtpHearths3} from './DtpHearths3';
 import {DtpHearths5} from './DtpHearths5';
 import {DtpHearthsPicket} from './DtpHearthsPicket';
+import {Rub1} from './Rub1';
 import {Rub} from './Rub';
+import {DtpGibddRub} from './DtpGibddRub';
+import {TestGraphQl} from './TestGraphQl';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -121,7 +124,9 @@ let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
-	'Рубежи (json)': Rub,
+	'TestGraphQl': TestGraphQl,
+	'Рубежи': Rub,
+	'Рубежи (test)': Rub1,
 	'Очаги ГИБДД по пикетажу': DtpHearthsPicket,
 	'Очаги ГИБДД разные типы, геометрия': DtpHearths5,
 	'Очаги ГИБДД одного типа, геометрия': DtpHearths3,
@@ -131,6 +136,7 @@ let overlays = {
 	'ДТП  ГИБДД+СКПДИ (объединение)': DtpVerifyed,
 	'ДТП СКПДИ + тепловая карта': DtpSkpdi,
 	'ДТП ГИБДД + тепловая карта': DtpGibdd,
+	'ДТП ГИБДД + тепловая карта + Рубежи': DtpGibddRub,
 };
 
 // let comp = L.DomUtil.create('div', 'layerInfo');
@@ -169,9 +175,11 @@ let filtersControl = L.control.gmxIcon({
 			cont1._Filters = new DtpVerifyedFilters({
 				target: cont1,
 				props: {
+					DtpGibddRub: DtpGibddRub,
 					DtpGibdd: DtpGibdd,
 					DtpSkpdi: DtpSkpdi,
 					Rub: Rub,
+					// Rub1: Rub1,
 					DtpHearthsPicket: DtpHearthsPicket,
 					DtpHearths5: DtpHearths5,
 					DtpHearths3: DtpHearths3,
@@ -316,6 +324,7 @@ const refreshFilters = () => {
 		}
 	});
 };
+DtpGibddRub._refreshFilters =
 DtpGibdd._refreshFilters =
 DtpSkpdi._refreshFilters =
 DtpVerifyed._refreshFilters =
@@ -328,6 +337,7 @@ Rub._refreshFilters =
 DtpHearthsTmp._refreshFilters = refreshFilters;
 
 const eventsStr = 'remove';
+DtpGibddRub.on(eventsStr, refreshFilters);
 DtpGibdd.on(eventsStr, refreshFilters);
 DtpSkpdi.on(eventsStr, refreshFilters);
 DtpVerifyed.on(eventsStr, refreshFilters);
@@ -342,7 +352,7 @@ Rub.on(eventsStr, refreshFilters);
 map
 	.on('zoomend', (ev) => {
 		map._crpx = 0;
-console.log('zoomend ', map._zoom);
+// console.log('zoomend ', map._zoom);
 		if (DtpVerifyed._map) {
 			DtpVerifyed.checkZoom(map._zoom);
 		}

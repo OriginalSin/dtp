@@ -1,15 +1,13 @@
 import {MarkerPoint, CirclePoint} from './CirclePoint';
-import DtpPopup from './DtpPopupSkpdi.svelte';
+import DtpPopup from './DtpPopupGibddRub.svelte';
 
 const L = window.L;
 
 const popup = L.popup();
 let argFilters;
-
 const setPopup = function (id) {
-	let url = 'https://dtp.mvs.group/scripts/index.php?request=get_dtp_id&id=' + id + '&type=skpdi';
+	let url = 'https://dtp.mvs.group/scripts/dtprubez/get_stat_gipdd_with_rub_' + id + '.txt';
 	fetch(url, {})
-	// fetch('/static/data/dtpexample.json', {})
 		.then(req => req.json())
 		.then(json => {
 // console.log('bindPopup', layer, json, DtpPopup);
@@ -24,29 +22,30 @@ const setPopup = function (id) {
 			popup.setContent(cont);
 		});
 	return '';
-	// return layer.feature.properties.id || '';
 }
 
-export const DtpSkpdi = L.featureGroup([]);
-DtpSkpdi._needHeat = {radius: 19, blur: 11.26, minOpacity: 0.34};
-DtpSkpdi.checkZoom = z => {
-	if (Object.keys(DtpSkpdi._layers).length) {
+// let renderer = L.canvas();
+export const DtpGibddRub = L.featureGroup([]);
+DtpGibddRub._needHeat = {radius: 19, blur: 11.26, minOpacity: 0.34};
+DtpGibddRub.checkZoom = z => {
+	if (Object.keys(DtpGibddRub._layers).length) {
 		if (z < 12) {
-			DtpSkpdi.setFilter(argFilters);
+			DtpGibddRub.setFilter(argFilters);
 		}
 	} else if (z > 11) {
-		DtpSkpdi.setFilter(argFilters);
+		DtpGibddRub.setFilter(argFilters);
 	}
 };
-DtpSkpdi.setFilter = arg => {
+DtpGibddRub.setFilter = arg => {
 // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
-	if (!DtpSkpdi._map) { return; }
-	DtpSkpdi.clearLayers();
+	if (!DtpGibddRub._map) { return; }
+	DtpGibddRub.clearLayers();
 	argFilters = arg || [];
+	DtpGibddRub._argFilters = argFilters;
 
 	let arr = [], heat = [];
-	if (DtpSkpdi._group) {
-		DtpSkpdi._group.getLayers().forEach(it => {
+	if (DtpGibddRub._group) {
+		DtpGibddRub._group.getLayers().forEach(it => {
 			let prp = it.options.props,
 				cnt = 0;
 			argFilters.forEach(ft => {
@@ -54,6 +53,12 @@ DtpSkpdi.setFilter = arg => {
 					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.collision_type).length) {
 					// if (prp.collision_type === ft.zn) {
 						cnt++;
+					}
+				} else if (ft.type === 'list_rub') {
+					if (prp.list_rub.length) {
+						if (ft.zn.on) { cnt++; }
+					} else {
+						if (ft.zn.off) { cnt++; }
 					}
 				} else if (ft.type === 'date') {
 					if (prp.date >= ft.zn[0] && prp.date < ft.zn[1]) {
@@ -66,30 +71,33 @@ DtpSkpdi.setFilter = arg => {
 				heat.push(it._latlng);
 			}
 		});
-		if (DtpSkpdi._needHeat) {
-			DtpSkpdi._map.addLayer(DtpSkpdi._heat);
-			DtpSkpdi._heat.setLatLngs(heat);
-			DtpSkpdi._heat.setOptions(DtpSkpdi._needHeat);
-			if (DtpSkpdi._map._zoom > 11) {
-				DtpSkpdi.addLayer(L.layerGroup(arr));
+		if (DtpGibddRub._needHeat) {
+			DtpGibddRub._map.addLayer(DtpGibddRub._heat);
+			DtpGibddRub._heat.setLatLngs(heat);
+			DtpGibddRub._heat.setOptions(DtpGibddRub._needHeat);
+			if (DtpGibddRub._map._zoom > 11) {
+				DtpGibddRub.addLayer(L.layerGroup(arr));
 			}
 		} else {
-			DtpSkpdi.addLayer(L.layerGroup(arr));
-			DtpSkpdi._map.removeLayer(DtpSkpdi._heat);
+			DtpGibddRub.addLayer(L.layerGroup(arr));
+			DtpGibddRub._map.removeLayer(DtpGibddRub._heat);
 		}
+
 	}
 };
 
-DtpSkpdi.on('remove', () => {
-	// DtpSkpdi._needHeat = null;
-	DtpSkpdi._map.removeLayer(DtpSkpdi._heat);
-	DtpSkpdi.clearLayers();
+DtpGibddRub.on('remove', (ev) => {
+	// DtpGibddRub._needHeat = null;
+	DtpGibddRub._map.removeLayer(DtpGibddRub._heat);
+	DtpGibddRub.clearLayers();
 }).on('add', ev => {
 	// console.log('/static/data/dtpskpdi.geojson', ev);
-	DtpSkpdi._heat = L.heatLayer([]);
-	
-	fetch('https://dtp.mvs.group/scripts/index.php?request=get_skpdi', {})
-	// fetch('https://dtp.mvs.group/static/data/json_stat.json', {})
+	DtpGibddRub._heat = L.heatLayer([], {
+		// blur: 50,
+		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
+	});
+
+	fetch('https://dtp.mvs.group/scripts/dtprubez/get_stat_gipdd_with_rub.txt', {})
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};
@@ -112,6 +120,7 @@ DtpSkpdi.on('remove', () => {
 						fillColor = '#2F4F4F'; //  17-18
 					}
 				}
+				if (!prp.list_rub) { prp.list_rub = []; }
 
 if (!prp.lat || !prp.lon) {
 console.log('_______', prp);
@@ -132,16 +141,15 @@ console.log('_______', prp);
 				return new CirclePoint(latLng, {
 					props: prp,
 					radius: 6,
-					box: true,
+					// box: true,
 					stroke: stroke,
-					fillColor: fillColor
-					// ,
+					fillColor: fillColor,
 					// renderer: renderer
 				}).bindPopup(popup).on('popupopen', (ev) => {
 						setPopup(ev.target.options.props.id);
 						// console.log('popupopen', ev);
 					}).on('popupclose', (ev) => {
-						console.log('popupclose', ev);
+						// console.log('popupclose', ev);
 						// ev.popup.setContent('');
 						if (ev.popup._svObj) {
 							ev.popup._svObj.$destroy();
@@ -149,20 +157,24 @@ console.log('_______', prp);
 						}
 					});
 			});
-			DtpSkpdi.addLayer(DtpSkpdi._heat);
-			DtpSkpdi._heat.setLatLngs(heat);
-			DtpSkpdi._heat.setOptions(DtpSkpdi._needHeat);
+			// let out = {arr: arr, heat: heat, opt: opt};
+			// target._data = out;
+			// return out;
+			// if (target._heat) {
+				DtpGibddRub.addLayer(DtpGibddRub._heat);
+				DtpGibddRub._heat.setLatLngs(heat);
+				DtpGibddRub._heat.setOptions(DtpGibddRub._needHeat);
+			// }
 
-			DtpSkpdi._opt = opt;
-			DtpSkpdi._group = L.layerGroup(arr);
-			// DtpSkpdi.addLayer(L.layerGroup(arr));
+			DtpGibddRub._opt = opt;
+			DtpGibddRub._group = L.layerGroup(arr);
+
 			if (argFilters) {
-				DtpSkpdi.setFilter(argFilters);
-			} else {
-				DtpSkpdi.addLayer(DtpSkpdi._group);
+				DtpGibddRub.setFilter(argFilters);
+			} else if (DtpGibddRub._map._zoom > 11) {
+				DtpGibddRub.addLayer(DtpGibddRub._group);
 			}
-			DtpSkpdi.checkZoom(DtpSkpdi._map._zoom);
-			DtpSkpdi._refreshFilters();
+			DtpGibddRub._refreshFilters();
 		});
 });
 
