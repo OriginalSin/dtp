@@ -100,7 +100,7 @@ DtpHearthsPicket.on('remove', () => {
 	let opt = {road: {}, str_icon_type: {}, iconType: {}, years: {}, dtps: {}},
 		arr = [],
 		max_quarter = 0,
-		prefix = 'https://dtp.mvs.group/scripts/hearths_picket/',
+		prefix = 'https://dtp.mvs.group/scripts/hearths_picket_dev/',
 		parseItem = (it, ht) => {
 			let iconType = it.icon_type || 1,
 				list_bounds = L.latLngBounds(),

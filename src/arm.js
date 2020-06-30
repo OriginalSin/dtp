@@ -179,6 +179,7 @@ let filtersControl = L.control.gmxIcon({
 			cont1._Filters = new DtpVerifyedFilters({
 				target: cont1,
 				props: {
+					control: target,
 					DtpGibdd: DtpGibdd,
 					DtpSkpdi: DtpSkpdi,
 					DtpHearthsStat: DtpHearthsStat,

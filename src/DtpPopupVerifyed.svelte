@@ -23,7 +23,7 @@
     const setPage = (nm) => {
 		let pt = prp._cur[nm],
 			type = pt.type, 
-			url = 'https://dtp.mvs.group/scripts/index.php?request=get_dtp_id&id=' + pt.id + '&type=' + type;
+			url = 'https://dtp.mvs.group/scripts/index_dev.php?request=get_dtp_id&id=' + pt.id + '&type=' + type;
 
 
 		fetch(url, {})

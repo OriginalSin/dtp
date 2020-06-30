@@ -6,7 +6,7 @@ const L = window.L;
 const popup = L.popup();
 let argFilters;
 const setPopup = function (id) {
-	let url = 'https://dtp.mvs.group/scripts/index.php?request=get_dtp_id&id=' + id + '&type=gibdd';
+	let url = 'https://dtp.mvs.group/scripts/index_dev.php?request=get_dtp_id&id=' + id + '&type=gibdd';
 	fetch(url, {})
 		.then(req => req.json())
 		.then(json => {
@@ -43,7 +43,7 @@ DtpGibdd.setFilter = arg => {
 	argFilters = arg || [];
 
 	let arr = [], heat = [];
-	if (DtpGibdd._group) {
+	if (DtpGibdd._group && DtpGibdd._map) {
 		DtpGibdd._group.getLayers().forEach(it => {
 			let prp = it.options.props,
 				cnt = 0;
@@ -51,6 +51,10 @@ DtpGibdd.setFilter = arg => {
 				if (ft.type === 'collision_type') {
 					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.collision_type).length) {
 					// if (prp.collision_type === ft.zn) {
+						cnt++;
+					}
+				} else if (ft.type === 'id_dtp') {
+					if (prp.id == ft.zn) {
 						cnt++;
 					}
 				} else if (ft.type === 'date') {
@@ -89,8 +93,9 @@ DtpGibdd.on('remove', (ev) => {
 		// blur: 50,
 		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
 	});
+	argFilters = [];
 
-	fetch('https://dtp.mvs.group/scripts/index.php?request=get_stat_gipdd', {})
+	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_stat_gipdd', {})
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};

@@ -8,7 +8,7 @@ const popup = L.popup();
 const popup1 = L.popup({minWidth: 200});
 let argFilters;
 let collision_type;
-let prefix = 'https://dtp.mvs.group/scripts/rubez/';
+let prefix = 'https://dtp.mvs.group/scripts/rubez_dev/';
 
 const setPopup = function (props) {
 	let cont = L.DomUtil.create('div'),

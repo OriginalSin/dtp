@@ -7,7 +7,7 @@ const popup = L.popup();
 let argFilters;
 
 const setPopup = function (id) {
-	let url = 'https://dtp.mvs.group/scripts/index.php?request=get_dtp_id&id=' + id + '&type=skpdi';
+	let url = 'https://dtp.mvs.group/scripts/index_dev.php?request=get_dtp_id&id=' + id + '&type=skpdi';
 	fetch(url, {})
 	// fetch('/static/data/dtpexample.json', {})
 		.then(req => req.json())
@@ -45,7 +45,7 @@ DtpSkpdi.setFilter = arg => {
 	argFilters = arg || [];
 
 	let arr = [], heat = [];
-	if (DtpSkpdi._group) {
+	if (DtpSkpdi._group && DtpSkpdi._map) {
 		DtpSkpdi._group.getLayers().forEach(it => {
 			let prp = it.options.props,
 				cnt = 0;
@@ -53,6 +53,10 @@ DtpSkpdi.setFilter = arg => {
 				if (ft.type === 'collision_type') {
 					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.collision_type).length) {
 					// if (prp.collision_type === ft.zn) {
+						cnt++;
+					}
+				} else if (ft.type === 'id_dtp') {
+					if (prp.id == ft.zn) {
 						cnt++;
 					}
 				} else if (ft.type === 'date') {
@@ -87,9 +91,9 @@ DtpSkpdi.on('remove', () => {
 }).on('add', ev => {
 	// console.log('/static/data/dtpskpdi.geojson', ev);
 	DtpSkpdi._heat = L.heatLayer([]);
-	
-	fetch('https://dtp.mvs.group/scripts/index.php?request=get_skpdi', {})
-	// fetch('https://dtp.mvs.group/static/data/json_stat.json', {})
+	argFilters = [];
+
+	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_skpdi', {})
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};

@@ -124,9 +124,9 @@ let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
 		// .openPopup(),
-	'TestGraphQl': TestGraphQl,
+	// 'TestGraphQl': TestGraphQl,
 	'Рубежи': Rub,
-	'Рубежи (test)': Rub1,
+	// 'Рубежи (test)': Rub1,
 	'Очаги ГИБДД по пикетажу': DtpHearthsPicket,
 	'Очаги ГИБДД разные типы, геометрия': DtpHearths5,
 	'Очаги ГИБДД одного типа, геометрия': DtpHearths3,
@@ -175,6 +175,7 @@ let filtersControl = L.control.gmxIcon({
 			cont1._Filters = new DtpVerifyedFilters({
 				target: cont1,
 				props: {
+					control: target,
 					DtpGibddRub: DtpGibddRub,
 					DtpGibdd: DtpGibdd,
 					DtpSkpdi: DtpSkpdi,

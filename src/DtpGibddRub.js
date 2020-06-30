@@ -6,7 +6,7 @@ const L = window.L;
 const popup = L.popup();
 let argFilters;
 const setPopup = function (id) {
-	let url = 'https://dtp.mvs.group/scripts/dtprubez/get_stat_gipdd_with_rub_' + id + '.txt';
+	let url = 'https://dtp.mvs.group/scripts/dtprubez_dev/get_stat_gipdd_with_rub_' + id + '.txt';
 	fetch(url, {})
 		.then(req => req.json())
 		.then(json => {
@@ -44,7 +44,7 @@ DtpGibddRub.setFilter = arg => {
 	DtpGibddRub._argFilters = argFilters;
 
 	let arr = [], heat = [];
-	if (DtpGibddRub._group) {
+	if (DtpGibddRub._group && DtpGibddRub._map) {
 		DtpGibddRub._group.getLayers().forEach(it => {
 			let prp = it.options.props,
 				cnt = 0;
@@ -52,6 +52,10 @@ DtpGibddRub.setFilter = arg => {
 				if (ft.type === 'collision_type') {
 					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.collision_type).length) {
 					// if (prp.collision_type === ft.zn) {
+						cnt++;
+					}
+				} else if (ft.type === 'id_dtp') {
+					if (prp.id == ft.zn) {
 						cnt++;
 					}
 				} else if (ft.type === 'list_rub') {
@@ -96,8 +100,9 @@ DtpGibddRub.on('remove', (ev) => {
 		// blur: 50,
 		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
 	});
+	argFilters = null;
 
-	fetch('https://dtp.mvs.group/scripts/dtprubez/get_stat_gipdd_with_rub.txt', {})
+	fetch('https://dtp.mvs.group/scripts/dtprubez_dev/get_stat_gipdd_with_rub.txt', {})
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};
@@ -169,9 +174,10 @@ console.log('_______', prp);
 			DtpGibddRub._opt = opt;
 			DtpGibddRub._group = L.layerGroup(arr);
 
-			if (argFilters) {
-				DtpGibddRub.setFilter(argFilters);
-			} else if (DtpGibddRub._map._zoom > 11) {
+			// if (argFilters) {
+				DtpGibddRub.setFilter();
+			// } else 
+			if (DtpGibddRub._map._zoom > 11) {
 				DtpGibddRub.addLayer(DtpGibddRub._group);
 			}
 			DtpGibddRub._refreshFilters();

@@ -43,7 +43,7 @@
 			<tbody>
 			<tr>
 			  <td class="first">ID:</td>
-			  <td>{prp.sid || prp.id_stat || prp.id_skpdi || ''}</td>
+			  <td>{prp.id || prp.id_stat || prp.id_skpdi || ''}</td>
 			</tr>
 			<tr>
 			  <td class="first">Пикетаж:</td>

@@ -348,7 +348,16 @@ button:focus {
 }
 
 .leaflet-popup-content .contVideo {
-	width: 740px;
+	width: 860px;
+}
+
+.leaflet-popup-content .videoDiv.small {
+    width: 420px;
+}
+
+.leaflet-popup-content .videoDiv {
+    display: inline-flex;
+    margin: 4px;
 }
 
 

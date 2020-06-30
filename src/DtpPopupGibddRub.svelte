@@ -31,7 +31,7 @@
 console.log('showRub', ev.target.value)
 
 		rubCont.innerHTML = '';
-		let url = 'https://dtp.mvs.group/scripts/rubez/rubez-complex-' + id + '.txt';
+		let url = 'https://dtp.mvs.group/scripts/rubez_dev/rubez-complex-' + id + '.txt';
 		fetch(url, {})
 			.then(req => req.json())
 			.then(json => {
@@ -147,7 +147,7 @@ console.log('ddddd', prp)
               <td>
 		<div class="win leaflet-popup-content-wrapper " bind:this={rubCont}></div>
 				<ul>
-					{#each prp.list_rub as pt, index}
+					{#each (prp.list_rub || []) as pt, index}
 						<li class="link" on:click={showRub} value={pt.line_id}>{pt.line_id} ({pt.range} м.)</li>
 					{/each}
 				</ul>

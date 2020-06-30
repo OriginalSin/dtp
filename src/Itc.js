@@ -3,7 +3,7 @@ import DtpPopup from './DtpPopupGibddRub.svelte';
 
 const L = window.L;
 
-const popup = L.popup({maxWidth: 740});
+const popup = L.popup({maxWidth: 848});
 let argFilters;
 let curCam = 0;
 const setPopup = function (prp) {
@@ -11,11 +11,14 @@ const setPopup = function (prp) {
 	let cont = L.DomUtil.create('div', 'contVideo');
 	let list = L.DomUtil.create('div', 'list', cont);
 	let videoCont = L.DomUtil.create('div', 'videoCont', cont);
-	let setVideo = (ind) => {
-		videoCont.innerHTML = '';
+	let setVideo = (ind, flag) => {
+		if (flag) {
+			videoCont.innerHTML = '';
+		}
 		curCam = ind;
 		let curCamPrp = cams.length > curCam ? cams[curCam] : {};
-		let video = L.DomUtil.create('video', 'video', videoCont);
+		let videoDiv = L.DomUtil.create('span', 'videoDiv' + (flag ? '' : ' small'), videoCont);
+		let video = L.DomUtil.create('video', 'video', videoDiv);
 		// video.setAttribute('controls', true);
 			// <video id="videoPlayer" controls></video>
 		// var url = 'https://dtp.mvs.group/static/proxy.php?url=http:' + curCamPrp.video;
@@ -32,37 +35,21 @@ const setPopup = function (prp) {
 		}
 		button.textContent = it.name || 'Камера';
 		L.DomEvent.on(button, 'click', () => {
-			setVideo(ind);
+			setVideo(ind, true);
 			prev.classList.remove('active');
 			button.classList.add('active');
 			prev = button;
 		});
 		
+		setVideo(ind, false);
 		
 	});
 	if (cams.length > curCam) {
-		setVideo(0);
+		// setVideo(0);
 	} else {
 		cont.innerHTML = 'Камеры отсутствуют!';
 	}
 	popup.setContent(cont);
-/*
-	fetch(url, {})
-		.then(req => req.json())
-		.then(json => {
-// console.log('bindPopup', layer, json, DtpPopup);
-			let cont = L.DomUtil.create('div');
-			const app = new DtpPopup({
-				target: cont,
-				props: {
-					prp: json
-				}
-			});
-			popup._svObj = app;
-			popup.setContent(cont);
-		});
-	return '';
-	*/
 }
 
 // let renderer = L.canvas();

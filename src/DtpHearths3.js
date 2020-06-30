@@ -1,6 +1,7 @@
 import {Bbox, CirclePoint} from './CirclePoint';
 import DtpPopup from './DtpPopupVerifyed.svelte';
 import DtpPopupHearths from './DtpPopupHearths.svelte';
+import {chkStricken} from './MapUtils';
 
 const L = window.L;
 
@@ -43,13 +44,18 @@ DtpHearths3.setFilter = arg => {
 	argFilters = arg;
 
 	let arr = [];
-	if (DtpHearths3._group) {
+	if (DtpHearths3._group && DtpHearths3._map) {
 		DtpHearths3._group.getLayers().forEach(it => {
 			let prp = it.options.cluster,
+				list_dtp = prp.list_dtp || [],
 				cnt = 0;
 			argFilters.forEach(ft => {
 				if (ft.type === 'quarter') {
 					if (ft.zn[prp.year] && ft.zn[prp.year][prp.quarter]) {
+						cnt++;
+					}
+				} else if (ft.type === 'id_dtp') {
+					if (list_dtp.filter(pt => pt.id == ft.zn || pt.id_skpdi == ft.zn || pt.id_stat == ft.zn).length) {
 						cnt++;
 					}
 				} else if (ft.type === 'year') {
@@ -64,13 +70,13 @@ DtpHearths3.setFilter = arg => {
 					let zn = ft.zn;
 					if (!zn) {
 						cnt++;
-					} else if (zn === 1 && prp.count_lost) {
+					} else if (zn === 1 && !prp.count_stricken && prp.count_lost) {
 						cnt++;								// Только с погибшими
-					} else if (zn === 2 && prp.count_stricken) {
+					} else if (zn === 2 && prp.count_stricken && !prp.count_lost) {
 						cnt++;								// Только с пострадавшими
 					} else if (zn === 3 && (prp.count_stricken || prp.count_lost)) {
 						cnt++;								// С пострадавшими или погибшими
-					} else if (zn === 3 && prp.count_stricken && prp.count_lost) {
+					} else if (zn === 4 && prp.count_stricken && prp.count_lost) {
 						cnt++;								// С пострадавшими и погибшими
 					}
 				}
@@ -92,20 +98,24 @@ DtpHearths3.setFilter = arg => {
 DtpHearths3.on('remove', () => {
 	DtpHearths3.clearLayers();
 }).on('add', ev => {
-	let opt = {str_icon_type: {}, iconType: {}, years: {}, dtps: {}},
+	argFilters = [];
+	let opt = {str_icon_type: {}, iconType: {}, years: {}, dtps: {}, stricken: {0:0}},
 		arr = [],
 		max_quarter = 0,
-		prefix = 'https://dtp.mvs.group/scripts/hearths3/';
+		prefix = 'https://dtp.mvs.group/scripts/hearths3_dev/';
 
 	Promise.all([2019, 2020].map(key => fetch(prefix + key + '.txt', {}).then(req => req.json())))
 		.then(allJson => {
 			allJson.forEach(json => {
+				opt.stricken[0] += json.length;
 				json.forEach(it => {
 					let iconType = it.icon_type || 1,
 						list_bounds = L.latLngBounds(),
 						list_dtp = it.list_dtp,
 						stroke = false,
+						stricken = chkStricken(it, opt),
 						fillColor = '#FF0000'; //   19-20
+						
 					if (list_dtp.length) {
 
 						let cy = Number(it.year),
@@ -266,7 +276,7 @@ DtpHearths3.on('remove', () => {
 				}
 				DtpHearths3._refreshFilters();
 			});
-console.log('__allJson_____', allJson, DtpHearths3._opt);
+console.log('__DtpHearths3_____', allJson, DtpHearths3._opt);
 		});
 });
 

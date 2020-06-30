@@ -40,7 +40,7 @@ DtpVerifyed.setFilter = arg => {
 	argFilters = arg || [];
 
 	let arr = [], heat = [];
-	if (DtpVerifyed._group) {
+	if (DtpVerifyed._group && DtpVerifyed._map) {
 		DtpVerifyed._group.getLayers().forEach(it => {
 			let prp = it.options.props,
 				cnt = 0;
@@ -53,6 +53,10 @@ DtpVerifyed.setFilter = arg => {
 					} else if (ft.zn === 2 && (prp.id_skpdi && !prp.id_stat)) {
 						cnt++;
 					} else if (ft.zn === 3 && (prp.id_stat && !prp.id_skpdi)) {
+						cnt++;
+					}
+				} else if (ft.type === 'id_dtp') {
+					if (prp.id_skpdi == ft.zn || prp.id_stat == ft.zn) {
 						cnt++;
 					}
 				} else if (ft.type === 'collision_type') {
@@ -91,8 +95,9 @@ DtpVerifyed.on('remove', () => {
 	DtpVerifyed._map.removeLayer(DtpVerifyed._heat);
 	DtpVerifyed.clearLayers();
 }).on('add', ev => {
+	argFilters = [];
 	DtpVerifyed._heat = L.heatLayer([], {interactive: false});
-	fetch('https://dtp.mvs.group/scripts/index.php?request=get_collision', {})
+	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_collision', {})
 		.then(req => req.json())
 		.then(json => {
 			let opt = {collision_type: {}, iconType: {}};

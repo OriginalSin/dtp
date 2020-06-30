@@ -11,6 +11,13 @@
 	export let DtpGibdd;
 	export let DtpGibddRub;
 	export let Rub;
+	export let control;
+
+	if (!Rub) { Rub = {}; };
+	if (!DtpGibddRub) { DtpGibddRub = {}; };
+	if (!DtpHearthsPicket) { DtpHearthsPicket = {}; };
+	if (!DtpHearths5) { DtpHearths5 = {}; };
+	if (!DtpHearths3) { DtpHearths3 = {}; };
 
 	let currentFilter = 0;
 	let currentFilterDtpHearths = 0;
@@ -23,9 +30,10 @@
 	// const ed = new Date(tdd.getTime() + 24*60*60*1000);
 	const ed = td;
 	// const bd = new Date(tdd.getTime() - 30*24*60*60*1000);
-	const bd = new Date(2018, 0, 1);
+	const bd = new Date(2019, 0, 1);
 
-	let dateInterval = [bd.getTime()/1000, ed.getTime()/1000];
+	let id_dtp = control._id_dtp || null;
+	let dateInterval = control._dateInterval || [bd.getTime()/1000, ed.getTime()/1000];
 	let optData = DtpVerifyed._opt || {};
 	let optCollisionKeys = optData.collision_type ? Object.keys(optData.collision_type).sort((a, b) => optData.collision_type[b] - optData.collision_type[a]) : [];
  // console.log('optData', optData)
@@ -34,31 +42,30 @@
 	let optCollisionSkpdiKeys = optDataSkpdi.collision_type ? Object.keys(optDataSkpdi.collision_type).sort((a, b) => optDataSkpdi.collision_type[b] - optDataSkpdi.collision_type[a]) : [];
 	let optDataGibdd = DtpGibdd._opt || {};
 	let optCollisionGibddKeys = optDataGibdd.collision_type ? Object.keys(optDataGibdd.collision_type).sort((a, b) => optDataGibdd.collision_type[b] - optDataGibdd.collision_type[a]) : [];
-	let optDataGibddRub = DtpGibddRub._opt || {};
+	let optDataGibddRub = (DtpGibddRub || {})._opt || {};
 	let optCollisionGibddRubKeys = optDataGibddRub.collision_type ? Object.keys(optDataGibddRub.collision_type).sort((a, b) => optDataGibddRub.collision_type[b] - optDataGibddRub.collision_type[a]) : [];
 
-	let optDataHearths = DtpHearths._opt || {};
+	let optDataHearths = (DtpHearths || {})._opt || {};
 	let optTypeHearthsKeys = optDataHearths.str_icon_type ? Object.keys(optDataHearths.str_icon_type).sort((a, b) => optDataHearths.str_icon_type[b] - optDataHearths.str_icon_type[a]) : [];
 
-	let optDataHearthsTmp = DtpHearthsTmp._opt || {};
+	let optDataHearthsTmp = (DtpHearthsTmp || {})._opt || {};
 	let optTypeHearthsTmpKeys = optDataHearthsTmp.str_icon_type ? Object.keys(optDataHearthsTmp.str_icon_type).sort((a, b) => optDataHearthsTmp.str_icon_type[b] - optDataHearthsTmp.str_icon_type[a]) : [];
 
-	let optDataHearthsStat = DtpHearthsStat._opt || {};
+	let optDataHearthsStat = (DtpHearthsStat || {})._opt || {};
 	let optTypeHearthsStatKeys = optDataHearthsStat.str_icon_type ? Object.keys(optDataHearthsStat.str_icon_type).sort((a, b) => optDataHearthsStat.str_icon_type[b] - optDataHearthsStat.str_icon_type[a]) : [];
 
-	let optDataHearths3 = DtpHearths3._opt || {};
+	let optDataHearths3 = (DtpHearths3 || {})._opt || {};
 	let optTypeHearths3Keys = optDataHearths3.str_icon_type ? Object.keys(optDataHearths3.str_icon_type).sort((a, b) => optDataHearths3.str_icon_type[b] - optDataHearths3.str_icon_type[a]) : [];
 
-	let optDataHearths5 = DtpHearths5._opt || {};
+	let optDataHearths5 = (DtpHearths5 || {})._opt || {};
 	let optTypeHearths5Keys = optDataHearths5.str_icon_type ? Object.keys(optDataHearths5.str_icon_type).sort((a, b) => optDataHearths5.str_icon_type[b] - optDataHearths5.str_icon_type[a]) : [];
 
-	let optDataHearthsPicket = DtpHearthsPicket._opt || {};
+	let optDataHearthsPicket = (DtpHearthsPicket || {})._opt || {};
 	let optRoadTypes = optDataHearthsPicket.road ? Object.keys(optDataHearthsPicket.road).sort((a, b) => optDataHearthsPicket.road[b] - optDataHearthsPicket.road[a]) : [];
 
 	let roads = [''];
 	let ht = {'hearth3': true, 'hearth5': true};
 	let id_hearth = null;
-	let id_dtp = null;
 
 	let collision_type = [''];
 	let collision_type_skpdi = [''];
@@ -77,7 +84,7 @@
 	let heatElementDtpSkpdi;
 	let heatElementDtpVerifyed;
 
-	let _comps = Rub._argFilters ? Rub._argFilters[0] : {type: 'comp', zn: {on: true, off: true}};
+	let _comps = Rub && Rub._argFilters ? Rub._argFilters[0] : {type: 'comp', zn: {on: true, off: true}};
 	let compOn = _comps.zn.on;
 	let comp1On = _comps.zn.off;
 
@@ -93,26 +100,42 @@
 	};
 
     const setFilterHearthsPicket = () => {
-		let opt = [];
-		if (id_dtp) {
-			opt.push({type: 'id_dtp', zn: id_dtp});
+		if (DtpHearthsPicket._map) {
+			let opt = [];
+			if (id_dtp) {
+				opt.push({type: 'id_dtp', zn: id_dtp});
+			}
+			if (id_hearth) {
+				opt.push({type: 'id_hearth', zn: id_hearth});
+			}
+			if (roads) {
+				opt.push({type: 'roads', zn: roads});
+			}
+			opt.push({type: 'ht', zn: ht});
+			// console.log('opt', opt);
+			DtpHearthsPicket.setFilter(opt);
 		}
-		if (id_hearth) {
-			opt.push({type: 'id_hearth', zn: id_hearth});
-		}
-		if (roads) {
-			opt.push({type: 'roads', zn: roads});
-		}
-		opt.push({type: 'ht', zn: ht});
-		// console.log('opt', opt);
-		DtpHearthsPicket.setFilter(opt);
+	};
+
+	const refresh = () => {
+		setFilterHearthsPicket();
+		setFilterHearths5({});
+		setFilterHearths3({});
+		setFilterHearths({});
+		setFilterHearthsTmp({});
+		setFilterHearthsStat({});
+		setFilterSkpdi();
+		setFilterGibdd();
+		setFilterGibddRub();
+		setFilter();
 	};
 
 	const oncheckIdDtp = (ev) => {
 		let target = ev.target,
 			value = target.value;
 		id_dtp = value ? value : null;
-		setFilterHearthsPicket();
+		control._id_dtp = id_dtp;
+		refresh();
 	};
 
 	const oncheckIdHearth = (ev) => {
@@ -152,40 +175,55 @@
 	};
 
 	const setFilter = () => {
-		let opt = [
-			{type: 'itemType', zn: currentFilter}
-		];
-		if (dateInterval) {
-			opt.push({type: 'date', zn: dateInterval});
+		if (DtpVerifyed._map) {
+			let opt = [
+				{type: 'itemType', zn: currentFilter}
+			];
+			if (id_dtp) {
+				opt.push({type: 'id_dtp', zn: id_dtp});
+			}
+			if (dateInterval) {
+				control._dateInterval = dateInterval;
+				opt.push({type: 'date', zn: dateInterval});
+			}
+			if (collision_type) {
+				opt.push({type: 'collision_type', zn: collision_type});
+			}
+			// console.log('opt', collision_type, opt);
+			DtpVerifyed.setFilter(opt);
 		}
-		if (collision_type) {
-			opt.push({type: 'collision_type', zn: collision_type});
-		}
-		// console.log('opt', collision_type, opt);
-		DtpVerifyed.setFilter(opt);
 	};
 
-	let _list_rub = DtpGibddRub._argFilters ? DtpGibddRub._argFilters[0] : {type: 'list_rub', zn: {on: true, off: true}};
+	let _list_rub = DtpGibddRub._argFilters && DtpGibddRub._argFilters.length ? DtpGibddRub._argFilters[0] : {type: 'list_rub', zn: {on: true, off: true}};
 	let list_rubOn = _list_rub.zn.on;
 	let list_rubOff = _list_rub.zn.off;
 
     const setFilterGibddRub = () => {
-		let opt = [
-			{type: 'list_rub', zn: {on: list_rubOn, off: list_rubOff}}
-		];
-		if (dateInterval) {
-			opt.push({type: 'date', zn: dateInterval});
+		if (DtpGibddRub._map) {
+			let opt = [
+				{type: 'list_rub', zn: {on: list_rubOn, off: list_rubOff}}
+			];
+			if (id_dtp) {
+				opt.push({type: 'id_dtp', zn: id_dtp});
+			}
+			if (dateInterval) {
+				opt.push({type: 'date', zn: dateInterval});
+			}
+			if (collision_type_gibddRub) {
+				opt.push({type: 'collision_type', zn: collision_type_gibddRub});
+			}
+			// console.log('opt', collision_type, opt);
+			DtpGibddRub.setFilter(opt);
 		}
-		if (collision_type_gibddRub) {
-			opt.push({type: 'collision_type', zn: collision_type_gibddRub});
-		}
-		// console.log('opt', collision_type, opt);
-		DtpGibddRub.setFilter(opt);
 	};
 
     const setFilterGibdd = () => {
+		if (DtpGibdd._map) {
 		let opt = [
 		];
+		if (id_dtp) {
+			opt.push({type: 'id_dtp', zn: id_dtp});
+		}
 		if (dateInterval) {
 			opt.push({type: 'date', zn: dateInterval});
 		}
@@ -194,11 +232,16 @@
 		}
 		// console.log('opt', collision_type, opt);
 		DtpGibdd.setFilter(opt);
+		}
 	};
 
     const setFilterSkpdi = () => {
+		if (DtpSkpdi._map) {
 		let opt = [
 		];
+		if (id_dtp) {
+			opt.push({type: 'id_dtp', zn: id_dtp});
+		}
 		if (dateInterval) {
 			opt.push({type: 'date', zn: dateInterval});
 		}
@@ -207,6 +250,7 @@
 		}
 		// console.log('opt', collision_type, opt);
 		DtpSkpdi.setFilter(opt);
+		}
 	};
 
 	// date filter
@@ -238,6 +282,7 @@
 				setFilter();
 				setFilterSkpdi();
 				setFilterGibdd();
+				setFilterGibddRub();
 			},
 			toString(date, format) {
 				// you should do formatting based on the passed format,
@@ -281,6 +326,8 @@
 			field: endDate,
 			defaultDate: new Date(1000 * dateInterval[1])
 		}));
+		// id_dtp = null;
+		refresh();
 
 	});
 	const onPrev = () => {
@@ -295,6 +342,9 @@
 		end.setDate(new Date(e.getTime() - ms));
 		dateInterval = [beg.getDate().getTime()/1000, 24*60*60 + end.getDate().getTime()/1000];
 		setFilter();
+		setFilterSkpdi();
+		setFilterGibdd();
+		setFilterGibddRub();
 // console.log('ssssss', dateInterval, beg.getDate(), end.getDate())
 	};
 	const onNext = () => {
@@ -310,7 +360,10 @@
 		// end.setDate(new Date(beg.getDate().getTime() + ms));
 		dateInterval = [beg.getDate().getTime()/1000, 24*60*60 + end.getDate().getTime()/1000];
 		setFilter();
- // console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
+		setFilterSkpdi();
+		setFilterGibdd();
+ 		setFilterGibddRub();
+// console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
 	};
 
 	// ДТП Очаги (5)
@@ -334,6 +387,7 @@
 	// };
 
     const setFilterHearths5 = (ev) => {
+		if (DtpHearths5._map) {
 		let arg = [],
 			target = ev.target || {},
 			checked = target.checked,
@@ -380,8 +434,12 @@
 		if (str_icon_type5.length > 0 && str_icon_type5[0]) {
 			arg.push({type: 'str_icon_type', zn: str_icon_type5});
 		}
+		if (id_dtp) {
+			arg.push({type: 'id_dtp', zn: id_dtp});
+		}
 		
 		DtpHearths5.setFilter(arg);
+		}
  	};
 
 	// ДТП Очаги (3)
@@ -405,6 +463,7 @@
 	// };
 
     const setFilterHearths3 = (ev) => {
+		if (DtpHearths3._map) {
 		let arg = [],
 			target = ev.target || {},
 			checked = target.checked,
@@ -451,8 +510,12 @@
 		if (str_icon_type3.length > 0 && str_icon_type3[0]) {
 			arg.push({type: 'str_icon_type', zn: str_icon_type3});
 		}
-		
+		if (id_dtp) {
+			arg.push({type: 'id_dtp', zn: id_dtp});
+		}
+
 		DtpHearths3.setFilter(arg);
+		}
  	};
 
 	// ДТП Очаги (Stat)
@@ -476,6 +539,7 @@
 	// };
 
     const setFilterHearthsStat = (ev) => {
+		if (DtpHearthsStat._map) {
 		let arg = [],
 			target = ev.target || {},
 			checked = target.checked,
@@ -522,8 +586,12 @@
 		if (str_icon_typeStat.length > 0 && str_icon_typeStat[0]) {
 			arg.push({type: 'str_icon_type', zn: str_icon_typeStat});
 		}
+		if (id_dtp) {
+			arg.push({type: 'id_dtp', zn: id_dtp});
+		}
 		
 		DtpHearthsStat.setFilter(arg);
+		}
  	};
 
 	// ДТП Очаги (TMP)
@@ -547,6 +615,7 @@
 	// };
 
     const setFilterHearthsTmp = (ev) => {
+		if (DtpHearthsTmp._map) {
 		let arg = [],
 			target = ev.target || {},
 			checked = target.checked,
@@ -593,8 +662,12 @@
 		if (str_icon_typeTmp.length > 0 && str_icon_typeTmp[0]) {
 			arg.push({type: 'str_icon_type', zn: str_icon_typeTmp});
 		}
+		if (id_dtp) {
+			arg.push({type: 'id_dtp', zn: id_dtp});
+		}
 		
 		DtpHearthsTmp.setFilter(arg);
+		}
  	};
 
 	// ДТП Очаги
@@ -615,12 +688,13 @@
 	hearths_quarter = last_quarter || {};
 
     const setFilterHearths = (ev) => {
+		if (DtpHearths._map) {
 		let arg = [],
 			target = ev.target || {},
 			checked = target.checked,
 			id = target.id,
 			name = target.name;
-		console.log('setFilterHearths', checked, id, name, ev);
+		// console.log('setFilterHearths', checked, id, name, ev);
 		if (id === 'hearths_period_type2') {
 			hearths_period_type = 2;
 		} else if (id === 'hearths_period_type1') {
@@ -658,8 +732,12 @@
 		if (str_icon_type.length > 0 && str_icon_type[0]) {
 			arg.push({type: 'str_icon_type', zn: str_icon_type});
 		}
+		if (id_dtp) {
+			arg.push({type: 'id_dtp', zn: id_dtp});
+		}
 
 		DtpHearths.setFilter(arg);
+		}
  	};
 
 </script>
@@ -693,6 +771,7 @@
 		{#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги (5)</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			<div class="pLine nowrap">
 			<fieldset>
 				<legend>Фильтрация по периодам:</legend>
@@ -720,11 +799,11 @@
 			</div>
 			<div class="pLine">
 				<select bind:value={hearths_stricken5} on:change="{setFilterHearths5}">
-					<option value=''>Очаги все</option>
-					<option value=1>Только с погибшими</option>
-					<option value=2>Только с пострадавшими</option>
-					<option value=3>С пострадавшими или погибшими</option>
-					<option value=4>С пострадавшими и погибшими</option>
+					<option value=''>({optDataHearths5.stricken[0] || 0}) Очаги все</option>
+					<option value=1>({optDataHearths5.stricken[1] || 0}) Только с погибшими</option>
+					<option value=2>({optDataHearths5.stricken[2] || 0}) Только с пострадавшими</option>
+					<option value=3>({optDataHearths5.stricken[3] || 0}) С пострадавшими или погибшими</option>
+					<option value=4>({optDataHearths5.stricken[4] || 0}) С пострадавшими и погибшими</option>
 				</select>
 			</div>
 		</div>
@@ -733,6 +812,7 @@
 		{#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги (3)</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			<div class="pLine nowrap">
 			<fieldset>
 				<legend>Фильтрация по периодам:</legend>
@@ -760,11 +840,11 @@
 			</div>
 			<div class="pLine">
 				<select bind:value={hearths_stricken3} on:change="{setFilterHearths3}">
-					<option value=''>Очаги все</option>
-					<option value=1>Только с погибшими</option>
-					<option value=2>Только с пострадавшими</option>
-					<option value=3>С пострадавшими или погибшими</option>
-					<option value=4>С пострадавшими и погибшими</option>
+					<option value=''>({optDataHearths3.stricken[0] || 0}) Очаги все</option>
+					<option value=1>({optDataHearths3.stricken[1] || 0}) Только с погибшими</option>
+					<option value=2>({optDataHearths3.stricken[2] || 0}) Только с пострадавшими</option>
+					<option value=3>({optDataHearths3.stricken[3] || 0}) С пострадавшими или погибшими</option>
+					<option value=4>({optDataHearths3.stricken[4] || 0}) С пострадавшими и погибшими</option>
 				</select>
 			</div>
 		</div>
@@ -773,6 +853,7 @@
 		{#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги (Stat)</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			<div class="pLine nowrap">
 			<fieldset>
 				<legend>Фильтрация по периодам:</legend>
@@ -811,11 +892,11 @@
 			</div>
 			<div class="pLine">
 				<select bind:value={hearths_strickenStat} on:change="{setFilterHearthsStat}">
-					<option value=''>Очаги все</option>
-					<option value=1>Только с погибшими</option>
-					<option value=2>Только с пострадавшими</option>
-					<option value=3>С пострадавшими или погибшими</option>
-					<option value=4>С пострадавшими и погибшими</option>
+					<option value=''>({optDataHearthsStat.stricken[0] || 0}) Очаги все</option>
+					<option value=1>({optDataHearthsStat.stricken[1] || 0}) Только с погибшими</option>
+					<option value=2>({optDataHearthsStat.stricken[2] || 0}) Только с пострадавшими</option>
+					<option value=3>({optDataHearthsStat.stricken[3] || 0}) С пострадавшими или погибшими</option>
+					<option value=4>({optDataHearthsStat.stricken[4] || 0}) С пострадавшими и погибшими</option>
 				</select>
 			</div>
 		</div>
@@ -824,6 +905,7 @@
 		{#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги (TMP)</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			<div class="pLine nowrap">
 			<fieldset>
 				<legend>Фильтрация по периодам:</legend>
@@ -876,11 +958,11 @@
 			</div>
 			<div class="pLine">
 				<select bind:value={hearths_strickenTmp} on:change="{setFilterHearthsTmp}">
-					<option value=''>Очаги все</option>
-					<option value=1>Только с погибшими</option>
-					<option value=2>Только с пострадавшими</option>
-					<option value=3>С пострадавшими или погибшими</option>
-					<option value=4>С пострадавшими и погибшими</option>
+					<option value=''>({optDataHearthsTmp.stricken[0] || 0}) Очаги все</option>
+					<option value=1>({optDataHearthsTmp.stricken[1] || 0}) Только с погибшими</option>
+					<option value=2>({optDataHearthsTmp.stricken[2] || 0}) Только с пострадавшими</option>
+					<option value=3>({optDataHearthsTmp.stricken[3] || 0}) С пострадавшими или погибшими</option>
+					<option value=4>({optDataHearthsTmp.stricken[4] || 0}) С пострадавшими и погибшими</option>
 				</select>
 			</div>
 		</div>
@@ -890,6 +972,7 @@
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП Очаги</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			<div class="pLine nowrap">
 			<fieldset>
 				<legend>Фильтрация по периодам:</legend>
@@ -928,11 +1011,11 @@
 			</div>
 			<div class="pLine">
 				<select bind:value={hearths_stricken} on:change="{setFilterHearths}">
-					<option value=''>Очаги все</option>
-					<option value=1>Только с погибшими</option>
-					<option value=2>Только с пострадавшими</option>
-					<option value=3>С пострадавшими или погибшими</option>
-					<option value=4>С пострадавшими и погибшими</option>
+					<option value=''>({optDataHearths.stricken[0] || 0}) Очаги все</option>
+					<option value=1>({optDataHearths.stricken[1] || 0}) Только с погибшими</option>
+					<option value=2>({optDataHearths.stricken[2] || 0}) Только с пострадавшими</option>
+					<option value=3>({optDataHearths.stricken[3] || 0}) С пострадавшими или погибшими</option>
+					<option value=4>({optDataHearths.stricken[4] || 0}) С пострадавшими и погибшими</option>
 				</select>
 			</div>
 		</div>
@@ -961,9 +1044,9 @@
 				</label>
 			</div>
 			<div class="pLine">
-				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked name="heat"><label for="heat"> - тепловая карта</label>
+				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={DtpGibddRub._needHeat || DtpGibdd._needHeat || DtpSkpdi._needHeat || DtpVerifyed._needHeat} name="heat"><label for="heat"> - тепловая карта</label>
 			</div>
-		{:else if !DtpHearths._map && !DtpHearthsTmp._map && !DtpHearthsPicket._map && !Rub._map}
+		{:else if !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
 			<div class="pLine">Нет включенных слоев</div>
 		{/if}
 
@@ -971,6 +1054,7 @@
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП Сводный</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			<div class="pLine"><input type="radio" id="d0" name="drone" value=0 checked on:click={oncheck}><label for="d0">Все</label></div>
 			{#if DtpVerifyed._arm}
 			<div class="pLine"><input type="radio" id="d1" name="drone" value=1 on:click={oncheck}><label for="d1">Только Пересечения ГИБДД и СКПДИ</label></div>
@@ -1000,6 +1084,7 @@
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП СКПДИ</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			{#if optDataSkpdi.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_skpdi} on:change="{setFilterSkpdi}" multiple>
@@ -1021,6 +1106,7 @@
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП ГИБДД</b></div>
 		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 			{#if optDataGibdd.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibdd}" multiple>
@@ -1041,11 +1127,11 @@
 		{#if DtpGibddRub._map}
 		<div class="pLine"><hr></div>
 		<div class="pLine">Фильтры - <b>ДТП ГИБДД + Рубежи</b></div>
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
 		<div class="pLine">
 			<input type="checkbox" bind:checked={list_rubOn} on:change={setFilterGibddRub} name="list_rubOn"><label for="list_rubOn"> - с рубежами</label>
 			<input type="checkbox" bind:checked={list_rubOff} on:change={setFilterGibddRub} name="list_rubOff"><label for="list_rubOff"> - без рубежей</label>
 		</div>
-		list_rub
 		<div class="filtersCont">
 			{#if optDataGibddRub.collision_type}
 			<div class="pLine">
