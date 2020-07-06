@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	export let DtpHearthsPicket4;
 	export let DtpHearthsPicket;
 	export let DtpHearths5;
 	export let DtpHearths3;
@@ -15,6 +16,7 @@
 
 	if (!Rub) { Rub = {}; };
 	if (!DtpGibddRub) { DtpGibddRub = {}; };
+	if (!DtpHearthsPicket4) { DtpHearthsPicket4 = {}; };
 	if (!DtpHearthsPicket) { DtpHearthsPicket = {}; };
 	if (!DtpHearths5) { DtpHearths5 = {}; };
 	if (!DtpHearths3) { DtpHearths3 = {}; };
@@ -62,6 +64,9 @@
 
 	let optDataHearthsPicket = (DtpHearthsPicket || {})._opt || {};
 	let optRoadTypes = optDataHearthsPicket.road ? Object.keys(optDataHearthsPicket.road).sort((a, b) => optDataHearthsPicket.road[b] - optDataHearthsPicket.road[a]) : [];
+
+	let optDataHearthsPicket4 = (DtpHearthsPicket4 || {})._opt || {};
+	let optRoadTypes4 = optDataHearthsPicket4.road ? Object.keys(optDataHearthsPicket4.road).sort((a, b) => optDataHearthsPicket4.road[b] - optDataHearthsPicket4.road[a]) : [];
 
 	let roads = [''];
 	let ht = {'hearth3': true, 'hearth5': true};
@@ -117,7 +122,48 @@
 		}
 	};
 
+	let hearths_stricken4;
+	let hearths_year_Picket4 = {};
+	Object.keys(optDataHearthsPicket4.years || {}).sort().forEach(key => {
+		hearths_year_Picket4[key] = true;
+	});
+    const setFilterHearthsPicket4 = (ev) => {
+		if (DtpHearthsPicket4._map) {
+			if (ev) {
+				let target = ev.target || {},
+					checked = target.checked,
+					id = target.id,
+					name = target.name;
+				if (id !== 'stricken') {
+					// hearths_stricken4 = 
+				// } else {
+					hearths_year_Picket4[name] = checked;
+				}
+			}
+			let opt = [];
+			if (id_dtp) {
+				opt.push({type: 'id_dtp', zn: id_dtp});
+			}
+			if (hearths_stricken4) {
+				opt.push({type: 'stricken', zn: Number(hearths_stricken4)});
+			}
+			if (hearths_period_type_Stat === 1) {
+				opt.push({type: 'year', zn: hearths_year_Picket4});
+			}
+			if (id_hearth) {
+				opt.push({type: 'id_hearth', zn: id_hearth});
+			}
+			if (roads) {
+				opt.push({type: 'roads', zn: roads});
+			}
+			opt.push({type: 'ht', zn: ht});
+			// console.log('opt', opt);
+			DtpHearthsPicket4.setFilter(opt);
+		}
+	};
+
 	const refresh = () => {
+		setFilterHearthsPicket4();
 		setFilterHearthsPicket();
 		setFilterHearths5({});
 		setFilterHearths3({});
@@ -143,11 +189,13 @@
 			value = target.value;
 		id_hearth = value ? value : null;
 		setFilterHearthsPicket();
+		setFilterHearthsPicket4();
 	};
 	const oncheckHt = (ev) => {
 		let target = ev.target;
 		ht[target.name] = target.checked;
 		setFilterHearthsPicket();
+		setFilterHearthsPicket4();
 	};
 
 	const setHeat = (ev) => {
@@ -744,6 +792,52 @@
 
 	  <div class="mvsFilters">
 
+		{#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}
+		<div class="pLine">Фильтры - <b>Предочаги по пикетажу</b></div>
+		<div class="filtersCont">
+			<div class="pLine">ID Очага: <input type="text" on:input={oncheckIdHearth} value={id_hearth} /></div>
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine nowrap">
+				<fieldset>
+					<legend>Фильтрация по периодам:</legend>
+					<div class="pLine type">
+						<input type="radio" on:change={setFilterHearthsPicket4} bind:group={hearths_period_type_Stat} value={1} checked={hearths_period_type_Stat === 1} id="hearths_period_type_Stat1" name="hearths_period_type_Stat"><label for="hearths_period_type_Stat1">Фильтрация по годам</label>
+						<div class="pLine margin">
+						{#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}
+							<input type="checkbox" on:change={setFilterHearthsPicket4} id="hearths_year_Picket4" checked={hearths_year_Picket4[key]} disabled={hearths_period_type_Stat === 2} name="{key}"><label for="hearths_year_Picket4">{key}</label>
+						{/each}
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckHt} id="ht_3" checked={ht.hearth3} name="hearth3"><label for="ht_3">одного типа</label>
+				<input type="checkbox" on:change={oncheckHt} id="ht_5" checked={ht.hearth5} name="hearth5"><label for="ht_5">разного типа</label>
+			</div>
+			<div class="pLine">
+				<select class="multiple_icon_typeTmp" bind:value={roads} on:change="{setFilterHearthsPicket4}" multiple>
+					<option value=''>
+						Все дороги ({optRoadTypes4.reduce((p, c) => { p += optDataHearthsPicket4.road[c]; return p; }, 0)})
+					</option>
+					{#each optRoadTypes4 as key}
+						<option value={key} class="road_{key}">
+							({optDataHearthsPicket4.road[key]}) - {key}
+						</option>
+					{/each}
+				</select>
+			</div>
+			<div class="pLine">
+				<select bind:value={hearths_stricken4} name="stricken" on:change="{setFilterHearthsPicket4}">
+					<option value=''>({optDataHearthsPicket4.stricken[0] || 0}) Очаги все</option>
+					<option value=1>({optDataHearthsPicket4.stricken[1] || 0}) Только с погибшими</option>
+					<option value=2>({optDataHearthsPicket4.stricken[2] || 0}) Только с пострадавшими</option>
+					<option value=3>({optDataHearthsPicket4.stricken[3] || 0}) С пострадавшими или погибшими</option>
+					<option value=4>({optDataHearthsPicket4.stricken[4] || 0}) С пострадавшими и погибшими</option>
+				</select>
+			</div>
+		</div>
+		{/if}
+
 		{#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги(Picket)</b></div>
 		<div class="filtersCont">
@@ -1046,7 +1140,7 @@
 			<div class="pLine">
 				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={DtpGibddRub._needHeat || DtpGibdd._needHeat || DtpSkpdi._needHeat || DtpVerifyed._needHeat} name="heat"><label for="heat"> - тепловая карта</label>
 			</div>
-		{:else if !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
+		{:else if !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket4._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
 			<div class="pLine">Нет включенных слоев</div>
 		{/if}
 

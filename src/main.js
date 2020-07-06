@@ -20,6 +20,7 @@ import {Rub1} from './Rub1';
 import {Rub} from './Rub';
 import {DtpGibddRub} from './DtpGibddRub';
 import {TestGraphQl} from './TestGraphQl';
+import {DtpHearthsPicket4} from './DtpHearthsPicket4';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -127,6 +128,7 @@ let overlays = {
 	// 'TestGraphQl': TestGraphQl,
 	'Рубежи': Rub,
 	// 'Рубежи (test)': Rub1,
+	'Предочаги по пикетажу': DtpHearthsPicket4,
 	'Очаги ГИБДД по пикетажу': DtpHearthsPicket,
 	'Очаги ГИБДД разные типы, геометрия': DtpHearths5,
 	'Очаги ГИБДД одного типа, геометрия': DtpHearths3,
@@ -181,6 +183,7 @@ let filtersControl = L.control.gmxIcon({
 					DtpSkpdi: DtpSkpdi,
 					Rub: Rub,
 					// Rub1: Rub1,
+					DtpHearthsPicket4: DtpHearthsPicket4,
 					DtpHearthsPicket: DtpHearthsPicket,
 					DtpHearths5: DtpHearths5,
 					DtpHearths3: DtpHearths3,
@@ -334,6 +337,7 @@ DtpHearthsStat._refreshFilters =
 DtpHearths3._refreshFilters =
 DtpHearths5._refreshFilters =
 DtpHearthsPicket._refreshFilters =
+DtpHearthsPicket4._refreshFilters =
 Rub._refreshFilters =
 DtpHearthsTmp._refreshFilters = refreshFilters;
 
@@ -348,6 +352,7 @@ DtpHearthsStat.on(eventsStr, refreshFilters);
 DtpHearths3.on(eventsStr, refreshFilters);
 DtpHearths5.on(eventsStr, refreshFilters);
 DtpHearthsPicket.on(eventsStr, refreshFilters);
+DtpHearthsPicket4.on(eventsStr, refreshFilters);
 Rub.on(eventsStr, refreshFilters);
 
 map

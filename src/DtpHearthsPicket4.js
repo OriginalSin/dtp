@@ -1,6 +1,7 @@
 import {Bbox, CirclePoint} from './CirclePoint';
 import DtpPopup from './DtpPopupVerifyed.svelte';
 import DtpPopupHearths from './DtpPopupHearths.svelte';
+import {chkStricken} from './MapUtils';
 
 const L = window.L;
 
@@ -14,7 +15,6 @@ const setPopup = function (props) {
 	new DtpPopup({
 		target: cont,
 		props: {
-			// popup: popup,
 			prp: props
 		}
 	});
@@ -27,6 +27,7 @@ const setPopup1 = function (props) {
 	new DtpPopupHearths({
 		target: cont,
 		props: {
+			predochag: 1,
 			prp: props
 		}
 	});
@@ -35,17 +36,17 @@ const setPopup1 = function (props) {
 }
 
 // let renderer = L.canvas();
-export const DtpHearthsPicket = L.featureGroup([]);
-DtpHearthsPicket.setFilter = arg => {
-	if (!DtpHearthsPicket._map) { return; }
+export const DtpHearthsPicket4 = L.featureGroup([]);
+DtpHearthsPicket4.setFilter = arg => {
+	if (!DtpHearthsPicket4._map) { return; }
 // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
-	DtpHearthsPicket.clearLayers();
+	DtpHearthsPicket4.clearLayers();
 	// DtpHearths._heatData = [];
 	argFilters = arg;
 
 	let arr = [];
-	if (DtpHearthsPicket._group) {
-		DtpHearthsPicket._group.getLayers().forEach(it => {
+	if (DtpHearthsPicket4._group) {
+		DtpHearthsPicket4._group.getLayers().forEach(it => {
 			let prp = it.options.cluster,
 				cnt = 0;
 			argFilters.forEach(ft => {
@@ -58,11 +59,15 @@ DtpHearthsPicket.setFilter = arg => {
 						cnt++;
 					}
 				} else if (ft.type === 'id_dtp') {
-					if (prp.list_dtp.filter(pt => pt.id == ft.zn).length || !ft.zn.length) {
+					if (prp.list_dtp.filter(pt => pt.id_skpdi == ft.zn || pt.id_stat == ft.zn).length || !ft.zn.length) {
 						cnt++;
 					}
 				} else if (ft.type === 'id_hearth') {
-					if (ft.zn == prp.id_hearth) {
+					if (ft.zn == prp.id) {
+						cnt++;
+					}
+				} else if (ft.type === 'year') {
+					if (ft.zn[prp.year]) {
 						cnt++;
 					}
 				} else if (ft.type === 'stricken') {
@@ -86,7 +91,7 @@ DtpHearthsPicket.setFilter = arg => {
 				// DtpHearths._heatData.push({lat: prp.lat, lng: prp.lon, count: prp.iconType});
 			}
 		});
-		DtpHearthsPicket.addLayer(L.layerGroup(arr));
+		DtpHearthsPicket4.addLayer(L.layerGroup(arr));
 		// DtpHearths._heat.setData({
 			// max: 8,
 			// data: DtpHearths._heatData
@@ -94,14 +99,14 @@ DtpHearthsPicket.setFilter = arg => {
 	}
 };
 
-DtpHearthsPicket.on('remove', () => {
-	DtpHearthsPicket.clearLayers();
+DtpHearthsPicket4.on('remove', () => {
+	DtpHearthsPicket4.clearLayers();
 }).on('add', ev => {
-	let opt = {road: {}, str_icon_type: {}, iconType: {}, years: {}, dtps: {}},
+	let opt = {road: {}, str_icon_type: {}, lost: 0, stricken: {0:0}, iconType: {}, years: {}, dtps: {}},
 		arr = [],
 		max_quarter = 0,
-		prefix = 'https://dtp.mvs.group/scripts/hearths_picket_dev/',
-		parseItem = (it, ht) => {
+		prefix = 'https://dtp.mvs.group/scripts/prehearths4_dev/',
+		parseItem = (it, ind) => {
 			let iconType = it.icon_type || 1,
 				list_bounds = L.latLngBounds(),
 				latlngs = [],
@@ -109,28 +114,11 @@ DtpHearthsPicket.on('remove', () => {
 				stroke = false,
 				fillColor = '#FF0000'; //   19-20
 
-			it.ht = ht;
+			chkStricken(it, opt);
+			it.ht = ind < 2 ? 'hearth3' : 'hearth5';
 			if (list_dtp.length) {
+				opt.years[it.year] = true;
 
-				let cy = Number(it.year),
-					cq = Number(it.quarter),
-					cm = cy + (cq - 1) / 4,
-					year = opt.years[it.year];
-				if (cm > max_quarter) {
-					max_quarter = cm;
-				}
-				if (!year) {
-					year = opt.years[it.year] = {};
-				}
-				opt.years[it.year] = year;
-				let quarter = year[it.quarter];
-				if (it.quarter in year) {
-					quarter++;
-				} else {
-					quarter = year[it.quarter] = 1;
-				}
-				year[it.quarter] = quarter;
-				
 				let cTypeCount = opt.str_icon_type[it.str_icon_type];
 				if (!cTypeCount) {
 					cTypeCount = 1;
@@ -178,13 +166,14 @@ DtpHearthsPicket.on('remove', () => {
 					list_bounds.extend(latlng);
 					latlngs.push(latlng);
 
-					if (prp.id === it.head) { head = prp; }
+					// if (prp.id === it.head) { head = prp; }
 
 					if (prp.id_skpdi) { cur.push({type: 'skpdi', id: prp.id_skpdi}); }
 					if (prp.id_stat) { cur.push({type: 'gibdd', id: prp.id_stat}); }
 					prp._cur = cur;
 
-					let dtps = opt.dtps[prp.id] || {};
+					let idDtp = prp.id || prp.id_stat || prp.id_skpdi;
+					let dtps = opt.dtps[idDtp] || {};
 					let idHearth = it.id || it.id_hearth;
 					if (!dtps) {
 						dtps = {};
@@ -194,7 +183,14 @@ DtpHearthsPicket.on('remove', () => {
 					} else {
 						dtps[idHearth]++;
 					}
-					opt.dtps[prp.id] = dtps;
+					opt.dtps[idDtp] = dtps;
+					// if (prp.stricken) { opt.stricken++; }
+					stroke = false;
+					if (prp.lost) {
+						opt.lost++;
+						stroke = true;
+					}
+					
 					return new CirclePoint(L.latLng(coords.lat, coords.lon), {
 							cluster: it,
 							props: prp,
@@ -257,10 +253,10 @@ DtpHearthsPicket.on('remove', () => {
 						});
 						if (dist < 10) {
 							setPopup(dtp.options.props);
-							popup.setLatLng(dtp._latlng).openOn(DtpHearthsPicket._map);
+							popup.setLatLng(dtp._latlng).openOn(DtpHearthsPicket4._map);
 						} else {
 							setPopup1(it);
-							popup1.setLatLng(latlng).openOn(DtpHearthsPicket._map);
+							popup1.setLatLng(latlng).openOn(DtpHearthsPicket4._map);
 						}
 						
 						// console.log('popu666popen', dist, dtp);
@@ -270,33 +266,39 @@ DtpHearthsPicket.on('remove', () => {
 			}
 		};
 
-	Promise.all([2019].map(key => fetch(prefix + key + '.txt', {}).then(req => req.json())))
+	Promise.all([
+		'https://dtp.mvs.group/scripts/prehearths2_dev/2019.txt',
+		'https://dtp.mvs.group/scripts/prehearths2_dev/2020.txt',
+		'https://dtp.mvs.group/scripts/prehearths4_dev/2019.txt',
+		'https://dtp.mvs.group/scripts/prehearths4_dev/2020.txt'
+	].map(key => fetch(key, {}).then(req => req.json())))
 	// Promise.all([2019, 2020].map(key => fetch(prefix + key + '.txt', {}).then(req => req.json())))
 		.then(allJson => {
-			allJson.forEach(json => {
+			allJson.forEach((json, ind) => {
+				opt.stricken[0] += json.length;
 				json.forEach(pt => {
-					(pt.hearth3 || []).forEach(it => {
-						parseItem(it, 'hearth3');
-					});
-					(pt.hearth5 || []).forEach(it => {
-						parseItem(it, 'hearth5');
-					});
+					// (pt.hearth3 || []).forEach(it => {
+						// parseItem(it, 'hearth3');
+					// });
+					// (pt.hearth5 || []).forEach(it => {
+						parseItem(pt, ind);
+					// });
 				});
 				
 				// let y = Math.floor(max_quarter),
 					// q = 1 + 4 * (max_quarter - y);
 				// argFilters = [{type: 'quarter', year: y, zn: q}];
 // console.log('opt', opt);
-				DtpHearthsPicket._opt = opt;
-				DtpHearthsPicket._group = L.layerGroup(arr);
+				DtpHearthsPicket4._opt = opt;
+				DtpHearthsPicket4._group = L.layerGroup(arr);
 				if (argFilters) {
-					DtpHearthsPicket.setFilter(argFilters);
+					DtpHearthsPicket4.setFilter(argFilters);
 				} else {
-					DtpHearthsPicket.addLayer(DtpHearthsPicket._group);
+					DtpHearthsPicket4.addLayer(DtpHearthsPicket4._group);
 				}
-				DtpHearthsPicket._refreshFilters();
+				DtpHearthsPicket4._refreshFilters();
 			});
-console.log('__allJson_____', allJson, DtpHearthsPicket._opt);
+console.log('__allJson_____', allJson, DtpHearthsPicket4._opt);
 		});
 });
 

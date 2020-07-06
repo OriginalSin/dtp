@@ -1,6 +1,7 @@
 <script>
 	import DtpPopup from './DtpPopupVerifyed.svelte';
 	export let prp;
+	export let predochag;
 	let current;
 
     const moveTo = (nm) => {
@@ -16,7 +17,7 @@ console.log('showDtpInfo ', ev);
 
 </script>
 	<div class="mvsPopup">
-		<div class="pLine">Очаг ДТП (id: {prp.id || prp.id_hearth})</div>
+		<div class="pLine">{predochag ? 'Предочаг' : 'Очаг'} ДТП (id: {prp.id || prp.id_hearth})</div>
 		<div class="pLine">{prp.quarter ? prp.quarter + ' кв.': ''} {prp.year}г.</div>
 		<div class="featureCont">
 		  <table class="table">
@@ -27,10 +28,12 @@ console.log('showDtpInfo ', ev);
 			  <td>От: <b>{prp.piketaj_start_km || 0}</b> км. до: <b>{prp.piketaj_finish_km || 0}</b> км.</td>
 			</tr>
 				{/if}
+				{#if prp.str_icon_type}
 			<tr>
 			  <td class="first">Тип ДТП:</td>
 			  <td>{prp.str_icon_type || ''}</td>
 			</tr>
+				{/if}
 			<tr>
 			  <td class="first">Всего ДТП:</td>
 			  <td>{prp.list_dtp.length}</td>

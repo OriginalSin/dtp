@@ -63,7 +63,7 @@ Rub1.setFilter = arg => {
 						cnt++;								// Только с пострадавшими
 					} else if (zn === 3 && (prp.count_stricken || prp.count_lost)) {
 						cnt++;								// С пострадавшими или погибшими
-					} else if (zn === 3 && prp.count_stricken && prp.count_lost) {
+					} else if (zn === 4 && prp.count_stricken && prp.count_lost) {
 						cnt++;								// С пострадавшими и погибшими
 					}
 				}
