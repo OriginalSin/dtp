@@ -371,3 +371,12 @@ button:focus {
 .leaflet-popup-content .contVideo button.active {
     background-color: lightblue;
 }
+
+div.leaflet-tooltip {
+    background-color: cyan;
+    font-weight: bold;
+}
+
+div.leaflet-tooltip:before {
+   /* background-color: cyan; */
+}
