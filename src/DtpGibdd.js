@@ -6,7 +6,8 @@ const L = window.L;
 const popup = L.popup();
 let argFilters;
 const setPopup = function (id) {
-	let url = 'https://dtp.mvs.group/scripts/index_dev.php?request=get_dtp_id&id=' + id + '&type=gibdd';
+	let url = 'https://dtp.mvs.group/scripts/dtp_dev/get_stat_gipdd_' + id + '.txt';
+	// let url = 'https://dtp.mvs.group/scripts/index_dev.php?request=get_dtp_id&id=' + id + '&type=gibdd';
 	fetch(url, {})
 		.then(req => req.json())
 		.then(json => {

@@ -1,6 +1,7 @@
 <script>
 	import { afterUpdate } from 'svelte';
 	import Modal from './Modal.svelte';
+	import DtpPopup from './DtpPopupDps.svelte';
 
 	export let showModal = false;
 
@@ -8,6 +9,7 @@
 	let modal;
 
 	let disabled = prp.skpdiFiles ? '' : 'disabled';
+	let gpsCont;
 
 	afterUpdate(() => {
 		// console.log('the component just updated', showModal, modal);
@@ -24,6 +26,28 @@
 			});
 		}
 	});
+    const showBat = (ev) => {
+		let id = ev.target.value;
+console.log('showBat', ev.target.value)
+		gpsCont.innerHTML = '';
+
+		let url = 'https://dtp.mvs.group/scripts/regiments_dev/get_plk_id' + id + '.txt';
+		// let url = 'https://dtp.mvs.group/scripts/rubez_dev/rubez-complex-' + id + '.txt';
+		fetch(url, {})
+			.then(req => req.json())
+			.then(json => {
+	// console.log('bindPopup', layer, json, DtpPopup);
+				const app = new DtpPopup({
+					target: gpsCont,
+					props: {
+						prp: json[0]
+					}
+				});
+			});
+/*
+*/
+	};
+
     const copyParent = (ev) => {
 		navigator.clipboard.writeText(ev.target.parentNode.textContent).catch(err => {
 			console.log('Something went wrong', err);
@@ -121,14 +145,35 @@
               <td class="first">Количество погибших/раненых:</td>
               <td><b>{prp.pog}/{prp.ran}</b></td>
             </tr>
+            <tr>
+              <td class="first" colspan=2>
+		<div class="win leaflet-popup-content-wrapper " bind:this={gpsCont}></div>
+				<ul>
+			{#each (prp.dps_plk || []) as pt1}
+				<li class="link" on:click={showBat} value={pt1}>батальон ДПС</li>
+			{/each}
+				</ul>
+			  </td>
+            </tr>
 		   </tbody>
 		  </table>
 		</div>
 	  </div>
 
 <style>
+.win {
+    position: absolute;
+    min-width: 280px;
+    left: 360px;
+    top: 76px;
+}
+
 .mvsPopup .featureCont .first {
     max-width: 100px;
+}
+
+.mvsPopup .featureCont .first .link {
+    cursor: pointer;
 }
 .primary {
     color: #fff;
