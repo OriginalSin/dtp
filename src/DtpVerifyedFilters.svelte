@@ -12,8 +12,10 @@
 	export let DtpGibdd;
 	export let DtpGibddRub;
 	export let Rub;
+	export let Measures;
 	export let control;
 
+	if (!Measures) { Measures = {}; };
 	if (!Rub) { Rub = {}; };
 	if (!DtpGibddRub) { DtpGibddRub = {}; };
 	if (!DtpHearthsPicket4) { DtpHearthsPicket4 = {}; };
@@ -44,6 +46,9 @@
 	let optCollisionSkpdiKeys = optDataSkpdi.collision_type ? Object.keys(optDataSkpdi.collision_type).sort((a, b) => optDataSkpdi.collision_type[b] - optDataSkpdi.collision_type[a]) : [];
 	let optDataGibdd = DtpGibdd._opt || {};
 	let optCollisionGibddKeys = optDataGibdd.collision_type ? Object.keys(optDataGibdd.collision_type).sort((a, b) => optDataGibdd.collision_type[b] - optDataGibdd.collision_type[a]) : [];
+	let dps = {'Dps1': true, 'Dps0': true};
+	let evnt = {'ev1': true, 'ev0': true};
+
 	let optDataGibddRub = (DtpGibddRub || {})._opt || {};
 	let optCollisionGibddRubKeys = optDataGibddRub.collision_type ? Object.keys(optDataGibddRub.collision_type).sort((a, b) => optDataGibddRub.collision_type[b] - optDataGibddRub.collision_type[a]) : [];
 
@@ -67,6 +72,9 @@
 
 	let optDataHearthsPicket4 = (DtpHearthsPicket4 || {})._opt || {};
 	let optRoadTypes4 = optDataHearthsPicket4.road ? Object.keys(optDataHearthsPicket4.road).sort((a, b) => optDataHearthsPicket4.road[b] - optDataHearthsPicket4.road[a]) : [];
+
+	let optMeasures = Measures._opt || {};
+	let optMeasuresKeys = optMeasures.type ? Object.keys(optMeasures.type).sort((a, b) => optMeasures.type[b] - optMeasures.type[a]) : [];
 
 	let roads = [''];
 	let ht = {'hearth3': true, 'hearth5': true};
@@ -93,7 +101,23 @@
 	let compOn = _comps.zn.on;
 	let comp1On = _comps.zn.off;
 
-		// console.log('optDataHearthsPicket', optRoadTypes, optDataHearthsPicket);
+
+	let measures_type = [];
+    const setFilterMeasures = () => {
+		if (Measures._map) {
+			let opt = [];
+			if (measures_type.length) {
+				opt.push({type: 'measures_type', zn: measures_type});
+			}
+			// if (id_dtp) {
+				// opt.push({type: 'id_dtp', zn: id_dtp});
+			// }
+			if (dateInterval) {
+				opt.push({type: 'date', zn: dateInterval});
+			}
+			Measures.setFilter(opt);
+		}
+	};
 
 	// const setListRub = (ev) => {
 		// let opt = [{type: 'comp', zn: {on: compOn, off: comp1On}}];
@@ -173,6 +197,7 @@
 		setFilterSkpdi();
 		setFilterGibdd();
 		setFilterGibddRub();
+		setFilterMeasures();
 		setFilter();
 	};
 
@@ -196,6 +221,18 @@
 		ht[target.name] = target.checked;
 		setFilterHearthsPicket();
 		setFilterHearthsPicket4();
+	};
+	const oncheckDps = (ev) => {
+		let target = ev.target;
+		dps[target.name] = target.checked;
+		setFilterGibdd();
+	};
+	const oncheckEvents = (ev) => {
+		let target = ev.target;
+		evnt[target.name] = target.checked;
+		setFilterGibdd();
+		setFilterSkpdi();
+		setFilter();
 	};
 
 	const setHeat = (ev) => {
@@ -225,6 +262,7 @@
 	const setFilter = () => {
 		if (DtpVerifyed._map) {
 			let opt = [
+				{type: 'evnt', zn: evnt},
 				{type: 'itemType', zn: currentFilter}
 			];
 			if (id_dtp) {
@@ -268,6 +306,8 @@
     const setFilterGibdd = () => {
 		if (DtpGibdd._map) {
 		let opt = [
+			{type: 'dps', zn: dps},
+			{type: 'evnt', zn: evnt}
 		];
 		if (id_dtp) {
 			opt.push({type: 'id_dtp', zn: id_dtp});
@@ -286,6 +326,7 @@
     const setFilterSkpdi = () => {
 		if (DtpSkpdi._map) {
 		let opt = [
+			{type: 'evnt', zn: evnt}
 		];
 		if (id_dtp) {
 			opt.push({type: 'id_dtp', zn: id_dtp});
@@ -330,6 +371,7 @@
 				setFilter();
 				setFilterSkpdi();
 				setFilterGibdd();
+				setFilterMeasures();
 				setFilterGibddRub();
 			},
 			toString(date, format) {
@@ -1115,7 +1157,7 @@
 		</div>
 		{/if}
 
-		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}
+		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}
 		<div class="pLine"><hr></div>
 		<div class="pikaday pLine">
 			<button class="pika-prev" on:click={onPrev}></button>
@@ -1123,6 +1165,7 @@
 			<input type="text" class="endDate" bind:this={endDate} />
 			<button class="pika-next" on:click={onNext}></button>
 		</div>
+		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}
 			<div class="pLine">
 				<br />
 				<label>
@@ -1140,8 +1183,30 @@
 			<div class="pLine">
 				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={DtpGibddRub._needHeat || DtpGibdd._needHeat || DtpSkpdi._needHeat || DtpVerifyed._needHeat} name="heat"><label for="heat"> - тепловая карта</label>
 			</div>
-		{:else if !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket4._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
+		{/if}
+		{:else if !Measures._map && !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket4._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
 			<div class="pLine">Нет включенных слоев</div>
+		{/if}
+
+		{#if Measures._map}
+		<div class="pLine"><hr></div>
+		<div class="pLine">Фильтры - <b>Мероприятий</b></div>
+		<div class="filtersCont">
+			{#if optMeasures.type}
+			<div class="pLine">
+				<select class="multiple_type" bind:value={measures_type} on:change="{setFilterMeasures}" multiple>
+					<option value=''>
+						Все типы ({optMeasuresKeys.reduce((p, c) => { p += optMeasures.type[c]; return p; }, 0)})
+					</option>
+					{#each optMeasuresKeys as key}
+						<option value={key} class="type_{optMeasures.type[key]}">
+							({optMeasures.type[key]}) - {key}
+						</option>
+					{/each}
+				</select>
+			</div>
+			{/if}
+		</div>
 		{/if}
 
 		{#if DtpVerifyed._map}
@@ -1157,6 +1222,10 @@
 			<div class="pLine"><input type="radio" id="d2" name="drone" value="2" on:click={oncheck}><label for="d2">Только СКПДИ</label></div>
 			{/if}
 			<div class="pLine"><input type="radio" id="d3" name="drone" value="3" on:click={oncheck}><label for="d3">Только ГИБДД</label></div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckEvents} id="ev1" checked={evnt.ev1} name="ev1"><label for="ev1"> - с мероприятиями</label>
+				<input type="checkbox" on:change={oncheckEvents} id="ev0" checked={evnt.ev0} name="ev0"><label for="ev0"> - без мероприятий</label>
+			</div>
 			{#if optData.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type} on:change="{setFilter}" multiple>
@@ -1179,6 +1248,10 @@
 		<div class="pLine">Фильтры - <b>ДТП СКПДИ</b></div>
 		<div class="filtersCont">
 			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckEvents} id="ev1" checked={evnt.ev1} name="ev1"><label for="ev1"> - с мероприятиями</label>
+				<input type="checkbox" on:change={oncheckEvents} id="ev0" checked={evnt.ev0} name="ev0"><label for="ev0"> - без мероприятий</label>
+			</div>
 			{#if optDataSkpdi.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_skpdi} on:change="{setFilterSkpdi}" multiple>
@@ -1201,6 +1274,14 @@
 		<div class="pLine">Фильтры - <b>ДТП ГИБДД</b></div>
 		<div class="filtersCont">
 			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckDps} id="Dps1" checked={dps.Dps1} name="Dps1"><label for="Dps1"> - с батальонами ДПС</label>
+				<input type="checkbox" on:change={oncheckDps} id="Dps0" checked={dps.Dps0} name="Dps0"><label for="Dps0"> - без батальонов ДПС</label>
+			</div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckEvents} id="ev1" checked={evnt.ev1} name="ev1"><label for="ev1"> - с мероприятиями</label>
+				<input type="checkbox" on:change={oncheckEvents} id="ev0" checked={evnt.ev0} name="ev0"><label for="ev0"> - без мероприятий</label>
+			</div>
 			{#if optDataGibdd.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibdd}" multiple>

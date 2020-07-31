@@ -619,9 +619,9 @@ var dtp = (function () {
   };
 
   const matrix = document.createElementNS("http://www.w3.org/2000/svg", "svg").createSVGMatrix();
-  const icon2path = (str, dx, dy) => {
-  	let sc = 20 / 832,
-  		p = new Path2D(str),
+  const icon2path = (str, dx, dy, sc) => {
+  	sc = sc || (20 / 832);
+  	let p = new Path2D(str),
   		p1 = new Path2D();
 
   	p1.addPath(p, matrix.translate(dx, dy).rotate(180).scale(-sc, -sc));
@@ -630,6 +630,7 @@ var dtp = (function () {
 
 
   const icons = {
+  	measures: icon2path('M 10.5 9 C 10.132813 9 9.578125 9.167969 9.1875 9.5 C 8.796875 9.832031 8.488281 10.273438 8.0625 10.96875 C 7.738281 11.496094 7.21875 12.621094 6.4375 14.28125 C 5.65625 15.941406 4.6875 18.015625 3.75 20.0625 C 1.875 24.152344 0.09375 28.09375 0.09375 28.09375 C -0.0820313 28.390625 -0.09375 28.753906 0.0625 29.0625 C 0.0703125 29.082031 0.0820313 29.105469 0.09375 29.125 C 0.148438 29.308594 0.210938 29.46875 0.3125 29.59375 C 0.496094 29.816406 0.695313 29.921875 0.84375 30 C 1.144531 30.160156 1.355469 30.226563 1.5 30.3125 C 1.789063 30.488281 2 30.527344 2 31.6875 C 2 34.023438 2.664063 36.609375 4.46875 38.625 C 6.273438 40.640625 9.199219 42 13.40625 42 C 16.816406 42 19.355469 40.886719 20.90625 38.875 C 22.457031 36.863281 23 34.121094 23 31 L 23 28.5625 C 23.351563 28.339844 23.972656 28 25 28 C 26.027344 28 26.648438 28.339844 27 28.5625 L 27 31 C 27 34.121094 27.542969 36.863281 29.09375 38.875 C 30.644531 40.886719 33.183594 42 36.59375 42 C 40.800781 42 43.726563 40.65625 45.53125 38.65625 C 47.335938 36.65625 48 34.101563 48 31.8125 C 48 30.59375 48.226563 30.53125 48.5 30.375 C 48.636719 30.296875 48.824219 30.242188 49.125 30.09375 C 49.277344 30.019531 49.460938 29.910156 49.65625 29.6875 C 49.804688 29.515625 49.917969 29.273438 49.96875 29.03125 C 50.105469 28.726563 50.082031 28.375 49.90625 28.09375 C 49.90625 28.09375 48.125 24.152344 46.25 20.0625 C 45.3125 18.015625 44.34375 15.941406 43.5625 14.28125 C 42.78125 12.621094 42.261719 11.496094 41.9375 10.96875 C 41.511719 10.273438 41.203125 9.832031 40.8125 9.5 C 40.421875 9.167969 39.867188 9 39.5 9 C 39.050781 9 38.546875 9.210938 38.1875 9.53125 C 37.828125 9.851563 37.53125 10.285156 37.15625 10.875 C 36.566406 11.859375 36.15625 12.4375 36.15625 12.4375 C 35.84375 12.902344 35.972656 13.53125 36.4375 13.84375 C 36.902344 14.15625 37.53125 14.027344 37.84375 13.5625 C 37.84375 13.5625 38.246094 12.929688 38.84375 11.9375 C 38.851563 11.921875 38.835938 11.921875 38.84375 11.90625 C 39.144531 11.433594 39.382813 11.175781 39.5 11.0625 C 39.613281 11.160156 39.882813 11.4375 40.25 12.03125 C 40.324219 12.152344 41.003906 13.476563 41.78125 15.125 C 42.558594 16.773438 43.5 18.863281 44.4375 20.90625 C 45.820313 23.917969 46.519531 25.488281 47.125 26.8125 C 46.839844 26.75 46.585938 26.683594 46.25 26.625 C 44.132813 26.257813 40.941406 26 36.40625 26 C 33.464844 26 30.472656 26.660156 28.1875 26.96875 C 27.71875 26.640625 26.699219 26 25 26 C 23.300781 26 22.28125 26.640625 21.8125 26.96875 C 19.527344 26.660156 16.535156 26 13.59375 26 C 9.058594 26 5.863281 26.242188 3.75 26.59375 C 3.414063 26.648438 3.15625 26.71875 2.875 26.78125 C 3.484375 25.449219 4.1875 23.90625 5.5625 20.90625 C 6.5 18.863281 7.441406 16.773438 8.21875 15.125 C 8.996094 13.476563 9.675781 12.152344 9.75 12.03125 L 9.75 12 C 10.105469 11.429688 10.390625 11.160156 10.5 11.0625 C 10.617188 11.175781 10.855469 11.433594 11.15625 11.90625 C 11.164063 11.921875 11.148438 11.921875 11.15625 11.9375 C 11.753906 12.929688 12.15625 13.5625 12.15625 13.5625 C 12.46875 14.027344 13.097656 14.15625 13.5625 13.84375 C 14.027344 13.53125 14.15625 12.902344 13.84375 12.4375 C 13.84375 12.4375 13.433594 11.859375 12.84375 10.875 C 12.46875 10.285156 12.171875 9.851563 11.8125 9.53125 C 11.453125 9.210938 10.949219 9 10.5 9 Z M 13.59375 28 C 16.042969 28 18.679688 28.570313 21 28.90625 L 21 31 C 21 33.878906 20.460938 36.136719 19.3125 37.625 C 18.164063 39.113281 16.398438 40 13.40625 40 C 9.613281 40 7.332031 38.839844 5.9375 37.28125 C 4.542969 35.722656 4 33.652344 4 31.6875 C 4 30.265625 3.398438 29.386719 2.78125 28.875 C 3.160156 28.769531 3.46875 28.667969 4.09375 28.5625 C 6.03125 28.238281 9.128906 28 13.59375 28 Z M 36.40625 28 C 40.871094 28 43.972656 28.261719 45.90625 28.59375 C 46.554688 28.707031 46.871094 28.820313 47.25 28.9375 C 46.613281 29.441406 46 30.34375 46 31.8125 C 46 33.722656 45.457031 35.765625 44.0625 37.3125 C 42.667969 38.859375 40.386719 40 36.59375 40 C 33.601563 40 31.835938 39.113281 30.6875 37.625 C 29.539063 36.136719 29 33.878906 29 31 L 29 28.90625 C 31.320313 28.570313 33.957031 28 36.40625 28 Z', -12, -13, 0.5),
   	camera: icon2path('M864 260H728l-32.4-90.8a32.07 32.07 0 0 0-30.2-21.2H358.6c-13.5 0-25.6 8.5-30.1 21.2L296 260H160c-44.2 0-80 35.8-80 80v456c0 44.2 35.8 80 80 80h704c44.2 0 80-35.8 80-80V340c0-44.2-35.8-80-80-80zM512 716c-88.4 0-160-71.6-160-160s71.6-160 160-160 160 71.6 160 160-71.6 160-160 160zm-96-160a96 96 0 1 0 192 0 96 96 0 1 0-192 0z', -12, -13)
   };
 
@@ -746,6 +747,7 @@ var dtp = (function () {
   	} else if (options.box) {
   		ctx.fillRect(p.x - r, p.y - r, r2, r2);
   	} else if (options.path) {
+  		// ctx.arc(p.x, p.y, r, 0, 2 * Math.PI);
   		let icon = icons[options.path];
   		ctx.translate(p.x, p.y);
   		ctx.fill(icon);
@@ -1780,20 +1782,394 @@ var dtp = (function () {
   	}
   }
 
-  /* src\DtpPopupGibdd.svelte generated by Svelte v3.20.1 */
+  /* src\DtpPopupEvnt.svelte generated by Svelte v3.20.1 */
 
   const { console: console_1$1 } = globals;
-  const file$2 = "src\\DtpPopupGibdd.svelte";
+  const file$2 = "src\\DtpPopupEvnt.svelte";
+
+  function create_fragment$2(ctx) {
+  	let div2;
+  	let div0;
+  	let t1;
+  	let div1;
+  	let table;
+  	let tbody;
+  	let tr0;
+  	let td0;
+  	let t3;
+  	let td1;
+  	let t4_value = (/*prp*/ ctx[0].type || "") + "";
+  	let t4;
+  	let t5;
+  	let tr1;
+  	let td2;
+  	let t7;
+  	let td3;
+  	let t8_value = (/*prp*/ ctx[0].id || "") + "";
+  	let t8;
+  	let t9;
+  	let tr2;
+  	let td4;
+  	let t11;
+  	let td5;
+  	let t12_value = (/*prp*/ ctx[0].dor || "") + "";
+  	let t12;
+  	let t13;
+  	let tr3;
+  	let td6;
+  	let t15;
+  	let td7;
+  	let t16_value = (/*prp*/ ctx[0].status || "") + "";
+  	let t16;
+  	let t17;
+  	let tr4;
+  	let td8;
+  	let t19;
+  	let td9;
+  	let t20_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_created) + "";
+  	let t20;
+  	let t21;
+  	let tr5;
+  	let td10;
+  	let t23;
+  	let td11;
+  	let t24_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_finish_fact) + "";
+  	let t24;
+  	let t25;
+  	let tr6;
+  	let td12;
+  	let t27;
+  	let td13;
+  	let t28_value = /*coords*/ ctx[2].lat + "";
+  	let t28;
+  	let t29;
+  	let t30_value = /*coords*/ ctx[2].lon + "";
+  	let t30;
+  	let t31;
+  	let span;
+  	let t32;
+  	let tr7;
+  	let td14;
+  	let t34;
+  	let td15;
+  	let t35_value = (/*prp*/ ctx[0].id_dtp || "") + "";
+  	let t35;
+  	let t36;
+  	let tr8;
+  	let td16;
+  	let t38;
+  	let td17;
+  	let t39_value = (/*prp*/ ctx[0].client || "") + "";
+  	let t39;
+  	let dispose;
+
+  	const block = {
+  		c: function create() {
+  			div2 = element("div");
+  			div0 = element("div");
+  			div0.textContent = "Мероприятие";
+  			t1 = space();
+  			div1 = element("div");
+  			table = element("table");
+  			tbody = element("tbody");
+  			tr0 = element("tr");
+  			td0 = element("td");
+  			td0.textContent = "Тип мероприятия:";
+  			t3 = space();
+  			td1 = element("td");
+  			t4 = text(t4_value);
+  			t5 = space();
+  			tr1 = element("tr");
+  			td2 = element("td");
+  			td2.textContent = "ID:";
+  			t7 = space();
+  			td3 = element("td");
+  			t8 = text(t8_value);
+  			t9 = space();
+  			tr2 = element("tr");
+  			td4 = element("td");
+  			td4.textContent = "Участок дороги:";
+  			t11 = space();
+  			td5 = element("td");
+  			t12 = text(t12_value);
+  			t13 = space();
+  			tr3 = element("tr");
+  			td6 = element("td");
+  			td6.textContent = "Статус:";
+  			t15 = space();
+  			td7 = element("td");
+  			t16 = text(t16_value);
+  			t17 = space();
+  			tr4 = element("tr");
+  			td8 = element("td");
+  			td8.textContent = "Дата добавления:";
+  			t19 = space();
+  			td9 = element("td");
+  			t20 = text(t20_value);
+  			t21 = space();
+  			tr5 = element("tr");
+  			td10 = element("td");
+  			td10.textContent = "Дата завершения:";
+  			t23 = space();
+  			td11 = element("td");
+  			t24 = text(t24_value);
+  			t25 = space();
+  			tr6 = element("tr");
+  			td12 = element("td");
+  			td12.textContent = "Координаты:";
+  			t27 = space();
+  			td13 = element("td");
+  			t28 = text(t28_value);
+  			t29 = space();
+  			t30 = text(t30_value);
+  			t31 = space();
+  			span = element("span");
+  			t32 = space();
+  			tr7 = element("tr");
+  			td14 = element("td");
+  			td14.textContent = "ID ДТП:";
+  			t34 = space();
+  			td15 = element("td");
+  			t35 = text(t35_value);
+  			t36 = space();
+  			tr8 = element("tr");
+  			td16 = element("td");
+  			td16.textContent = "Заказчик:";
+  			t38 = space();
+  			td17 = element("td");
+  			t39 = text(t39_value);
+  			attr_dev(div0, "class", "pLine");
+  			add_location(div0, file$2, 17, 2, 455);
+  			attr_dev(td0, "class", "first svelte-1ve8gqw");
+  			add_location(td0, file$2, 22, 5, 570);
+  			add_location(td1, file$2, 23, 5, 615);
+  			add_location(tr0, file$2, 21, 3, 560);
+  			attr_dev(td2, "class", "first svelte-1ve8gqw");
+  			add_location(td2, file$2, 26, 5, 663);
+  			add_location(td3, file$2, 27, 5, 695);
+  			add_location(tr1, file$2, 25, 3, 653);
+  			attr_dev(td4, "class", "first svelte-1ve8gqw");
+  			add_location(td4, file$2, 30, 5, 741);
+  			add_location(td5, file$2, 31, 5, 785);
+  			add_location(tr2, file$2, 29, 3, 731);
+  			attr_dev(td6, "class", "first svelte-1ve8gqw");
+  			add_location(td6, file$2, 34, 5, 832);
+  			add_location(td7, file$2, 35, 5, 868);
+  			add_location(tr3, file$2, 33, 3, 822);
+  			attr_dev(td8, "class", "first svelte-1ve8gqw");
+  			add_location(td8, file$2, 38, 5, 918);
+  			add_location(td9, file$2, 39, 5, 963);
+  			add_location(tr4, file$2, 37, 3, 908);
+  			attr_dev(td10, "class", "first svelte-1ve8gqw");
+  			add_location(td10, file$2, 42, 5, 1022);
+  			add_location(td11, file$2, 43, 5, 1067);
+  			add_location(tr5, file$2, 41, 3, 1012);
+  			attr_dev(td12, "class", "first svelte-1ve8gqw");
+  			add_location(td12, file$2, 46, 5, 1130);
+  			attr_dev(span, "title", "Скопировать в буфер обмена");
+  			attr_dev(span, "class", "leaflet-gmx-icon-copy");
+  			add_location(span, file$2, 47, 35, 1200);
+  			add_location(td13, file$2, 47, 5, 1170);
+  			add_location(tr6, file$2, 45, 3, 1120);
+  			attr_dev(td14, "class", "first svelte-1ve8gqw");
+  			add_location(td14, file$2, 50, 5, 1328);
+  			add_location(td15, file$2, 51, 5, 1364);
+  			add_location(tr7, file$2, 49, 3, 1318);
+  			attr_dev(td16, "class", "first svelte-1ve8gqw");
+  			add_location(td16, file$2, 54, 5, 1414);
+  			add_location(td17, file$2, 55, 5, 1452);
+  			add_location(tr8, file$2, 53, 3, 1404);
+  			add_location(tbody, file$2, 20, 3, 549);
+  			attr_dev(table, "class", "table svelte-1ve8gqw");
+  			add_location(table, file$2, 19, 4, 524);
+  			attr_dev(div1, "class", "featureCont");
+  			add_location(div1, file$2, 18, 2, 494);
+  			attr_dev(div2, "class", "mvsPopup svelte-1ve8gqw");
+  			add_location(div2, file$2, 16, 1, 430);
+  		},
+  		l: function claim(nodes) {
+  			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, div2, anchor);
+  			append_dev(div2, div0);
+  			append_dev(div2, t1);
+  			append_dev(div2, div1);
+  			append_dev(div1, table);
+  			append_dev(table, tbody);
+  			append_dev(tbody, tr0);
+  			append_dev(tr0, td0);
+  			append_dev(tr0, t3);
+  			append_dev(tr0, td1);
+  			append_dev(td1, t4);
+  			append_dev(tbody, t5);
+  			append_dev(tbody, tr1);
+  			append_dev(tr1, td2);
+  			append_dev(tr1, t7);
+  			append_dev(tr1, td3);
+  			append_dev(td3, t8);
+  			append_dev(tbody, t9);
+  			append_dev(tbody, tr2);
+  			append_dev(tr2, td4);
+  			append_dev(tr2, t11);
+  			append_dev(tr2, td5);
+  			append_dev(td5, t12);
+  			append_dev(tbody, t13);
+  			append_dev(tbody, tr3);
+  			append_dev(tr3, td6);
+  			append_dev(tr3, t15);
+  			append_dev(tr3, td7);
+  			append_dev(td7, t16);
+  			append_dev(tbody, t17);
+  			append_dev(tbody, tr4);
+  			append_dev(tr4, td8);
+  			append_dev(tr4, t19);
+  			append_dev(tr4, td9);
+  			append_dev(td9, t20);
+  			append_dev(tbody, t21);
+  			append_dev(tbody, tr5);
+  			append_dev(tr5, td10);
+  			append_dev(tr5, t23);
+  			append_dev(tr5, td11);
+  			append_dev(td11, t24);
+  			append_dev(tbody, t25);
+  			append_dev(tbody, tr6);
+  			append_dev(tr6, td12);
+  			append_dev(tr6, t27);
+  			append_dev(tr6, td13);
+  			append_dev(td13, t28);
+  			append_dev(td13, t29);
+  			append_dev(td13, t30);
+  			append_dev(td13, t31);
+  			append_dev(td13, span);
+  			append_dev(tbody, t32);
+  			append_dev(tbody, tr7);
+  			append_dev(tr7, td14);
+  			append_dev(tr7, t34);
+  			append_dev(tr7, td15);
+  			append_dev(td15, t35);
+  			append_dev(tbody, t36);
+  			append_dev(tbody, tr8);
+  			append_dev(tr8, td16);
+  			append_dev(tr8, t38);
+  			append_dev(tr8, td17);
+  			append_dev(td17, t39);
+  			if (remount) dispose();
+  			dispose = listen_dev(span, "click", /*copyParent*/ ctx[1], false, false, false);
+  		},
+  		p: function update(ctx, [dirty]) {
+  			if (dirty & /*prp*/ 1 && t4_value !== (t4_value = (/*prp*/ ctx[0].type || "") + "")) set_data_dev(t4, t4_value);
+  			if (dirty & /*prp*/ 1 && t8_value !== (t8_value = (/*prp*/ ctx[0].id || "") + "")) set_data_dev(t8, t8_value);
+  			if (dirty & /*prp*/ 1 && t12_value !== (t12_value = (/*prp*/ ctx[0].dor || "") + "")) set_data_dev(t12, t12_value);
+  			if (dirty & /*prp*/ 1 && t16_value !== (t16_value = (/*prp*/ ctx[0].status || "") + "")) set_data_dev(t16, t16_value);
+  			if (dirty & /*prp*/ 1 && t20_value !== (t20_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_created) + "")) set_data_dev(t20, t20_value);
+  			if (dirty & /*prp*/ 1 && t24_value !== (t24_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_finish_fact) + "")) set_data_dev(t24, t24_value);
+  			if (dirty & /*prp*/ 1 && t35_value !== (t35_value = (/*prp*/ ctx[0].id_dtp || "") + "")) set_data_dev(t35, t35_value);
+  			if (dirty & /*prp*/ 1 && t39_value !== (t39_value = (/*prp*/ ctx[0].client || "") + "")) set_data_dev(t39, t39_value);
+  		},
+  		i: noop,
+  		o: noop,
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(div2);
+  			dispose();
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_fragment$2.name,
+  		type: "component",
+  		source: "",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  function instance$2($$self, $$props, $$invalidate) {
+  	let { prp } = $$props;
+
+  	const copyParent = ev => {
+  		navigator.clipboard.writeText(ev.target.parentNode.textContent).catch(err => {
+  			console.log("Something went wrong", err);
+  		});
+  	};
+
+  	let coords = prp.coords[0] || { lat: prp.lat, lon: prp.lon };
+
+  	const getDate = time => {
+  		if (!time) {
+  			return "";
+  		}
+
+  		let d = new Date(time * 1000);
+  		return d.toLocaleDateString() + " " + d.toLocaleTimeString();
+  	};
+
+  	const writable_props = ["prp"];
+
+  	Object.keys($$props).forEach(key => {
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$1.warn(`<DtpPopupEvnt> was created with unknown prop '${key}'`);
+  	});
+
+  	let { $$slots = {}, $$scope } = $$props;
+  	validate_slots("DtpPopupEvnt", $$slots, []);
+
+  	$$self.$set = $$props => {
+  		if ("prp" in $$props) $$invalidate(0, prp = $$props.prp);
+  	};
+
+  	$$self.$capture_state = () => ({ prp, copyParent, coords, getDate });
+
+  	$$self.$inject_state = $$props => {
+  		if ("prp" in $$props) $$invalidate(0, prp = $$props.prp);
+  		if ("coords" in $$props) $$invalidate(2, coords = $$props.coords);
+  	};
+
+  	if ($$props && "$$inject" in $$props) {
+  		$$self.$inject_state($$props.$$inject);
+  	}
+
+  	return [prp, copyParent, coords, getDate];
+  }
+
+  class DtpPopupEvnt extends SvelteComponentDev {
+  	constructor(options) {
+  		super(options);
+  		init(this, options, instance$2, create_fragment$2, safe_not_equal, { prp: 0 });
+
+  		dispatch_dev("SvelteRegisterComponent", {
+  			component: this,
+  			tagName: "DtpPopupEvnt",
+  			options,
+  			id: create_fragment$2.name
+  		});
+
+  		const { ctx } = this.$$;
+  		const props = options.props || {};
+
+  		if (/*prp*/ ctx[0] === undefined && !("prp" in props)) {
+  			console_1$1.warn("<DtpPopupEvnt> was created without expected prop 'prp'");
+  		}
+  	}
+
+  	get prp() {
+  		throw new Error("<DtpPopupEvnt>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  	}
+
+  	set prp(value) {
+  		throw new Error("<DtpPopupEvnt>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  	}
+  }
+
+  /* src\DtpPopupGibdd.svelte generated by Svelte v3.20.1 */
+
+  const { console: console_1$2 } = globals;
+  const file$3 = "src\\DtpPopupGibdd.svelte";
 
   function get_each_context$1(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[9] = list[i];
-  	return child_ctx;
-  }
-
-  function get_each_context_2(ctx, list, i) {
-  	const child_ctx = ctx.slice();
-  	child_ctx[9] = list[i];
+  	child_ctx[12] = list[i];
   	return child_ctx;
   }
 
@@ -1803,17 +2179,29 @@ var dtp = (function () {
   	return child_ctx;
   }
 
-  // (109:6) {#if pt.ts}
+  function get_each_context_3(ctx, list, i) {
+  	const child_ctx = ctx.slice();
+  	child_ctx[12] = list[i];
+  	return child_ctx;
+  }
+
+  function get_each_context_2(ctx, list, i) {
+  	const child_ctx = ctx.slice();
+  	child_ctx[17] = list[i];
+  	return child_ctx;
+  }
+
+  // (128:6) {#if pt.ts}
   function create_if_block_7(ctx) {
   	let li;
-  	let t_value = /*pt*/ ctx[12].ts + "";
+  	let t_value = /*pt*/ ctx[17].ts + "";
   	let t;
 
   	const block = {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$2, 108, 17, 2681);
+  			add_location(li, file$3, 127, 17, 3095);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -1829,24 +2217,24 @@ var dtp = (function () {
   		block,
   		id: create_if_block_7.name,
   		type: "if",
-  		source: "(109:6) {#if pt.ts}",
+  		source: "(128:6) {#if pt.ts}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (111:7) {#if pt1.k_uch && (pt1.npdd || pt1.sop_npdd)}
+  // (130:7) {#if pt1.k_uch && (pt1.npdd || pt1.sop_npdd)}
   function create_if_block_6(ctx) {
   	let li;
-  	let t_value = /*pt1*/ ctx[9].k_uch + "";
+  	let t_value = /*pt1*/ ctx[12].k_uch + "";
   	let t;
 
   	const block = {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$2, 110, 52, 2783);
+  			add_location(li, file$3, 129, 52, 3197);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -1862,24 +2250,24 @@ var dtp = (function () {
   		block,
   		id: create_if_block_6.name,
   		type: "if",
-  		source: "(111:7) {#if pt1.k_uch && (pt1.npdd || pt1.sop_npdd)}",
+  		source: "(130:7) {#if pt1.k_uch && (pt1.npdd || pt1.sop_npdd)}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (112:7) {#if pt1.npdd}
+  // (131:7) {#if pt1.npdd}
   function create_if_block_5(ctx) {
   	let li;
-  	let t_value = /*pt1*/ ctx[9].npdd + "";
+  	let t_value = /*pt1*/ ctx[12].npdd + "";
   	let t;
 
   	const block = {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$2, 111, 21, 2830);
+  			add_location(li, file$3, 130, 21, 3244);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -1895,24 +2283,24 @@ var dtp = (function () {
   		block,
   		id: create_if_block_5.name,
   		type: "if",
-  		source: "(112:7) {#if pt1.npdd}",
+  		source: "(131:7) {#if pt1.npdd}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (113:7) {#if pt1.sop_npdd}
+  // (132:7) {#if pt1.sop_npdd}
   function create_if_block_4(ctx) {
   	let li;
-  	let t_value = /*pt1*/ ctx[9].sop_npdd + "";
+  	let t_value = /*pt1*/ ctx[12].sop_npdd + "";
   	let t;
 
   	const block = {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$2, 112, 25, 2880);
+  			add_location(li, file$3, 131, 25, 3294);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -1928,21 +2316,21 @@ var dtp = (function () {
   		block,
   		id: create_if_block_4.name,
   		type: "if",
-  		source: "(113:7) {#if pt1.sop_npdd}",
+  		source: "(132:7) {#if pt1.sop_npdd}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (110:6) {#each pt.arr as pt1}
-  function create_each_block_2(ctx) {
+  // (129:6) {#each pt.arr as pt1}
+  function create_each_block_3(ctx) {
   	let t0;
   	let t1;
   	let if_block2_anchor;
-  	let if_block0 = /*pt1*/ ctx[9].k_uch && (/*pt1*/ ctx[9].npdd || /*pt1*/ ctx[9].sop_npdd) && create_if_block_6(ctx);
-  	let if_block1 = /*pt1*/ ctx[9].npdd && create_if_block_5(ctx);
-  	let if_block2 = /*pt1*/ ctx[9].sop_npdd && create_if_block_4(ctx);
+  	let if_block0 = /*pt1*/ ctx[12].k_uch && (/*pt1*/ ctx[12].npdd || /*pt1*/ ctx[12].sop_npdd) && create_if_block_6(ctx);
+  	let if_block1 = /*pt1*/ ctx[12].npdd && create_if_block_5(ctx);
+  	let if_block2 = /*pt1*/ ctx[12].sop_npdd && create_if_block_4(ctx);
 
   	const block = {
   		c: function create() {
@@ -1962,9 +2350,9 @@ var dtp = (function () {
   			insert_dev(target, if_block2_anchor, anchor);
   		},
   		p: function update(ctx, dirty) {
-  			if (/*pt1*/ ctx[9].k_uch && (/*pt1*/ ctx[9].npdd || /*pt1*/ ctx[9].sop_npdd)) if_block0.p(ctx, dirty);
-  			if (/*pt1*/ ctx[9].npdd) if_block1.p(ctx, dirty);
-  			if (/*pt1*/ ctx[9].sop_npdd) if_block2.p(ctx, dirty);
+  			if (/*pt1*/ ctx[12].k_uch && (/*pt1*/ ctx[12].npdd || /*pt1*/ ctx[12].sop_npdd)) if_block0.p(ctx, dirty);
+  			if (/*pt1*/ ctx[12].npdd) if_block1.p(ctx, dirty);
+  			if (/*pt1*/ ctx[12].sop_npdd) if_block2.p(ctx, dirty);
   		},
   		d: function destroy(detaching) {
   			if (if_block0) if_block0.d(detaching);
@@ -1978,26 +2366,26 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_2.name,
+  		id: create_each_block_3.name,
   		type: "each",
-  		source: "(110:6) {#each pt.arr as pt1}",
+  		source: "(129:6) {#each pt.arr as pt1}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (108:5) {#each tsInfoArr as pt}
-  function create_each_block_1(ctx) {
+  // (127:5) {#each tsInfoArr as pt}
+  function create_each_block_2(ctx) {
   	let t;
   	let each_1_anchor;
-  	let if_block = /*pt*/ ctx[12].ts && create_if_block_7(ctx);
-  	let each_value_2 = /*pt*/ ctx[12].arr;
-  	validate_each_argument(each_value_2);
+  	let if_block = /*pt*/ ctx[17].ts && create_if_block_7(ctx);
+  	let each_value_3 = /*pt*/ ctx[17].arr;
+  	validate_each_argument(each_value_3);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_2.length; i += 1) {
-  		each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+  	for (let i = 0; i < each_value_3.length; i += 1) {
+  		each_blocks[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
   	}
 
   	const block = {
@@ -2022,20 +2410,20 @@ var dtp = (function () {
   			insert_dev(target, each_1_anchor, anchor);
   		},
   		p: function update(ctx, dirty) {
-  			if (/*pt*/ ctx[12].ts) if_block.p(ctx, dirty);
+  			if (/*pt*/ ctx[17].ts) if_block.p(ctx, dirty);
 
-  			if (dirty & /*tsInfoArr*/ 16) {
-  				each_value_2 = /*pt*/ ctx[12].arr;
-  				validate_each_argument(each_value_2);
+  			if (dirty & /*tsInfoArr*/ 64) {
+  				each_value_3 = /*pt*/ ctx[17].arr;
+  				validate_each_argument(each_value_3);
   				let i;
 
-  				for (i = 0; i < each_value_2.length; i += 1) {
-  					const child_ctx = get_each_context_2(ctx, each_value_2, i);
+  				for (i = 0; i < each_value_3.length; i += 1) {
+  					const child_ctx = get_each_context_3(ctx, each_value_3, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_2(child_ctx);
+  						each_blocks[i] = create_each_block_3(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
   					}
@@ -2045,7 +2433,7 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_2.length;
+  				each_blocks.length = each_value_3.length;
   			}
   		},
   		d: function destroy(detaching) {
@@ -2058,16 +2446,16 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_1.name,
+  		id: create_each_block_2.name,
   		type: "each",
-  		source: "(108:5) {#each tsInfoArr as pt}",
+  		source: "(127:5) {#each tsInfoArr as pt}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (122:4) {#if prp.spog}
+  // (141:4) {#if prp.spog}
   function create_if_block_3(ctx) {
   	let div2;
   	let div0;
@@ -2085,10 +2473,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$2, 123, 6, 3093);
+  			add_location(div0, file$3, 142, 6, 3507);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$2, 123, 40, 3127);
-  			add_location(div2, file$2, 122, 5, 3081);
+  			add_location(div1, file$3, 142, 40, 3541);
+  			add_location(div2, file$3, 141, 5, 3495);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -2109,14 +2497,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_3.name,
   		type: "if",
-  		source: "(122:4) {#if prp.spog}",
+  		source: "(141:4) {#if prp.spog}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (127:4) {#if prp.s_pch}
+  // (146:4) {#if prp.s_pch}
   function create_if_block_2(ctx) {
   	let div2;
   	let div0;
@@ -2134,10 +2522,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$2, 128, 6, 3221);
+  			add_location(div0, file$3, 147, 6, 3635);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$2, 128, 42, 3257);
-  			add_location(div2, file$2, 127, 5, 3209);
+  			add_location(div1, file$3, 147, 42, 3671);
+  			add_location(div2, file$3, 146, 5, 3623);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -2158,14 +2546,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_2.name,
   		type: "if",
-  		source: "(127:4) {#if prp.s_pch}",
+  		source: "(146:4) {#if prp.s_pch}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (132:4) {#if prp.osv}
+  // (151:4) {#if prp.osv}
   function create_if_block_1(ctx) {
   	let div2;
   	let div0;
@@ -2183,10 +2571,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$2, 133, 6, 3350);
+  			add_location(div0, file$3, 152, 6, 3764);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$2, 133, 46, 3390);
-  			add_location(div2, file$2, 132, 5, 3338);
+  			add_location(div1, file$3, 152, 46, 3804);
+  			add_location(div2, file$3, 151, 5, 3752);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -2207,14 +2595,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_1.name,
   		type: "if",
-  		source: "(132:4) {#if prp.osv}",
+  		source: "(151:4) {#if prp.osv}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (137:4) {#if prp.ndu}
+  // (156:4) {#if prp.ndu}
   function create_if_block(ctx) {
   	let div2;
   	let div0;
@@ -2232,10 +2620,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$2, 138, 6, 3481);
+  			add_location(div0, file$3, 157, 6, 3895);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$2, 138, 46, 3521);
-  			add_location(div2, file$2, 137, 5, 3469);
+  			add_location(div1, file$3, 157, 46, 3935);
+  			add_location(div2, file$3, 156, 5, 3883);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -2256,15 +2644,15 @@ var dtp = (function () {
   		block,
   		id: create_if_block.name,
   		type: "if",
-  		source: "(137:4) {#if prp.ndu}",
+  		source: "(156:4) {#if prp.ndu}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (152:3) {#each (prp.dps_plk || []) as pt1}
-  function create_each_block$1(ctx) {
+  // (171:3) {#each (prp.dps_plk || []) as pt1}
+  function create_each_block_1(ctx) {
   	let li;
   	let t;
   	let li_value_value;
@@ -2275,17 +2663,60 @@ var dtp = (function () {
   			li = element("li");
   			t = text("батальон ДПС");
   			attr_dev(li, "class", "link svelte-bxm1yk");
-  			li.value = li_value_value = /*pt1*/ ctx[9];
-  			add_location(li, file$2, 152, 4, 3945);
+  			li.value = li_value_value = /*pt1*/ ctx[12];
+  			add_location(li, file$3, 171, 4, 4359);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, li, anchor);
   			append_dev(li, t);
   			if (remount) dispose();
-  			dispose = listen_dev(li, "click", /*showBat*/ ctx[2], false, false, false);
+  			dispose = listen_dev(li, "click", /*showBat*/ ctx[4], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty & /*prp*/ 1 && li_value_value !== (li_value_value = /*pt1*/ ctx[9])) {
+  			if (dirty & /*prp*/ 1 && li_value_value !== (li_value_value = /*pt1*/ ctx[12])) {
+  				prop_dev(li, "value", li_value_value);
+  			}
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(li);
+  			dispose();
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_each_block_1.name,
+  		type: "each",
+  		source: "(171:3) {#each (prp.dps_plk || []) as pt1}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (181:3) {#each (prp.event_list || []) as pt1}
+  function create_each_block$1(ctx) {
+  	let li;
+  	let t;
+  	let li_value_value;
+  	let dispose;
+
+  	const block = {
+  		c: function create() {
+  			li = element("li");
+  			t = text("Мероприятие");
+  			attr_dev(li, "class", "link svelte-bxm1yk");
+  			li.value = li_value_value = /*pt1*/ ctx[12];
+  			add_location(li, file$3, 181, 4, 4666);
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, li, anchor);
+  			append_dev(li, t);
+  			if (remount) dispose();
+  			dispose = listen_dev(li, "click", /*showEvn*/ ctx[3], false, false, false);
+  		},
+  		p: function update(ctx, dirty) {
+  			if (dirty & /*prp*/ 1 && li_value_value !== (li_value_value = /*pt1*/ ctx[12])) {
   				prop_dev(li, "value", li_value_value);
   			}
   		},
@@ -2299,21 +2730,21 @@ var dtp = (function () {
   		block,
   		id: create_each_block$1.name,
   		type: "each",
-  		source: "(152:3) {#each (prp.dps_plk || []) as pt1}",
+  		source: "(181:3) {#each (prp.event_list || []) as pt1}",
   		ctx
   	});
 
   	return block;
   }
 
-  function create_fragment$2(ctx) {
-  	let div3;
+  function create_fragment$3(ctx) {
+  	let div4;
   	let div0;
   	let b0;
   	let t0_value = (/*prp*/ ctx[0].name || /*prp*/ ctx[0].dtvp || "") + "";
   	let t0;
   	let t1;
-  	let div2;
+  	let div3;
   	let table;
   	let tbody;
   	let tr0;
@@ -2402,8 +2833,26 @@ var dtp = (function () {
   	let div1;
   	let t49;
   	let ul1;
+  	let t50;
+  	let tr10;
+  	let td19;
+  	let div2;
+  	let t51;
+  	let ul2;
   	let dispose;
-  	let each_value_1 = /*tsInfoArr*/ ctx[4];
+  	let each_value_2 = /*tsInfoArr*/ ctx[6];
+  	validate_each_argument(each_value_2);
+  	let each_blocks_2 = [];
+
+  	for (let i = 0; i < each_value_2.length; i += 1) {
+  		each_blocks_2[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+  	}
+
+  	let if_block0 = /*prp*/ ctx[0].spog && create_if_block_3(ctx);
+  	let if_block1 = /*prp*/ ctx[0].s_pch && create_if_block_2(ctx);
+  	let if_block2 = /*prp*/ ctx[0].osv && create_if_block_1(ctx);
+  	let if_block3 = /*prp*/ ctx[0].ndu && create_if_block(ctx);
+  	let each_value_1 = /*prp*/ ctx[0].dps_plk || [];
   	validate_each_argument(each_value_1);
   	let each_blocks_1 = [];
 
@@ -2411,11 +2860,7 @@ var dtp = (function () {
   		each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
   	}
 
-  	let if_block0 = /*prp*/ ctx[0].spog && create_if_block_3(ctx);
-  	let if_block1 = /*prp*/ ctx[0].s_pch && create_if_block_2(ctx);
-  	let if_block2 = /*prp*/ ctx[0].osv && create_if_block_1(ctx);
-  	let if_block3 = /*prp*/ ctx[0].ndu && create_if_block(ctx);
-  	let each_value = /*prp*/ ctx[0].dps_plk || [];
+  	let each_value = /*prp*/ ctx[0].event_list || [];
   	validate_each_argument(each_value);
   	let each_blocks = [];
 
@@ -2425,12 +2870,12 @@ var dtp = (function () {
 
   	const block = {
   		c: function create() {
-  			div3 = element("div");
+  			div4 = element("div");
   			div0 = element("div");
   			b0 = element("b");
   			t0 = text(t0_value);
   			t1 = space();
-  			div2 = element("div");
+  			div3 = element("div");
   			table = element("table");
   			tbody = element("tbody");
   			tr0 = element("tr");
@@ -2493,8 +2938,8 @@ var dtp = (function () {
   			td13 = element("td");
   			ul0 = element("ul");
 
-  			for (let i = 0; i < each_blocks_1.length; i += 1) {
-  				each_blocks_1[i].c();
+  			for (let i = 0; i < each_blocks_2.length; i += 1) {
+  				each_blocks_2[i].c();
   			}
 
   			t36 = space();
@@ -2527,82 +2972,100 @@ var dtp = (function () {
   			t49 = space();
   			ul1 = element("ul");
 
+  			for (let i = 0; i < each_blocks_1.length; i += 1) {
+  				each_blocks_1[i].c();
+  			}
+
+  			t50 = space();
+  			tr10 = element("tr");
+  			td19 = element("td");
+  			div2 = element("div");
+  			t51 = space();
+  			ul2 = element("ul");
+
   			for (let i = 0; i < each_blocks.length; i += 1) {
   				each_blocks[i].c();
   			}
 
-  			add_location(b0, file$2, 74, 4, 1712);
+  			add_location(b0, file$3, 93, 4, 2126);
   			attr_dev(div0, "class", "pLine");
-  			add_location(div0, file$2, 73, 2, 1688);
+  			add_location(div0, file$3, 92, 2, 2102);
   			attr_dev(td0, "class", "first svelte-bxm1yk");
-  			add_location(td0, file$2, 80, 5, 1835);
-  			add_location(td1, file$2, 81, 5, 1867);
-  			add_location(tr0, file$2, 79, 3, 1825);
+  			add_location(td0, file$3, 99, 5, 2249);
+  			add_location(td1, file$3, 100, 5, 2281);
+  			add_location(tr0, file$3, 98, 3, 2239);
   			attr_dev(td2, "class", "first svelte-bxm1yk");
-  			add_location(td2, file$2, 84, 5, 1945);
-  			add_location(td3, file$2, 85, 5, 1980);
-  			add_location(tr1, file$2, 83, 3, 1935);
+  			add_location(td2, file$3, 103, 5, 2359);
+  			add_location(td3, file$3, 104, 5, 2394);
+  			add_location(tr1, file$3, 102, 3, 2349);
   			attr_dev(td4, "class", "first svelte-bxm1yk");
-  			add_location(td4, file$2, 88, 5, 2048);
-  			add_location(b1, file$2, 89, 9, 2089);
-  			add_location(b2, file$2, 89, 34, 2114);
-  			add_location(td5, file$2, 89, 5, 2085);
-  			add_location(tr2, file$2, 87, 3, 2038);
+  			add_location(td4, file$3, 107, 5, 2462);
+  			add_location(b1, file$3, 108, 9, 2503);
+  			add_location(b2, file$3, 108, 34, 2528);
+  			add_location(td5, file$3, 108, 5, 2499);
+  			add_location(tr2, file$3, 106, 3, 2452);
   			attr_dev(td6, "class", "first svelte-bxm1yk");
-  			add_location(td6, file$2, 92, 5, 2164);
+  			add_location(td6, file$3, 111, 5, 2578);
   			attr_dev(span, "title", "Скопировать в буфер обмена");
   			attr_dev(span, "class", "leaflet-gmx-icon-copy");
-  			add_location(span, file$2, 93, 29, 2228);
-  			add_location(td7, file$2, 93, 5, 2204);
-  			add_location(tr3, file$2, 91, 3, 2154);
+  			add_location(span, file$3, 112, 29, 2642);
+  			add_location(td7, file$3, 112, 5, 2618);
+  			add_location(tr3, file$3, 110, 3, 2568);
   			attr_dev(td8, "class", "first svelte-bxm1yk");
-  			add_location(td8, file$2, 96, 5, 2356);
-  			add_location(td9, file$2, 97, 5, 2396);
-  			add_location(tr4, file$2, 95, 3, 2346);
+  			add_location(td8, file$3, 115, 5, 2770);
+  			add_location(td9, file$3, 116, 5, 2810);
+  			add_location(tr4, file$3, 114, 3, 2760);
   			attr_dev(td10, "class", "first svelte-bxm1yk");
-  			add_location(td10, file$2, 100, 5, 2470);
-  			add_location(td11, file$2, 101, 5, 2507);
-  			add_location(tr5, file$2, 99, 3, 2460);
+  			add_location(td10, file$3, 119, 5, 2884);
+  			add_location(td11, file$3, 120, 5, 2921);
+  			add_location(tr5, file$3, 118, 3, 2874);
   			attr_dev(td12, "class", "first svelte-bxm1yk");
-  			add_location(td12, file$2, 104, 14, 2573);
-  			add_location(ul0, file$2, 106, 4, 2630);
-  			add_location(td13, file$2, 105, 14, 2621);
-  			add_location(tr6, file$2, 103, 12, 2554);
+  			add_location(td12, file$3, 123, 14, 2987);
+  			add_location(ul0, file$3, 125, 4, 3044);
+  			add_location(td13, file$3, 124, 14, 3035);
+  			add_location(tr6, file$3, 122, 12, 2968);
   			attr_dev(td14, "class", "first svelte-bxm1yk");
-  			add_location(td14, file$2, 119, 14, 3006);
-  			add_location(td15, file$2, 120, 14, 3052);
-  			add_location(tr7, file$2, 118, 12, 2987);
+  			add_location(td14, file$3, 138, 14, 3420);
+  			add_location(td15, file$3, 139, 14, 3466);
+  			add_location(tr7, file$3, 137, 12, 3401);
   			attr_dev(td16, "class", "first svelte-bxm1yk");
-  			add_location(td16, file$2, 144, 14, 3637);
-  			add_location(b3, file$2, 145, 18, 3707);
-  			add_location(td17, file$2, 145, 14, 3703);
-  			add_location(tr8, file$2, 143, 12, 3618);
+  			add_location(td16, file$3, 163, 14, 4051);
+  			add_location(b3, file$3, 164, 18, 4121);
+  			add_location(td17, file$3, 164, 14, 4117);
+  			add_location(tr8, file$3, 162, 12, 4032);
   			attr_dev(div1, "class", "win leaflet-popup-content-wrapper  svelte-bxm1yk");
-  			add_location(div1, file$2, 149, 2, 3819);
-  			add_location(ul1, file$2, 150, 4, 3898);
+  			add_location(div1, file$3, 168, 2, 4233);
+  			add_location(ul1, file$3, 169, 4, 4312);
   			attr_dev(td18, "class", "first svelte-bxm1yk");
   			attr_dev(td18, "colspan", "2");
-  			add_location(td18, file$2, 148, 14, 3788);
-  			add_location(tr9, file$2, 147, 12, 3769);
-  			add_location(tbody, file$2, 78, 3, 1814);
+  			add_location(td18, file$3, 167, 14, 4202);
+  			add_location(tr9, file$3, 166, 12, 4183);
+  			attr_dev(div2, "class", "win leaflet-popup-content-wrapper  svelte-bxm1yk");
+  			add_location(div2, file$3, 178, 2, 4537);
+  			add_location(ul2, file$3, 179, 4, 4616);
+  			attr_dev(td19, "class", "first svelte-bxm1yk");
+  			attr_dev(td19, "colspan", "2");
+  			add_location(td19, file$3, 177, 14, 4506);
+  			add_location(tr10, file$3, 176, 12, 4487);
+  			add_location(tbody, file$3, 97, 3, 2228);
   			attr_dev(table, "class", "table");
-  			add_location(table, file$2, 77, 4, 1789);
-  			attr_dev(div2, "class", "featureCont");
-  			add_location(div2, file$2, 76, 2, 1759);
-  			attr_dev(div3, "class", "mvsPopup svelte-bxm1yk");
-  			add_location(div3, file$2, 72, 3, 1663);
+  			add_location(table, file$3, 96, 4, 2203);
+  			attr_dev(div3, "class", "featureCont");
+  			add_location(div3, file$3, 95, 2, 2173);
+  			attr_dev(div4, "class", "mvsPopup svelte-bxm1yk");
+  			add_location(div4, file$3, 91, 3, 2077);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
   		},
   		m: function mount(target, anchor, remount) {
-  			insert_dev(target, div3, anchor);
-  			append_dev(div3, div0);
+  			insert_dev(target, div4, anchor);
+  			append_dev(div4, div0);
   			append_dev(div0, b0);
   			append_dev(b0, t0);
-  			append_dev(div3, t1);
-  			append_dev(div3, div2);
-  			append_dev(div2, table);
+  			append_dev(div4, t1);
+  			append_dev(div4, div3);
+  			append_dev(div3, table);
   			append_dev(table, tbody);
   			append_dev(tbody, tr0);
   			append_dev(tr0, td0);
@@ -2657,8 +3120,8 @@ var dtp = (function () {
   			append_dev(tr6, td13);
   			append_dev(td13, ul0);
 
-  			for (let i = 0; i < each_blocks_1.length; i += 1) {
-  				each_blocks_1[i].m(ul0, null);
+  			for (let i = 0; i < each_blocks_2.length; i += 1) {
+  				each_blocks_2[i].m(ul0, null);
   			}
 
   			append_dev(tbody, t36);
@@ -2686,16 +3149,28 @@ var dtp = (function () {
   			append_dev(tbody, tr9);
   			append_dev(tr9, td18);
   			append_dev(td18, div1);
-  			/*div1_binding*/ ctx[8](div1);
+  			/*div1_binding*/ ctx[10](div1);
   			append_dev(td18, t49);
   			append_dev(td18, ul1);
 
+  			for (let i = 0; i < each_blocks_1.length; i += 1) {
+  				each_blocks_1[i].m(ul1, null);
+  			}
+
+  			append_dev(tbody, t50);
+  			append_dev(tbody, tr10);
+  			append_dev(tr10, td19);
+  			append_dev(td19, div2);
+  			/*div2_binding*/ ctx[11](div2);
+  			append_dev(td19, t51);
+  			append_dev(td19, ul2);
+
   			for (let i = 0; i < each_blocks.length; i += 1) {
-  				each_blocks[i].m(ul1, null);
+  				each_blocks[i].m(ul2, null);
   			}
 
   			if (remount) dispose();
-  			dispose = listen_dev(span, "click", /*copyParent*/ ctx[3], false, false, false);
+  			dispose = listen_dev(span, "click", /*copyParent*/ ctx[5], false, false, false);
   		},
   		p: function update(ctx, [dirty]) {
   			if (dirty & /*prp*/ 1 && t0_value !== (t0_value = (/*prp*/ ctx[0].name || /*prp*/ ctx[0].dtvp || "") + "")) set_data_dev(t0, t0_value);
@@ -2709,28 +3184,28 @@ var dtp = (function () {
   			if (dirty & /*prp*/ 1 && t28_value !== (t28_value = (/*prp*/ ctx[0].collision_date || /*prp*/ ctx[0].dtp_date || "") + "")) set_data_dev(t28, t28_value);
   			if (dirty & /*prp*/ 1 && t32_value !== (t32_value = (/*prp*/ ctx[0].dtvp || "") + "")) set_data_dev(t32, t32_value);
 
-  			if (dirty & /*tsInfoArr*/ 16) {
-  				each_value_1 = /*tsInfoArr*/ ctx[4];
-  				validate_each_argument(each_value_1);
+  			if (dirty & /*tsInfoArr*/ 64) {
+  				each_value_2 = /*tsInfoArr*/ ctx[6];
+  				validate_each_argument(each_value_2);
   				let i;
 
-  				for (i = 0; i < each_value_1.length; i += 1) {
-  					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+  				for (i = 0; i < each_value_2.length; i += 1) {
+  					const child_ctx = get_each_context_2(ctx, each_value_2, i);
 
-  					if (each_blocks_1[i]) {
-  						each_blocks_1[i].p(child_ctx, dirty);
+  					if (each_blocks_2[i]) {
+  						each_blocks_2[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_1[i] = create_each_block_1(child_ctx);
-  						each_blocks_1[i].c();
-  						each_blocks_1[i].m(ul0, null);
+  						each_blocks_2[i] = create_each_block_2(child_ctx);
+  						each_blocks_2[i].c();
+  						each_blocks_2[i].m(ul0, null);
   					}
   				}
 
-  				for (; i < each_blocks_1.length; i += 1) {
-  					each_blocks_1[i].d(1);
+  				for (; i < each_blocks_2.length; i += 1) {
+  					each_blocks_2[i].d(1);
   				}
 
-  				each_blocks_1.length = each_value_1.length;
+  				each_blocks_2.length = each_value_2.length;
   			}
 
   			if (/*prp*/ ctx[0].spog) {
@@ -2788,8 +3263,32 @@ var dtp = (function () {
   			if (dirty & /*prp*/ 1 && t45_value !== (t45_value = /*prp*/ ctx[0].pog + "")) set_data_dev(t45, t45_value);
   			if (dirty & /*prp*/ 1 && t47_value !== (t47_value = /*prp*/ ctx[0].ran + "")) set_data_dev(t47, t47_value);
 
-  			if (dirty & /*prp, showBat*/ 5) {
-  				each_value = /*prp*/ ctx[0].dps_plk || [];
+  			if (dirty & /*prp, showBat*/ 17) {
+  				each_value_1 = /*prp*/ ctx[0].dps_plk || [];
+  				validate_each_argument(each_value_1);
+  				let i;
+
+  				for (i = 0; i < each_value_1.length; i += 1) {
+  					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+  					if (each_blocks_1[i]) {
+  						each_blocks_1[i].p(child_ctx, dirty);
+  					} else {
+  						each_blocks_1[i] = create_each_block_1(child_ctx);
+  						each_blocks_1[i].c();
+  						each_blocks_1[i].m(ul1, null);
+  					}
+  				}
+
+  				for (; i < each_blocks_1.length; i += 1) {
+  					each_blocks_1[i].d(1);
+  				}
+
+  				each_blocks_1.length = each_value_1.length;
+  			}
+
+  			if (dirty & /*prp, showEvn*/ 9) {
+  				each_value = /*prp*/ ctx[0].event_list || [];
   				validate_each_argument(each_value);
   				let i;
 
@@ -2801,7 +3300,7 @@ var dtp = (function () {
   					} else {
   						each_blocks[i] = create_each_block$1(child_ctx);
   						each_blocks[i].c();
-  						each_blocks[i].m(ul1, null);
+  						each_blocks[i].m(ul2, null);
   					}
   				}
 
@@ -2815,13 +3314,15 @@ var dtp = (function () {
   		i: noop,
   		o: noop,
   		d: function destroy(detaching) {
-  			if (detaching) detach_dev(div3);
-  			destroy_each(each_blocks_1, detaching);
+  			if (detaching) detach_dev(div4);
+  			destroy_each(each_blocks_2, detaching);
   			if (if_block0) if_block0.d();
   			if (if_block1) if_block1.d();
   			if (if_block2) if_block2.d();
   			if (if_block3) if_block3.d();
-  			/*div1_binding*/ ctx[8](null);
+  			/*div1_binding*/ ctx[10](null);
+  			destroy_each(each_blocks_1, detaching);
+  			/*div2_binding*/ ctx[11](null);
   			destroy_each(each_blocks, detaching);
   			dispose();
   		}
@@ -2829,7 +3330,7 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$2.name,
+  		id: create_fragment$3.name,
   		type: "component",
   		source: "",
   		ctx
@@ -2838,12 +3339,23 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$2($$self, $$props, $$invalidate) {
+  function instance$3($$self, $$props, $$invalidate) {
   	let { showModal = false } = $$props;
   	let { prp } = $$props;
   	let modal;
   	let disabled = prp.skpdiFiles ? "" : "disabled";
   	let gpsCont;
+  	let evnCont;
+
+  	const showEvn = ev => {
+  		let id = ev.target.value;
+  		$$invalidate(2, evnCont.innerHTML = "", evnCont);
+  		let url = "https://dtp.mvs.group/scripts/events_dev/get_event_id_" + id + ".txt";
+
+  		fetch(url, {}).then(req => req.json()).then(json => {
+  			const app = new DtpPopupEvnt({ target: evnCont, props: { prp: json[0] } });
+  		});
+  	};
 
   	afterUpdate(() => {
   		// console.log('the component just updated', showModal, modal);
@@ -2855,7 +3367,7 @@ var dtp = (function () {
 
   			modal.$on("close", ev => {
   				modal.$destroy();
-  				$$invalidate(5, showModal = false);
+  				$$invalidate(7, showModal = false);
   			});
   		}
   	});
@@ -2898,7 +3410,7 @@ var dtp = (function () {
   	const writable_props = ["showModal", "prp"];
 
   	Object.keys($$props).forEach(key => {
-  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$1.warn(`<DtpPopupGibdd> was created with unknown prop '${key}'`);
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$2.warn(`<DtpPopupGibdd> was created with unknown prop '${key}'`);
   	});
 
   	let { $$slots = {}, $$scope } = $$props;
@@ -2910,8 +3422,14 @@ var dtp = (function () {
   		});
   	}
 
+  	function div2_binding($$value) {
+  		binding_callbacks[$$value ? "unshift" : "push"](() => {
+  			$$invalidate(2, evnCont = $$value);
+  		});
+  	}
+
   	$$self.$set = $$props => {
-  		if ("showModal" in $$props) $$invalidate(5, showModal = $$props.showModal);
+  		if ("showModal" in $$props) $$invalidate(7, showModal = $$props.showModal);
   		if ("prp" in $$props) $$invalidate(0, prp = $$props.prp);
   	};
 
@@ -2919,22 +3437,26 @@ var dtp = (function () {
   		afterUpdate,
   		Modal,
   		DtpPopup: DtpPopupDps,
+  		DtpPopupEvnt,
   		showModal,
   		prp,
   		modal,
   		disabled,
   		gpsCont,
+  		evnCont,
+  		showEvn,
   		showBat,
   		copyParent,
   		tsInfoArr
   	});
 
   	$$self.$inject_state = $$props => {
-  		if ("showModal" in $$props) $$invalidate(5, showModal = $$props.showModal);
+  		if ("showModal" in $$props) $$invalidate(7, showModal = $$props.showModal);
   		if ("prp" in $$props) $$invalidate(0, prp = $$props.prp);
   		if ("modal" in $$props) modal = $$props.modal;
   		if ("disabled" in $$props) disabled = $$props.disabled;
   		if ("gpsCont" in $$props) $$invalidate(1, gpsCont = $$props.gpsCont);
+  		if ("evnCont" in $$props) $$invalidate(2, evnCont = $$props.evnCont);
   	};
 
   	if ($$props && "$$inject" in $$props) {
@@ -2944,33 +3466,36 @@ var dtp = (function () {
   	return [
   		prp,
   		gpsCont,
+  		evnCont,
+  		showEvn,
   		showBat,
   		copyParent,
   		tsInfoArr,
   		showModal,
   		modal,
   		disabled,
-  		div1_binding
+  		div1_binding,
+  		div2_binding
   	];
   }
 
   class DtpPopupGibdd extends SvelteComponentDev {
   	constructor(options) {
   		super(options);
-  		init(this, options, instance$2, create_fragment$2, safe_not_equal, { showModal: 5, prp: 0 });
+  		init(this, options, instance$3, create_fragment$3, safe_not_equal, { showModal: 7, prp: 0 });
 
   		dispatch_dev("SvelteRegisterComponent", {
   			component: this,
   			tagName: "DtpPopupGibdd",
   			options,
-  			id: create_fragment$2.name
+  			id: create_fragment$3.name
   		});
 
   		const { ctx } = this.$$;
   		const props = options.props || {};
 
   		if (/*prp*/ ctx[0] === undefined && !("prp" in props)) {
-  			console_1$1.warn("<DtpPopupGibdd> was created without expected prop 'prp'");
+  			console_1$2.warn("<DtpPopupGibdd> was created without expected prop 'prp'");
   		}
   	}
 
@@ -3044,6 +3569,18 @@ var dtp = (function () {
   					// if (prp.collision_type === ft.zn) {
   						cnt++;
   					}
+  				} else if (ft.type === 'evnt') {
+  					if (prp.event) {
+  						if (ft.zn.ev1) { cnt++; }
+  					} else {
+  						if (ft.zn.ev0) { cnt++; }
+  					}
+  				} else if (ft.type === 'dps') {
+  					if (prp.dps) {
+  						if (ft.zn.Dps1) { cnt++; }
+  					} else {
+  						if (ft.zn.Dps0) { cnt++; }
+  					}
   				} else if (ft.type === 'id_dtp') {
   					if (prp.id == ft.zn) {
   						cnt++;
@@ -3089,7 +3626,7 @@ var dtp = (function () {
   	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_stat_gipdd', {})
   		.then(req => req.json())
   		.then(json => {
-  			let opt = {collision_type: {}, iconType: {}};
+  			let opt = {collision_type: {}, iconType: {}, event: {}};
   			let heat = [];
   			let arr = json.map(prp => {
   				let iconType = prp.iconType || 0,
@@ -3109,10 +3646,22 @@ var dtp = (function () {
   						fillColor = '#2F4F4F'; //  17-18
   					}
   				}
+  				
+  if (prp.id == 220457693) {
+  	prp.dps = 1;
+  }
   if (!prp.lat || !prp.lon) {
   console.log('_______', prp);
   	prp.lat = prp.lon = 0;
   }
+  				let cnt = opt.event[prp.event];
+  				if (!cnt) {
+  					cnt = 1;
+  				} else {
+  					cnt++;
+  				}
+  				opt.event[prp.event] = cnt;
+
   				let cTypeCount = opt.collision_type[prp.collision_type];
   				if (!cTypeCount) {
   					cTypeCount = 1;
@@ -3167,25 +3716,134 @@ var dtp = (function () {
 
   /* src\DtpPopupSkpdi.svelte generated by Svelte v3.20.1 */
 
-  const { console: console_1$2 } = globals;
-  const file$3 = "src\\DtpPopupSkpdi.svelte";
+  const { console: console_1$3 } = globals;
+  const file$4 = "src\\DtpPopupSkpdi.svelte";
 
   function get_each_context$2(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[6] = list[i];
+  	child_ctx[9] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_1$1(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[6] = list[i];
+  	child_ctx[12] = list[i];
   	return child_ctx;
   }
 
-  // (71:5) {#if prp.collisionTypes && prp.collisionTypes.length}
+  function get_each_context_2$1(ctx, list, i) {
+  	const child_ctx = ctx.slice();
+  	child_ctx[12] = list[i];
+  	return child_ctx;
+  }
+
+  // (89:5) {#if prp.collisionTypes && prp.collisionTypes.length}
   function create_if_block_1$1(ctx) {
   	let each_1_anchor;
-  	let each_value_1 = /*prp*/ ctx[1].collisionTypes;
+  	let each_value_2 = /*prp*/ ctx[1].collisionTypes;
+  	validate_each_argument(each_value_2);
+  	let each_blocks = [];
+
+  	for (let i = 0; i < each_value_2.length; i += 1) {
+  		each_blocks[i] = create_each_block_2$1(get_each_context_2$1(ctx, each_value_2, i));
+  	}
+
+  	const block = {
+  		c: function create() {
+  			for (let i = 0; i < each_blocks.length; i += 1) {
+  				each_blocks[i].c();
+  			}
+
+  			each_1_anchor = empty();
+  		},
+  		m: function mount(target, anchor) {
+  			for (let i = 0; i < each_blocks.length; i += 1) {
+  				each_blocks[i].m(target, anchor);
+  			}
+
+  			insert_dev(target, each_1_anchor, anchor);
+  		},
+  		p: function update(ctx, dirty) {
+  			if (dirty & /*prp*/ 2) {
+  				each_value_2 = /*prp*/ ctx[1].collisionTypes;
+  				validate_each_argument(each_value_2);
+  				let i;
+
+  				for (i = 0; i < each_value_2.length; i += 1) {
+  					const child_ctx = get_each_context_2$1(ctx, each_value_2, i);
+
+  					if (each_blocks[i]) {
+  						each_blocks[i].p(child_ctx, dirty);
+  					} else {
+  						each_blocks[i] = create_each_block_2$1(child_ctx);
+  						each_blocks[i].c();
+  						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+  					}
+  				}
+
+  				for (; i < each_blocks.length; i += 1) {
+  					each_blocks[i].d(1);
+  				}
+
+  				each_blocks.length = each_value_2.length;
+  			}
+  		},
+  		d: function destroy(detaching) {
+  			destroy_each(each_blocks, detaching);
+  			if (detaching) detach_dev(each_1_anchor);
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_if_block_1$1.name,
+  		type: "if",
+  		source: "(89:5) {#if prp.collisionTypes && prp.collisionTypes.length}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (90:5) {#each prp.collisionTypes as pt}
+  function create_each_block_2$1(ctx) {
+  	let li;
+  	let t_value = (/*pt*/ ctx[12].collisionType || "") + "";
+  	let t;
+
+  	const block = {
+  		c: function create() {
+  			li = element("li");
+  			t = text(t_value);
+  			add_location(li, file$4, 90, 5, 2201);
+  		},
+  		m: function mount(target, anchor) {
+  			insert_dev(target, li, anchor);
+  			append_dev(li, t);
+  		},
+  		p: function update(ctx, dirty) {
+  			if (dirty & /*prp*/ 2 && t_value !== (t_value = (/*pt*/ ctx[12].collisionType || "") + "")) set_data_dev(t, t_value);
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(li);
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_each_block_2$1.name,
+  		type: "each",
+  		source: "(90:5) {#each prp.collisionTypes as pt}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (101:5) {#if prp.uchs && prp.uchs.length}
+  function create_if_block$1(ctx) {
+  	let each_1_anchor;
+  	let each_value_1 = /*prp*/ ctx[1].uchs;
   	validate_each_argument(each_value_1);
   	let each_blocks = [];
 
@@ -3210,7 +3868,7 @@ var dtp = (function () {
   		},
   		p: function update(ctx, dirty) {
   			if (dirty & /*prp*/ 2) {
-  				each_value_1 = /*prp*/ ctx[1].collisionTypes;
+  				each_value_1 = /*prp*/ ctx[1].uchs;
   				validate_each_argument(each_value_1);
   				let i;
 
@@ -3241,128 +3899,25 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_1$1.name,
-  		type: "if",
-  		source: "(71:5) {#if prp.collisionTypes && prp.collisionTypes.length}",
-  		ctx
-  	});
-
-  	return block;
-  }
-
-  // (72:5) {#each prp.collisionTypes as pt}
-  function create_each_block_1$1(ctx) {
-  	let li;
-  	let t_value = (/*pt*/ ctx[6].collisionType || "") + "";
-  	let t;
-
-  	const block = {
-  		c: function create() {
-  			li = element("li");
-  			t = text(t_value);
-  			add_location(li, file$3, 72, 5, 1845);
-  		},
-  		m: function mount(target, anchor) {
-  			insert_dev(target, li, anchor);
-  			append_dev(li, t);
-  		},
-  		p: function update(ctx, dirty) {
-  			if (dirty & /*prp*/ 2 && t_value !== (t_value = (/*pt*/ ctx[6].collisionType || "") + "")) set_data_dev(t, t_value);
-  		},
-  		d: function destroy(detaching) {
-  			if (detaching) detach_dev(li);
-  		}
-  	};
-
-  	dispatch_dev("SvelteRegisterBlock", {
-  		block,
-  		id: create_each_block_1$1.name,
-  		type: "each",
-  		source: "(72:5) {#each prp.collisionTypes as pt}",
-  		ctx
-  	});
-
-  	return block;
-  }
-
-  // (83:5) {#if prp.uchs && prp.uchs.length}
-  function create_if_block$1(ctx) {
-  	let each_1_anchor;
-  	let each_value = /*prp*/ ctx[1].uchs;
-  	validate_each_argument(each_value);
-  	let each_blocks = [];
-
-  	for (let i = 0; i < each_value.length; i += 1) {
-  		each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
-  	}
-
-  	const block = {
-  		c: function create() {
-  			for (let i = 0; i < each_blocks.length; i += 1) {
-  				each_blocks[i].c();
-  			}
-
-  			each_1_anchor = empty();
-  		},
-  		m: function mount(target, anchor) {
-  			for (let i = 0; i < each_blocks.length; i += 1) {
-  				each_blocks[i].m(target, anchor);
-  			}
-
-  			insert_dev(target, each_1_anchor, anchor);
-  		},
-  		p: function update(ctx, dirty) {
-  			if (dirty & /*prp*/ 2) {
-  				each_value = /*prp*/ ctx[1].uchs;
-  				validate_each_argument(each_value);
-  				let i;
-
-  				for (i = 0; i < each_value.length; i += 1) {
-  					const child_ctx = get_each_context$2(ctx, each_value, i);
-
-  					if (each_blocks[i]) {
-  						each_blocks[i].p(child_ctx, dirty);
-  					} else {
-  						each_blocks[i] = create_each_block$2(child_ctx);
-  						each_blocks[i].c();
-  						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-  					}
-  				}
-
-  				for (; i < each_blocks.length; i += 1) {
-  					each_blocks[i].d(1);
-  				}
-
-  				each_blocks.length = each_value.length;
-  			}
-  		},
-  		d: function destroy(detaching) {
-  			destroy_each(each_blocks, detaching);
-  			if (detaching) detach_dev(each_1_anchor);
-  		}
-  	};
-
-  	dispatch_dev("SvelteRegisterBlock", {
-  		block,
   		id: create_if_block$1.name,
   		type: "if",
-  		source: "(83:5) {#if prp.uchs && prp.uchs.length}",
+  		source: "(101:5) {#if prp.uchs && prp.uchs.length}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (84:5) {#each prp.uchs as pt}
-  function create_each_block$2(ctx) {
+  // (102:5) {#each prp.uchs as pt}
+  function create_each_block_1$1(ctx) {
   	let li;
-  	let t0_value = (/*pt*/ ctx[6].collisionPartyCategory || "") + "";
+  	let t0_value = (/*pt*/ ctx[12].collisionPartyCategory || "") + "";
   	let t0;
   	let t1;
   	let b;
   	let i;
   	let t2;
-  	let t3_value = (/*pt*/ ctx[6].collisionPartyCond || "") + "";
+  	let t3_value = (/*pt*/ ctx[12].collisionPartyCond || "") + "";
   	let t3;
   	let t4;
 
@@ -3376,9 +3931,9 @@ var dtp = (function () {
   			t2 = text("(");
   			t3 = text(t3_value);
   			t4 = text(")");
-  			add_location(i, file$3, 84, 46, 2148);
-  			add_location(b, file$3, 84, 43, 2145);
-  			add_location(li, file$3, 84, 5, 2107);
+  			add_location(i, file$4, 102, 46, 2504);
+  			add_location(b, file$4, 102, 43, 2501);
+  			add_location(li, file$4, 102, 5, 2463);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -3391,8 +3946,8 @@ var dtp = (function () {
   			append_dev(i, t4);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty & /*prp*/ 2 && t0_value !== (t0_value = (/*pt*/ ctx[6].collisionPartyCategory || "") + "")) set_data_dev(t0, t0_value);
-  			if (dirty & /*prp*/ 2 && t3_value !== (t3_value = (/*pt*/ ctx[6].collisionPartyCond || "") + "")) set_data_dev(t3, t3_value);
+  			if (dirty & /*prp*/ 2 && t0_value !== (t0_value = (/*pt*/ ctx[12].collisionPartyCategory || "") + "")) set_data_dev(t0, t0_value);
+  			if (dirty & /*prp*/ 2 && t3_value !== (t3_value = (/*pt*/ ctx[12].collisionPartyCond || "") + "")) set_data_dev(t3, t3_value);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(li);
@@ -3401,23 +3956,66 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block$2.name,
+  		id: create_each_block_1$1.name,
   		type: "each",
-  		source: "(84:5) {#each prp.uchs as pt}",
+  		source: "(102:5) {#each prp.uchs as pt}",
   		ctx
   	});
 
   	return block;
   }
 
-  function create_fragment$3(ctx) {
-  	let div4;
+  // (113:3) {#each (prp.event_list || []) as pt1}
+  function create_each_block$2(ctx) {
+  	let li;
+  	let t;
+  	let li_value_value;
+  	let dispose;
+
+  	const block = {
+  		c: function create() {
+  			li = element("li");
+  			t = text("Мероприятие");
+  			attr_dev(li, "class", "link svelte-vdxfpj");
+  			li.value = li_value_value = /*pt1*/ ctx[9];
+  			add_location(li, file$4, 113, 4, 2806);
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, li, anchor);
+  			append_dev(li, t);
+  			if (remount) dispose();
+  			dispose = listen_dev(li, "click", /*showEvn*/ ctx[4], false, false, false);
+  		},
+  		p: function update(ctx, dirty) {
+  			if (dirty & /*prp*/ 2 && li_value_value !== (li_value_value = /*pt1*/ ctx[9])) {
+  				prop_dev(li, "value", li_value_value);
+  			}
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(li);
+  			dispose();
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_each_block$2.name,
+  		type: "each",
+  		source: "(113:3) {#each (prp.event_list || []) as pt1}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  function create_fragment$4(ctx) {
+  	let div5;
   	let div0;
   	let b0;
   	let t0_value = (/*prp*/ ctx[1].name || /*prp*/ ctx[1].dtvp || "") + "";
   	let t0;
   	let t1;
-  	let div3;
+  	let div4;
   	let table;
   	let tbody;
   	let tr0;
@@ -3481,20 +4079,33 @@ var dtp = (function () {
   	let t33;
   	let tr7;
   	let td13;
-  	let button;
+  	let div3;
   	let t34;
+  	let ul2;
+  	let t35;
+  	let tr8;
+  	let td14;
+  	let button;
+  	let t36;
   	let dispose;
   	let if_block0 = /*prp*/ ctx[1].collisionTypes && /*prp*/ ctx[1].collisionTypes.length && create_if_block_1$1(ctx);
   	let if_block1 = /*prp*/ ctx[1].uchs && /*prp*/ ctx[1].uchs.length && create_if_block$1(ctx);
+  	let each_value = /*prp*/ ctx[1].event_list || [];
+  	validate_each_argument(each_value);
+  	let each_blocks = [];
+
+  	for (let i = 0; i < each_value.length; i += 1) {
+  		each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
+  	}
 
   	const block = {
   		c: function create() {
-  			div4 = element("div");
+  			div5 = element("div");
   			div0 = element("div");
   			b0 = element("b");
   			t0 = text(t0_value);
   			t1 = space();
-  			div3 = element("div");
+  			div4 = element("div");
   			table = element("table");
   			tbody = element("tbody");
   			tr0 = element("tr");
@@ -3560,74 +4171,92 @@ var dtp = (function () {
   			t33 = space();
   			tr7 = element("tr");
   			td13 = element("td");
+  			div3 = element("div");
+  			t34 = space();
+  			ul2 = element("ul");
+
+  			for (let i = 0; i < each_blocks.length; i += 1) {
+  				each_blocks[i].c();
+  			}
+
+  			t35 = space();
+  			tr8 = element("tr");
+  			td14 = element("td");
   			button = element("button");
-  			t34 = text("Фото и схемы");
-  			add_location(b0, file$3, 38, 4, 855);
+  			t36 = text("Фото и схемы");
+  			add_location(b0, file$4, 56, 4, 1211);
   			attr_dev(div0, "class", "pLine");
-  			add_location(div0, file$3, 37, 2, 831);
+  			add_location(div0, file$4, 55, 2, 1187);
   			attr_dev(td0, "class", "first");
-  			add_location(td0, file$3, 44, 5, 978);
-  			add_location(td1, file$3, 45, 5, 1010);
-  			add_location(tr0, file$3, 43, 3, 968);
+  			add_location(td0, file$4, 62, 5, 1334);
+  			add_location(td1, file$4, 63, 5, 1366);
+  			add_location(tr0, file$4, 61, 3, 1324);
   			attr_dev(td2, "class", "first");
-  			add_location(td2, file$3, 48, 5, 1087);
-  			add_location(b1, file$3, 49, 9, 1128);
-  			add_location(b2, file$3, 49, 34, 1153);
-  			add_location(td3, file$3, 49, 5, 1124);
-  			add_location(tr1, file$3, 47, 3, 1077);
+  			add_location(td2, file$4, 66, 5, 1443);
+  			add_location(b1, file$4, 67, 9, 1484);
+  			add_location(b2, file$4, 67, 34, 1509);
+  			add_location(td3, file$4, 67, 5, 1480);
+  			add_location(tr1, file$4, 65, 3, 1433);
   			attr_dev(td4, "class", "first");
-  			add_location(td4, file$3, 53, 5, 1204);
+  			add_location(td4, file$4, 71, 5, 1560);
   			attr_dev(span, "title", "Скопировать в буфер обмена");
   			attr_dev(span, "class", "leaflet-gmx-icon-copy");
-  			add_location(span, file$3, 54, 29, 1268);
-  			add_location(td5, file$3, 54, 5, 1244);
-  			add_location(tr2, file$3, 52, 3, 1194);
+  			add_location(span, file$4, 72, 29, 1624);
+  			add_location(td5, file$4, 72, 5, 1600);
+  			add_location(tr2, file$4, 70, 3, 1550);
   			attr_dev(td6, "class", "first");
-  			add_location(td6, file$3, 57, 5, 1396);
-  			add_location(td7, file$3, 58, 5, 1436);
-  			add_location(tr3, file$3, 56, 3, 1386);
+  			add_location(td6, file$4, 75, 5, 1752);
+  			add_location(td7, file$4, 76, 5, 1792);
+  			add_location(tr3, file$4, 74, 3, 1742);
   			attr_dev(div1, "class", "first");
-  			add_location(div1, file$3, 62, 4, 1531);
-  			add_location(div2, file$3, 63, 4, 1573);
+  			add_location(div1, file$4, 80, 4, 1887);
+  			add_location(div2, file$4, 81, 4, 1929);
   			attr_dev(td8, "colspan", "2");
-  			add_location(td8, file$3, 61, 5, 1510);
-  			add_location(tr4, file$3, 60, 3, 1500);
+  			add_location(td8, file$4, 79, 5, 1866);
+  			add_location(tr4, file$4, 78, 3, 1856);
   			attr_dev(td9, "class", "first");
-  			add_location(td9, file$3, 67, 14, 1681);
-  			add_location(ul0, file$3, 69, 4, 1738);
-  			add_location(td10, file$3, 68, 14, 1729);
-  			add_location(tr5, file$3, 66, 12, 1662);
+  			add_location(td9, file$4, 85, 14, 2037);
+  			add_location(ul0, file$4, 87, 4, 2094);
+  			add_location(td10, file$4, 86, 14, 2085);
+  			add_location(tr5, file$4, 84, 12, 2018);
   			attr_dev(td11, "class", "first");
-  			add_location(td11, file$3, 79, 14, 1973);
-  			add_location(ul1, file$3, 81, 4, 2030);
-  			add_location(td12, file$3, 80, 14, 2021);
-  			add_location(tr6, file$3, 78, 12, 1954);
-  			attr_dev(button, "class", "primary svelte-1aipaym");
-  			button.disabled = /*disabled*/ ctx[2];
-  			add_location(button, file$3, 93, 4, 2309);
-  			attr_dev(td13, "class", "center");
+  			add_location(td11, file$4, 97, 14, 2329);
+  			add_location(ul1, file$4, 99, 4, 2386);
+  			add_location(td12, file$4, 98, 14, 2377);
+  			add_location(tr6, file$4, 96, 12, 2310);
+  			attr_dev(div3, "class", "win leaflet-popup-content-wrapper  svelte-vdxfpj");
+  			add_location(div3, file$4, 110, 2, 2677);
+  			add_location(ul2, file$4, 111, 4, 2756);
+  			attr_dev(td13, "class", "first");
   			attr_dev(td13, "colspan", "2");
-  			add_location(td13, file$3, 92, 5, 2273);
-  			add_location(tr7, file$3, 91, 3, 2263);
-  			add_location(tbody, file$3, 42, 3, 957);
+  			add_location(td13, file$4, 109, 14, 2646);
+  			add_location(tr7, file$4, 108, 12, 2627);
+  			attr_dev(button, "class", "primary svelte-vdxfpj");
+  			button.disabled = /*disabled*/ ctx[2];
+  			add_location(button, file$4, 121, 4, 2971);
+  			attr_dev(td14, "class", "center");
+  			attr_dev(td14, "colspan", "2");
+  			add_location(td14, file$4, 120, 5, 2935);
+  			add_location(tr8, file$4, 119, 3, 2925);
+  			add_location(tbody, file$4, 60, 3, 1313);
   			attr_dev(table, "class", "table");
-  			add_location(table, file$3, 41, 4, 932);
-  			attr_dev(div3, "class", "featureCont");
-  			add_location(div3, file$3, 40, 2, 902);
-  			attr_dev(div4, "class", "mvsPopup");
-  			add_location(div4, file$3, 36, 3, 806);
+  			add_location(table, file$4, 59, 4, 1288);
+  			attr_dev(div4, "class", "featureCont");
+  			add_location(div4, file$4, 58, 2, 1258);
+  			attr_dev(div5, "class", "mvsPopup");
+  			add_location(div5, file$4, 54, 3, 1162);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
   		},
   		m: function mount(target, anchor, remount) {
-  			insert_dev(target, div4, anchor);
-  			append_dev(div4, div0);
+  			insert_dev(target, div5, anchor);
+  			append_dev(div5, div0);
   			append_dev(div0, b0);
   			append_dev(b0, t0);
-  			append_dev(div4, t1);
-  			append_dev(div4, div3);
-  			append_dev(div3, table);
+  			append_dev(div5, t1);
+  			append_dev(div5, div4);
+  			append_dev(div4, table);
   			append_dev(table, tbody);
   			append_dev(tbody, tr0);
   			append_dev(tr0, td0);
@@ -3685,13 +4314,25 @@ var dtp = (function () {
   			append_dev(tbody, t33);
   			append_dev(tbody, tr7);
   			append_dev(tr7, td13);
-  			append_dev(td13, button);
-  			append_dev(button, t34);
+  			append_dev(td13, div3);
+  			/*div3_binding*/ ctx[7](div3);
+  			append_dev(td13, t34);
+  			append_dev(td13, ul2);
+
+  			for (let i = 0; i < each_blocks.length; i += 1) {
+  				each_blocks[i].m(ul2, null);
+  			}
+
+  			append_dev(tbody, t35);
+  			append_dev(tbody, tr8);
+  			append_dev(tr8, td14);
+  			append_dev(td14, button);
+  			append_dev(button, t36);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(span, "click", /*copyParent*/ ctx[3], false, false, false),
-  				listen_dev(button, "click", /*click_handler*/ ctx[5], false, false, false)
+  				listen_dev(span, "click", /*copyParent*/ ctx[5], false, false, false),
+  				listen_dev(button, "click", /*click_handler*/ ctx[8], false, false, false)
   			];
   		},
   		p: function update(ctx, [dirty]) {
@@ -3730,6 +4371,30 @@ var dtp = (function () {
   				if_block1 = null;
   			}
 
+  			if (dirty & /*prp, showEvn*/ 18) {
+  				each_value = /*prp*/ ctx[1].event_list || [];
+  				validate_each_argument(each_value);
+  				let i;
+
+  				for (i = 0; i < each_value.length; i += 1) {
+  					const child_ctx = get_each_context$2(ctx, each_value, i);
+
+  					if (each_blocks[i]) {
+  						each_blocks[i].p(child_ctx, dirty);
+  					} else {
+  						each_blocks[i] = create_each_block$2(child_ctx);
+  						each_blocks[i].c();
+  						each_blocks[i].m(ul2, null);
+  					}
+  				}
+
+  				for (; i < each_blocks.length; i += 1) {
+  					each_blocks[i].d(1);
+  				}
+
+  				each_blocks.length = each_value.length;
+  			}
+
   			if (dirty & /*disabled*/ 4) {
   				prop_dev(button, "disabled", /*disabled*/ ctx[2]);
   			}
@@ -3737,16 +4402,18 @@ var dtp = (function () {
   		i: noop,
   		o: noop,
   		d: function destroy(detaching) {
-  			if (detaching) detach_dev(div4);
+  			if (detaching) detach_dev(div5);
   			if (if_block0) if_block0.d();
   			if (if_block1) if_block1.d();
+  			/*div3_binding*/ ctx[7](null);
+  			destroy_each(each_blocks, detaching);
   			run_all(dispose);
   		}
   	};
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$3.name,
+  		id: create_fragment$4.name,
   		type: "component",
   		source: "",
   		ctx
@@ -3755,11 +4422,22 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$3($$self, $$props, $$invalidate) {
+  function instance$4($$self, $$props, $$invalidate) {
   	let { showModal = false } = $$props;
   	let { prp } = $$props;
   	let modal;
   	let disabled = prp.files && prp.files.length ? "" : "disabled";
+  	let evnCont;
+
+  	const showEvn = ev => {
+  		let id = ev.target.value;
+  		$$invalidate(3, evnCont.innerHTML = "", evnCont);
+  		let url = "https://dtp.mvs.group/scripts/events_dev/get_event_id_" + id + ".txt";
+
+  		fetch(url, {}).then(req => req.json()).then(json => {
+  			const app = new DtpPopupEvnt({ target: evnCont, props: { prp: json[0] } });
+  		});
+  	};
 
   	afterUpdate(() => {
   		// console.log('the component just updated', showModal, modal);
@@ -3787,11 +4465,18 @@ var dtp = (function () {
   	const writable_props = ["showModal", "prp"];
 
   	Object.keys($$props).forEach(key => {
-  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$2.warn(`<DtpPopupSkpdi> was created with unknown prop '${key}'`);
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$3.warn(`<DtpPopupSkpdi> was created with unknown prop '${key}'`);
   	});
 
   	let { $$slots = {}, $$scope } = $$props;
   	validate_slots("DtpPopupSkpdi", $$slots, []);
+
+  	function div3_binding($$value) {
+  		binding_callbacks[$$value ? "unshift" : "push"](() => {
+  			$$invalidate(3, evnCont = $$value);
+  		});
+  	}
+
   	const click_handler = () => $$invalidate(0, showModal = true);
 
   	$$self.$set = $$props => {
@@ -3802,10 +4487,13 @@ var dtp = (function () {
   	$$self.$capture_state = () => ({
   		afterUpdate,
   		Modal,
+  		DtpPopup: DtpPopupEvnt,
   		showModal,
   		prp,
   		modal,
   		disabled,
+  		evnCont,
+  		showEvn,
   		copyParent
   	});
 
@@ -3814,32 +4502,43 @@ var dtp = (function () {
   		if ("prp" in $$props) $$invalidate(1, prp = $$props.prp);
   		if ("modal" in $$props) modal = $$props.modal;
   		if ("disabled" in $$props) $$invalidate(2, disabled = $$props.disabled);
+  		if ("evnCont" in $$props) $$invalidate(3, evnCont = $$props.evnCont);
   	};
 
   	if ($$props && "$$inject" in $$props) {
   		$$self.$inject_state($$props.$$inject);
   	}
 
-  	return [showModal, prp, disabled, copyParent, modal, click_handler];
+  	return [
+  		showModal,
+  		prp,
+  		disabled,
+  		evnCont,
+  		showEvn,
+  		copyParent,
+  		modal,
+  		div3_binding,
+  		click_handler
+  	];
   }
 
   class DtpPopupSkpdi extends SvelteComponentDev {
   	constructor(options) {
   		super(options);
-  		init(this, options, instance$3, create_fragment$3, safe_not_equal, { showModal: 0, prp: 1 });
+  		init(this, options, instance$4, create_fragment$4, safe_not_equal, { showModal: 0, prp: 1 });
 
   		dispatch_dev("SvelteRegisterComponent", {
   			component: this,
   			tagName: "DtpPopupSkpdi",
   			options,
-  			id: create_fragment$3.name
+  			id: create_fragment$4.name
   		});
 
   		const { ctx } = this.$$;
   		const props = options.props || {};
 
   		if (/*prp*/ ctx[1] === undefined && !("prp" in props)) {
-  			console_1$2.warn("<DtpPopupSkpdi> was created without expected prop 'prp'");
+  			console_1$3.warn("<DtpPopupSkpdi> was created without expected prop 'prp'");
   		}
   	}
 
@@ -3914,6 +4613,12 @@ var dtp = (function () {
   					// if (prp.collision_type === ft.zn) {
   						cnt++;
   					}
+  				} else if (ft.type === 'evnt') {
+  					if (prp.event) {
+  						if (ft.zn.ev1) { cnt++; }
+  					} else {
+  						if (ft.zn.ev0) { cnt++; }
+  					}
   				} else if (ft.type === 'id_dtp') {
   					if (prp.id == ft.zn) {
   						cnt++;
@@ -3955,7 +4660,7 @@ var dtp = (function () {
   	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_skpdi', {})
   		.then(req => req.json())
   		.then(json => {
-  			let opt = {collision_type: {}, iconType: {}};
+  			let opt = {collision_type: {}, iconType: {}, event: {}};
   			let heat = [];
   			let arr = json.map(prp => {
   				let iconType = prp.iconType || 0,
@@ -3980,6 +4685,14 @@ var dtp = (function () {
   console.log('_______', prp);
   	prp.lat = prp.lon = 0;
   }
+  				let cnt = opt.event[prp.event];
+  				if (!cnt) {
+  					cnt = 1;
+  				} else {
+  					cnt++;
+  				}
+  				opt.event[prp.event] = cnt;
+
   				let cTypeCount = opt.collision_type[prp.collision_type];
   				if (!cTypeCount) {
   					cTypeCount = 1;
@@ -4030,7 +4743,7 @@ var dtp = (function () {
   });
 
   /* src\DtpPopupVerifyed.svelte generated by Svelte v3.20.1 */
-  const file$4 = "src\\DtpPopupVerifyed.svelte";
+  const file$5 = "src\\DtpPopupVerifyed.svelte";
 
   function get_each_context$3(ctx, list, i) {
   	const child_ctx = ctx.slice();
@@ -4054,7 +4767,7 @@ var dtp = (function () {
   			t = text(t_value);
   			attr_dev(button, "class", button_class_value = "" + (null_to_empty(/*curNum*/ ctx[2] === /*i*/ ctx[8] ? "current" : "") + " svelte-txaali"));
   			button.value = button_value_value = /*i*/ ctx[8];
-  			add_location(button, file$4, 46, 3, 970);
+  			add_location(button, file$5, 46, 3, 970);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, button, anchor);
@@ -4180,7 +4893,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function create_fragment$4(ctx) {
+  function create_fragment$5(ctx) {
   	let div2;
   	let div0;
   	let a;
@@ -4227,13 +4940,13 @@ var dtp = (function () {
   			if_block.c();
   			attr_dev(a, "class", "leaflet-popup-close-button");
   			attr_dev(a, "href", "#close");
-  			add_location(a, file$4, 41, 3, 814);
+  			add_location(a, file$5, 41, 3, 814);
   			attr_dev(div0, "class", "close");
-  			add_location(div0, file$4, 40, 2, 791);
+  			add_location(div0, file$5, 40, 2, 791);
   			attr_dev(div1, "class", "pLine");
-  			add_location(div1, file$4, 44, 2, 918);
+  			add_location(div1, file$5, 44, 2, 918);
   			attr_dev(div2, "class", "mvsPopup");
-  			add_location(div2, file$4, 39, 1, 766);
+  			add_location(div2, file$5, 39, 1, 766);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4335,7 +5048,7 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$4.name,
+  		id: create_fragment$5.name,
   		type: "component",
   		source: "",
   		ctx
@@ -4344,7 +5057,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$4($$self, $$props, $$invalidate) {
+  function instance$5($$self, $$props, $$invalidate) {
   	let { prp } = $$props;
 
   	let { closeMe = () => {
@@ -4417,13 +5130,13 @@ var dtp = (function () {
   class DtpPopupVerifyed extends SvelteComponentDev {
   	constructor(options) {
   		super(options);
-  		init(this, options, instance$4, create_fragment$4, safe_not_equal, { prp: 0, closeMe: 1 });
+  		init(this, options, instance$5, create_fragment$5, safe_not_equal, { prp: 0, closeMe: 1 });
 
   		dispatch_dev("SvelteRegisterComponent", {
   			component: this,
   			tagName: "DtpPopupVerifyed",
   			options,
-  			id: create_fragment$4.name
+  			id: create_fragment$5.name
   		});
 
   		const { ctx } = this.$$;
@@ -4504,6 +5217,12 @@ var dtp = (function () {
   					} else if (ft.zn === 3 && (prp.id_stat && !prp.id_skpdi)) {
   						cnt++;
   					}
+  				} else if (ft.type === 'evnt') {
+  					if (prp.event) {
+  						if (ft.zn.ev1) { cnt++; }
+  					} else {
+  						if (ft.zn.ev0) { cnt++; }
+  					}
   				} else if (ft.type === 'id_dtp') {
   					if (prp.id_skpdi == ft.zn || prp.id_stat == ft.zn) {
   						cnt++;
@@ -4549,7 +5268,7 @@ var dtp = (function () {
   	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_collision', {})
   		.then(req => req.json())
   		.then(json => {
-  			let opt = {collision_type: {}, iconType: {}};
+  			let opt = {collision_type: {}, iconType: {}, event: {}};
   			// DtpVerifyed._heatData = [];
   			let heat = [];
   			let arr = json.map(prp => {
@@ -4584,6 +5303,14 @@ var dtp = (function () {
   // if (cur.length > 1) {
   // console.log('___prp.id_skpdi && prp.id_stat____', prp);
   // }
+  				let cnt = opt.event[prp.event];
+  				if (!cnt) {
+  					cnt = 1;
+  				} else {
+  					cnt++;
+  				}
+  				opt.event[prp.event] = cnt;
+
   				let cTypeCount = opt.collision_type[prp.collision_type];
   				if (!cTypeCount) {
   					cTypeCount = 1;
@@ -4637,148 +5364,154 @@ var dtp = (function () {
   /* src\DtpVerifyedFilters.svelte generated by Svelte v3.20.1 */
 
   const { Object: Object_1 } = globals;
-  const file$5 = "src\\DtpVerifyedFilters.svelte";
+  const file$6 = "src\\DtpVerifyedFilters.svelte";
 
   function get_each_context$4(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_1$2(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
-  function get_each_context_2$1(ctx, list, i) {
+  function get_each_context_2$2(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
-  function get_each_context_3(ctx, list, i) {
+  function get_each_context_3$1(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_4(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
-  	return child_ctx;
-  }
-
-  function get_each_context_6(ctx, list, i) {
-  	const child_ctx = ctx.slice();
-  	child_ctx[183] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_5(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_7(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[196] = list[i];
+  	return child_ctx;
+  }
+
+  function get_each_context_6(ctx, list, i) {
+  	const child_ctx = ctx.slice();
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_8(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
-  	return child_ctx;
-  }
-
-  function get_each_context_10(ctx, list, i) {
-  	const child_ctx = ctx.slice();
-  	child_ctx[183] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_9(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_11(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[196] = list[i];
+  	return child_ctx;
+  }
+
+  function get_each_context_10(ctx, list, i) {
+  	const child_ctx = ctx.slice();
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_12(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
-  	return child_ctx;
-  }
-
-  function get_each_context_14(ctx, list, i) {
-  	const child_ctx = ctx.slice();
-  	child_ctx[183] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_13(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_15(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[196] = list[i];
+  	return child_ctx;
+  }
+
+  function get_each_context_14(ctx, list, i) {
+  	const child_ctx = ctx.slice();
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_16(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_17(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_18(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_19(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_20(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_21(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
   function get_each_context_22(ctx, list, i) {
   	const child_ctx = ctx.slice();
-  	child_ctx[170] = list[i];
+  	child_ctx[181] = list[i];
   	return child_ctx;
   }
 
-  // (795:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}
-  function create_if_block_18(ctx) {
+  function get_each_context_23(ctx, list, i) {
+  	const child_ctx = ctx.slice();
+  	child_ctx[181] = list[i];
+  	return child_ctx;
+  }
+
+  // (837:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}
+  function create_if_block_21(ctx) {
   	let div0;
   	let t0;
   	let b;
@@ -4825,20 +5558,20 @@ var dtp = (function () {
   	let option4;
   	let option5;
   	let dispose;
-  	let each_value_22 = Object.keys(/*DtpHearthsPicket4*/ ctx[0]._opt.years).sort();
-  	validate_each_argument(each_value_22);
+  	let each_value_23 = Object.keys(/*DtpHearthsPicket4*/ ctx[0]._opt.years).sort();
+  	validate_each_argument(each_value_23);
   	let each_blocks_1 = [];
 
-  	for (let i = 0; i < each_value_22.length; i += 1) {
-  		each_blocks_1[i] = create_each_block_22(get_each_context_22(ctx, each_value_22, i));
+  	for (let i = 0; i < each_value_23.length; i += 1) {
+  		each_blocks_1[i] = create_each_block_23(get_each_context_23(ctx, each_value_23, i));
   	}
 
-  	let each_value_21 = /*optRoadTypes4*/ ctx[76];
-  	validate_each_argument(each_value_21);
+  	let each_value_22 = /*optRoadTypes4*/ ctx[80];
+  	validate_each_argument(each_value_22);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_21.length; i += 1) {
-  		each_blocks[i] = create_each_block_21(get_each_context_21(ctx, each_value_21, i));
+  	for (let i = 0; i < each_value_22.length; i += 1) {
+  		each_blocks[i] = create_each_block_22(get_each_context_22(ctx, each_value_22, i));
   	}
 
   	const block = {
@@ -4888,7 +5621,7 @@ var dtp = (function () {
   			option0 = element("option");
 
   			option0.textContent = `
-						Все дороги (${/*optRoadTypes4*/ ctx[76].reduce(/*func*/ ctx[124], 0)})
+						Все дороги (${/*optRoadTypes4*/ ctx[80].reduce(/*func*/ ctx[133], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -4899,103 +5632,103 @@ var dtp = (function () {
   			div8 = element("div");
   			select1 = element("select");
   			option1 = element("option");
-  			option1.textContent = `(${/*optDataHearthsPicket4*/ ctx[75].stricken[0] || 0}) Очаги все`;
+  			option1.textContent = `(${/*optDataHearthsPicket4*/ ctx[79].stricken[0] || 0}) Очаги все`;
   			option2 = element("option");
-  			option2.textContent = `(${/*optDataHearthsPicket4*/ ctx[75].stricken[1] || 0}) Только с погибшими`;
+  			option2.textContent = `(${/*optDataHearthsPicket4*/ ctx[79].stricken[1] || 0}) Только с погибшими`;
   			option3 = element("option");
-  			option3.textContent = `(${/*optDataHearthsPicket4*/ ctx[75].stricken[2] || 0}) Только с пострадавшими`;
+  			option3.textContent = `(${/*optDataHearthsPicket4*/ ctx[79].stricken[2] || 0}) Только с пострадавшими`;
   			option4 = element("option");
-  			option4.textContent = `(${/*optDataHearthsPicket4*/ ctx[75].stricken[3] || 0}) С пострадавшими или погибшими`;
+  			option4.textContent = `(${/*optDataHearthsPicket4*/ ctx[79].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
-  			option5.textContent = `(${/*optDataHearthsPicket4*/ ctx[75].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$5, 795, 31, 24791);
+  			option5.textContent = `(${/*optDataHearthsPicket4*/ ctx[79].stricken[4] || 0}) С пострадавшими и погибшими`;
+  			add_location(b, file$6, 837, 31, 25849);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 795, 2, 24762);
+  			add_location(div0, file$6, 837, 2, 25820);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_hearth*/ ctx[17];
+  			input0.value = /*id_hearth*/ ctx[20];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 797, 32, 24886);
+  			add_location(input0, file$6, 839, 32, 25944);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 797, 3, 24857);
+  			add_location(div1, file$6, 839, 3, 25915);
   			attr_dev(input1, "type", "text");
-  			input1.value = /*id_dtp*/ ctx[14];
+  			input1.value = /*id_dtp*/ ctx[15];
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$5, 798, 30, 24989);
+  			add_location(input1, file$6, 840, 30, 26047);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 798, 3, 24962);
-  			add_location(legend, file$5, 801, 5, 25106);
+  			add_location(div2, file$6, 840, 3, 26020);
+  			add_location(legend, file$6, 843, 5, 26164);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 1;
   			input2.value = input2.__value;
-  			input2.checked = input2_checked_value = /*hearths_period_type_Stat*/ ctx[42] === 1;
+  			input2.checked = input2_checked_value = /*hearths_period_type_Stat*/ ctx[46] === 1;
   			attr_dev(input2, "id", "hearths_period_type_Stat1");
   			attr_dev(input2, "name", "hearths_period_type_Stat");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][2].push(input2);
-  			add_location(input2, file$5, 803, 6, 25183);
+  			/*$$binding_groups*/ ctx[132][2].push(input2);
+  			add_location(input2, file$6, 845, 6, 26241);
   			attr_dev(label0, "for", "hearths_period_type_Stat1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 803, 214, 25391);
+  			add_location(label0, file$6, 845, 214, 26449);
   			attr_dev(div3, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div3, file$5, 804, 6, 25464);
+  			add_location(div3, file$6, 846, 6, 26522);
   			attr_dev(div4, "class", "pLine type svelte-1jsovbn");
-  			add_location(div4, file$5, 802, 5, 25152);
-  			add_location(fieldset, file$5, 800, 4, 25090);
+  			add_location(div4, file$6, 844, 5, 26210);
+  			add_location(fieldset, file$6, 842, 4, 26148);
   			attr_dev(div5, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div5, file$5, 799, 3, 25059);
+  			add_location(div5, file$6, 841, 3, 26117);
   			attr_dev(input3, "type", "checkbox");
   			attr_dev(input3, "id", "ht_3");
-  			input3.checked = input3_checked_value = /*ht*/ ctx[16].hearth3;
+  			input3.checked = input3_checked_value = /*ht*/ ctx[19].hearth3;
   			attr_dev(input3, "name", "hearth3");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$5, 813, 4, 25884);
+  			add_location(input3, file$6, 855, 4, 26942);
   			attr_dev(label1, "for", "ht_3");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 813, 95, 25975);
+  			add_location(label1, file$6, 855, 95, 27033);
   			attr_dev(input4, "type", "checkbox");
   			attr_dev(input4, "id", "ht_5");
-  			input4.checked = input4_checked_value = /*ht*/ ctx[16].hearth5;
+  			input4.checked = input4_checked_value = /*ht*/ ctx[19].hearth5;
   			attr_dev(input4, "name", "hearth5");
   			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$5, 814, 4, 26017);
+  			add_location(input4, file$6, 856, 4, 27075);
   			attr_dev(label2, "for", "ht_5");
   			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$5, 814, 95, 26108);
+  			add_location(label2, file$6, 856, 95, 27166);
   			attr_dev(div6, "class", "pLine svelte-1jsovbn");
-  			add_location(div6, file$5, 812, 3, 25860);
+  			add_location(div6, file$6, 854, 3, 26918);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$5, 818, 5, 26294);
+  			add_location(option0, file$6, 860, 5, 27352);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
-  			if (/*roads*/ ctx[15] === void 0) add_render_callback(() => /*select0_change_handler*/ ctx[125].call(select0));
-  			add_location(select0, file$5, 817, 4, 26184);
+  			if (/*roads*/ ctx[18] === void 0) add_render_callback(() => /*select0_change_handler*/ ctx[134].call(select0));
+  			add_location(select0, file$6, 859, 4, 27242);
   			attr_dev(div7, "class", "pLine svelte-1jsovbn");
-  			add_location(div7, file$5, 816, 3, 26160);
+  			add_location(div7, file$6, 858, 3, 27218);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$5, 830, 5, 26743);
+  			add_location(option1, file$6, 872, 5, 27801);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$5, 831, 5, 26827);
+  			add_location(option2, file$6, 873, 5, 27885);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$5, 832, 5, 26919);
+  			add_location(option3, file$6, 874, 5, 27977);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$5, 833, 5, 27015);
+  			add_location(option4, file$6, 875, 5, 28073);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$5, 834, 5, 27118);
+  			add_location(option5, file$6, 876, 5, 28176);
   			attr_dev(select1, "name", "stricken");
   			attr_dev(select1, "class", "svelte-1jsovbn");
-  			if (/*hearths_stricken4*/ ctx[28] === void 0) add_render_callback(() => /*select1_change_handler*/ ctx[126].call(select1));
-  			add_location(select1, file$5, 829, 4, 26644);
+  			if (/*hearths_stricken4*/ ctx[32] === void 0) add_render_callback(() => /*select1_change_handler*/ ctx[135].call(select1));
+  			add_location(select1, file$6, 871, 4, 27702);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$5, 828, 3, 26620);
+  			add_location(div8, file$6, 870, 3, 27678);
   			attr_dev(div9, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div9, file$5, 796, 2, 24828);
+  			add_location(div9, file$6, 838, 2, 25886);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -5017,7 +5750,7 @@ var dtp = (function () {
   			append_dev(fieldset, t8);
   			append_dev(fieldset, div4);
   			append_dev(div4, input2);
-  			input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[42];
+  			input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[46];
   			append_dev(div4, label0);
   			append_dev(div4, t10);
   			append_dev(div4, div3);
@@ -5042,7 +5775,7 @@ var dtp = (function () {
   				each_blocks[i].m(select0, null);
   			}
 
-  			select_options(select0, /*roads*/ ctx[15]);
+  			select_options(select0, /*roads*/ ctx[18]);
   			append_dev(div9, t19);
   			append_dev(div9, div8);
   			append_dev(div8, select1);
@@ -5051,51 +5784,51 @@ var dtp = (function () {
   			append_dev(select1, option3);
   			append_dev(select1, option4);
   			append_dev(select1, option5);
-  			select_option(select1, /*hearths_stricken4*/ ctx[28]);
+  			select_option(select1, /*hearths_stricken4*/ ctx[32]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdHearth*/ ctx[82], false, false, false),
-  				listen_dev(input1, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input2, "change", /*setFilterHearthsPicket4*/ ctx[80], false, false, false),
-  				listen_dev(input2, "change", /*input2_change_handler*/ ctx[122]),
-  				listen_dev(input3, "change", /*oncheckHt*/ ctx[83], false, false, false),
-  				listen_dev(input4, "change", /*oncheckHt*/ ctx[83], false, false, false),
-  				listen_dev(select0, "change", /*select0_change_handler*/ ctx[125]),
-  				listen_dev(select0, "change", /*setFilterHearthsPicket4*/ ctx[80], false, false, false),
-  				listen_dev(select1, "change", /*select1_change_handler*/ ctx[126]),
-  				listen_dev(select1, "change", /*setFilterHearthsPicket4*/ ctx[80], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdHearth*/ ctx[89], false, false, false),
+  				listen_dev(input1, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input2, "change", /*setFilterHearthsPicket4*/ ctx[87], false, false, false),
+  				listen_dev(input2, "change", /*input2_change_handler*/ ctx[131]),
+  				listen_dev(input3, "change", /*oncheckHt*/ ctx[90], false, false, false),
+  				listen_dev(input4, "change", /*oncheckHt*/ ctx[90], false, false, false),
+  				listen_dev(select0, "change", /*select0_change_handler*/ ctx[134]),
+  				listen_dev(select0, "change", /*setFilterHearthsPicket4*/ ctx[87], false, false, false),
+  				listen_dev(select1, "change", /*select1_change_handler*/ ctx[135]),
+  				listen_dev(select1, "change", /*setFilterHearthsPicket4*/ ctx[87], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_hearth*/ 131072 && input0.value !== /*id_hearth*/ ctx[17]) {
-  				prop_dev(input0, "value", /*id_hearth*/ ctx[17]);
+  			if (dirty[0] & /*id_hearth*/ 1048576 && input0.value !== /*id_hearth*/ ctx[20]) {
+  				prop_dev(input0, "value", /*id_hearth*/ ctx[20]);
   			}
 
-  			if (dirty[0] & /*id_dtp*/ 16384 && input1.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input1, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input1.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input1, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048 && input2_checked_value !== (input2_checked_value = /*hearths_period_type_Stat*/ ctx[42] === 1)) {
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768 && input2_checked_value !== (input2_checked_value = /*hearths_period_type_Stat*/ ctx[46] === 1)) {
   				prop_dev(input2, "checked", input2_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048) {
-  				input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[42];
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768) {
+  				input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[46];
   			}
 
-  			if (dirty[0] & /*DtpHearthsPicket4, hearths_year_Picket4*/ 536870913 | dirty[1] & /*hearths_period_type_Stat*/ 2048 | dirty[2] & /*setFilterHearthsPicket4*/ 262144) {
-  				each_value_22 = Object.keys(/*DtpHearthsPicket4*/ ctx[0]._opt.years).sort();
-  				validate_each_argument(each_value_22);
+  			if (dirty[0] & /*DtpHearthsPicket4*/ 1 | dirty[1] & /*hearths_year_Picket4, hearths_period_type_Stat*/ 32772 | dirty[2] & /*setFilterHearthsPicket4*/ 33554432) {
+  				each_value_23 = Object.keys(/*DtpHearthsPicket4*/ ctx[0]._opt.years).sort();
+  				validate_each_argument(each_value_23);
   				let i;
 
-  				for (i = 0; i < each_value_22.length; i += 1) {
-  					const child_ctx = get_each_context_22(ctx, each_value_22, i);
+  				for (i = 0; i < each_value_23.length; i += 1) {
+  					const child_ctx = get_each_context_23(ctx, each_value_23, i);
 
   					if (each_blocks_1[i]) {
   						each_blocks_1[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_1[i] = create_each_block_22(child_ctx);
+  						each_blocks_1[i] = create_each_block_23(child_ctx);
   						each_blocks_1[i].c();
   						each_blocks_1[i].m(div3, null);
   					}
@@ -5105,29 +5838,29 @@ var dtp = (function () {
   					each_blocks_1[i].d(1);
   				}
 
-  				each_blocks_1.length = each_value_22.length;
+  				each_blocks_1.length = each_value_23.length;
   			}
 
-  			if (dirty[0] & /*ht*/ 65536 && input3_checked_value !== (input3_checked_value = /*ht*/ ctx[16].hearth3)) {
+  			if (dirty[0] & /*ht*/ 524288 && input3_checked_value !== (input3_checked_value = /*ht*/ ctx[19].hearth3)) {
   				prop_dev(input3, "checked", input3_checked_value);
   			}
 
-  			if (dirty[0] & /*ht*/ 65536 && input4_checked_value !== (input4_checked_value = /*ht*/ ctx[16].hearth5)) {
+  			if (dirty[0] & /*ht*/ 524288 && input4_checked_value !== (input4_checked_value = /*ht*/ ctx[19].hearth5)) {
   				prop_dev(input4, "checked", input4_checked_value);
   			}
 
-  			if (dirty[2] & /*optRoadTypes4, optDataHearthsPicket4*/ 24576) {
-  				each_value_21 = /*optRoadTypes4*/ ctx[76];
-  				validate_each_argument(each_value_21);
+  			if (dirty[2] & /*optRoadTypes4, optDataHearthsPicket4*/ 393216) {
+  				each_value_22 = /*optRoadTypes4*/ ctx[80];
+  				validate_each_argument(each_value_22);
   				let i;
 
-  				for (i = 0; i < each_value_21.length; i += 1) {
-  					const child_ctx = get_each_context_21(ctx, each_value_21, i);
+  				for (i = 0; i < each_value_22.length; i += 1) {
+  					const child_ctx = get_each_context_22(ctx, each_value_22, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_21(child_ctx);
+  						each_blocks[i] = create_each_block_22(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select0, null);
   					}
@@ -5137,22 +5870,22 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_21.length;
+  				each_blocks.length = each_value_22.length;
   			}
 
-  			if (dirty[0] & /*roads*/ 32768) {
-  				select_options(select0, /*roads*/ ctx[15]);
+  			if (dirty[0] & /*roads*/ 262144) {
+  				select_options(select0, /*roads*/ ctx[18]);
   			}
 
-  			if (dirty[0] & /*hearths_stricken4*/ 268435456) {
-  				select_option(select1, /*hearths_stricken4*/ ctx[28]);
+  			if (dirty[1] & /*hearths_stricken4*/ 2) {
+  				select_option(select1, /*hearths_stricken4*/ ctx[32]);
   			}
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t2);
   			if (detaching) detach_dev(div9);
-  			/*$$binding_groups*/ ctx[123][2].splice(/*$$binding_groups*/ ctx[123][2].indexOf(input2), 1);
+  			/*$$binding_groups*/ ctx[132][2].splice(/*$$binding_groups*/ ctx[132][2].indexOf(input2), 1);
   			destroy_each(each_blocks_1, detaching);
   			destroy_each(each_blocks, detaching);
   			run_all(dispose);
@@ -5161,23 +5894,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_18.name,
+  		id: create_if_block_21.name,
   		type: "if",
-  		source: "(795:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}",
+  		source: "(837:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (806:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}
-  function create_each_block_22(ctx) {
+  // (848:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}
+  function create_each_block_23(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t_value = /*key*/ ctx[170] + "";
+  	let t_value = /*key*/ ctx[181] + "";
   	let t;
   	let dispose;
 
@@ -5188,36 +5921,36 @@ var dtp = (function () {
   			t = text(t_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_year_Picket4");
-  			input.checked = input_checked_value = /*hearths_year_Picket4*/ ctx[29][/*key*/ ctx[170]];
-  			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[42] === 2;
-  			attr_dev(input, "name", input_name_value = /*key*/ ctx[170]);
+  			input.checked = input_checked_value = /*hearths_year_Picket4*/ ctx[33][/*key*/ ctx[181]];
+  			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[46] === 2;
+  			attr_dev(input, "name", input_name_value = /*key*/ ctx[181]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 806, 7, 25568);
+  			add_location(input, file$6, 848, 7, 26626);
   			attr_dev(label, "for", "hearths_year_Picket4");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 806, 183, 25744);
+  			add_location(label, file$6, 848, 183, 26802);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
   			insert_dev(target, label, anchor);
   			append_dev(label, t);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearthsPicket4*/ ctx[80], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearthsPicket4*/ ctx[87], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*hearths_year_Picket4, DtpHearthsPicket4*/ 536870913 && input_checked_value !== (input_checked_value = /*hearths_year_Picket4*/ ctx[29][/*key*/ ctx[170]])) {
+  			if (dirty[0] & /*DtpHearthsPicket4*/ 1 | dirty[1] & /*hearths_year_Picket4*/ 4 && input_checked_value !== (input_checked_value = /*hearths_year_Picket4*/ ctx[33][/*key*/ ctx[181]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_Stat*/ ctx[42] === 2)) {
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_Stat*/ ctx[46] === 2)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsPicket4*/ 1 && input_name_value !== (input_name_value = /*key*/ ctx[170])) {
+  			if (dirty[0] & /*DtpHearthsPicket4*/ 1 && input_name_value !== (input_name_value = /*key*/ ctx[181])) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsPicket4*/ 1 && t_value !== (t_value = /*key*/ ctx[170] + "")) set_data_dev(t, t_value);
+  			if (dirty[0] & /*DtpHearthsPicket4*/ 1 && t_value !== (t_value = /*key*/ ctx[181] + "")) set_data_dev(t, t_value);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(input);
@@ -5228,23 +5961,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_22.name,
+  		id: create_each_block_23.name,
   		type: "each",
-  		source: "(806:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}",
+  		source: "(848:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (822:5) {#each optRoadTypes4 as key}
-  function create_each_block_21(ctx) {
+  // (864:5) {#each optRoadTypes4 as key}
+  function create_each_block_22(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataHearthsPicket4*/ ctx[75].road[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataHearthsPicket4*/ ctx[79].road[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -5258,10 +5991,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "road_" + /*key*/ ctx[170] + " svelte-1jsovbn");
-  			add_location(option, file$5, 822, 6, 26473);
+  			attr_dev(option, "class", option_class_value = "road_" + /*key*/ ctx[181] + " svelte-1jsovbn");
+  			add_location(option, file$6, 864, 6, 27531);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -5279,17 +6012,17 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_21.name,
+  		id: create_each_block_22.name,
   		type: "each",
-  		source: "(822:5) {#each optRoadTypes4 as key}",
+  		source: "(864:5) {#each optRoadTypes4 as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (841:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
-  function create_if_block_17(ctx) {
+  // (883:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
+  function create_if_block_20(ctx) {
   	let div0;
   	let t0;
   	let b;
@@ -5316,12 +6049,12 @@ var dtp = (function () {
   	let select;
   	let option;
   	let dispose;
-  	let each_value_20 = /*optRoadTypes*/ ctx[74];
-  	validate_each_argument(each_value_20);
+  	let each_value_21 = /*optRoadTypes*/ ctx[78];
+  	validate_each_argument(each_value_21);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_20.length; i += 1) {
-  		each_blocks[i] = create_each_block_20(get_each_context_20(ctx, each_value_20, i));
+  	for (let i = 0; i < each_value_21.length; i += 1) {
+  		each_blocks[i] = create_each_block_21(get_each_context_21(ctx, each_value_21, i));
   	}
 
   	const block = {
@@ -5354,60 +6087,60 @@ var dtp = (function () {
   			option = element("option");
 
   			option.textContent = `
-						Все дороги (${/*optRoadTypes*/ ctx[74].reduce(/*func_1*/ ctx[127], 0)})
+						Все дороги (${/*optRoadTypes*/ ctx[78].reduce(/*func_1*/ ctx[136], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
   				each_blocks[i].c();
   			}
 
-  			add_location(b, file$5, 841, 31, 27373);
+  			add_location(b, file$6, 883, 31, 28431);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 841, 2, 27344);
+  			add_location(div0, file$6, 883, 2, 28402);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_hearth*/ ctx[17];
+  			input0.value = /*id_hearth*/ ctx[20];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 843, 32, 27464);
+  			add_location(input0, file$6, 885, 32, 28522);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 843, 3, 27435);
+  			add_location(div1, file$6, 885, 3, 28493);
   			attr_dev(input1, "type", "text");
-  			input1.value = /*id_dtp*/ ctx[14];
+  			input1.value = /*id_dtp*/ ctx[15];
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$5, 844, 30, 27567);
+  			add_location(input1, file$6, 886, 30, 28625);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 844, 3, 27540);
+  			add_location(div2, file$6, 886, 3, 28598);
   			attr_dev(input2, "type", "checkbox");
   			attr_dev(input2, "id", "ht_3");
-  			input2.checked = input2_checked_value = /*ht*/ ctx[16].hearth3;
+  			input2.checked = input2_checked_value = /*ht*/ ctx[19].hearth3;
   			attr_dev(input2, "name", "hearth3");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$5, 846, 4, 27661);
+  			add_location(input2, file$6, 888, 4, 28719);
   			attr_dev(label0, "for", "ht_3");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 846, 95, 27752);
+  			add_location(label0, file$6, 888, 95, 28810);
   			attr_dev(input3, "type", "checkbox");
   			attr_dev(input3, "id", "ht_5");
-  			input3.checked = input3_checked_value = /*ht*/ ctx[16].hearth5;
+  			input3.checked = input3_checked_value = /*ht*/ ctx[19].hearth5;
   			attr_dev(input3, "name", "hearth5");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$5, 847, 4, 27794);
+  			add_location(input3, file$6, 889, 4, 28852);
   			attr_dev(label1, "for", "ht_5");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 847, 95, 27885);
+  			add_location(label1, file$6, 889, 95, 28943);
   			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$5, 845, 3, 27637);
+  			add_location(div3, file$6, 887, 3, 28695);
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$5, 851, 5, 28070);
+  			add_location(option, file$6, 893, 5, 29128);
   			attr_dev(select, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select.multiple = true;
-  			if (/*roads*/ ctx[15] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[128].call(select));
-  			add_location(select, file$5, 850, 4, 27961);
+  			if (/*roads*/ ctx[18] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[137].call(select));
+  			add_location(select, file$6, 892, 4, 29019);
   			attr_dev(div4, "class", "pLine svelte-1jsovbn");
-  			add_location(div4, file$5, 849, 3, 27937);
+  			add_location(div4, file$6, 891, 3, 28995);
   			attr_dev(div5, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div5, file$5, 842, 2, 27406);
+  			add_location(div5, file$6, 884, 2, 28464);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -5438,47 +6171,47 @@ var dtp = (function () {
   				each_blocks[i].m(select, null);
   			}
 
-  			select_options(select, /*roads*/ ctx[15]);
+  			select_options(select, /*roads*/ ctx[18]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdHearth*/ ctx[82], false, false, false),
-  				listen_dev(input1, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input2, "change", /*oncheckHt*/ ctx[83], false, false, false),
-  				listen_dev(input3, "change", /*oncheckHt*/ ctx[83], false, false, false),
-  				listen_dev(select, "change", /*select_change_handler*/ ctx[128]),
-  				listen_dev(select, "change", /*setFilterHearthsPicket*/ ctx[79], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdHearth*/ ctx[89], false, false, false),
+  				listen_dev(input1, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input2, "change", /*oncheckHt*/ ctx[90], false, false, false),
+  				listen_dev(input3, "change", /*oncheckHt*/ ctx[90], false, false, false),
+  				listen_dev(select, "change", /*select_change_handler*/ ctx[137]),
+  				listen_dev(select, "change", /*setFilterHearthsPicket*/ ctx[86], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_hearth*/ 131072 && input0.value !== /*id_hearth*/ ctx[17]) {
-  				prop_dev(input0, "value", /*id_hearth*/ ctx[17]);
+  			if (dirty[0] & /*id_hearth*/ 1048576 && input0.value !== /*id_hearth*/ ctx[20]) {
+  				prop_dev(input0, "value", /*id_hearth*/ ctx[20]);
   			}
 
-  			if (dirty[0] & /*id_dtp*/ 16384 && input1.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input1, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input1.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input1, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[0] & /*ht*/ 65536 && input2_checked_value !== (input2_checked_value = /*ht*/ ctx[16].hearth3)) {
+  			if (dirty[0] & /*ht*/ 524288 && input2_checked_value !== (input2_checked_value = /*ht*/ ctx[19].hearth3)) {
   				prop_dev(input2, "checked", input2_checked_value);
   			}
 
-  			if (dirty[0] & /*ht*/ 65536 && input3_checked_value !== (input3_checked_value = /*ht*/ ctx[16].hearth5)) {
+  			if (dirty[0] & /*ht*/ 524288 && input3_checked_value !== (input3_checked_value = /*ht*/ ctx[19].hearth5)) {
   				prop_dev(input3, "checked", input3_checked_value);
   			}
 
-  			if (dirty[2] & /*optRoadTypes, optDataHearthsPicket*/ 6144) {
-  				each_value_20 = /*optRoadTypes*/ ctx[74];
-  				validate_each_argument(each_value_20);
+  			if (dirty[2] & /*optRoadTypes, optDataHearthsPicket*/ 98304) {
+  				each_value_21 = /*optRoadTypes*/ ctx[78];
+  				validate_each_argument(each_value_21);
   				let i;
 
-  				for (i = 0; i < each_value_20.length; i += 1) {
-  					const child_ctx = get_each_context_20(ctx, each_value_20, i);
+  				for (i = 0; i < each_value_21.length; i += 1) {
+  					const child_ctx = get_each_context_21(ctx, each_value_21, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_20(child_ctx);
+  						each_blocks[i] = create_each_block_21(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select, null);
   					}
@@ -5488,11 +6221,11 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_20.length;
+  				each_blocks.length = each_value_21.length;
   			}
 
-  			if (dirty[0] & /*roads*/ 32768) {
-  				select_options(select, /*roads*/ ctx[15]);
+  			if (dirty[0] & /*roads*/ 262144) {
+  				select_options(select, /*roads*/ ctx[18]);
   			}
   		},
   		d: function destroy(detaching) {
@@ -5506,23 +6239,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_17.name,
+  		id: create_if_block_20.name,
   		type: "if",
-  		source: "(841:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}",
+  		source: "(883:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (855:5) {#each optRoadTypes as key}
-  function create_each_block_20(ctx) {
+  // (897:5) {#each optRoadTypes as key}
+  function create_each_block_21(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataHearthsPicket*/ ctx[73].road[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataHearthsPicket*/ ctx[77].road[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -5536,10 +6269,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "road_" + /*key*/ ctx[170] + " svelte-1jsovbn");
-  			add_location(option, file$5, 855, 6, 28246);
+  			attr_dev(option, "class", option_class_value = "road_" + /*key*/ ctx[181] + " svelte-1jsovbn");
+  			add_location(option, file$6, 897, 6, 29304);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -5557,17 +6290,17 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_20.name,
+  		id: create_each_block_21.name,
   		type: "each",
-  		source: "(855:5) {#each optRoadTypes as key}",
+  		source: "(897:5) {#each optRoadTypes as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (865:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}
-  function create_if_block_16(ctx) {
+  // (907:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}
+  function create_if_block_19(ctx) {
   	let div0;
   	let t0;
   	let b;
@@ -5601,20 +6334,20 @@ var dtp = (function () {
   	let option4;
   	let option5;
   	let dispose;
-  	let each_value_19 = Object.keys(/*DtpHearths5*/ ctx[2]._opt.years).sort();
-  	validate_each_argument(each_value_19);
+  	let each_value_20 = Object.keys(/*DtpHearths5*/ ctx[2]._opt.years).sort();
+  	validate_each_argument(each_value_20);
   	let each_blocks_1 = [];
 
-  	for (let i = 0; i < each_value_19.length; i += 1) {
-  		each_blocks_1[i] = create_each_block_19(get_each_context_19(ctx, each_value_19, i));
+  	for (let i = 0; i < each_value_20.length; i += 1) {
+  		each_blocks_1[i] = create_each_block_20(get_each_context_20(ctx, each_value_20, i));
   	}
 
-  	let each_value_18 = /*optTypeHearths5Keys*/ ctx[72];
-  	validate_each_argument(each_value_18);
+  	let each_value_19 = /*optTypeHearths5Keys*/ ctx[76];
+  	validate_each_argument(each_value_19);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_18.length; i += 1) {
-  		each_blocks[i] = create_each_block_18(get_each_context_18(ctx, each_value_18, i));
+  	for (let i = 0; i < each_value_19.length; i += 1) {
+  		each_blocks[i] = create_each_block_19(get_each_context_19(ctx, each_value_19, i));
   	}
 
   	const block = {
@@ -5651,7 +6384,7 @@ var dtp = (function () {
   			option0 = element("option");
 
   			option0.textContent = `
-						Все типы (${/*optTypeHearths5Keys*/ ctx[72].reduce(/*func_2*/ ctx[130], 0)})
+						Все типы (${/*optTypeHearths5Keys*/ ctx[76].reduce(/*func_2*/ ctx[139], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -5662,76 +6395,76 @@ var dtp = (function () {
   			div6 = element("div");
   			select1 = element("select");
   			option1 = element("option");
-  			option1.textContent = `(${/*optDataHearths5*/ ctx[71].stricken[0] || 0}) Очаги все`;
+  			option1.textContent = `(${/*optDataHearths5*/ ctx[75].stricken[0] || 0}) Очаги все`;
   			option2 = element("option");
-  			option2.textContent = `(${/*optDataHearths5*/ ctx[71].stricken[1] || 0}) Только с погибшими`;
+  			option2.textContent = `(${/*optDataHearths5*/ ctx[75].stricken[1] || 0}) Только с погибшими`;
   			option3 = element("option");
-  			option3.textContent = `(${/*optDataHearths5*/ ctx[71].stricken[2] || 0}) Только с пострадавшими`;
+  			option3.textContent = `(${/*optDataHearths5*/ ctx[75].stricken[2] || 0}) Только с пострадавшими`;
   			option4 = element("option");
-  			option4.textContent = `(${/*optDataHearths5*/ ctx[71].stricken[3] || 0}) С пострадавшими или погибшими`;
+  			option4.textContent = `(${/*optDataHearths5*/ ctx[75].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
-  			option5.textContent = `(${/*optDataHearths5*/ ctx[71].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$5, 865, 31, 28511);
+  			option5.textContent = `(${/*optDataHearths5*/ ctx[75].stricken[4] || 0}) С пострадавшими и погибшими`;
+  			add_location(b, file$6, 907, 31, 29569);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 865, 2, 28482);
+  			add_location(div0, file$6, 907, 2, 29540);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[14];
+  			input0.value = /*id_dtp*/ ctx[15];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 867, 30, 28596);
+  			add_location(input0, file$6, 909, 30, 29654);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 867, 3, 28569);
-  			add_location(legend, file$5, 870, 4, 28711);
+  			add_location(div1, file$6, 909, 3, 29627);
+  			add_location(legend, file$6, 912, 4, 29769);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
-  			input1.checked = input1_checked_value = /*hearths_period_type_5*/ ctx[34] === 1;
+  			input1.checked = input1_checked_value = /*hearths_period_type_5*/ ctx[38] === 1;
   			attr_dev(input1, "id", "hearths_period_type_51");
   			attr_dev(input1, "name", "hearths_period_type_5");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][4].push(input1);
-  			add_location(input1, file$5, 872, 5, 28786);
+  			/*$$binding_groups*/ ctx[132][4].push(input1);
+  			add_location(input1, file$6, 914, 5, 29844);
   			attr_dev(label, "for", "hearths_period_type_51");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 872, 195, 28976);
+  			add_location(label, file$6, 914, 195, 30034);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$5, 873, 5, 29045);
+  			add_location(div2, file$6, 915, 5, 30103);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$5, 871, 4, 28756);
-  			add_location(fieldset, file$5, 869, 3, 28696);
+  			add_location(div3, file$6, 913, 4, 29814);
+  			add_location(fieldset, file$6, 911, 3, 29754);
   			attr_dev(div4, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div4, file$5, 868, 3, 28666);
+  			add_location(div4, file$6, 910, 3, 29724);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$5, 883, 5, 29539);
+  			add_location(option0, file$6, 925, 5, 30597);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
-  			if (/*str_icon_type5*/ ctx[33] === void 0) add_render_callback(() => /*select0_change_handler_1*/ ctx[131].call(select0));
-  			add_location(select0, file$5, 882, 4, 29426);
+  			if (/*str_icon_type5*/ ctx[37] === void 0) add_render_callback(() => /*select0_change_handler_1*/ ctx[140].call(select0));
+  			add_location(select0, file$6, 924, 4, 30484);
   			attr_dev(div5, "class", "pLine svelte-1jsovbn");
-  			add_location(div5, file$5, 881, 3, 29402);
+  			add_location(div5, file$6, 923, 3, 30460);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$5, 895, 5, 30013);
+  			add_location(option1, file$6, 937, 5, 31071);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$5, 896, 5, 30091);
+  			add_location(option2, file$6, 938, 5, 31149);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$5, 897, 5, 30177);
+  			add_location(option3, file$6, 939, 5, 31235);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$5, 898, 5, 30267);
+  			add_location(option4, file$6, 940, 5, 31325);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$5, 899, 5, 30364);
+  			add_location(option5, file$6, 941, 5, 31422);
   			attr_dev(select1, "class", "svelte-1jsovbn");
-  			if (/*hearths_stricken5*/ ctx[32] === void 0) add_render_callback(() => /*select1_change_handler_1*/ ctx[132].call(select1));
-  			add_location(select1, file$5, 894, 4, 29936);
+  			if (/*hearths_stricken5*/ ctx[36] === void 0) add_render_callback(() => /*select1_change_handler_1*/ ctx[141].call(select1));
+  			add_location(select1, file$6, 936, 4, 30994);
   			attr_dev(div6, "class", "pLine svelte-1jsovbn");
-  			add_location(div6, file$5, 893, 3, 29912);
+  			add_location(div6, file$6, 935, 3, 30970);
   			attr_dev(div7, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div7, file$5, 866, 2, 28540);
+  			add_location(div7, file$6, 908, 2, 29598);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -5749,7 +6482,7 @@ var dtp = (function () {
   			append_dev(fieldset, t6);
   			append_dev(fieldset, div3);
   			append_dev(div3, input1);
-  			input1.checked = input1.__value === /*hearths_period_type_5*/ ctx[34];
+  			input1.checked = input1.__value === /*hearths_period_type_5*/ ctx[38];
   			append_dev(div3, label);
   			append_dev(div3, t8);
   			append_dev(div3, div2);
@@ -5767,7 +6500,7 @@ var dtp = (function () {
   				each_blocks[i].m(select0, null);
   			}
 
-  			select_options(select0, /*str_icon_type5*/ ctx[33]);
+  			select_options(select0, /*str_icon_type5*/ ctx[37]);
   			append_dev(div7, t13);
   			append_dev(div7, div6);
   			append_dev(div6, select1);
@@ -5776,44 +6509,44 @@ var dtp = (function () {
   			append_dev(select1, option3);
   			append_dev(select1, option4);
   			append_dev(select1, option5);
-  			select_option(select1, /*hearths_stricken5*/ ctx[32]);
+  			select_option(select1, /*hearths_stricken5*/ ctx[36]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input1, "change", /*setFilterHearths5*/ ctx[93], false, false, false),
-  				listen_dev(input1, "change", /*input1_change_handler*/ ctx[129]),
-  				listen_dev(select0, "change", /*select0_change_handler_1*/ ctx[131]),
-  				listen_dev(select0, "change", /*setFilterHearths5*/ ctx[93], false, false, false),
-  				listen_dev(select1, "change", /*select1_change_handler_1*/ ctx[132]),
-  				listen_dev(select1, "change", /*setFilterHearths5*/ ctx[93], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*setFilterHearths5*/ ctx[102], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_handler*/ ctx[138]),
+  				listen_dev(select0, "change", /*select0_change_handler_1*/ ctx[140]),
+  				listen_dev(select0, "change", /*setFilterHearths5*/ ctx[102], false, false, false),
+  				listen_dev(select1, "change", /*select1_change_handler_1*/ ctx[141]),
+  				listen_dev(select1, "change", /*setFilterHearths5*/ ctx[102], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input0.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_5*/ 8 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_5*/ ctx[34] === 1)) {
+  			if (dirty[1] & /*hearths_period_type_5*/ 128 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_5*/ ctx[38] === 1)) {
   				prop_dev(input1, "checked", input1_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_5*/ 8) {
-  				input1.checked = input1.__value === /*hearths_period_type_5*/ ctx[34];
+  			if (dirty[1] & /*hearths_period_type_5*/ 128) {
+  				input1.checked = input1.__value === /*hearths_period_type_5*/ ctx[38];
   			}
 
-  			if (dirty[0] & /*DtpHearths5*/ 4 | dirty[1] & /*hearths_year_5, hearths_period_type_5*/ 24 | dirty[3] & /*setFilterHearths5*/ 1) {
-  				each_value_19 = Object.keys(/*DtpHearths5*/ ctx[2]._opt.years).sort();
-  				validate_each_argument(each_value_19);
+  			if (dirty[0] & /*DtpHearths5*/ 4 | dirty[1] & /*hearths_year_5, hearths_period_type_5*/ 384 | dirty[3] & /*setFilterHearths5*/ 512) {
+  				each_value_20 = Object.keys(/*DtpHearths5*/ ctx[2]._opt.years).sort();
+  				validate_each_argument(each_value_20);
   				let i;
 
-  				for (i = 0; i < each_value_19.length; i += 1) {
-  					const child_ctx = get_each_context_19(ctx, each_value_19, i);
+  				for (i = 0; i < each_value_20.length; i += 1) {
+  					const child_ctx = get_each_context_20(ctx, each_value_20, i);
 
   					if (each_blocks_1[i]) {
   						each_blocks_1[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_1[i] = create_each_block_19(child_ctx);
+  						each_blocks_1[i] = create_each_block_20(child_ctx);
   						each_blocks_1[i].c();
   						each_blocks_1[i].m(div2, null);
   					}
@@ -5823,21 +6556,21 @@ var dtp = (function () {
   					each_blocks_1[i].d(1);
   				}
 
-  				each_blocks_1.length = each_value_19.length;
+  				each_blocks_1.length = each_value_20.length;
   			}
 
-  			if (dirty[2] & /*optTypeHearths5Keys, optDataHearths5*/ 1536) {
-  				each_value_18 = /*optTypeHearths5Keys*/ ctx[72];
-  				validate_each_argument(each_value_18);
+  			if (dirty[2] & /*optTypeHearths5Keys, optDataHearths5*/ 24576) {
+  				each_value_19 = /*optTypeHearths5Keys*/ ctx[76];
+  				validate_each_argument(each_value_19);
   				let i;
 
-  				for (i = 0; i < each_value_18.length; i += 1) {
-  					const child_ctx = get_each_context_18(ctx, each_value_18, i);
+  				for (i = 0; i < each_value_19.length; i += 1) {
+  					const child_ctx = get_each_context_19(ctx, each_value_19, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_18(child_ctx);
+  						each_blocks[i] = create_each_block_19(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select0, null);
   					}
@@ -5847,22 +6580,22 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_18.length;
+  				each_blocks.length = each_value_19.length;
   			}
 
-  			if (dirty[1] & /*str_icon_type5*/ 4) {
-  				select_options(select0, /*str_icon_type5*/ ctx[33]);
+  			if (dirty[1] & /*str_icon_type5*/ 64) {
+  				select_options(select0, /*str_icon_type5*/ ctx[37]);
   			}
 
-  			if (dirty[1] & /*hearths_stricken5*/ 2) {
-  				select_option(select1, /*hearths_stricken5*/ ctx[32]);
+  			if (dirty[1] & /*hearths_stricken5*/ 32) {
+  				select_option(select1, /*hearths_stricken5*/ ctx[36]);
   			}
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t2);
   			if (detaching) detach_dev(div7);
-  			/*$$binding_groups*/ ctx[123][4].splice(/*$$binding_groups*/ ctx[123][4].indexOf(input1), 1);
+  			/*$$binding_groups*/ ctx[132][4].splice(/*$$binding_groups*/ ctx[132][4].indexOf(input1), 1);
   			destroy_each(each_blocks_1, detaching);
   			destroy_each(each_blocks, detaching);
   			run_all(dispose);
@@ -5871,23 +6604,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_16.name,
+  		id: create_if_block_19.name,
   		type: "if",
-  		source: "(865:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}",
+  		source: "(907:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (875:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}
-  function create_each_block_19(ctx) {
+  // (917:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}
+  function create_each_block_20(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t_value = /*key*/ ctx[170] + "";
+  	let t_value = /*key*/ ctx[181] + "";
   	let t;
   	let dispose;
 
@@ -5898,36 +6631,36 @@ var dtp = (function () {
   			t = text(t_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_year_5");
-  			input.checked = input_checked_value = /*hearths_year_5*/ ctx[35][/*key*/ ctx[170]];
-  			input.disabled = input_disabled_value = /*hearths_period_type_5*/ ctx[34] === 2;
-  			attr_dev(input, "name", input_name_value = /*key*/ ctx[170]);
+  			input.checked = input_checked_value = /*hearths_year_5*/ ctx[39][/*key*/ ctx[181]];
+  			input.disabled = input_disabled_value = /*hearths_period_type_5*/ ctx[38] === 2;
+  			attr_dev(input, "name", input_name_value = /*key*/ ctx[181]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 875, 6, 29141);
+  			add_location(input, file$6, 917, 6, 30199);
   			attr_dev(label, "for", "hearths_year_5");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 875, 161, 29296);
+  			add_location(label, file$6, 917, 161, 30354);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
   			insert_dev(target, label, anchor);
   			append_dev(label, t);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearths5*/ ctx[93], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearths5*/ ctx[102], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearths5*/ 4 | dirty[1] & /*hearths_year_5*/ 16 && input_checked_value !== (input_checked_value = /*hearths_year_5*/ ctx[35][/*key*/ ctx[170]])) {
+  			if (dirty[0] & /*DtpHearths5*/ 4 | dirty[1] & /*hearths_year_5*/ 256 && input_checked_value !== (input_checked_value = /*hearths_year_5*/ ctx[39][/*key*/ ctx[181]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_5*/ 8 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_5*/ ctx[34] === 2)) {
+  			if (dirty[1] & /*hearths_period_type_5*/ 128 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_5*/ ctx[38] === 2)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearths5*/ 4 && input_name_value !== (input_name_value = /*key*/ ctx[170])) {
+  			if (dirty[0] & /*DtpHearths5*/ 4 && input_name_value !== (input_name_value = /*key*/ ctx[181])) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearths5*/ 4 && t_value !== (t_value = /*key*/ ctx[170] + "")) set_data_dev(t, t_value);
+  			if (dirty[0] & /*DtpHearths5*/ 4 && t_value !== (t_value = /*key*/ ctx[181] + "")) set_data_dev(t, t_value);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(input);
@@ -5938,23 +6671,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_19.name,
+  		id: create_each_block_20.name,
   		type: "each",
-  		source: "(875:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}",
+  		source: "(917:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (887:5) {#each optTypeHearths5Keys as key}
-  function create_each_block_18(ctx) {
+  // (929:5) {#each optTypeHearths5Keys as key}
+  function create_each_block_19(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataHearths5*/ ctx[71].str_icon_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataHearths5*/ ctx[75].str_icon_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -5968,10 +6701,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths5*/ ctx[71].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 887, 6, 29731);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths5*/ ctx[75].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 929, 6, 30789);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -5989,17 +6722,17 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_18.name,
+  		id: create_each_block_19.name,
   		type: "each",
-  		source: "(887:5) {#each optTypeHearths5Keys as key}",
+  		source: "(929:5) {#each optTypeHearths5Keys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (906:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}
-  function create_if_block_15(ctx) {
+  // (948:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}
+  function create_if_block_18(ctx) {
   	let div0;
   	let t0;
   	let b;
@@ -6033,20 +6766,20 @@ var dtp = (function () {
   	let option4;
   	let option5;
   	let dispose;
-  	let each_value_17 = Object.keys(/*DtpHearths3*/ ctx[3]._opt.years).sort();
-  	validate_each_argument(each_value_17);
+  	let each_value_18 = Object.keys(/*DtpHearths3*/ ctx[3]._opt.years).sort();
+  	validate_each_argument(each_value_18);
   	let each_blocks_1 = [];
 
-  	for (let i = 0; i < each_value_17.length; i += 1) {
-  		each_blocks_1[i] = create_each_block_17(get_each_context_17(ctx, each_value_17, i));
+  	for (let i = 0; i < each_value_18.length; i += 1) {
+  		each_blocks_1[i] = create_each_block_18(get_each_context_18(ctx, each_value_18, i));
   	}
 
-  	let each_value_16 = /*optTypeHearths3Keys*/ ctx[70];
-  	validate_each_argument(each_value_16);
+  	let each_value_17 = /*optTypeHearths3Keys*/ ctx[74];
+  	validate_each_argument(each_value_17);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_16.length; i += 1) {
-  		each_blocks[i] = create_each_block_16(get_each_context_16(ctx, each_value_16, i));
+  	for (let i = 0; i < each_value_17.length; i += 1) {
+  		each_blocks[i] = create_each_block_17(get_each_context_17(ctx, each_value_17, i));
   	}
 
   	const block = {
@@ -6083,7 +6816,7 @@ var dtp = (function () {
   			option0 = element("option");
 
   			option0.textContent = `
-						Все типы (${/*optTypeHearths3Keys*/ ctx[70].reduce(/*func_3*/ ctx[134], 0)})
+						Все типы (${/*optTypeHearths3Keys*/ ctx[74].reduce(/*func_3*/ ctx[143], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -6094,76 +6827,76 @@ var dtp = (function () {
   			div6 = element("div");
   			select1 = element("select");
   			option1 = element("option");
-  			option1.textContent = `(${/*optDataHearths3*/ ctx[69].stricken[0] || 0}) Очаги все`;
+  			option1.textContent = `(${/*optDataHearths3*/ ctx[73].stricken[0] || 0}) Очаги все`;
   			option2 = element("option");
-  			option2.textContent = `(${/*optDataHearths3*/ ctx[69].stricken[1] || 0}) Только с погибшими`;
+  			option2.textContent = `(${/*optDataHearths3*/ ctx[73].stricken[1] || 0}) Только с погибшими`;
   			option3 = element("option");
-  			option3.textContent = `(${/*optDataHearths3*/ ctx[69].stricken[2] || 0}) Только с пострадавшими`;
+  			option3.textContent = `(${/*optDataHearths3*/ ctx[73].stricken[2] || 0}) Только с пострадавшими`;
   			option4 = element("option");
-  			option4.textContent = `(${/*optDataHearths3*/ ctx[69].stricken[3] || 0}) С пострадавшими или погибшими`;
+  			option4.textContent = `(${/*optDataHearths3*/ ctx[73].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
-  			option5.textContent = `(${/*optDataHearths3*/ ctx[69].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$5, 906, 31, 30598);
+  			option5.textContent = `(${/*optDataHearths3*/ ctx[73].stricken[4] || 0}) С пострадавшими и погибшими`;
+  			add_location(b, file$6, 948, 31, 31656);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 906, 2, 30569);
+  			add_location(div0, file$6, 948, 2, 31627);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[14];
+  			input0.value = /*id_dtp*/ ctx[15];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 908, 30, 30683);
+  			add_location(input0, file$6, 950, 30, 31741);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 908, 3, 30656);
-  			add_location(legend, file$5, 911, 4, 30798);
+  			add_location(div1, file$6, 950, 3, 31714);
+  			add_location(legend, file$6, 953, 4, 31856);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
-  			input1.checked = input1_checked_value = /*hearths_period_type_3*/ ctx[38] === 1;
+  			input1.checked = input1_checked_value = /*hearths_period_type_3*/ ctx[42] === 1;
   			attr_dev(input1, "id", "hearths_period_type_31");
   			attr_dev(input1, "name", "hearths_period_type_3");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][3].push(input1);
-  			add_location(input1, file$5, 913, 5, 30873);
+  			/*$$binding_groups*/ ctx[132][3].push(input1);
+  			add_location(input1, file$6, 955, 5, 31931);
   			attr_dev(label, "for", "hearths_period_type_31");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 913, 195, 31063);
+  			add_location(label, file$6, 955, 195, 32121);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$5, 914, 5, 31132);
+  			add_location(div2, file$6, 956, 5, 32190);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$5, 912, 4, 30843);
-  			add_location(fieldset, file$5, 910, 3, 30783);
+  			add_location(div3, file$6, 954, 4, 31901);
+  			add_location(fieldset, file$6, 952, 3, 31841);
   			attr_dev(div4, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div4, file$5, 909, 3, 30753);
+  			add_location(div4, file$6, 951, 3, 31811);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$5, 924, 5, 31626);
+  			add_location(option0, file$6, 966, 5, 32684);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
-  			if (/*str_icon_type3*/ ctx[37] === void 0) add_render_callback(() => /*select0_change_handler_2*/ ctx[135].call(select0));
-  			add_location(select0, file$5, 923, 4, 31513);
+  			if (/*str_icon_type3*/ ctx[41] === void 0) add_render_callback(() => /*select0_change_handler_2*/ ctx[144].call(select0));
+  			add_location(select0, file$6, 965, 4, 32571);
   			attr_dev(div5, "class", "pLine svelte-1jsovbn");
-  			add_location(div5, file$5, 922, 3, 31489);
+  			add_location(div5, file$6, 964, 3, 32547);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$5, 936, 5, 32100);
+  			add_location(option1, file$6, 978, 5, 33158);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$5, 937, 5, 32178);
+  			add_location(option2, file$6, 979, 5, 33236);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$5, 938, 5, 32264);
+  			add_location(option3, file$6, 980, 5, 33322);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$5, 939, 5, 32354);
+  			add_location(option4, file$6, 981, 5, 33412);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$5, 940, 5, 32451);
+  			add_location(option5, file$6, 982, 5, 33509);
   			attr_dev(select1, "class", "svelte-1jsovbn");
-  			if (/*hearths_stricken3*/ ctx[36] === void 0) add_render_callback(() => /*select1_change_handler_2*/ ctx[136].call(select1));
-  			add_location(select1, file$5, 935, 4, 32023);
+  			if (/*hearths_stricken3*/ ctx[40] === void 0) add_render_callback(() => /*select1_change_handler_2*/ ctx[145].call(select1));
+  			add_location(select1, file$6, 977, 4, 33081);
   			attr_dev(div6, "class", "pLine svelte-1jsovbn");
-  			add_location(div6, file$5, 934, 3, 31999);
+  			add_location(div6, file$6, 976, 3, 33057);
   			attr_dev(div7, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div7, file$5, 907, 2, 30627);
+  			add_location(div7, file$6, 949, 2, 31685);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -6181,7 +6914,7 @@ var dtp = (function () {
   			append_dev(fieldset, t6);
   			append_dev(fieldset, div3);
   			append_dev(div3, input1);
-  			input1.checked = input1.__value === /*hearths_period_type_3*/ ctx[38];
+  			input1.checked = input1.__value === /*hearths_period_type_3*/ ctx[42];
   			append_dev(div3, label);
   			append_dev(div3, t8);
   			append_dev(div3, div2);
@@ -6199,7 +6932,7 @@ var dtp = (function () {
   				each_blocks[i].m(select0, null);
   			}
 
-  			select_options(select0, /*str_icon_type3*/ ctx[37]);
+  			select_options(select0, /*str_icon_type3*/ ctx[41]);
   			append_dev(div7, t13);
   			append_dev(div7, div6);
   			append_dev(div6, select1);
@@ -6208,44 +6941,44 @@ var dtp = (function () {
   			append_dev(select1, option3);
   			append_dev(select1, option4);
   			append_dev(select1, option5);
-  			select_option(select1, /*hearths_stricken3*/ ctx[36]);
+  			select_option(select1, /*hearths_stricken3*/ ctx[40]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input1, "change", /*setFilterHearths3*/ ctx[94], false, false, false),
-  				listen_dev(input1, "change", /*input1_change_handler_1*/ ctx[133]),
-  				listen_dev(select0, "change", /*select0_change_handler_2*/ ctx[135]),
-  				listen_dev(select0, "change", /*setFilterHearths3*/ ctx[94], false, false, false),
-  				listen_dev(select1, "change", /*select1_change_handler_2*/ ctx[136]),
-  				listen_dev(select1, "change", /*setFilterHearths3*/ ctx[94], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*setFilterHearths3*/ ctx[103], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_handler_1*/ ctx[142]),
+  				listen_dev(select0, "change", /*select0_change_handler_2*/ ctx[144]),
+  				listen_dev(select0, "change", /*setFilterHearths3*/ ctx[103], false, false, false),
+  				listen_dev(select1, "change", /*select1_change_handler_2*/ ctx[145]),
+  				listen_dev(select1, "change", /*setFilterHearths3*/ ctx[103], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input0.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_3*/ 128 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_3*/ ctx[38] === 1)) {
+  			if (dirty[1] & /*hearths_period_type_3*/ 2048 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_3*/ ctx[42] === 1)) {
   				prop_dev(input1, "checked", input1_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_3*/ 128) {
-  				input1.checked = input1.__value === /*hearths_period_type_3*/ ctx[38];
+  			if (dirty[1] & /*hearths_period_type_3*/ 2048) {
+  				input1.checked = input1.__value === /*hearths_period_type_3*/ ctx[42];
   			}
 
-  			if (dirty[0] & /*DtpHearths3*/ 8 | dirty[1] & /*hearths_year_3, hearths_period_type_3*/ 384 | dirty[3] & /*setFilterHearths3*/ 2) {
-  				each_value_17 = Object.keys(/*DtpHearths3*/ ctx[3]._opt.years).sort();
-  				validate_each_argument(each_value_17);
+  			if (dirty[0] & /*DtpHearths3*/ 8 | dirty[1] & /*hearths_year_3, hearths_period_type_3*/ 6144 | dirty[3] & /*setFilterHearths3*/ 1024) {
+  				each_value_18 = Object.keys(/*DtpHearths3*/ ctx[3]._opt.years).sort();
+  				validate_each_argument(each_value_18);
   				let i;
 
-  				for (i = 0; i < each_value_17.length; i += 1) {
-  					const child_ctx = get_each_context_17(ctx, each_value_17, i);
+  				for (i = 0; i < each_value_18.length; i += 1) {
+  					const child_ctx = get_each_context_18(ctx, each_value_18, i);
 
   					if (each_blocks_1[i]) {
   						each_blocks_1[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_1[i] = create_each_block_17(child_ctx);
+  						each_blocks_1[i] = create_each_block_18(child_ctx);
   						each_blocks_1[i].c();
   						each_blocks_1[i].m(div2, null);
   					}
@@ -6255,21 +6988,21 @@ var dtp = (function () {
   					each_blocks_1[i].d(1);
   				}
 
-  				each_blocks_1.length = each_value_17.length;
+  				each_blocks_1.length = each_value_18.length;
   			}
 
-  			if (dirty[2] & /*optTypeHearths3Keys, optDataHearths3*/ 384) {
-  				each_value_16 = /*optTypeHearths3Keys*/ ctx[70];
-  				validate_each_argument(each_value_16);
+  			if (dirty[2] & /*optTypeHearths3Keys, optDataHearths3*/ 6144) {
+  				each_value_17 = /*optTypeHearths3Keys*/ ctx[74];
+  				validate_each_argument(each_value_17);
   				let i;
 
-  				for (i = 0; i < each_value_16.length; i += 1) {
-  					const child_ctx = get_each_context_16(ctx, each_value_16, i);
+  				for (i = 0; i < each_value_17.length; i += 1) {
+  					const child_ctx = get_each_context_17(ctx, each_value_17, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_16(child_ctx);
+  						each_blocks[i] = create_each_block_17(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select0, null);
   					}
@@ -6279,22 +7012,22 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_16.length;
+  				each_blocks.length = each_value_17.length;
   			}
 
-  			if (dirty[1] & /*str_icon_type3*/ 64) {
-  				select_options(select0, /*str_icon_type3*/ ctx[37]);
+  			if (dirty[1] & /*str_icon_type3*/ 1024) {
+  				select_options(select0, /*str_icon_type3*/ ctx[41]);
   			}
 
-  			if (dirty[1] & /*hearths_stricken3*/ 32) {
-  				select_option(select1, /*hearths_stricken3*/ ctx[36]);
+  			if (dirty[1] & /*hearths_stricken3*/ 512) {
+  				select_option(select1, /*hearths_stricken3*/ ctx[40]);
   			}
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t2);
   			if (detaching) detach_dev(div7);
-  			/*$$binding_groups*/ ctx[123][3].splice(/*$$binding_groups*/ ctx[123][3].indexOf(input1), 1);
+  			/*$$binding_groups*/ ctx[132][3].splice(/*$$binding_groups*/ ctx[132][3].indexOf(input1), 1);
   			destroy_each(each_blocks_1, detaching);
   			destroy_each(each_blocks, detaching);
   			run_all(dispose);
@@ -6303,23 +7036,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_15.name,
+  		id: create_if_block_18.name,
   		type: "if",
-  		source: "(906:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}",
+  		source: "(948:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (916:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}
-  function create_each_block_17(ctx) {
+  // (958:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}
+  function create_each_block_18(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t_value = /*key*/ ctx[170] + "";
+  	let t_value = /*key*/ ctx[181] + "";
   	let t;
   	let dispose;
 
@@ -6330,36 +7063,36 @@ var dtp = (function () {
   			t = text(t_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_year_3");
-  			input.checked = input_checked_value = /*hearths_year_3*/ ctx[39][/*key*/ ctx[170]];
-  			input.disabled = input_disabled_value = /*hearths_period_type_3*/ ctx[38] === 2;
-  			attr_dev(input, "name", input_name_value = /*key*/ ctx[170]);
+  			input.checked = input_checked_value = /*hearths_year_3*/ ctx[43][/*key*/ ctx[181]];
+  			input.disabled = input_disabled_value = /*hearths_period_type_3*/ ctx[42] === 2;
+  			attr_dev(input, "name", input_name_value = /*key*/ ctx[181]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 916, 6, 31228);
+  			add_location(input, file$6, 958, 6, 32286);
   			attr_dev(label, "for", "hearths_year_3");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 916, 161, 31383);
+  			add_location(label, file$6, 958, 161, 32441);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
   			insert_dev(target, label, anchor);
   			append_dev(label, t);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearths3*/ ctx[94], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearths3*/ ctx[103], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearths3*/ 8 | dirty[1] & /*hearths_year_3*/ 256 && input_checked_value !== (input_checked_value = /*hearths_year_3*/ ctx[39][/*key*/ ctx[170]])) {
+  			if (dirty[0] & /*DtpHearths3*/ 8 | dirty[1] & /*hearths_year_3*/ 4096 && input_checked_value !== (input_checked_value = /*hearths_year_3*/ ctx[43][/*key*/ ctx[181]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_3*/ 128 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_3*/ ctx[38] === 2)) {
+  			if (dirty[1] & /*hearths_period_type_3*/ 2048 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_3*/ ctx[42] === 2)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearths3*/ 8 && input_name_value !== (input_name_value = /*key*/ ctx[170])) {
+  			if (dirty[0] & /*DtpHearths3*/ 8 && input_name_value !== (input_name_value = /*key*/ ctx[181])) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearths3*/ 8 && t_value !== (t_value = /*key*/ ctx[170] + "")) set_data_dev(t, t_value);
+  			if (dirty[0] & /*DtpHearths3*/ 8 && t_value !== (t_value = /*key*/ ctx[181] + "")) set_data_dev(t, t_value);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(input);
@@ -6370,23 +7103,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_17.name,
+  		id: create_each_block_18.name,
   		type: "each",
-  		source: "(916:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}",
+  		source: "(958:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (928:5) {#each optTypeHearths3Keys as key}
-  function create_each_block_16(ctx) {
+  // (970:5) {#each optTypeHearths3Keys as key}
+  function create_each_block_17(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataHearths3*/ ctx[69].str_icon_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataHearths3*/ ctx[73].str_icon_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -6400,10 +7133,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths3*/ ctx[69].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 928, 6, 31818);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths3*/ ctx[73].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 970, 6, 32876);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -6421,17 +7154,17 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_16.name,
+  		id: create_each_block_17.name,
   		type: "each",
-  		source: "(928:5) {#each optTypeHearths3Keys as key}",
+  		source: "(970:5) {#each optTypeHearths3Keys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (947:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}
-  function create_if_block_14(ctx) {
+  // (989:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}
+  function create_if_block_17(ctx) {
   	let div0;
   	let t0;
   	let b;
@@ -6472,28 +7205,28 @@ var dtp = (function () {
   	let option4;
   	let option5;
   	let dispose;
-  	let each_value_15 = Object.keys(/*DtpHearthsStat*/ ctx[9]._opt.years).sort();
-  	validate_each_argument(each_value_15);
+  	let each_value_16 = Object.keys(/*DtpHearthsStat*/ ctx[10]._opt.years).sort();
+  	validate_each_argument(each_value_16);
   	let each_blocks_2 = [];
 
-  	for (let i = 0; i < each_value_15.length; i += 1) {
-  		each_blocks_2[i] = create_each_block_15(get_each_context_15(ctx, each_value_15, i));
+  	for (let i = 0; i < each_value_16.length; i += 1) {
+  		each_blocks_2[i] = create_each_block_16(get_each_context_16(ctx, each_value_16, i));
   	}
 
-  	let each_value_13 = Object.keys(/*DtpHearthsStat*/ ctx[9]._opt.years).sort();
-  	validate_each_argument(each_value_13);
+  	let each_value_14 = Object.keys(/*DtpHearthsStat*/ ctx[10]._opt.years).sort();
+  	validate_each_argument(each_value_14);
   	let each_blocks_1 = [];
 
-  	for (let i = 0; i < each_value_13.length; i += 1) {
-  		each_blocks_1[i] = create_each_block_13(get_each_context_13(ctx, each_value_13, i));
+  	for (let i = 0; i < each_value_14.length; i += 1) {
+  		each_blocks_1[i] = create_each_block_14(get_each_context_14(ctx, each_value_14, i));
   	}
 
-  	let each_value_12 = /*optTypeHearthsStatKeys*/ ctx[68];
-  	validate_each_argument(each_value_12);
+  	let each_value_13 = /*optTypeHearthsStatKeys*/ ctx[72];
+  	validate_each_argument(each_value_13);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_12.length; i += 1) {
-  		each_blocks[i] = create_each_block_12(get_each_context_12(ctx, each_value_12, i));
+  	for (let i = 0; i < each_value_13.length; i += 1) {
+  		each_blocks[i] = create_each_block_13(get_each_context_13(ctx, each_value_13, i));
   	}
 
   	const block = {
@@ -6542,7 +7275,7 @@ var dtp = (function () {
   			option0 = element("option");
 
   			option0.textContent = `
-						Все типы (${/*optTypeHearthsStatKeys*/ ctx[68].reduce(/*func_4*/ ctx[139], 0)})
+						Все типы (${/*optTypeHearthsStatKeys*/ ctx[72].reduce(/*func_4*/ ctx[148], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -6553,91 +7286,91 @@ var dtp = (function () {
   			div8 = element("div");
   			select1 = element("select");
   			option1 = element("option");
-  			option1.textContent = `(${/*optDataHearthsStat*/ ctx[67].stricken[0] || 0}) Очаги все`;
+  			option1.textContent = `(${/*optDataHearthsStat*/ ctx[71].stricken[0] || 0}) Очаги все`;
   			option2 = element("option");
-  			option2.textContent = `(${/*optDataHearthsStat*/ ctx[67].stricken[1] || 0}) Только с погибшими`;
+  			option2.textContent = `(${/*optDataHearthsStat*/ ctx[71].stricken[1] || 0}) Только с погибшими`;
   			option3 = element("option");
-  			option3.textContent = `(${/*optDataHearthsStat*/ ctx[67].stricken[2] || 0}) Только с пострадавшими`;
+  			option3.textContent = `(${/*optDataHearthsStat*/ ctx[71].stricken[2] || 0}) Только с пострадавшими`;
   			option4 = element("option");
-  			option4.textContent = `(${/*optDataHearthsStat*/ ctx[67].stricken[3] || 0}) С пострадавшими или погибшими`;
+  			option4.textContent = `(${/*optDataHearthsStat*/ ctx[71].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
-  			option5.textContent = `(${/*optDataHearthsStat*/ ctx[67].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$5, 947, 31, 32694);
+  			option5.textContent = `(${/*optDataHearthsStat*/ ctx[71].stricken[4] || 0}) С пострадавшими и погибшими`;
+  			add_location(b, file$6, 989, 31, 33752);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 947, 2, 32665);
+  			add_location(div0, file$6, 989, 2, 33723);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[14];
+  			input0.value = /*id_dtp*/ ctx[15];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 949, 30, 32782);
+  			add_location(input0, file$6, 991, 30, 33840);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 949, 3, 32755);
-  			add_location(legend, file$5, 952, 4, 32897);
+  			add_location(div1, file$6, 991, 3, 33813);
+  			add_location(legend, file$6, 994, 4, 33955);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
-  			input1.checked = input1_checked_value = /*hearths_period_type_Stat*/ ctx[42] === 1;
+  			input1.checked = input1_checked_value = /*hearths_period_type_Stat*/ ctx[46] === 1;
   			attr_dev(input1, "id", "hearths_period_type_Stat1");
   			attr_dev(input1, "name", "hearths_period_type_Stat");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][2].push(input1);
-  			add_location(input1, file$5, 954, 5, 32972);
+  			/*$$binding_groups*/ ctx[132][2].push(input1);
+  			add_location(input1, file$6, 996, 5, 34030);
   			attr_dev(label0, "for", "hearths_period_type_Stat1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 954, 210, 33177);
+  			add_location(label0, file$6, 996, 210, 34235);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$5, 955, 5, 33249);
+  			add_location(div2, file$6, 997, 5, 34307);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$5, 953, 4, 32942);
+  			add_location(div3, file$6, 995, 4, 34000);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 2;
   			input2.value = input2.__value;
   			attr_dev(input2, "id", "hearths_period_type_Stat2");
   			attr_dev(input2, "name", "hearths_period_type_Stat");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][2].push(input2);
-  			add_location(input2, file$5, 962, 4, 33629);
+  			/*$$binding_groups*/ ctx[132][2].push(input2);
+  			add_location(input2, file$6, 1004, 4, 34687);
   			attr_dev(label1, "for", "hearths_period_type_Stat2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 962, 168, 33793);
+  			add_location(label1, file$6, 1004, 168, 34851);
   			attr_dev(div4, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div4, file$5, 963, 5, 33869);
+  			add_location(div4, file$6, 1005, 5, 34927);
   			attr_dev(div5, "class", "pLine type svelte-1jsovbn");
-  			add_location(div5, file$5, 961, 4, 33600);
-  			add_location(fieldset, file$5, 951, 3, 32882);
+  			add_location(div5, file$6, 1003, 4, 34658);
+  			add_location(fieldset, file$6, 993, 3, 33940);
   			attr_dev(div6, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div6, file$5, 950, 3, 32852);
+  			add_location(div6, file$6, 992, 3, 33910);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$5, 976, 5, 34563);
+  			add_location(option0, file$6, 1018, 5, 35621);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
-  			if (/*str_icon_typeStat*/ ctx[41] === void 0) add_render_callback(() => /*select0_change_handler_3*/ ctx[140].call(select0));
-  			add_location(select0, file$5, 975, 4, 34444);
+  			if (/*str_icon_typeStat*/ ctx[45] === void 0) add_render_callback(() => /*select0_change_handler_3*/ ctx[149].call(select0));
+  			add_location(select0, file$6, 1017, 4, 35502);
   			attr_dev(div7, "class", "pLine svelte-1jsovbn");
-  			add_location(div7, file$5, 974, 3, 34420);
+  			add_location(div7, file$6, 1016, 3, 35478);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$5, 988, 5, 35058);
+  			add_location(option1, file$6, 1030, 5, 36116);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$5, 989, 5, 35139);
+  			add_location(option2, file$6, 1031, 5, 36197);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$5, 990, 5, 35228);
+  			add_location(option3, file$6, 1032, 5, 36286);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$5, 991, 5, 35321);
+  			add_location(option4, file$6, 1033, 5, 36379);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$5, 992, 5, 35421);
+  			add_location(option5, file$6, 1034, 5, 36479);
   			attr_dev(select1, "class", "svelte-1jsovbn");
-  			if (/*hearths_strickenStat*/ ctx[40] === void 0) add_render_callback(() => /*select1_change_handler_3*/ ctx[141].call(select1));
-  			add_location(select1, file$5, 987, 4, 34975);
+  			if (/*hearths_strickenStat*/ ctx[44] === void 0) add_render_callback(() => /*select1_change_handler_3*/ ctx[150].call(select1));
+  			add_location(select1, file$6, 1029, 4, 36033);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$5, 986, 3, 34951);
+  			add_location(div8, file$6, 1028, 3, 36009);
   			attr_dev(div9, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div9, file$5, 948, 2, 32726);
+  			add_location(div9, file$6, 990, 2, 33784);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -6655,7 +7388,7 @@ var dtp = (function () {
   			append_dev(fieldset, t6);
   			append_dev(fieldset, div3);
   			append_dev(div3, input1);
-  			input1.checked = input1.__value === /*hearths_period_type_Stat*/ ctx[42];
+  			input1.checked = input1.__value === /*hearths_period_type_Stat*/ ctx[46];
   			append_dev(div3, label0);
   			append_dev(div3, t8);
   			append_dev(div3, div2);
@@ -6667,7 +7400,7 @@ var dtp = (function () {
   			append_dev(fieldset, t9);
   			append_dev(fieldset, div5);
   			append_dev(div5, input2);
-  			input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[42];
+  			input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[46];
   			append_dev(div5, label1);
   			append_dev(div5, t11);
   			append_dev(div5, div4);
@@ -6685,7 +7418,7 @@ var dtp = (function () {
   				each_blocks[i].m(select0, null);
   			}
 
-  			select_options(select0, /*str_icon_typeStat*/ ctx[41]);
+  			select_options(select0, /*str_icon_typeStat*/ ctx[45]);
   			append_dev(div9, t16);
   			append_dev(div9, div8);
   			append_dev(div8, select1);
@@ -6694,46 +7427,46 @@ var dtp = (function () {
   			append_dev(select1, option3);
   			append_dev(select1, option4);
   			append_dev(select1, option5);
-  			select_option(select1, /*hearths_strickenStat*/ ctx[40]);
+  			select_option(select1, /*hearths_strickenStat*/ ctx[44]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input1, "change", /*setFilterHearthsStat*/ ctx[95], false, false, false),
-  				listen_dev(input1, "change", /*input1_change_handler_2*/ ctx[137]),
-  				listen_dev(input2, "change", /*setFilterHearthsStat*/ ctx[95], false, false, false),
-  				listen_dev(input2, "change", /*input2_change_handler_1*/ ctx[138]),
-  				listen_dev(select0, "change", /*select0_change_handler_3*/ ctx[140]),
-  				listen_dev(select0, "change", /*setFilterHearthsStat*/ ctx[95], false, false, false),
-  				listen_dev(select1, "change", /*select1_change_handler_3*/ ctx[141]),
-  				listen_dev(select1, "change", /*setFilterHearthsStat*/ ctx[95], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*setFilterHearthsStat*/ ctx[104], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_handler_2*/ ctx[146]),
+  				listen_dev(input2, "change", /*setFilterHearthsStat*/ ctx[104], false, false, false),
+  				listen_dev(input2, "change", /*input2_change_handler_1*/ ctx[147]),
+  				listen_dev(select0, "change", /*select0_change_handler_3*/ ctx[149]),
+  				listen_dev(select0, "change", /*setFilterHearthsStat*/ ctx[104], false, false, false),
+  				listen_dev(select1, "change", /*select1_change_handler_3*/ ctx[150]),
+  				listen_dev(select1, "change", /*setFilterHearthsStat*/ ctx[104], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input0.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_Stat*/ ctx[42] === 1)) {
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_Stat*/ ctx[46] === 1)) {
   				prop_dev(input1, "checked", input1_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048) {
-  				input1.checked = input1.__value === /*hearths_period_type_Stat*/ ctx[42];
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768) {
+  				input1.checked = input1.__value === /*hearths_period_type_Stat*/ ctx[46];
   			}
 
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 | dirty[1] & /*hearths_year_Stat, hearths_period_type_Stat*/ 6144 | dirty[3] & /*setFilterHearthsStat*/ 4) {
-  				each_value_15 = Object.keys(/*DtpHearthsStat*/ ctx[9]._opt.years).sort();
-  				validate_each_argument(each_value_15);
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 | dirty[1] & /*hearths_year_Stat, hearths_period_type_Stat*/ 98304 | dirty[3] & /*setFilterHearthsStat*/ 2048) {
+  				each_value_16 = Object.keys(/*DtpHearthsStat*/ ctx[10]._opt.years).sort();
+  				validate_each_argument(each_value_16);
   				let i;
 
-  				for (i = 0; i < each_value_15.length; i += 1) {
-  					const child_ctx = get_each_context_15(ctx, each_value_15, i);
+  				for (i = 0; i < each_value_16.length; i += 1) {
+  					const child_ctx = get_each_context_16(ctx, each_value_16, i);
 
   					if (each_blocks_2[i]) {
   						each_blocks_2[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_2[i] = create_each_block_15(child_ctx);
+  						each_blocks_2[i] = create_each_block_16(child_ctx);
   						each_blocks_2[i].c();
   						each_blocks_2[i].m(div2, null);
   					}
@@ -6743,25 +7476,25 @@ var dtp = (function () {
   					each_blocks_2[i].d(1);
   				}
 
-  				each_blocks_2.length = each_value_15.length;
+  				each_blocks_2.length = each_value_16.length;
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048) {
-  				input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[42];
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768) {
+  				input2.checked = input2.__value === /*hearths_period_type_Stat*/ ctx[46];
   			}
 
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 | dirty[1] & /*hearths_quarter_Stat, hearths_period_type_Stat*/ 10240 | dirty[3] & /*setFilterHearthsStat*/ 4) {
-  				each_value_13 = Object.keys(/*DtpHearthsStat*/ ctx[9]._opt.years).sort();
-  				validate_each_argument(each_value_13);
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 | dirty[1] & /*hearths_quarter_Stat, hearths_period_type_Stat*/ 163840 | dirty[3] & /*setFilterHearthsStat*/ 2048) {
+  				each_value_14 = Object.keys(/*DtpHearthsStat*/ ctx[10]._opt.years).sort();
+  				validate_each_argument(each_value_14);
   				let i;
 
-  				for (i = 0; i < each_value_13.length; i += 1) {
-  					const child_ctx = get_each_context_13(ctx, each_value_13, i);
+  				for (i = 0; i < each_value_14.length; i += 1) {
+  					const child_ctx = get_each_context_14(ctx, each_value_14, i);
 
   					if (each_blocks_1[i]) {
   						each_blocks_1[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_1[i] = create_each_block_13(child_ctx);
+  						each_blocks_1[i] = create_each_block_14(child_ctx);
   						each_blocks_1[i].c();
   						each_blocks_1[i].m(div4, null);
   					}
@@ -6771,21 +7504,21 @@ var dtp = (function () {
   					each_blocks_1[i].d(1);
   				}
 
-  				each_blocks_1.length = each_value_13.length;
+  				each_blocks_1.length = each_value_14.length;
   			}
 
-  			if (dirty[2] & /*optTypeHearthsStatKeys, optDataHearthsStat*/ 96) {
-  				each_value_12 = /*optTypeHearthsStatKeys*/ ctx[68];
-  				validate_each_argument(each_value_12);
+  			if (dirty[2] & /*optTypeHearthsStatKeys, optDataHearthsStat*/ 1536) {
+  				each_value_13 = /*optTypeHearthsStatKeys*/ ctx[72];
+  				validate_each_argument(each_value_13);
   				let i;
 
-  				for (i = 0; i < each_value_12.length; i += 1) {
-  					const child_ctx = get_each_context_12(ctx, each_value_12, i);
+  				for (i = 0; i < each_value_13.length; i += 1) {
+  					const child_ctx = get_each_context_13(ctx, each_value_13, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_12(child_ctx);
+  						each_blocks[i] = create_each_block_13(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select0, null);
   					}
@@ -6795,24 +7528,24 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_12.length;
+  				each_blocks.length = each_value_13.length;
   			}
 
-  			if (dirty[1] & /*str_icon_typeStat*/ 1024) {
-  				select_options(select0, /*str_icon_typeStat*/ ctx[41]);
+  			if (dirty[1] & /*str_icon_typeStat*/ 16384) {
+  				select_options(select0, /*str_icon_typeStat*/ ctx[45]);
   			}
 
-  			if (dirty[1] & /*hearths_strickenStat*/ 512) {
-  				select_option(select1, /*hearths_strickenStat*/ ctx[40]);
+  			if (dirty[1] & /*hearths_strickenStat*/ 8192) {
+  				select_option(select1, /*hearths_strickenStat*/ ctx[44]);
   			}
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t2);
   			if (detaching) detach_dev(div9);
-  			/*$$binding_groups*/ ctx[123][2].splice(/*$$binding_groups*/ ctx[123][2].indexOf(input1), 1);
+  			/*$$binding_groups*/ ctx[132][2].splice(/*$$binding_groups*/ ctx[132][2].indexOf(input1), 1);
   			destroy_each(each_blocks_2, detaching);
-  			/*$$binding_groups*/ ctx[123][2].splice(/*$$binding_groups*/ ctx[123][2].indexOf(input2), 1);
+  			/*$$binding_groups*/ ctx[132][2].splice(/*$$binding_groups*/ ctx[132][2].indexOf(input2), 1);
   			destroy_each(each_blocks_1, detaching);
   			destroy_each(each_blocks, detaching);
   			run_all(dispose);
@@ -6821,23 +7554,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_14.name,
+  		id: create_if_block_17.name,
   		type: "if",
-  		source: "(947:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}",
+  		source: "(989:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (957:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
-  function create_each_block_15(ctx) {
+  // (999:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
+  function create_each_block_16(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t_value = /*key*/ ctx[170] + "";
+  	let t_value = /*key*/ ctx[181] + "";
   	let t;
   	let dispose;
 
@@ -6848,36 +7581,36 @@ var dtp = (function () {
   			t = text(t_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_year_Stat");
-  			input.checked = input_checked_value = /*hearths_year_Stat*/ ctx[43][/*key*/ ctx[170]];
-  			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[42] === 2;
-  			attr_dev(input, "name", input_name_value = /*key*/ ctx[170]);
+  			input.checked = input_checked_value = /*hearths_year_Stat*/ ctx[47][/*key*/ ctx[181]];
+  			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[46] === 2;
+  			attr_dev(input, "name", input_name_value = /*key*/ ctx[181]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 957, 6, 33348);
+  			add_location(input, file$6, 999, 6, 34406);
   			attr_dev(label, "for", "hearths_year_Stat");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 957, 173, 33515);
+  			add_location(label, file$6, 999, 173, 34573);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
   			insert_dev(target, label, anchor);
   			append_dev(label, t);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearthsStat*/ ctx[95], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearthsStat*/ ctx[104], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 | dirty[1] & /*hearths_year_Stat*/ 4096 && input_checked_value !== (input_checked_value = /*hearths_year_Stat*/ ctx[43][/*key*/ ctx[170]])) {
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 | dirty[1] & /*hearths_year_Stat*/ 65536 && input_checked_value !== (input_checked_value = /*hearths_year_Stat*/ ctx[47][/*key*/ ctx[181]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_Stat*/ ctx[42] === 2)) {
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_Stat*/ ctx[46] === 2)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 && input_name_value !== (input_name_value = /*key*/ ctx[170])) {
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 && input_name_value !== (input_name_value = /*key*/ ctx[181])) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 && t_value !== (t_value = /*key*/ ctx[170] + "")) set_data_dev(t, t_value);
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 && t_value !== (t_value = /*key*/ ctx[181] + "")) set_data_dev(t, t_value);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(input);
@@ -6888,26 +7621,26 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_15.name,
+  		id: create_each_block_16.name,
   		type: "each",
-  		source: "(957:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
+  		source: "(999:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (966:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}
-  function create_each_block_14(ctx) {
+  // (1008:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}
+  function create_each_block_15(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t0_value = /*key1*/ ctx[183] + "";
+  	let t0_value = /*key1*/ ctx[196] + "";
   	let t0;
   	let t1;
-  	let t2_value = /*key*/ ctx[170] + "";
+  	let t2_value = /*key*/ ctx[181] + "";
   	let t2;
   	let label_for_value;
   	let dispose;
@@ -6921,14 +7654,14 @@ var dtp = (function () {
   			t2 = text(t2_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_quarter_Stat");
-  			input.checked = input_checked_value = /*hearths_quarter_Stat*/ ctx[44][/*key*/ ctx[170]] && /*hearths_quarter_Stat*/ ctx[44][/*key*/ ctx[170]][/*key1*/ ctx[183]];
-  			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[42] === 1;
-  			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[170] + "_" + /*key1*/ ctx[183]));
+  			input.checked = input_checked_value = /*hearths_quarter_Stat*/ ctx[48][/*key*/ ctx[181]] && /*hearths_quarter_Stat*/ ctx[48][/*key*/ ctx[181]][/*key1*/ ctx[196]];
+  			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[46] === 1;
+  			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[181] + "_" + /*key1*/ ctx[196]));
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 966, 7, 34042);
-  			attr_dev(label, "for", label_for_value = "hearths_quarter_Stat_" + /*key*/ ctx[170] + "_" + /*key1*/ ctx[183]);
+  			add_location(input, file$6, 1008, 7, 35100);
+  			attr_dev(label, "for", label_for_value = "hearths_quarter_Stat_" + /*key*/ ctx[181] + "_" + /*key1*/ ctx[196]);
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 966, 222, 34257);
+  			add_location(label, file$6, 1008, 222, 35315);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -6937,25 +7670,25 @@ var dtp = (function () {
   			append_dev(label, t1);
   			append_dev(label, t2);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearthsStat*/ ctx[95], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearthsStat*/ ctx[104], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 | dirty[1] & /*hearths_quarter_Stat*/ 8192 && input_checked_value !== (input_checked_value = /*hearths_quarter_Stat*/ ctx[44][/*key*/ ctx[170]] && /*hearths_quarter_Stat*/ ctx[44][/*key*/ ctx[170]][/*key1*/ ctx[183]])) {
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 | dirty[1] & /*hearths_quarter_Stat*/ 131072 && input_checked_value !== (input_checked_value = /*hearths_quarter_Stat*/ ctx[48][/*key*/ ctx[181]] && /*hearths_quarter_Stat*/ ctx[48][/*key*/ ctx[181]][/*key1*/ ctx[196]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_Stat*/ 2048 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_Stat*/ ctx[42] === 1)) {
+  			if (dirty[1] & /*hearths_period_type_Stat*/ 32768 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_Stat*/ ctx[46] === 1)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 && input_name_value !== (input_name_value = "" + (/*key*/ ctx[170] + "_" + /*key1*/ ctx[183]))) {
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 && input_name_value !== (input_name_value = "" + (/*key*/ ctx[181] + "_" + /*key1*/ ctx[196]))) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 && t0_value !== (t0_value = /*key1*/ ctx[183] + "")) set_data_dev(t0, t0_value);
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 && t2_value !== (t2_value = /*key*/ ctx[170] + "")) set_data_dev(t2, t2_value);
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 && t0_value !== (t0_value = /*key1*/ ctx[196] + "")) set_data_dev(t0, t0_value);
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 && t2_value !== (t2_value = /*key*/ ctx[181] + "")) set_data_dev(t2, t2_value);
 
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 && label_for_value !== (label_for_value = "hearths_quarter_Stat_" + /*key*/ ctx[170] + "_" + /*key1*/ ctx[183])) {
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 && label_for_value !== (label_for_value = "hearths_quarter_Stat_" + /*key*/ ctx[181] + "_" + /*key1*/ ctx[196])) {
   				attr_dev(label, "for", label_for_value);
   			}
   		},
@@ -6968,25 +7701,25 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_14.name,
+  		id: create_each_block_15.name,
   		type: "each",
-  		source: "(966:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}",
+  		source: "(1008:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (965:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
-  function create_each_block_13(ctx) {
+  // (1007:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
+  function create_each_block_14(ctx) {
   	let t;
   	let br;
-  	let each_value_14 = Object.keys(/*DtpHearthsStat*/ ctx[9]._opt.years[/*key*/ ctx[170]]).sort();
-  	validate_each_argument(each_value_14);
+  	let each_value_15 = Object.keys(/*DtpHearthsStat*/ ctx[10]._opt.years[/*key*/ ctx[181]]).sort();
+  	validate_each_argument(each_value_15);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_14.length; i += 1) {
-  		each_blocks[i] = create_each_block_14(get_each_context_14(ctx, each_value_14, i));
+  	for (let i = 0; i < each_value_15.length; i += 1) {
+  		each_blocks[i] = create_each_block_15(get_each_context_15(ctx, each_value_15, i));
   	}
 
   	const block = {
@@ -6997,7 +7730,7 @@ var dtp = (function () {
 
   			t = space();
   			br = element("br");
-  			add_location(br, file$5, 968, 6, 34349);
+  			add_location(br, file$6, 1010, 6, 35407);
   		},
   		m: function mount(target, anchor) {
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -7008,18 +7741,18 @@ var dtp = (function () {
   			insert_dev(target, br, anchor);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearthsStat*/ 512 | dirty[1] & /*hearths_quarter_Stat, hearths_period_type_Stat*/ 10240 | dirty[3] & /*setFilterHearthsStat*/ 4) {
-  				each_value_14 = Object.keys(/*DtpHearthsStat*/ ctx[9]._opt.years[/*key*/ ctx[170]]).sort();
-  				validate_each_argument(each_value_14);
+  			if (dirty[0] & /*DtpHearthsStat*/ 1024 | dirty[1] & /*hearths_quarter_Stat, hearths_period_type_Stat*/ 163840 | dirty[3] & /*setFilterHearthsStat*/ 2048) {
+  				each_value_15 = Object.keys(/*DtpHearthsStat*/ ctx[10]._opt.years[/*key*/ ctx[181]]).sort();
+  				validate_each_argument(each_value_15);
   				let i;
 
-  				for (i = 0; i < each_value_14.length; i += 1) {
-  					const child_ctx = get_each_context_14(ctx, each_value_14, i);
+  				for (i = 0; i < each_value_15.length; i += 1) {
+  					const child_ctx = get_each_context_15(ctx, each_value_15, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_14(child_ctx);
+  						each_blocks[i] = create_each_block_15(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(t.parentNode, t);
   					}
@@ -7029,7 +7762,7 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_14.length;
+  				each_blocks.length = each_value_15.length;
   			}
   		},
   		d: function destroy(detaching) {
@@ -7041,23 +7774,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_13.name,
+  		id: create_each_block_14.name,
   		type: "each",
-  		source: "(965:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
+  		source: "(1007:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (980:5) {#each optTypeHearthsStatKeys as key}
-  function create_each_block_12(ctx) {
+  // (1022:5) {#each optTypeHearthsStatKeys as key}
+  function create_each_block_13(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataHearthsStat*/ ctx[67].str_icon_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataHearthsStat*/ ctx[71].str_icon_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -7071,10 +7804,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearthsStat*/ ctx[67].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 980, 6, 34764);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearthsStat*/ ctx[71].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1022, 6, 35822);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -7092,17 +7825,17 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_12.name,
+  		id: create_each_block_13.name,
   		type: "each",
-  		source: "(980:5) {#each optTypeHearthsStatKeys as key}",
+  		source: "(1022:5) {#each optTypeHearthsStatKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (999:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}
-  function create_if_block_13(ctx) {
+  // (1041:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}
+  function create_if_block_16(ctx) {
   	let div0;
   	let t0;
   	let b;
@@ -7143,28 +7876,28 @@ var dtp = (function () {
   	let option4;
   	let option5;
   	let dispose;
-  	let each_value_11 = Object.keys(/*DtpHearthsTmp*/ ctx[10]._opt.years).sort();
-  	validate_each_argument(each_value_11);
+  	let each_value_12 = Object.keys(/*DtpHearthsTmp*/ ctx[11]._opt.years).sort();
+  	validate_each_argument(each_value_12);
   	let each_blocks_2 = [];
 
-  	for (let i = 0; i < each_value_11.length; i += 1) {
-  		each_blocks_2[i] = create_each_block_11(get_each_context_11(ctx, each_value_11, i));
+  	for (let i = 0; i < each_value_12.length; i += 1) {
+  		each_blocks_2[i] = create_each_block_12(get_each_context_12(ctx, each_value_12, i));
   	}
 
-  	let each_value_9 = Object.keys(/*DtpHearthsTmp*/ ctx[10]._opt.years).sort();
-  	validate_each_argument(each_value_9);
+  	let each_value_10 = Object.keys(/*DtpHearthsTmp*/ ctx[11]._opt.years).sort();
+  	validate_each_argument(each_value_10);
   	let each_blocks_1 = [];
 
-  	for (let i = 0; i < each_value_9.length; i += 1) {
-  		each_blocks_1[i] = create_each_block_9(get_each_context_9(ctx, each_value_9, i));
+  	for (let i = 0; i < each_value_10.length; i += 1) {
+  		each_blocks_1[i] = create_each_block_10(get_each_context_10(ctx, each_value_10, i));
   	}
 
-  	let each_value_8 = /*optTypeHearthsTmpKeys*/ ctx[66];
-  	validate_each_argument(each_value_8);
+  	let each_value_9 = /*optTypeHearthsTmpKeys*/ ctx[70];
+  	validate_each_argument(each_value_9);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_8.length; i += 1) {
-  		each_blocks[i] = create_each_block_8(get_each_context_8(ctx, each_value_8, i));
+  	for (let i = 0; i < each_value_9.length; i += 1) {
+  		each_blocks[i] = create_each_block_9(get_each_context_9(ctx, each_value_9, i));
   	}
 
   	const block = {
@@ -7213,7 +7946,7 @@ var dtp = (function () {
   			option0 = element("option");
 
   			option0.textContent = `
-						Все типы (${/*optTypeHearthsTmpKeys*/ ctx[66].reduce(/*func_5*/ ctx[144], 0)})
+						Все типы (${/*optTypeHearthsTmpKeys*/ ctx[70].reduce(/*func_5*/ ctx[153], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -7224,91 +7957,91 @@ var dtp = (function () {
   			div8 = element("div");
   			select1 = element("select");
   			option1 = element("option");
-  			option1.textContent = `(${/*optDataHearthsTmp*/ ctx[65].stricken[0] || 0}) Очаги все`;
+  			option1.textContent = `(${/*optDataHearthsTmp*/ ctx[69].stricken[0] || 0}) Очаги все`;
   			option2 = element("option");
-  			option2.textContent = `(${/*optDataHearthsTmp*/ ctx[65].stricken[1] || 0}) Только с погибшими`;
+  			option2.textContent = `(${/*optDataHearthsTmp*/ ctx[69].stricken[1] || 0}) Только с погибшими`;
   			option3 = element("option");
-  			option3.textContent = `(${/*optDataHearthsTmp*/ ctx[65].stricken[2] || 0}) Только с пострадавшими`;
+  			option3.textContent = `(${/*optDataHearthsTmp*/ ctx[69].stricken[2] || 0}) Только с пострадавшими`;
   			option4 = element("option");
-  			option4.textContent = `(${/*optDataHearthsTmp*/ ctx[65].stricken[3] || 0}) С пострадавшими или погибшими`;
+  			option4.textContent = `(${/*optDataHearthsTmp*/ ctx[69].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
-  			option5.textContent = `(${/*optDataHearthsTmp*/ ctx[65].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$5, 999, 31, 35664);
+  			option5.textContent = `(${/*optDataHearthsTmp*/ ctx[69].stricken[4] || 0}) С пострадавшими и погибшими`;
+  			add_location(b, file$6, 1041, 31, 36722);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 999, 2, 35635);
+  			add_location(div0, file$6, 1041, 2, 36693);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[14];
+  			input0.value = /*id_dtp*/ ctx[15];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 1001, 30, 35751);
+  			add_location(input0, file$6, 1043, 30, 36809);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1001, 3, 35724);
-  			add_location(legend, file$5, 1004, 4, 35866);
+  			add_location(div1, file$6, 1043, 3, 36782);
+  			add_location(legend, file$6, 1046, 4, 36924);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
-  			input1.checked = input1_checked_value = /*hearths_period_type_tmp*/ ctx[47] === 1;
+  			input1.checked = input1_checked_value = /*hearths_period_type_tmp*/ ctx[51] === 1;
   			attr_dev(input1, "id", "hearths_period_type_tmp1");
   			attr_dev(input1, "name", "hearths_period_type_tmp");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][1].push(input1);
-  			add_location(input1, file$5, 1006, 5, 35941);
+  			/*$$binding_groups*/ ctx[132][1].push(input1);
+  			add_location(input1, file$6, 1048, 5, 36999);
   			attr_dev(label0, "for", "hearths_period_type_tmp1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 1006, 205, 36141);
+  			add_location(label0, file$6, 1048, 205, 37199);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$5, 1007, 5, 36212);
+  			add_location(div2, file$6, 1049, 5, 37270);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$5, 1005, 4, 35911);
+  			add_location(div3, file$6, 1047, 4, 36969);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 2;
   			input2.value = input2.__value;
   			attr_dev(input2, "id", "hearths_period_type_tmp2");
   			attr_dev(input2, "name", "hearths_period_type_tmp");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][1].push(input2);
-  			add_location(input2, file$5, 1014, 4, 36586);
+  			/*$$binding_groups*/ ctx[132][1].push(input2);
+  			add_location(input2, file$6, 1056, 4, 37644);
   			attr_dev(label1, "for", "hearths_period_type_tmp2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 1014, 164, 36746);
+  			add_location(label1, file$6, 1056, 164, 37804);
   			attr_dev(div4, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div4, file$5, 1015, 5, 36821);
+  			add_location(div4, file$6, 1057, 5, 37879);
   			attr_dev(div5, "class", "pLine type svelte-1jsovbn");
-  			add_location(div5, file$5, 1013, 4, 36557);
-  			add_location(fieldset, file$5, 1003, 3, 35851);
+  			add_location(div5, file$6, 1055, 4, 37615);
+  			add_location(fieldset, file$6, 1045, 3, 36909);
   			attr_dev(div6, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div6, file$5, 1002, 3, 35821);
+  			add_location(div6, file$6, 1044, 3, 36879);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$5, 1042, 5, 38059);
+  			add_location(option0, file$6, 1084, 5, 39117);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
-  			if (/*str_icon_typeTmp*/ ctx[46] === void 0) add_render_callback(() => /*select0_change_handler_4*/ ctx[145].call(select0));
-  			add_location(select0, file$5, 1041, 4, 37942);
+  			if (/*str_icon_typeTmp*/ ctx[50] === void 0) add_render_callback(() => /*select0_change_handler_4*/ ctx[154].call(select0));
+  			add_location(select0, file$6, 1083, 4, 39000);
   			attr_dev(div7, "class", "pLine svelte-1jsovbn");
-  			add_location(div7, file$5, 1040, 3, 37918);
+  			add_location(div7, file$6, 1082, 3, 38976);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$5, 1054, 5, 38547);
+  			add_location(option1, file$6, 1096, 5, 39605);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$5, 1055, 5, 38627);
+  			add_location(option2, file$6, 1097, 5, 39685);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$5, 1056, 5, 38715);
+  			add_location(option3, file$6, 1098, 5, 39773);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$5, 1057, 5, 38807);
+  			add_location(option4, file$6, 1099, 5, 39865);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$5, 1058, 5, 38906);
+  			add_location(option5, file$6, 1100, 5, 39964);
   			attr_dev(select1, "class", "svelte-1jsovbn");
-  			if (/*hearths_strickenTmp*/ ctx[45] === void 0) add_render_callback(() => /*select1_change_handler_4*/ ctx[146].call(select1));
-  			add_location(select1, file$5, 1053, 4, 38466);
+  			if (/*hearths_strickenTmp*/ ctx[49] === void 0) add_render_callback(() => /*select1_change_handler_4*/ ctx[155].call(select1));
+  			add_location(select1, file$6, 1095, 4, 39524);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$5, 1052, 3, 38442);
+  			add_location(div8, file$6, 1094, 3, 39500);
   			attr_dev(div9, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div9, file$5, 1000, 2, 35695);
+  			add_location(div9, file$6, 1042, 2, 36753);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -7326,7 +8059,7 @@ var dtp = (function () {
   			append_dev(fieldset, t6);
   			append_dev(fieldset, div3);
   			append_dev(div3, input1);
-  			input1.checked = input1.__value === /*hearths_period_type_tmp*/ ctx[47];
+  			input1.checked = input1.__value === /*hearths_period_type_tmp*/ ctx[51];
   			append_dev(div3, label0);
   			append_dev(div3, t8);
   			append_dev(div3, div2);
@@ -7338,7 +8071,7 @@ var dtp = (function () {
   			append_dev(fieldset, t9);
   			append_dev(fieldset, div5);
   			append_dev(div5, input2);
-  			input2.checked = input2.__value === /*hearths_period_type_tmp*/ ctx[47];
+  			input2.checked = input2.__value === /*hearths_period_type_tmp*/ ctx[51];
   			append_dev(div5, label1);
   			append_dev(div5, t11);
   			append_dev(div5, div4);
@@ -7356,7 +8089,7 @@ var dtp = (function () {
   				each_blocks[i].m(select0, null);
   			}
 
-  			select_options(select0, /*str_icon_typeTmp*/ ctx[46]);
+  			select_options(select0, /*str_icon_typeTmp*/ ctx[50]);
   			append_dev(div9, t16);
   			append_dev(div9, div8);
   			append_dev(div8, select1);
@@ -7365,46 +8098,46 @@ var dtp = (function () {
   			append_dev(select1, option3);
   			append_dev(select1, option4);
   			append_dev(select1, option5);
-  			select_option(select1, /*hearths_strickenTmp*/ ctx[45]);
+  			select_option(select1, /*hearths_strickenTmp*/ ctx[49]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input1, "change", /*setFilterHearthsTmp*/ ctx[96], false, false, false),
-  				listen_dev(input1, "change", /*input1_change_handler_3*/ ctx[142]),
-  				listen_dev(input2, "change", /*setFilterHearthsTmp*/ ctx[96], false, false, false),
-  				listen_dev(input2, "change", /*input2_change_handler_2*/ ctx[143]),
-  				listen_dev(select0, "change", /*select0_change_handler_4*/ ctx[145]),
-  				listen_dev(select0, "change", /*setFilterHearthsTmp*/ ctx[96], false, false, false),
-  				listen_dev(select1, "change", /*select1_change_handler_4*/ ctx[146]),
-  				listen_dev(select1, "change", /*setFilterHearthsTmp*/ ctx[96], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*setFilterHearthsTmp*/ ctx[105], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_handler_3*/ ctx[151]),
+  				listen_dev(input2, "change", /*setFilterHearthsTmp*/ ctx[105], false, false, false),
+  				listen_dev(input2, "change", /*input2_change_handler_2*/ ctx[152]),
+  				listen_dev(select0, "change", /*select0_change_handler_4*/ ctx[154]),
+  				listen_dev(select0, "change", /*setFilterHearthsTmp*/ ctx[105], false, false, false),
+  				listen_dev(select1, "change", /*select1_change_handler_4*/ ctx[155]),
+  				listen_dev(select1, "change", /*setFilterHearthsTmp*/ ctx[105], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input0.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_tmp*/ 65536 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_tmp*/ ctx[47] === 1)) {
+  			if (dirty[1] & /*hearths_period_type_tmp*/ 1048576 && input1_checked_value !== (input1_checked_value = /*hearths_period_type_tmp*/ ctx[51] === 1)) {
   				prop_dev(input1, "checked", input1_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_tmp*/ 65536) {
-  				input1.checked = input1.__value === /*hearths_period_type_tmp*/ ctx[47];
+  			if (dirty[1] & /*hearths_period_type_tmp*/ 1048576) {
+  				input1.checked = input1.__value === /*hearths_period_type_tmp*/ ctx[51];
   			}
 
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 | dirty[1] & /*hearths_year_tmp, hearths_period_type_tmp*/ 196608 | dirty[3] & /*setFilterHearthsTmp*/ 8) {
-  				each_value_11 = Object.keys(/*DtpHearthsTmp*/ ctx[10]._opt.years).sort();
-  				validate_each_argument(each_value_11);
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 | dirty[1] & /*hearths_year_tmp, hearths_period_type_tmp*/ 3145728 | dirty[3] & /*setFilterHearthsTmp*/ 4096) {
+  				each_value_12 = Object.keys(/*DtpHearthsTmp*/ ctx[11]._opt.years).sort();
+  				validate_each_argument(each_value_12);
   				let i;
 
-  				for (i = 0; i < each_value_11.length; i += 1) {
-  					const child_ctx = get_each_context_11(ctx, each_value_11, i);
+  				for (i = 0; i < each_value_12.length; i += 1) {
+  					const child_ctx = get_each_context_12(ctx, each_value_12, i);
 
   					if (each_blocks_2[i]) {
   						each_blocks_2[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_2[i] = create_each_block_11(child_ctx);
+  						each_blocks_2[i] = create_each_block_12(child_ctx);
   						each_blocks_2[i].c();
   						each_blocks_2[i].m(div2, null);
   					}
@@ -7414,25 +8147,25 @@ var dtp = (function () {
   					each_blocks_2[i].d(1);
   				}
 
-  				each_blocks_2.length = each_value_11.length;
+  				each_blocks_2.length = each_value_12.length;
   			}
 
-  			if (dirty[1] & /*hearths_period_type_tmp*/ 65536) {
-  				input2.checked = input2.__value === /*hearths_period_type_tmp*/ ctx[47];
+  			if (dirty[1] & /*hearths_period_type_tmp*/ 1048576) {
+  				input2.checked = input2.__value === /*hearths_period_type_tmp*/ ctx[51];
   			}
 
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 | dirty[1] & /*hearths_quarter_tmp, hearths_period_type_tmp*/ 327680 | dirty[3] & /*setFilterHearthsTmp*/ 8) {
-  				each_value_9 = Object.keys(/*DtpHearthsTmp*/ ctx[10]._opt.years).sort();
-  				validate_each_argument(each_value_9);
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 | dirty[1] & /*hearths_quarter_tmp, hearths_period_type_tmp*/ 5242880 | dirty[3] & /*setFilterHearthsTmp*/ 4096) {
+  				each_value_10 = Object.keys(/*DtpHearthsTmp*/ ctx[11]._opt.years).sort();
+  				validate_each_argument(each_value_10);
   				let i;
 
-  				for (i = 0; i < each_value_9.length; i += 1) {
-  					const child_ctx = get_each_context_9(ctx, each_value_9, i);
+  				for (i = 0; i < each_value_10.length; i += 1) {
+  					const child_ctx = get_each_context_10(ctx, each_value_10, i);
 
   					if (each_blocks_1[i]) {
   						each_blocks_1[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_1[i] = create_each_block_9(child_ctx);
+  						each_blocks_1[i] = create_each_block_10(child_ctx);
   						each_blocks_1[i].c();
   						each_blocks_1[i].m(div4, null);
   					}
@@ -7442,21 +8175,21 @@ var dtp = (function () {
   					each_blocks_1[i].d(1);
   				}
 
-  				each_blocks_1.length = each_value_9.length;
+  				each_blocks_1.length = each_value_10.length;
   			}
 
-  			if (dirty[2] & /*optTypeHearthsTmpKeys, optDataHearthsTmp*/ 24) {
-  				each_value_8 = /*optTypeHearthsTmpKeys*/ ctx[66];
-  				validate_each_argument(each_value_8);
+  			if (dirty[2] & /*optTypeHearthsTmpKeys, optDataHearthsTmp*/ 384) {
+  				each_value_9 = /*optTypeHearthsTmpKeys*/ ctx[70];
+  				validate_each_argument(each_value_9);
   				let i;
 
-  				for (i = 0; i < each_value_8.length; i += 1) {
-  					const child_ctx = get_each_context_8(ctx, each_value_8, i);
+  				for (i = 0; i < each_value_9.length; i += 1) {
+  					const child_ctx = get_each_context_9(ctx, each_value_9, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_8(child_ctx);
+  						each_blocks[i] = create_each_block_9(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select0, null);
   					}
@@ -7466,24 +8199,24 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_8.length;
+  				each_blocks.length = each_value_9.length;
   			}
 
-  			if (dirty[1] & /*str_icon_typeTmp*/ 32768) {
-  				select_options(select0, /*str_icon_typeTmp*/ ctx[46]);
+  			if (dirty[1] & /*str_icon_typeTmp*/ 524288) {
+  				select_options(select0, /*str_icon_typeTmp*/ ctx[50]);
   			}
 
-  			if (dirty[1] & /*hearths_strickenTmp*/ 16384) {
-  				select_option(select1, /*hearths_strickenTmp*/ ctx[45]);
+  			if (dirty[1] & /*hearths_strickenTmp*/ 262144) {
+  				select_option(select1, /*hearths_strickenTmp*/ ctx[49]);
   			}
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t2);
   			if (detaching) detach_dev(div9);
-  			/*$$binding_groups*/ ctx[123][1].splice(/*$$binding_groups*/ ctx[123][1].indexOf(input1), 1);
+  			/*$$binding_groups*/ ctx[132][1].splice(/*$$binding_groups*/ ctx[132][1].indexOf(input1), 1);
   			destroy_each(each_blocks_2, detaching);
-  			/*$$binding_groups*/ ctx[123][1].splice(/*$$binding_groups*/ ctx[123][1].indexOf(input2), 1);
+  			/*$$binding_groups*/ ctx[132][1].splice(/*$$binding_groups*/ ctx[132][1].indexOf(input2), 1);
   			destroy_each(each_blocks_1, detaching);
   			destroy_each(each_blocks, detaching);
   			run_all(dispose);
@@ -7492,23 +8225,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_13.name,
+  		id: create_if_block_16.name,
   		type: "if",
-  		source: "(999:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}",
+  		source: "(1041:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1009:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
-  function create_each_block_11(ctx) {
+  // (1051:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
+  function create_each_block_12(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t_value = /*key*/ ctx[170] + "";
+  	let t_value = /*key*/ ctx[181] + "";
   	let t;
   	let dispose;
 
@@ -7519,36 +8252,36 @@ var dtp = (function () {
   			t = text(t_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_year_tmp");
-  			input.checked = input_checked_value = /*hearths_year_tmp*/ ctx[48][/*key*/ ctx[170]];
-  			input.disabled = input_disabled_value = /*hearths_period_type_tmp*/ ctx[47] === 2;
-  			attr_dev(input, "name", input_name_value = /*key*/ ctx[170]);
+  			input.checked = input_checked_value = /*hearths_year_tmp*/ ctx[52][/*key*/ ctx[181]];
+  			input.disabled = input_disabled_value = /*hearths_period_type_tmp*/ ctx[51] === 2;
+  			attr_dev(input, "name", input_name_value = /*key*/ ctx[181]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 1009, 6, 36310);
+  			add_location(input, file$6, 1051, 6, 37368);
   			attr_dev(label, "for", "hearths_year_tmp");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 1009, 169, 36473);
+  			add_location(label, file$6, 1051, 169, 37531);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
   			insert_dev(target, label, anchor);
   			append_dev(label, t);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearthsTmp*/ ctx[96], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearthsTmp*/ ctx[105], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 | dirty[1] & /*hearths_year_tmp*/ 131072 && input_checked_value !== (input_checked_value = /*hearths_year_tmp*/ ctx[48][/*key*/ ctx[170]])) {
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 | dirty[1] & /*hearths_year_tmp*/ 2097152 && input_checked_value !== (input_checked_value = /*hearths_year_tmp*/ ctx[52][/*key*/ ctx[181]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_tmp*/ 65536 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_tmp*/ ctx[47] === 2)) {
+  			if (dirty[1] & /*hearths_period_type_tmp*/ 1048576 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_tmp*/ ctx[51] === 2)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 && input_name_value !== (input_name_value = /*key*/ ctx[170])) {
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 && input_name_value !== (input_name_value = /*key*/ ctx[181])) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 && t_value !== (t_value = /*key*/ ctx[170] + "")) set_data_dev(t, t_value);
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 && t_value !== (t_value = /*key*/ ctx[181] + "")) set_data_dev(t, t_value);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(input);
@@ -7559,26 +8292,26 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_11.name,
+  		id: create_each_block_12.name,
   		type: "each",
-  		source: "(1009:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
+  		source: "(1051:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1018:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}
-  function create_each_block_10(ctx) {
+  // (1060:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}
+  function create_each_block_11(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t0_value = /*key1*/ ctx[183] + "";
+  	let t0_value = /*key1*/ ctx[196] + "";
   	let t0;
   	let t1;
-  	let t2_value = /*key*/ ctx[170] + "";
+  	let t2_value = /*key*/ ctx[181] + "";
   	let t2;
   	let label_for_value;
   	let dispose;
@@ -7592,14 +8325,14 @@ var dtp = (function () {
   			t2 = text(t2_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_quarter_tmp");
-  			input.checked = input_checked_value = /*hearths_quarter_tmp*/ ctx[49][/*key*/ ctx[170]] && /*hearths_quarter_tmp*/ ctx[49][/*key*/ ctx[170]][/*key1*/ ctx[183]];
-  			input.disabled = input_disabled_value = /*hearths_period_type_tmp*/ ctx[47] === 1;
-  			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[170] + "_" + /*key1*/ ctx[183]));
+  			input.checked = input_checked_value = /*hearths_quarter_tmp*/ ctx[53][/*key*/ ctx[181]] && /*hearths_quarter_tmp*/ ctx[53][/*key*/ ctx[181]][/*key1*/ ctx[196]];
+  			input.disabled = input_disabled_value = /*hearths_period_type_tmp*/ ctx[51] === 1;
+  			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[181] + "_" + /*key1*/ ctx[196]));
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 1018, 7, 36992);
-  			attr_dev(label, "for", label_for_value = "hearths_quarter_tmp_" + /*key*/ ctx[170] + "_" + /*key1*/ ctx[183]);
+  			add_location(input, file$6, 1060, 7, 38050);
+  			attr_dev(label, "for", label_for_value = "hearths_quarter_tmp_" + /*key*/ ctx[181] + "_" + /*key1*/ ctx[196]);
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 1018, 217, 37202);
+  			add_location(label, file$6, 1060, 217, 38260);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -7608,25 +8341,25 @@ var dtp = (function () {
   			append_dev(label, t1);
   			append_dev(label, t2);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearthsTmp*/ ctx[96], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearthsTmp*/ ctx[105], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 | dirty[1] & /*hearths_quarter_tmp*/ 262144 && input_checked_value !== (input_checked_value = /*hearths_quarter_tmp*/ ctx[49][/*key*/ ctx[170]] && /*hearths_quarter_tmp*/ ctx[49][/*key*/ ctx[170]][/*key1*/ ctx[183]])) {
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 | dirty[1] & /*hearths_quarter_tmp*/ 4194304 && input_checked_value !== (input_checked_value = /*hearths_quarter_tmp*/ ctx[53][/*key*/ ctx[181]] && /*hearths_quarter_tmp*/ ctx[53][/*key*/ ctx[181]][/*key1*/ ctx[196]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type_tmp*/ 65536 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_tmp*/ ctx[47] === 1)) {
+  			if (dirty[1] & /*hearths_period_type_tmp*/ 1048576 && input_disabled_value !== (input_disabled_value = /*hearths_period_type_tmp*/ ctx[51] === 1)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 && input_name_value !== (input_name_value = "" + (/*key*/ ctx[170] + "_" + /*key1*/ ctx[183]))) {
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 && input_name_value !== (input_name_value = "" + (/*key*/ ctx[181] + "_" + /*key1*/ ctx[196]))) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 && t0_value !== (t0_value = /*key1*/ ctx[183] + "")) set_data_dev(t0, t0_value);
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 && t2_value !== (t2_value = /*key*/ ctx[170] + "")) set_data_dev(t2, t2_value);
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 && t0_value !== (t0_value = /*key1*/ ctx[196] + "")) set_data_dev(t0, t0_value);
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 && t2_value !== (t2_value = /*key*/ ctx[181] + "")) set_data_dev(t2, t2_value);
 
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 && label_for_value !== (label_for_value = "hearths_quarter_tmp_" + /*key*/ ctx[170] + "_" + /*key1*/ ctx[183])) {
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 && label_for_value !== (label_for_value = "hearths_quarter_tmp_" + /*key*/ ctx[181] + "_" + /*key1*/ ctx[196])) {
   				attr_dev(label, "for", label_for_value);
   			}
   		},
@@ -7639,25 +8372,25 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_10.name,
+  		id: create_each_block_11.name,
   		type: "each",
-  		source: "(1018:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}",
+  		source: "(1060:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1017:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
-  function create_each_block_9(ctx) {
+  // (1059:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
+  function create_each_block_10(ctx) {
   	let t;
   	let br;
-  	let each_value_10 = Object.keys(/*DtpHearthsTmp*/ ctx[10]._opt.years[/*key*/ ctx[170]]).sort();
-  	validate_each_argument(each_value_10);
+  	let each_value_11 = Object.keys(/*DtpHearthsTmp*/ ctx[11]._opt.years[/*key*/ ctx[181]]).sort();
+  	validate_each_argument(each_value_11);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_10.length; i += 1) {
-  		each_blocks[i] = create_each_block_10(get_each_context_10(ctx, each_value_10, i));
+  	for (let i = 0; i < each_value_11.length; i += 1) {
+  		each_blocks[i] = create_each_block_11(get_each_context_11(ctx, each_value_11, i));
   	}
 
   	const block = {
@@ -7668,7 +8401,7 @@ var dtp = (function () {
 
   			t = space();
   			br = element("br");
-  			add_location(br, file$5, 1020, 6, 37293);
+  			add_location(br, file$6, 1062, 6, 38351);
   		},
   		m: function mount(target, anchor) {
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -7679,18 +8412,18 @@ var dtp = (function () {
   			insert_dev(target, br, anchor);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearthsTmp*/ 1024 | dirty[1] & /*hearths_quarter_tmp, hearths_period_type_tmp*/ 327680 | dirty[3] & /*setFilterHearthsTmp*/ 8) {
-  				each_value_10 = Object.keys(/*DtpHearthsTmp*/ ctx[10]._opt.years[/*key*/ ctx[170]]).sort();
-  				validate_each_argument(each_value_10);
+  			if (dirty[0] & /*DtpHearthsTmp*/ 2048 | dirty[1] & /*hearths_quarter_tmp, hearths_period_type_tmp*/ 5242880 | dirty[3] & /*setFilterHearthsTmp*/ 4096) {
+  				each_value_11 = Object.keys(/*DtpHearthsTmp*/ ctx[11]._opt.years[/*key*/ ctx[181]]).sort();
+  				validate_each_argument(each_value_11);
   				let i;
 
-  				for (i = 0; i < each_value_10.length; i += 1) {
-  					const child_ctx = get_each_context_10(ctx, each_value_10, i);
+  				for (i = 0; i < each_value_11.length; i += 1) {
+  					const child_ctx = get_each_context_11(ctx, each_value_11, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_10(child_ctx);
+  						each_blocks[i] = create_each_block_11(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(t.parentNode, t);
   					}
@@ -7700,7 +8433,7 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_10.length;
+  				each_blocks.length = each_value_11.length;
   			}
   		},
   		d: function destroy(detaching) {
@@ -7712,23 +8445,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_9.name,
+  		id: create_each_block_10.name,
   		type: "each",
-  		source: "(1017:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
+  		source: "(1059:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1046:5) {#each optTypeHearthsTmpKeys as key}
-  function create_each_block_8(ctx) {
+  // (1088:5) {#each optTypeHearthsTmpKeys as key}
+  function create_each_block_9(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataHearthsTmp*/ ctx[65].str_icon_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataHearthsTmp*/ ctx[69].str_icon_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -7742,10 +8475,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearthsTmp*/ ctx[65].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 1046, 6, 38257);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearthsTmp*/ ctx[69].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1088, 6, 39315);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -7763,17 +8496,17 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_8.name,
+  		id: create_each_block_9.name,
   		type: "each",
-  		source: "(1046:5) {#each optTypeHearthsTmpKeys as key}",
+  		source: "(1088:5) {#each optTypeHearthsTmpKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1065:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}
-  function create_if_block_12(ctx) {
+  // (1107:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}
+  function create_if_block_15(ctx) {
   	let div0;
   	let hr;
   	let t0;
@@ -7817,28 +8550,28 @@ var dtp = (function () {
   	let option4;
   	let option5;
   	let dispose;
-  	let each_value_7 = Object.keys(/*DtpHearths*/ ctx[11]._opt.years).sort();
-  	validate_each_argument(each_value_7);
+  	let each_value_8 = Object.keys(/*DtpHearths*/ ctx[12]._opt.years).sort();
+  	validate_each_argument(each_value_8);
   	let each_blocks_2 = [];
 
-  	for (let i = 0; i < each_value_7.length; i += 1) {
-  		each_blocks_2[i] = create_each_block_7(get_each_context_7(ctx, each_value_7, i));
+  	for (let i = 0; i < each_value_8.length; i += 1) {
+  		each_blocks_2[i] = create_each_block_8(get_each_context_8(ctx, each_value_8, i));
   	}
 
-  	let each_value_5 = Object.keys(/*DtpHearths*/ ctx[11]._opt.years).sort();
-  	validate_each_argument(each_value_5);
+  	let each_value_6 = Object.keys(/*DtpHearths*/ ctx[12]._opt.years).sort();
+  	validate_each_argument(each_value_6);
   	let each_blocks_1 = [];
 
-  	for (let i = 0; i < each_value_5.length; i += 1) {
-  		each_blocks_1[i] = create_each_block_5(get_each_context_5(ctx, each_value_5, i));
+  	for (let i = 0; i < each_value_6.length; i += 1) {
+  		each_blocks_1[i] = create_each_block_6(get_each_context_6(ctx, each_value_6, i));
   	}
 
-  	let each_value_4 = /*optTypeHearthsKeys*/ ctx[64];
-  	validate_each_argument(each_value_4);
+  	let each_value_5 = /*optTypeHearthsKeys*/ ctx[68];
+  	validate_each_argument(each_value_5);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_4.length; i += 1) {
-  		each_blocks[i] = create_each_block_4(get_each_context_4(ctx, each_value_4, i));
+  	for (let i = 0; i < each_value_5.length; i += 1) {
+  		each_blocks[i] = create_each_block_5(get_each_context_5(ctx, each_value_5, i));
   	}
 
   	const block = {
@@ -7890,7 +8623,7 @@ var dtp = (function () {
   			option0 = element("option");
 
   			option0.textContent = `
-						Все типы (${/*optTypeHearthsKeys*/ ctx[64].reduce(/*func_6*/ ctx[149], 0)})
+						Все типы (${/*optTypeHearthsKeys*/ ctx[68].reduce(/*func_6*/ ctx[158], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -7901,95 +8634,95 @@ var dtp = (function () {
   			div9 = element("div");
   			select1 = element("select");
   			option1 = element("option");
-  			option1.textContent = `(${/*optDataHearths*/ ctx[63].stricken[0] || 0}) Очаги все`;
+  			option1.textContent = `(${/*optDataHearths*/ ctx[67].stricken[0] || 0}) Очаги все`;
   			option2 = element("option");
-  			option2.textContent = `(${/*optDataHearths*/ ctx[63].stricken[1] || 0}) Только с погибшими`;
+  			option2.textContent = `(${/*optDataHearths*/ ctx[67].stricken[1] || 0}) Только с погибшими`;
   			option3 = element("option");
-  			option3.textContent = `(${/*optDataHearths*/ ctx[63].stricken[2] || 0}) Только с пострадавшими`;
+  			option3.textContent = `(${/*optDataHearths*/ ctx[67].stricken[2] || 0}) Только с пострадавшими`;
   			option4 = element("option");
-  			option4.textContent = `(${/*optDataHearths*/ ctx[63].stricken[3] || 0}) С пострадавшими или погибшими`;
+  			option4.textContent = `(${/*optDataHearths*/ ctx[67].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
-  			option5.textContent = `(${/*optDataHearths*/ ctx[63].stricken[4] || 0}) С пострадавшими и погибшими`;
+  			option5.textContent = `(${/*optDataHearths*/ ctx[67].stricken[4] || 0}) С пострадавшими и погибшими`;
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$5, 1065, 21, 39129);
+  			add_location(hr, file$6, 1107, 21, 40187);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1065, 2, 39110);
-  			add_location(b, file$5, 1066, 31, 39171);
+  			add_location(div0, file$6, 1107, 2, 40168);
+  			add_location(b, file$6, 1108, 31, 40229);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1066, 2, 39142);
+  			add_location(div1, file$6, 1108, 2, 40200);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[14];
+  			input0.value = /*id_dtp*/ ctx[15];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 1068, 30, 39252);
+  			add_location(input0, file$6, 1110, 30, 40310);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 1068, 3, 39225);
-  			add_location(legend, file$5, 1071, 4, 39367);
+  			add_location(div2, file$6, 1110, 3, 40283);
+  			add_location(legend, file$6, 1113, 4, 40425);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
-  			input1.checked = input1_checked_value = /*hearths_period_type*/ ctx[52] === 1;
+  			input1.checked = input1_checked_value = /*hearths_period_type*/ ctx[56] === 1;
   			attr_dev(input1, "id", "hearths_period_type1");
   			attr_dev(input1, "name", "hearths_period_type");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][0].push(input1);
-  			add_location(input1, file$5, 1073, 5, 39442);
+  			/*$$binding_groups*/ ctx[132][0].push(input1);
+  			add_location(input1, file$6, 1115, 5, 40500);
   			attr_dev(label0, "for", "hearths_period_type1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 1073, 186, 39623);
+  			add_location(label0, file$6, 1115, 186, 40681);
   			attr_dev(div3, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div3, file$5, 1074, 5, 39690);
+  			add_location(div3, file$6, 1116, 5, 40748);
   			attr_dev(div4, "class", "pLine type svelte-1jsovbn");
-  			add_location(div4, file$5, 1072, 4, 39412);
+  			add_location(div4, file$6, 1114, 4, 40470);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 2;
   			input2.value = input2.__value;
   			attr_dev(input2, "id", "hearths_period_type2");
   			attr_dev(input2, "name", "hearths_period_type");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			/*$$binding_groups*/ ctx[123][0].push(input2);
-  			add_location(input2, file$5, 1081, 4, 40047);
+  			/*$$binding_groups*/ ctx[132][0].push(input2);
+  			add_location(input2, file$6, 1123, 4, 41105);
   			attr_dev(label1, "for", "hearths_period_type2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 1081, 149, 40192);
+  			add_location(label1, file$6, 1123, 149, 41250);
   			attr_dev(div5, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div5, file$5, 1082, 5, 40263);
+  			add_location(div5, file$6, 1124, 5, 41321);
   			attr_dev(div6, "class", "pLine type svelte-1jsovbn");
-  			add_location(div6, file$5, 1080, 4, 40018);
-  			add_location(fieldset, file$5, 1070, 3, 39352);
+  			add_location(div6, file$6, 1122, 4, 41076);
+  			add_location(fieldset, file$6, 1112, 3, 40410);
   			attr_dev(div7, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div7, file$5, 1069, 3, 39322);
+  			add_location(div7, file$6, 1111, 3, 40380);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$5, 1095, 5, 40912);
+  			add_location(option0, file$6, 1137, 5, 41970);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
-  			if (/*str_icon_type*/ ctx[51] === void 0) add_render_callback(() => /*select0_change_handler_5*/ ctx[150].call(select0));
-  			add_location(select0, file$5, 1094, 4, 40801);
+  			if (/*str_icon_type*/ ctx[55] === void 0) add_render_callback(() => /*select0_change_handler_5*/ ctx[159].call(select0));
+  			add_location(select0, file$6, 1136, 4, 41859);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$5, 1093, 3, 40777);
+  			add_location(div8, file$6, 1135, 3, 41835);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$5, 1107, 5, 41379);
+  			add_location(option1, file$6, 1149, 5, 42437);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$5, 1108, 5, 41456);
+  			add_location(option2, file$6, 1150, 5, 42514);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$5, 1109, 5, 41541);
+  			add_location(option3, file$6, 1151, 5, 42599);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$5, 1110, 5, 41630);
+  			add_location(option4, file$6, 1152, 5, 42688);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$5, 1111, 5, 41726);
+  			add_location(option5, file$6, 1153, 5, 42784);
   			attr_dev(select1, "class", "svelte-1jsovbn");
-  			if (/*hearths_stricken*/ ctx[50] === void 0) add_render_callback(() => /*select1_change_handler_5*/ ctx[151].call(select1));
-  			add_location(select1, file$5, 1106, 4, 41304);
+  			if (/*hearths_stricken*/ ctx[54] === void 0) add_render_callback(() => /*select1_change_handler_5*/ ctx[160].call(select1));
+  			add_location(select1, file$6, 1148, 4, 42362);
   			attr_dev(div9, "class", "pLine svelte-1jsovbn");
-  			add_location(div9, file$5, 1105, 3, 41280);
+  			add_location(div9, file$6, 1147, 3, 42338);
   			attr_dev(div10, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div10, file$5, 1067, 2, 39196);
+  			add_location(div10, file$6, 1109, 2, 40254);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -8010,7 +8743,7 @@ var dtp = (function () {
   			append_dev(fieldset, t7);
   			append_dev(fieldset, div4);
   			append_dev(div4, input1);
-  			input1.checked = input1.__value === /*hearths_period_type*/ ctx[52];
+  			input1.checked = input1.__value === /*hearths_period_type*/ ctx[56];
   			append_dev(div4, label0);
   			append_dev(div4, t9);
   			append_dev(div4, div3);
@@ -8022,7 +8755,7 @@ var dtp = (function () {
   			append_dev(fieldset, t10);
   			append_dev(fieldset, div6);
   			append_dev(div6, input2);
-  			input2.checked = input2.__value === /*hearths_period_type*/ ctx[52];
+  			input2.checked = input2.__value === /*hearths_period_type*/ ctx[56];
   			append_dev(div6, label1);
   			append_dev(div6, t12);
   			append_dev(div6, div5);
@@ -8040,7 +8773,7 @@ var dtp = (function () {
   				each_blocks[i].m(select0, null);
   			}
 
-  			select_options(select0, /*str_icon_type*/ ctx[51]);
+  			select_options(select0, /*str_icon_type*/ ctx[55]);
   			append_dev(div10, t17);
   			append_dev(div10, div9);
   			append_dev(div9, select1);
@@ -8049,46 +8782,46 @@ var dtp = (function () {
   			append_dev(select1, option3);
   			append_dev(select1, option4);
   			append_dev(select1, option5);
-  			select_option(select1, /*hearths_stricken*/ ctx[50]);
+  			select_option(select1, /*hearths_stricken*/ ctx[54]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input1, "change", /*setFilterHearths*/ ctx[97], false, false, false),
-  				listen_dev(input1, "change", /*input1_change_handler_4*/ ctx[147]),
-  				listen_dev(input2, "change", /*setFilterHearths*/ ctx[97], false, false, false),
-  				listen_dev(input2, "change", /*input2_change_handler_3*/ ctx[148]),
-  				listen_dev(select0, "change", /*select0_change_handler_5*/ ctx[150]),
-  				listen_dev(select0, "change", /*setFilterHearths*/ ctx[97], false, false, false),
-  				listen_dev(select1, "change", /*select1_change_handler_5*/ ctx[151]),
-  				listen_dev(select1, "change", /*setFilterHearths*/ ctx[97], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*setFilterHearths*/ ctx[106], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_handler_4*/ ctx[156]),
+  				listen_dev(input2, "change", /*setFilterHearths*/ ctx[106], false, false, false),
+  				listen_dev(input2, "change", /*input2_change_handler_3*/ ctx[157]),
+  				listen_dev(select0, "change", /*select0_change_handler_5*/ ctx[159]),
+  				listen_dev(select0, "change", /*setFilterHearths*/ ctx[106], false, false, false),
+  				listen_dev(select1, "change", /*select1_change_handler_5*/ ctx[160]),
+  				listen_dev(select1, "change", /*setFilterHearths*/ ctx[106], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input0.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[1] & /*hearths_period_type*/ 2097152 && input1_checked_value !== (input1_checked_value = /*hearths_period_type*/ ctx[52] === 1)) {
+  			if (dirty[1] & /*hearths_period_type*/ 33554432 && input1_checked_value !== (input1_checked_value = /*hearths_period_type*/ ctx[56] === 1)) {
   				prop_dev(input1, "checked", input1_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type*/ 2097152) {
-  				input1.checked = input1.__value === /*hearths_period_type*/ ctx[52];
+  			if (dirty[1] & /*hearths_period_type*/ 33554432) {
+  				input1.checked = input1.__value === /*hearths_period_type*/ ctx[56];
   			}
 
-  			if (dirty[0] & /*DtpHearths*/ 2048 | dirty[1] & /*hearths_year, hearths_period_type*/ 6291456 | dirty[3] & /*setFilterHearths*/ 16) {
-  				each_value_7 = Object.keys(/*DtpHearths*/ ctx[11]._opt.years).sort();
-  				validate_each_argument(each_value_7);
+  			if (dirty[0] & /*DtpHearths*/ 4096 | dirty[1] & /*hearths_year, hearths_period_type*/ 100663296 | dirty[3] & /*setFilterHearths*/ 8192) {
+  				each_value_8 = Object.keys(/*DtpHearths*/ ctx[12]._opt.years).sort();
+  				validate_each_argument(each_value_8);
   				let i;
 
-  				for (i = 0; i < each_value_7.length; i += 1) {
-  					const child_ctx = get_each_context_7(ctx, each_value_7, i);
+  				for (i = 0; i < each_value_8.length; i += 1) {
+  					const child_ctx = get_each_context_8(ctx, each_value_8, i);
 
   					if (each_blocks_2[i]) {
   						each_blocks_2[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_2[i] = create_each_block_7(child_ctx);
+  						each_blocks_2[i] = create_each_block_8(child_ctx);
   						each_blocks_2[i].c();
   						each_blocks_2[i].m(div3, null);
   					}
@@ -8098,25 +8831,25 @@ var dtp = (function () {
   					each_blocks_2[i].d(1);
   				}
 
-  				each_blocks_2.length = each_value_7.length;
+  				each_blocks_2.length = each_value_8.length;
   			}
 
-  			if (dirty[1] & /*hearths_period_type*/ 2097152) {
-  				input2.checked = input2.__value === /*hearths_period_type*/ ctx[52];
+  			if (dirty[1] & /*hearths_period_type*/ 33554432) {
+  				input2.checked = input2.__value === /*hearths_period_type*/ ctx[56];
   			}
 
-  			if (dirty[0] & /*DtpHearths*/ 2048 | dirty[1] & /*hearths_quarter, hearths_period_type*/ 10485760 | dirty[3] & /*setFilterHearths*/ 16) {
-  				each_value_5 = Object.keys(/*DtpHearths*/ ctx[11]._opt.years).sort();
-  				validate_each_argument(each_value_5);
+  			if (dirty[0] & /*DtpHearths*/ 4096 | dirty[1] & /*hearths_quarter, hearths_period_type*/ 167772160 | dirty[3] & /*setFilterHearths*/ 8192) {
+  				each_value_6 = Object.keys(/*DtpHearths*/ ctx[12]._opt.years).sort();
+  				validate_each_argument(each_value_6);
   				let i;
 
-  				for (i = 0; i < each_value_5.length; i += 1) {
-  					const child_ctx = get_each_context_5(ctx, each_value_5, i);
+  				for (i = 0; i < each_value_6.length; i += 1) {
+  					const child_ctx = get_each_context_6(ctx, each_value_6, i);
 
   					if (each_blocks_1[i]) {
   						each_blocks_1[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks_1[i] = create_each_block_5(child_ctx);
+  						each_blocks_1[i] = create_each_block_6(child_ctx);
   						each_blocks_1[i].c();
   						each_blocks_1[i].m(div5, null);
   					}
@@ -8126,21 +8859,21 @@ var dtp = (function () {
   					each_blocks_1[i].d(1);
   				}
 
-  				each_blocks_1.length = each_value_5.length;
+  				each_blocks_1.length = each_value_6.length;
   			}
 
-  			if (dirty[2] & /*optTypeHearthsKeys, optDataHearths*/ 6) {
-  				each_value_4 = /*optTypeHearthsKeys*/ ctx[64];
-  				validate_each_argument(each_value_4);
+  			if (dirty[2] & /*optTypeHearthsKeys, optDataHearths*/ 96) {
+  				each_value_5 = /*optTypeHearthsKeys*/ ctx[68];
+  				validate_each_argument(each_value_5);
   				let i;
 
-  				for (i = 0; i < each_value_4.length; i += 1) {
-  					const child_ctx = get_each_context_4(ctx, each_value_4, i);
+  				for (i = 0; i < each_value_5.length; i += 1) {
+  					const child_ctx = get_each_context_5(ctx, each_value_5, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_4(child_ctx);
+  						each_blocks[i] = create_each_block_5(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select0, null);
   					}
@@ -8150,15 +8883,15 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_4.length;
+  				each_blocks.length = each_value_5.length;
   			}
 
-  			if (dirty[1] & /*str_icon_type*/ 1048576) {
-  				select_options(select0, /*str_icon_type*/ ctx[51]);
+  			if (dirty[1] & /*str_icon_type*/ 16777216) {
+  				select_options(select0, /*str_icon_type*/ ctx[55]);
   			}
 
-  			if (dirty[1] & /*hearths_stricken*/ 524288) {
-  				select_option(select1, /*hearths_stricken*/ ctx[50]);
+  			if (dirty[1] & /*hearths_stricken*/ 8388608) {
+  				select_option(select1, /*hearths_stricken*/ ctx[54]);
   			}
   		},
   		d: function destroy(detaching) {
@@ -8167,9 +8900,9 @@ var dtp = (function () {
   			if (detaching) detach_dev(div1);
   			if (detaching) detach_dev(t3);
   			if (detaching) detach_dev(div10);
-  			/*$$binding_groups*/ ctx[123][0].splice(/*$$binding_groups*/ ctx[123][0].indexOf(input1), 1);
+  			/*$$binding_groups*/ ctx[132][0].splice(/*$$binding_groups*/ ctx[132][0].indexOf(input1), 1);
   			destroy_each(each_blocks_2, detaching);
-  			/*$$binding_groups*/ ctx[123][0].splice(/*$$binding_groups*/ ctx[123][0].indexOf(input2), 1);
+  			/*$$binding_groups*/ ctx[132][0].splice(/*$$binding_groups*/ ctx[132][0].indexOf(input2), 1);
   			destroy_each(each_blocks_1, detaching);
   			destroy_each(each_blocks, detaching);
   			run_all(dispose);
@@ -8178,23 +8911,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_if_block_12.name,
+  		id: create_if_block_15.name,
   		type: "if",
-  		source: "(1065:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}",
+  		source: "(1107:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1076:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
-  function create_each_block_7(ctx) {
+  // (1118:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
+  function create_each_block_8(ctx) {
   	let input;
   	let input_checked_value;
   	let input_disabled_value;
   	let input_name_value;
   	let label;
-  	let t_value = /*key*/ ctx[170] + "";
+  	let t_value = /*key*/ ctx[181] + "";
   	let t;
   	let label_for_value;
   	let dispose;
@@ -8206,38 +8939,118 @@ var dtp = (function () {
   			t = text(t_value);
   			attr_dev(input, "type", "checkbox");
   			attr_dev(input, "id", "hearths_year");
-  			input.checked = input_checked_value = /*hearths_year*/ ctx[53][/*key*/ ctx[170]];
-  			input.disabled = input_disabled_value = /*hearths_period_type*/ ctx[52] === 2;
-  			attr_dev(input, "name", input_name_value = /*key*/ ctx[170]);
+  			input.checked = input_checked_value = /*hearths_year*/ ctx[57][/*key*/ ctx[181]];
+  			input.disabled = input_disabled_value = /*hearths_period_type*/ ctx[56] === 2;
+  			attr_dev(input, "name", input_name_value = /*key*/ ctx[181]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 1076, 6, 39785);
-  			attr_dev(label, "for", label_for_value = "hearths_year" + /*key*/ ctx[170]);
+  			add_location(input, file$6, 1118, 6, 40843);
+  			attr_dev(label, "for", label_for_value = "hearths_year" + /*key*/ ctx[181]);
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 1076, 154, 39933);
+  			add_location(label, file$6, 1118, 154, 40991);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
   			insert_dev(target, label, anchor);
   			append_dev(label, t);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearths*/ ctx[97], false, false, false);
+  			dispose = listen_dev(input, "change", /*setFilterHearths*/ ctx[106], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearths*/ 2048 | dirty[1] & /*hearths_year*/ 4194304 && input_checked_value !== (input_checked_value = /*hearths_year*/ ctx[53][/*key*/ ctx[170]])) {
+  			if (dirty[0] & /*DtpHearths*/ 4096 | dirty[1] & /*hearths_year*/ 67108864 && input_checked_value !== (input_checked_value = /*hearths_year*/ ctx[57][/*key*/ ctx[181]])) {
   				prop_dev(input, "checked", input_checked_value);
   			}
 
-  			if (dirty[1] & /*hearths_period_type*/ 2097152 && input_disabled_value !== (input_disabled_value = /*hearths_period_type*/ ctx[52] === 2)) {
+  			if (dirty[1] & /*hearths_period_type*/ 33554432 && input_disabled_value !== (input_disabled_value = /*hearths_period_type*/ ctx[56] === 2)) {
   				prop_dev(input, "disabled", input_disabled_value);
   			}
 
-  			if (dirty[0] & /*DtpHearths*/ 2048 && input_name_value !== (input_name_value = /*key*/ ctx[170])) {
+  			if (dirty[0] & /*DtpHearths*/ 4096 && input_name_value !== (input_name_value = /*key*/ ctx[181])) {
   				attr_dev(input, "name", input_name_value);
   			}
 
-  			if (dirty[0] & /*DtpHearths*/ 2048 && t_value !== (t_value = /*key*/ ctx[170] + "")) set_data_dev(t, t_value);
+  			if (dirty[0] & /*DtpHearths*/ 4096 && t_value !== (t_value = /*key*/ ctx[181] + "")) set_data_dev(t, t_value);
 
-  			if (dirty[0] & /*DtpHearths*/ 2048 && label_for_value !== (label_for_value = "hearths_year" + /*key*/ ctx[170])) {
+  			if (dirty[0] & /*DtpHearths*/ 4096 && label_for_value !== (label_for_value = "hearths_year" + /*key*/ ctx[181])) {
+  				attr_dev(label, "for", label_for_value);
+  			}
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(input);
+  			if (detaching) detach_dev(label);
+  			dispose();
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_each_block_8.name,
+  		type: "each",
+  		source: "(1118:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (1127:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}
+  function create_each_block_7(ctx) {
+  	let input;
+  	let input_checked_value;
+  	let input_disabled_value;
+  	let input_name_value;
+  	let label;
+  	let t0_value = /*key1*/ ctx[196] + "";
+  	let t0;
+  	let t1;
+  	let t2_value = /*key*/ ctx[181] + "";
+  	let t2;
+  	let label_for_value;
+  	let dispose;
+
+  	const block = {
+  		c: function create() {
+  			input = element("input");
+  			label = element("label");
+  			t0 = text(t0_value);
+  			t1 = text(" кв. ");
+  			t2 = text(t2_value);
+  			attr_dev(input, "type", "checkbox");
+  			attr_dev(input, "id", "hearths_quarter");
+  			input.checked = input_checked_value = /*hearths_quarter*/ ctx[58][/*key*/ ctx[181]] && /*hearths_quarter*/ ctx[58][/*key*/ ctx[181]][/*key1*/ ctx[196]];
+  			input.disabled = input_disabled_value = /*hearths_period_type*/ ctx[56] === 1;
+  			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[181] + "_" + /*key1*/ ctx[196]));
+  			attr_dev(input, "class", "svelte-1jsovbn");
+  			add_location(input, file$6, 1127, 7, 41486);
+  			attr_dev(label, "for", label_for_value = "hearths_quarter_" + /*key*/ ctx[181] + "_" + /*key1*/ ctx[196]);
+  			attr_dev(label, "class", "svelte-1jsovbn");
+  			add_location(label, file$6, 1127, 198, 41677);
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, input, anchor);
+  			insert_dev(target, label, anchor);
+  			append_dev(label, t0);
+  			append_dev(label, t1);
+  			append_dev(label, t2);
+  			if (remount) dispose();
+  			dispose = listen_dev(input, "change", /*setFilterHearths*/ ctx[106], false, false, false);
+  		},
+  		p: function update(ctx, dirty) {
+  			if (dirty[0] & /*DtpHearths*/ 4096 | dirty[1] & /*hearths_quarter*/ 134217728 && input_checked_value !== (input_checked_value = /*hearths_quarter*/ ctx[58][/*key*/ ctx[181]] && /*hearths_quarter*/ ctx[58][/*key*/ ctx[181]][/*key1*/ ctx[196]])) {
+  				prop_dev(input, "checked", input_checked_value);
+  			}
+
+  			if (dirty[1] & /*hearths_period_type*/ 33554432 && input_disabled_value !== (input_disabled_value = /*hearths_period_type*/ ctx[56] === 1)) {
+  				prop_dev(input, "disabled", input_disabled_value);
+  			}
+
+  			if (dirty[0] & /*DtpHearths*/ 4096 && input_name_value !== (input_name_value = "" + (/*key*/ ctx[181] + "_" + /*key1*/ ctx[196]))) {
+  				attr_dev(input, "name", input_name_value);
+  			}
+
+  			if (dirty[0] & /*DtpHearths*/ 4096 && t0_value !== (t0_value = /*key1*/ ctx[196] + "")) set_data_dev(t0, t0_value);
+  			if (dirty[0] & /*DtpHearths*/ 4096 && t2_value !== (t2_value = /*key*/ ctx[181] + "")) set_data_dev(t2, t2_value);
+
+  			if (dirty[0] & /*DtpHearths*/ 4096 && label_for_value !== (label_for_value = "hearths_quarter_" + /*key*/ ctx[181] + "_" + /*key1*/ ctx[196])) {
   				attr_dev(label, "for", label_for_value);
   			}
   		},
@@ -8252,103 +9065,23 @@ var dtp = (function () {
   		block,
   		id: create_each_block_7.name,
   		type: "each",
-  		source: "(1076:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
+  		source: "(1127:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1085:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}
+  // (1126:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
   function create_each_block_6(ctx) {
-  	let input;
-  	let input_checked_value;
-  	let input_disabled_value;
-  	let input_name_value;
-  	let label;
-  	let t0_value = /*key1*/ ctx[183] + "";
-  	let t0;
-  	let t1;
-  	let t2_value = /*key*/ ctx[170] + "";
-  	let t2;
-  	let label_for_value;
-  	let dispose;
-
-  	const block = {
-  		c: function create() {
-  			input = element("input");
-  			label = element("label");
-  			t0 = text(t0_value);
-  			t1 = text(" кв. ");
-  			t2 = text(t2_value);
-  			attr_dev(input, "type", "checkbox");
-  			attr_dev(input, "id", "hearths_quarter");
-  			input.checked = input_checked_value = /*hearths_quarter*/ ctx[54][/*key*/ ctx[170]] && /*hearths_quarter*/ ctx[54][/*key*/ ctx[170]][/*key1*/ ctx[183]];
-  			input.disabled = input_disabled_value = /*hearths_period_type*/ ctx[52] === 1;
-  			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[170] + "_" + /*key1*/ ctx[183]));
-  			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 1085, 7, 40428);
-  			attr_dev(label, "for", label_for_value = "hearths_quarter_" + /*key*/ ctx[170] + "_" + /*key1*/ ctx[183]);
-  			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 1085, 198, 40619);
-  		},
-  		m: function mount(target, anchor, remount) {
-  			insert_dev(target, input, anchor);
-  			insert_dev(target, label, anchor);
-  			append_dev(label, t0);
-  			append_dev(label, t1);
-  			append_dev(label, t2);
-  			if (remount) dispose();
-  			dispose = listen_dev(input, "change", /*setFilterHearths*/ ctx[97], false, false, false);
-  		},
-  		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearths*/ 2048 | dirty[1] & /*hearths_quarter*/ 8388608 && input_checked_value !== (input_checked_value = /*hearths_quarter*/ ctx[54][/*key*/ ctx[170]] && /*hearths_quarter*/ ctx[54][/*key*/ ctx[170]][/*key1*/ ctx[183]])) {
-  				prop_dev(input, "checked", input_checked_value);
-  			}
-
-  			if (dirty[1] & /*hearths_period_type*/ 2097152 && input_disabled_value !== (input_disabled_value = /*hearths_period_type*/ ctx[52] === 1)) {
-  				prop_dev(input, "disabled", input_disabled_value);
-  			}
-
-  			if (dirty[0] & /*DtpHearths*/ 2048 && input_name_value !== (input_name_value = "" + (/*key*/ ctx[170] + "_" + /*key1*/ ctx[183]))) {
-  				attr_dev(input, "name", input_name_value);
-  			}
-
-  			if (dirty[0] & /*DtpHearths*/ 2048 && t0_value !== (t0_value = /*key1*/ ctx[183] + "")) set_data_dev(t0, t0_value);
-  			if (dirty[0] & /*DtpHearths*/ 2048 && t2_value !== (t2_value = /*key*/ ctx[170] + "")) set_data_dev(t2, t2_value);
-
-  			if (dirty[0] & /*DtpHearths*/ 2048 && label_for_value !== (label_for_value = "hearths_quarter_" + /*key*/ ctx[170] + "_" + /*key1*/ ctx[183])) {
-  				attr_dev(label, "for", label_for_value);
-  			}
-  		},
-  		d: function destroy(detaching) {
-  			if (detaching) detach_dev(input);
-  			if (detaching) detach_dev(label);
-  			dispose();
-  		}
-  	};
-
-  	dispatch_dev("SvelteRegisterBlock", {
-  		block,
-  		id: create_each_block_6.name,
-  		type: "each",
-  		source: "(1085:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}",
-  		ctx
-  	});
-
-  	return block;
-  }
-
-  // (1084:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
-  function create_each_block_5(ctx) {
   	let t;
   	let br;
-  	let each_value_6 = Object.keys(/*DtpHearths*/ ctx[11]._opt.years[/*key*/ ctx[170]]).sort();
-  	validate_each_argument(each_value_6);
+  	let each_value_7 = Object.keys(/*DtpHearths*/ ctx[12]._opt.years[/*key*/ ctx[181]]).sort();
+  	validate_each_argument(each_value_7);
   	let each_blocks = [];
 
-  	for (let i = 0; i < each_value_6.length; i += 1) {
-  		each_blocks[i] = create_each_block_6(get_each_context_6(ctx, each_value_6, i));
+  	for (let i = 0; i < each_value_7.length; i += 1) {
+  		each_blocks[i] = create_each_block_7(get_each_context_7(ctx, each_value_7, i));
   	}
 
   	const block = {
@@ -8359,7 +9092,7 @@ var dtp = (function () {
 
   			t = space();
   			br = element("br");
-  			add_location(br, file$5, 1087, 6, 40706);
+  			add_location(br, file$6, 1129, 6, 41764);
   		},
   		m: function mount(target, anchor) {
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -8370,18 +9103,18 @@ var dtp = (function () {
   			insert_dev(target, br, anchor);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*DtpHearths*/ 2048 | dirty[1] & /*hearths_quarter, hearths_period_type*/ 10485760 | dirty[3] & /*setFilterHearths*/ 16) {
-  				each_value_6 = Object.keys(/*DtpHearths*/ ctx[11]._opt.years[/*key*/ ctx[170]]).sort();
-  				validate_each_argument(each_value_6);
+  			if (dirty[0] & /*DtpHearths*/ 4096 | dirty[1] & /*hearths_quarter, hearths_period_type*/ 167772160 | dirty[3] & /*setFilterHearths*/ 8192) {
+  				each_value_7 = Object.keys(/*DtpHearths*/ ctx[12]._opt.years[/*key*/ ctx[181]]).sort();
+  				validate_each_argument(each_value_7);
   				let i;
 
-  				for (i = 0; i < each_value_6.length; i += 1) {
-  					const child_ctx = get_each_context_6(ctx, each_value_6, i);
+  				for (i = 0; i < each_value_7.length; i += 1) {
+  					const child_ctx = get_each_context_7(ctx, each_value_7, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_6(child_ctx);
+  						each_blocks[i] = create_each_block_7(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(t.parentNode, t);
   					}
@@ -8391,7 +9124,7 @@ var dtp = (function () {
   					each_blocks[i].d(1);
   				}
 
-  				each_blocks.length = each_value_6.length;
+  				each_blocks.length = each_value_7.length;
   			}
   		},
   		d: function destroy(detaching) {
@@ -8403,23 +9136,23 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_5.name,
+  		id: create_each_block_6.name,
   		type: "each",
-  		source: "(1084:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
+  		source: "(1126:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1099:5) {#each optTypeHearthsKeys as key}
-  function create_each_block_4(ctx) {
+  // (1141:5) {#each optTypeHearthsKeys as key}
+  function create_each_block_5(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataHearths*/ ctx[63].str_icon_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataHearths*/ ctx[67].str_icon_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -8433,10 +9166,589 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths*/ ctx[63].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 1099, 6, 41101);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths*/ ctx[67].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1141, 6, 42159);
+  		},
+  		m: function mount(target, anchor) {
+  			insert_dev(target, option, anchor);
+  			append_dev(option, t0);
+  			append_dev(option, t1);
+  			append_dev(option, t2);
+  			append_dev(option, t3);
+  			append_dev(option, t4);
+  		},
+  		p: noop,
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(option);
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_each_block_5.name,
+  		type: "each",
+  		source: "(1141:5) {#each optTypeHearthsKeys as key}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (1187:202) 
+  function create_if_block_14(ctx) {
+  	let div;
+
+  	const block = {
+  		c: function create() {
+  			div = element("div");
+  			div.textContent = "Нет включенных слоев";
+  			attr_dev(div, "class", "pLine svelte-1jsovbn");
+  			add_location(div, file$6, 1187, 3, 44465);
+  		},
+  		m: function mount(target, anchor) {
+  			insert_dev(target, div, anchor);
+  		},
+  		p: noop,
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(div);
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_if_block_14.name,
+  		type: "if",
+  		source: "(1187:202) ",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (1160:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}
+  function create_if_block_12(ctx) {
+  	let div0;
+  	let hr;
+  	let t0;
+  	let div1;
+  	let button0;
+  	let t1;
+  	let input0;
+  	let t2;
+  	let input1;
+  	let t3;
+  	let button1;
+  	let t4;
+  	let if_block_anchor;
+  	let dispose;
+  	let if_block = (/*DtpVerifyed*/ ctx[4]._map || /*DtpSkpdi*/ ctx[5]._map || /*DtpGibdd*/ ctx[6]._map || /*DtpGibddRub*/ ctx[7]._map) && create_if_block_13(ctx);
+
+  	const block = {
+  		c: function create() {
+  			div0 = element("div");
+  			hr = element("hr");
+  			t0 = space();
+  			div1 = element("div");
+  			button0 = element("button");
+  			t1 = space();
+  			input0 = element("input");
+  			t2 = space();
+  			input1 = element("input");
+  			t3 = space();
+  			button1 = element("button");
+  			t4 = space();
+  			if (if_block) if_block.c();
+  			if_block_anchor = empty();
+  			attr_dev(hr, "class", "svelte-1jsovbn");
+  			add_location(hr, file$6, 1160, 21, 43032);
+  			attr_dev(div0, "class", "pLine svelte-1jsovbn");
+  			add_location(div0, file$6, 1160, 2, 43013);
+  			attr_dev(button0, "class", "pika-prev");
+  			add_location(button0, file$6, 1162, 3, 43076);
+  			attr_dev(input0, "type", "text");
+  			attr_dev(input0, "class", "begDate svelte-1jsovbn");
+  			add_location(input0, file$6, 1163, 3, 43133);
+  			attr_dev(input1, "type", "text");
+  			attr_dev(input1, "class", "endDate svelte-1jsovbn");
+  			add_location(input1, file$6, 1164, 3, 43194);
+  			attr_dev(button1, "class", "pika-next");
+  			add_location(button1, file$6, 1165, 3, 43255);
+  			attr_dev(div1, "class", "pikaday pLine svelte-1jsovbn");
+  			add_location(div1, file$6, 1161, 2, 43045);
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, div0, anchor);
+  			append_dev(div0, hr);
+  			insert_dev(target, t0, anchor);
+  			insert_dev(target, div1, anchor);
+  			append_dev(div1, button0);
+  			append_dev(div1, t1);
+  			append_dev(div1, input0);
+  			/*input0_binding*/ ctx[161](input0);
+  			append_dev(div1, t2);
+  			append_dev(div1, input1);
+  			/*input1_binding*/ ctx[162](input1);
+  			append_dev(div1, t3);
+  			append_dev(div1, button1);
+  			insert_dev(target, t4, anchor);
+  			if (if_block) if_block.m(target, anchor);
+  			insert_dev(target, if_block_anchor, anchor);
+  			if (remount) run_all(dispose);
+
+  			dispose = [
+  				listen_dev(button0, "click", /*onPrev*/ ctx[100], false, false, false),
+  				listen_dev(button1, "click", /*onNext*/ ctx[101], false, false, false)
+  			];
+  		},
+  		p: function update(ctx, dirty) {
+  			if (/*DtpVerifyed*/ ctx[4]._map || /*DtpSkpdi*/ ctx[5]._map || /*DtpGibdd*/ ctx[6]._map || /*DtpGibddRub*/ ctx[7]._map) {
+  				if (if_block) {
+  					if_block.p(ctx, dirty);
+  				} else {
+  					if_block = create_if_block_13(ctx);
+  					if_block.c();
+  					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+  				}
+  			} else if (if_block) {
+  				if_block.d(1);
+  				if_block = null;
+  			}
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(div0);
+  			if (detaching) detach_dev(t0);
+  			if (detaching) detach_dev(div1);
+  			/*input0_binding*/ ctx[161](null);
+  			/*input1_binding*/ ctx[162](null);
+  			if (detaching) detach_dev(t4);
+  			if (if_block) if_block.d(detaching);
+  			if (detaching) detach_dev(if_block_anchor);
+  			run_all(dispose);
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_if_block_12.name,
+  		type: "if",
+  		source: "(1160:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (1168:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}
+  function create_if_block_13(ctx) {
+  	let div0;
+  	let br0;
+  	let t0;
+  	let label0;
+  	let input0;
+  	let input0_disabled_value;
+  	let span0;
+  	let t1;
+  	let t2;
+  	let t3;
+  	let t4;
+  	let br1;
+  	let t5;
+  	let label1;
+  	let input1;
+  	let input1_disabled_value;
+  	let span1;
+  	let t6;
+  	let t7;
+  	let t8;
+  	let t9;
+  	let br2;
+  	let t10;
+  	let label2;
+  	let input2;
+  	let input2_disabled_value;
+  	let span2;
+  	let t11;
+  	let t12;
+  	let t13;
+  	let t14;
+  	let div1;
+  	let input3;
+  	let input3_checked_value;
+  	let label3;
+  	let dispose;
+
+  	const block = {
+  		c: function create() {
+  			div0 = element("div");
+  			br0 = element("br");
+  			t0 = space();
+  			label0 = element("label");
+  			input0 = element("input");
+  			span0 = element("span");
+  			t1 = text("Мин.яркость (");
+  			t2 = text(/*minOpacity*/ ctx[27]);
+  			t3 = text(")");
+  			t4 = space();
+  			br1 = element("br");
+  			t5 = space();
+  			label1 = element("label");
+  			input1 = element("input");
+  			span1 = element("span");
+  			t6 = text("Радиус (");
+  			t7 = text(/*radius*/ ctx[25]);
+  			t8 = text(")");
+  			t9 = space();
+  			br2 = element("br");
+  			t10 = space();
+  			label2 = element("label");
+  			input2 = element("input");
+  			span2 = element("span");
+  			t11 = text("Размытие (");
+  			t12 = text(/*blur*/ ctx[26]);
+  			t13 = text(")");
+  			t14 = space();
+  			div1 = element("div");
+  			input3 = element("input");
+  			label3 = element("label");
+  			label3.textContent = "- тепловая карта";
+  			add_location(br0, file$6, 1169, 4, 43424);
+  			attr_dev(input0, "type", "range");
+  			attr_dev(input0, "min", "0.05");
+  			attr_dev(input0, "max", "1");
+  			attr_dev(input0, "step", "0.01");
+  			input0.disabled = input0_disabled_value = !/*heat*/ ctx[83];
+  			attr_dev(input0, "class", "svelte-1jsovbn");
+  			add_location(input0, file$6, 1171, 5, 43448);
+  			add_location(span0, file$6, 1171, 122, 43565);
+  			attr_dev(label0, "class", "svelte-1jsovbn");
+  			add_location(label0, file$6, 1170, 4, 43435);
+  			add_location(br1, file$6, 1173, 4, 43622);
+  			attr_dev(input1, "type", "range");
+  			attr_dev(input1, "min", "0");
+  			attr_dev(input1, "max", "100");
+  			attr_dev(input1, "step", "1");
+  			input1.disabled = input1_disabled_value = !/*heat*/ ctx[83];
+  			attr_dev(input1, "class", "svelte-1jsovbn");
+  			add_location(input1, file$6, 1175, 5, 43646);
+  			add_location(span1, file$6, 1175, 114, 43755);
+  			attr_dev(label1, "class", "svelte-1jsovbn");
+  			add_location(label1, file$6, 1174, 4, 43633);
+  			add_location(br2, file$6, 1177, 4, 43803);
+  			attr_dev(input2, "type", "range");
+  			attr_dev(input2, "min", "0");
+  			attr_dev(input2, "max", "15");
+  			attr_dev(input2, "step", "0.01");
+  			input2.disabled = input2_disabled_value = !/*heat*/ ctx[83];
+  			attr_dev(input2, "class", "svelte-1jsovbn");
+  			add_location(input2, file$6, 1179, 5, 43827);
+  			add_location(span2, file$6, 1179, 114, 43936);
+  			attr_dev(label2, "class", "svelte-1jsovbn");
+  			add_location(label2, file$6, 1178, 4, 43814);
+  			attr_dev(div0, "class", "pLine svelte-1jsovbn");
+  			add_location(div0, file$6, 1168, 3, 43400);
+  			attr_dev(input3, "type", "checkbox");
+  			input3.checked = input3_checked_value = /*DtpGibddRub*/ ctx[7]._needHeat || /*DtpGibdd*/ ctx[6]._needHeat || /*DtpSkpdi*/ ctx[5]._needHeat || /*DtpVerifyed*/ ctx[4]._needHeat;
+  			attr_dev(input3, "name", "heat");
+  			attr_dev(input3, "class", "svelte-1jsovbn");
+  			add_location(input3, file$6, 1183, 4, 44017);
+  			attr_dev(label3, "for", "heat");
+  			attr_dev(label3, "class", "svelte-1jsovbn");
+  			add_location(label3, file$6, 1183, 184, 44197);
+  			attr_dev(div1, "class", "pLine svelte-1jsovbn");
+  			add_location(div1, file$6, 1182, 3, 43993);
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, div0, anchor);
+  			append_dev(div0, br0);
+  			append_dev(div0, t0);
+  			append_dev(div0, label0);
+  			append_dev(label0, input0);
+  			set_input_value(input0, /*minOpacity*/ ctx[27]);
+  			append_dev(label0, span0);
+  			append_dev(span0, t1);
+  			append_dev(span0, t2);
+  			append_dev(span0, t3);
+  			append_dev(div0, t4);
+  			append_dev(div0, br1);
+  			append_dev(div0, t5);
+  			append_dev(div0, label1);
+  			append_dev(label1, input1);
+  			set_input_value(input1, /*radius*/ ctx[25]);
+  			append_dev(label1, span1);
+  			append_dev(span1, t6);
+  			append_dev(span1, t7);
+  			append_dev(span1, t8);
+  			append_dev(div0, t9);
+  			append_dev(div0, br2);
+  			append_dev(div0, t10);
+  			append_dev(div0, label2);
+  			append_dev(label2, input2);
+  			set_input_value(input2, /*blur*/ ctx[26]);
+  			append_dev(label2, span2);
+  			append_dev(span2, t11);
+  			append_dev(span2, t12);
+  			append_dev(span2, t13);
+  			insert_dev(target, t14, anchor);
+  			insert_dev(target, div1, anchor);
+  			append_dev(div1, input3);
+  			/*input3_binding*/ ctx[166](input3);
+  			append_dev(div1, label3);
+  			if (remount) run_all(dispose);
+
+  			dispose = [
+  				listen_dev(input0, "change", /*input0_change_input_handler*/ ctx[163]),
+  				listen_dev(input0, "input", /*input0_change_input_handler*/ ctx[163]),
+  				listen_dev(input0, "input", /*setMinOpacity*/ ctx[94], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_input_handler*/ ctx[164]),
+  				listen_dev(input1, "input", /*input1_change_input_handler*/ ctx[164]),
+  				listen_dev(input1, "input", /*setMinOpacity*/ ctx[94], false, false, false),
+  				listen_dev(input2, "change", /*input2_change_input_handler*/ ctx[165]),
+  				listen_dev(input2, "input", /*input2_change_input_handler*/ ctx[165]),
+  				listen_dev(input2, "input", /*setMinOpacity*/ ctx[94], false, false, false),
+  				listen_dev(input3, "change", /*setHeat*/ ctx[93], false, false, false)
+  			];
+  		},
+  		p: function update(ctx, dirty) {
+  			if (dirty[0] & /*minOpacity*/ 134217728) {
+  				set_input_value(input0, /*minOpacity*/ ctx[27]);
+  			}
+
+  			if (dirty[0] & /*minOpacity*/ 134217728) set_data_dev(t2, /*minOpacity*/ ctx[27]);
+
+  			if (dirty[0] & /*radius*/ 33554432) {
+  				set_input_value(input1, /*radius*/ ctx[25]);
+  			}
+
+  			if (dirty[0] & /*radius*/ 33554432) set_data_dev(t7, /*radius*/ ctx[25]);
+
+  			if (dirty[0] & /*blur*/ 67108864) {
+  				set_input_value(input2, /*blur*/ ctx[26]);
+  			}
+
+  			if (dirty[0] & /*blur*/ 67108864) set_data_dev(t12, /*blur*/ ctx[26]);
+
+  			if (dirty[0] & /*DtpGibddRub, DtpGibdd, DtpSkpdi, DtpVerifyed*/ 240 && input3_checked_value !== (input3_checked_value = /*DtpGibddRub*/ ctx[7]._needHeat || /*DtpGibdd*/ ctx[6]._needHeat || /*DtpSkpdi*/ ctx[5]._needHeat || /*DtpVerifyed*/ ctx[4]._needHeat)) {
+  				prop_dev(input3, "checked", input3_checked_value);
+  			}
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(div0);
+  			if (detaching) detach_dev(t14);
+  			if (detaching) detach_dev(div1);
+  			/*input3_binding*/ ctx[166](null);
+  			run_all(dispose);
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_if_block_13.name,
+  		type: "if",
+  		source: "(1168:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (1191:2) {#if Measures._map}
+  function create_if_block_10(ctx) {
+  	let div0;
+  	let hr;
+  	let t0;
+  	let div1;
+  	let t1;
+  	let b;
+  	let t3;
+  	let div2;
+  	let if_block = /*optMeasures*/ ctx[81].type && create_if_block_11(ctx);
+
+  	const block = {
+  		c: function create() {
+  			div0 = element("div");
+  			hr = element("hr");
+  			t0 = space();
+  			div1 = element("div");
+  			t1 = text("Фильтры - ");
+  			b = element("b");
+  			b.textContent = "Мероприятий";
+  			t3 = space();
+  			div2 = element("div");
+  			if (if_block) if_block.c();
+  			attr_dev(hr, "class", "svelte-1jsovbn");
+  			add_location(hr, file$6, 1191, 21, 44563);
+  			attr_dev(div0, "class", "pLine svelte-1jsovbn");
+  			add_location(div0, file$6, 1191, 2, 44544);
+  			add_location(b, file$6, 1192, 31, 44605);
+  			attr_dev(div1, "class", "pLine svelte-1jsovbn");
+  			add_location(div1, file$6, 1192, 2, 44576);
+  			attr_dev(div2, "class", "filtersCont svelte-1jsovbn");
+  			add_location(div2, file$6, 1193, 2, 44632);
+  		},
+  		m: function mount(target, anchor) {
+  			insert_dev(target, div0, anchor);
+  			append_dev(div0, hr);
+  			insert_dev(target, t0, anchor);
+  			insert_dev(target, div1, anchor);
+  			append_dev(div1, t1);
+  			append_dev(div1, b);
+  			insert_dev(target, t3, anchor);
+  			insert_dev(target, div2, anchor);
+  			if (if_block) if_block.m(div2, null);
+  		},
+  		p: function update(ctx, dirty) {
+  			if (/*optMeasures*/ ctx[81].type) if_block.p(ctx, dirty);
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(div0);
+  			if (detaching) detach_dev(t0);
+  			if (detaching) detach_dev(div1);
+  			if (detaching) detach_dev(t3);
+  			if (detaching) detach_dev(div2);
+  			if (if_block) if_block.d();
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_if_block_10.name,
+  		type: "if",
+  		source: "(1191:2) {#if Measures._map}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (1195:3) {#if optMeasures.type}
+  function create_if_block_11(ctx) {
+  	let div;
+  	let select;
+  	let option;
+  	let dispose;
+  	let each_value_4 = /*optMeasuresKeys*/ ctx[82];
+  	validate_each_argument(each_value_4);
+  	let each_blocks = [];
+
+  	for (let i = 0; i < each_value_4.length; i += 1) {
+  		each_blocks[i] = create_each_block_4(get_each_context_4(ctx, each_value_4, i));
+  	}
+
+  	const block = {
+  		c: function create() {
+  			div = element("div");
+  			select = element("select");
+  			option = element("option");
+
+  			option.textContent = `
+						Все типы (${/*optMeasuresKeys*/ ctx[82].reduce(/*func_7*/ ctx[167], 0)})
+					`;
+
+  			for (let i = 0; i < each_blocks.length; i += 1) {
+  				each_blocks[i].c();
+  			}
+
+  			option.__value = "";
+  			option.value = option.__value;
+  			add_location(option, file$6, 1197, 5, 44815);
+  			attr_dev(select, "class", "multiple_type svelte-1jsovbn");
+  			select.multiple = true;
+  			if (/*measures_type*/ ctx[31] === void 0) add_render_callback(() => /*select_change_handler_1*/ ctx[168].call(select));
+  			add_location(select, file$6, 1196, 4, 44711);
+  			attr_dev(div, "class", "pLine svelte-1jsovbn");
+  			add_location(div, file$6, 1195, 3, 44687);
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, div, anchor);
+  			append_dev(div, select);
+  			append_dev(select, option);
+
+  			for (let i = 0; i < each_blocks.length; i += 1) {
+  				each_blocks[i].m(select, null);
+  			}
+
+  			select_options(select, /*measures_type*/ ctx[31]);
+  			if (remount) run_all(dispose);
+
+  			dispose = [
+  				listen_dev(select, "change", /*select_change_handler_1*/ ctx[168]),
+  				listen_dev(select, "change", /*setFilterMeasures*/ ctx[84], false, false, false)
+  			];
+  		},
+  		p: function update(ctx, dirty) {
+  			if (dirty[2] & /*optMeasuresKeys, optMeasures*/ 1572864) {
+  				each_value_4 = /*optMeasuresKeys*/ ctx[82];
+  				validate_each_argument(each_value_4);
+  				let i;
+
+  				for (i = 0; i < each_value_4.length; i += 1) {
+  					const child_ctx = get_each_context_4(ctx, each_value_4, i);
+
+  					if (each_blocks[i]) {
+  						each_blocks[i].p(child_ctx, dirty);
+  					} else {
+  						each_blocks[i] = create_each_block_4(child_ctx);
+  						each_blocks[i].c();
+  						each_blocks[i].m(select, null);
+  					}
+  				}
+
+  				for (; i < each_blocks.length; i += 1) {
+  					each_blocks[i].d(1);
+  				}
+
+  				each_blocks.length = each_value_4.length;
+  			}
+
+  			if (dirty[1] & /*measures_type*/ 1) {
+  				select_options(select, /*measures_type*/ ctx[31]);
+  			}
+  		},
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(div);
+  			destroy_each(each_blocks, detaching);
+  			run_all(dispose);
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_if_block_11.name,
+  		type: "if",
+  		source: "(1195:3) {#if optMeasures.type}",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  // (1201:5) {#each optMeasuresKeys as key}
+  function create_each_block_4(ctx) {
+  	let option;
+  	let t0;
+  	let t1_value = /*optMeasures*/ ctx[81].type[/*key*/ ctx[181]] + "";
+  	let t1;
+  	let t2;
+  	let t3_value = /*key*/ ctx[181] + "";
+  	let t3;
+  	let t4;
+  	let option_value_value;
+  	let option_class_value;
+
+  	const block = {
+  		c: function create() {
+  			option = element("option");
+  			t0 = text("(");
+  			t1 = text(t1_value);
+  			t2 = text(") - ");
+  			t3 = text(t3_value);
+  			t4 = space();
+  			option.__value = option_value_value = /*key*/ ctx[181];
+  			option.value = option.__value;
+  			attr_dev(option, "class", option_class_value = "type_" + /*optMeasures*/ ctx[81].type[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1201, 6, 44986);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -8456,320 +9768,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_4.name,
   		type: "each",
-  		source: "(1099:5) {#each optTypeHearthsKeys as key}",
+  		source: "(1201:5) {#each optMeasuresKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1143:184) 
-  function create_if_block_11(ctx) {
-  	let div;
-
-  	const block = {
-  		c: function create() {
-  			div = element("div");
-  			div.textContent = "Нет включенных слоев";
-  			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$5, 1143, 3, 43285);
-  		},
-  		m: function mount(target, anchor) {
-  			insert_dev(target, div, anchor);
-  		},
-  		p: noop,
-  		d: function destroy(detaching) {
-  			if (detaching) detach_dev(div);
-  		}
-  	};
-
-  	dispatch_dev("SvelteRegisterBlock", {
-  		block,
-  		id: create_if_block_11.name,
-  		type: "if",
-  		source: "(1143:184) ",
-  		ctx
-  	});
-
-  	return block;
-  }
-
-  // (1118:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}
-  function create_if_block_10(ctx) {
-  	let div0;
-  	let hr;
-  	let t0;
-  	let div1;
-  	let button0;
-  	let t1;
-  	let input0;
-  	let t2;
-  	let input1;
-  	let t3;
-  	let button1;
-  	let t4;
-  	let div2;
-  	let br0;
-  	let t5;
-  	let label0;
-  	let input2;
-  	let input2_disabled_value;
-  	let span0;
-  	let t6;
-  	let t7;
-  	let t8;
-  	let t9;
-  	let br1;
-  	let t10;
-  	let label1;
-  	let input3;
-  	let input3_disabled_value;
-  	let span1;
-  	let t11;
-  	let t12;
-  	let t13;
-  	let t14;
-  	let br2;
-  	let t15;
-  	let label2;
-  	let input4;
-  	let input4_disabled_value;
-  	let span2;
-  	let t16;
-  	let t17;
-  	let t18;
-  	let t19;
-  	let div3;
-  	let input5;
-  	let input5_checked_value;
-  	let label3;
-  	let dispose;
-
-  	const block = {
-  		c: function create() {
-  			div0 = element("div");
-  			hr = element("hr");
-  			t0 = space();
-  			div1 = element("div");
-  			button0 = element("button");
-  			t1 = space();
-  			input0 = element("input");
-  			t2 = space();
-  			input1 = element("input");
-  			t3 = space();
-  			button1 = element("button");
-  			t4 = space();
-  			div2 = element("div");
-  			br0 = element("br");
-  			t5 = space();
-  			label0 = element("label");
-  			input2 = element("input");
-  			span0 = element("span");
-  			t6 = text("Мин.яркость (");
-  			t7 = text(/*minOpacity*/ ctx[24]);
-  			t8 = text(")");
-  			t9 = space();
-  			br1 = element("br");
-  			t10 = space();
-  			label1 = element("label");
-  			input3 = element("input");
-  			span1 = element("span");
-  			t11 = text("Радиус (");
-  			t12 = text(/*radius*/ ctx[22]);
-  			t13 = text(")");
-  			t14 = space();
-  			br2 = element("br");
-  			t15 = space();
-  			label2 = element("label");
-  			input4 = element("input");
-  			span2 = element("span");
-  			t16 = text("Размытие (");
-  			t17 = text(/*blur*/ ctx[23]);
-  			t18 = text(")");
-  			t19 = space();
-  			div3 = element("div");
-  			input5 = element("input");
-  			label3 = element("label");
-  			label3.textContent = "- тепловая карта";
-  			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$5, 1118, 21, 41957);
-  			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1118, 2, 41938);
-  			attr_dev(button0, "class", "pika-prev");
-  			add_location(button0, file$5, 1120, 3, 42001);
-  			attr_dev(input0, "type", "text");
-  			attr_dev(input0, "class", "begDate svelte-1jsovbn");
-  			add_location(input0, file$5, 1121, 3, 42058);
-  			attr_dev(input1, "type", "text");
-  			attr_dev(input1, "class", "endDate svelte-1jsovbn");
-  			add_location(input1, file$5, 1122, 3, 42119);
-  			attr_dev(button1, "class", "pika-next");
-  			add_location(button1, file$5, 1123, 3, 42180);
-  			attr_dev(div1, "class", "pikaday pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1119, 2, 41970);
-  			add_location(br0, file$5, 1126, 4, 42270);
-  			attr_dev(input2, "type", "range");
-  			attr_dev(input2, "min", "0.05");
-  			attr_dev(input2, "max", "1");
-  			attr_dev(input2, "step", "0.01");
-  			input2.disabled = input2_disabled_value = !/*heat*/ ctx[77];
-  			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$5, 1128, 5, 42294);
-  			add_location(span0, file$5, 1128, 122, 42411);
-  			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 1127, 4, 42281);
-  			add_location(br1, file$5, 1130, 4, 42468);
-  			attr_dev(input3, "type", "range");
-  			attr_dev(input3, "min", "0");
-  			attr_dev(input3, "max", "100");
-  			attr_dev(input3, "step", "1");
-  			input3.disabled = input3_disabled_value = !/*heat*/ ctx[77];
-  			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$5, 1132, 5, 42492);
-  			add_location(span1, file$5, 1132, 114, 42601);
-  			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 1131, 4, 42479);
-  			add_location(br2, file$5, 1134, 4, 42649);
-  			attr_dev(input4, "type", "range");
-  			attr_dev(input4, "min", "0");
-  			attr_dev(input4, "max", "15");
-  			attr_dev(input4, "step", "0.01");
-  			input4.disabled = input4_disabled_value = !/*heat*/ ctx[77];
-  			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$5, 1136, 5, 42673);
-  			add_location(span2, file$5, 1136, 114, 42782);
-  			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$5, 1135, 4, 42660);
-  			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 1125, 3, 42246);
-  			attr_dev(input5, "type", "checkbox");
-  			input5.checked = input5_checked_value = /*DtpGibddRub*/ ctx[7]._needHeat || /*DtpGibdd*/ ctx[6]._needHeat || /*DtpSkpdi*/ ctx[5]._needHeat || /*DtpVerifyed*/ ctx[4]._needHeat;
-  			attr_dev(input5, "name", "heat");
-  			attr_dev(input5, "class", "svelte-1jsovbn");
-  			add_location(input5, file$5, 1140, 4, 42863);
-  			attr_dev(label3, "for", "heat");
-  			attr_dev(label3, "class", "svelte-1jsovbn");
-  			add_location(label3, file$5, 1140, 184, 43043);
-  			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$5, 1139, 3, 42839);
-  		},
-  		m: function mount(target, anchor, remount) {
-  			insert_dev(target, div0, anchor);
-  			append_dev(div0, hr);
-  			insert_dev(target, t0, anchor);
-  			insert_dev(target, div1, anchor);
-  			append_dev(div1, button0);
-  			append_dev(div1, t1);
-  			append_dev(div1, input0);
-  			/*input0_binding*/ ctx[152](input0);
-  			append_dev(div1, t2);
-  			append_dev(div1, input1);
-  			/*input1_binding*/ ctx[153](input1);
-  			append_dev(div1, t3);
-  			append_dev(div1, button1);
-  			insert_dev(target, t4, anchor);
-  			insert_dev(target, div2, anchor);
-  			append_dev(div2, br0);
-  			append_dev(div2, t5);
-  			append_dev(div2, label0);
-  			append_dev(label0, input2);
-  			set_input_value(input2, /*minOpacity*/ ctx[24]);
-  			append_dev(label0, span0);
-  			append_dev(span0, t6);
-  			append_dev(span0, t7);
-  			append_dev(span0, t8);
-  			append_dev(div2, t9);
-  			append_dev(div2, br1);
-  			append_dev(div2, t10);
-  			append_dev(div2, label1);
-  			append_dev(label1, input3);
-  			set_input_value(input3, /*radius*/ ctx[22]);
-  			append_dev(label1, span1);
-  			append_dev(span1, t11);
-  			append_dev(span1, t12);
-  			append_dev(span1, t13);
-  			append_dev(div2, t14);
-  			append_dev(div2, br2);
-  			append_dev(div2, t15);
-  			append_dev(div2, label2);
-  			append_dev(label2, input4);
-  			set_input_value(input4, /*blur*/ ctx[23]);
-  			append_dev(label2, span2);
-  			append_dev(span2, t16);
-  			append_dev(span2, t17);
-  			append_dev(span2, t18);
-  			insert_dev(target, t19, anchor);
-  			insert_dev(target, div3, anchor);
-  			append_dev(div3, input5);
-  			/*input5_binding*/ ctx[157](input5);
-  			append_dev(div3, label3);
-  			if (remount) run_all(dispose);
-
-  			dispose = [
-  				listen_dev(button0, "click", /*onPrev*/ ctx[91], false, false, false),
-  				listen_dev(button1, "click", /*onNext*/ ctx[92], false, false, false),
-  				listen_dev(input2, "change", /*input2_change_input_handler*/ ctx[154]),
-  				listen_dev(input2, "input", /*input2_change_input_handler*/ ctx[154]),
-  				listen_dev(input2, "input", /*setMinOpacity*/ ctx[85], false, false, false),
-  				listen_dev(input3, "change", /*input3_change_input_handler*/ ctx[155]),
-  				listen_dev(input3, "input", /*input3_change_input_handler*/ ctx[155]),
-  				listen_dev(input3, "input", /*setMinOpacity*/ ctx[85], false, false, false),
-  				listen_dev(input4, "change", /*input4_change_input_handler*/ ctx[156]),
-  				listen_dev(input4, "input", /*input4_change_input_handler*/ ctx[156]),
-  				listen_dev(input4, "input", /*setMinOpacity*/ ctx[85], false, false, false),
-  				listen_dev(input5, "change", /*setHeat*/ ctx[84], false, false, false)
-  			];
-  		},
-  		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*minOpacity*/ 16777216) {
-  				set_input_value(input2, /*minOpacity*/ ctx[24]);
-  			}
-
-  			if (dirty[0] & /*minOpacity*/ 16777216) set_data_dev(t7, /*minOpacity*/ ctx[24]);
-
-  			if (dirty[0] & /*radius*/ 4194304) {
-  				set_input_value(input3, /*radius*/ ctx[22]);
-  			}
-
-  			if (dirty[0] & /*radius*/ 4194304) set_data_dev(t12, /*radius*/ ctx[22]);
-
-  			if (dirty[0] & /*blur*/ 8388608) {
-  				set_input_value(input4, /*blur*/ ctx[23]);
-  			}
-
-  			if (dirty[0] & /*blur*/ 8388608) set_data_dev(t17, /*blur*/ ctx[23]);
-
-  			if (dirty[0] & /*DtpGibddRub, DtpGibdd, DtpSkpdi, DtpVerifyed*/ 240 && input5_checked_value !== (input5_checked_value = /*DtpGibddRub*/ ctx[7]._needHeat || /*DtpGibdd*/ ctx[6]._needHeat || /*DtpSkpdi*/ ctx[5]._needHeat || /*DtpVerifyed*/ ctx[4]._needHeat)) {
-  				prop_dev(input5, "checked", input5_checked_value);
-  			}
-  		},
-  		d: function destroy(detaching) {
-  			if (detaching) detach_dev(div0);
-  			if (detaching) detach_dev(t0);
-  			if (detaching) detach_dev(div1);
-  			/*input0_binding*/ ctx[152](null);
-  			/*input1_binding*/ ctx[153](null);
-  			if (detaching) detach_dev(t4);
-  			if (detaching) detach_dev(div2);
-  			if (detaching) detach_dev(t19);
-  			if (detaching) detach_dev(div3);
-  			/*input5_binding*/ ctx[157](null);
-  			run_all(dispose);
-  		}
-  	};
-
-  	dispatch_dev("SvelteRegisterBlock", {
-  		block,
-  		id: create_if_block_10.name,
-  		type: "if",
-  		source: "(1118:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}",
-  		ctx
-  	});
-
-  	return block;
-  }
-
-  // (1147:2) {#if DtpVerifyed._map}
+  // (1212:2) {#if DtpVerifyed._map}
   function create_if_block_7$1(ctx) {
   	let div0;
   	let hr;
@@ -8778,7 +9784,7 @@ var dtp = (function () {
   	let t1;
   	let b;
   	let t3;
-  	let div5;
+  	let div6;
   	let div2;
   	let t4;
   	let input0;
@@ -8792,6 +9798,15 @@ var dtp = (function () {
   	let input2;
   	let label1;
   	let t10;
+  	let div5;
+  	let input3;
+  	let input3_checked_value;
+  	let label2;
+  	let t12;
+  	let input4;
+  	let input4_checked_value;
+  	let label3;
+  	let t14;
   	let dispose;
 
   	function select_block_type_1(ctx, dirty) {
@@ -8801,7 +9816,7 @@ var dtp = (function () {
 
   	let current_block_type = select_block_type_1(ctx);
   	let if_block0 = current_block_type(ctx);
-  	let if_block1 = /*optData*/ ctx[55].collision_type && create_if_block_8(ctx);
+  	let if_block1 = /*optData*/ ctx[59].collision_type && create_if_block_8(ctx);
 
   	const block = {
   		c: function create() {
@@ -8813,7 +9828,7 @@ var dtp = (function () {
   			b = element("b");
   			b.textContent = "ДТП Сводный";
   			t3 = space();
-  			div5 = element("div");
+  			div6 = element("div");
   			div2 = element("div");
   			t4 = text("ID ДТП: ");
   			input0 = element("input");
@@ -8830,45 +9845,74 @@ var dtp = (function () {
   			label1 = element("label");
   			label1.textContent = "Только ГИБДД";
   			t10 = space();
+  			div5 = element("div");
+  			input3 = element("input");
+  			label2 = element("label");
+  			label2.textContent = "- с мероприятиями";
+  			t12 = space();
+  			input4 = element("input");
+  			label3 = element("label");
+  			label3.textContent = "- без мероприятий";
+  			t14 = space();
   			if (if_block1) if_block1.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$5, 1147, 21, 43386);
+  			add_location(hr, file$6, 1212, 21, 45211);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1147, 2, 43367);
-  			add_location(b, file$5, 1148, 31, 43428);
+  			add_location(div0, file$6, 1212, 2, 45192);
+  			add_location(b, file$6, 1213, 31, 45253);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1148, 2, 43399);
+  			add_location(div1, file$6, 1213, 2, 45224);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[14];
+  			input0.value = /*id_dtp*/ ctx[15];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 1150, 30, 43511);
+  			add_location(input0, file$6, 1215, 30, 45336);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 1150, 3, 43484);
+  			add_location(div2, file$6, 1215, 3, 45309);
   			attr_dev(input1, "type", "radio");
   			attr_dev(input1, "id", "d0");
   			attr_dev(input1, "name", "drone");
   			input1.value = "0";
   			input1.checked = true;
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$5, 1151, 22, 43600);
+  			add_location(input1, file$6, 1216, 22, 45425);
   			attr_dev(label0, "for", "d0");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 1151, 98, 43676);
+  			add_location(label0, file$6, 1216, 98, 45501);
   			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$5, 1151, 3, 43581);
+  			add_location(div3, file$6, 1216, 3, 45406);
   			attr_dev(input2, "type", "radio");
   			attr_dev(input2, "id", "d3");
   			attr_dev(input2, "name", "drone");
   			input2.value = "3";
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$5, 1158, 22, 44205);
+  			add_location(input2, file$6, 1223, 22, 46030);
   			attr_dev(label1, "for", "d3");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 1158, 92, 44275);
+  			add_location(label1, file$6, 1223, 92, 46100);
   			attr_dev(div4, "class", "pLine svelte-1jsovbn");
-  			add_location(div4, file$5, 1158, 3, 44186);
-  			attr_dev(div5, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div5, file$5, 1149, 2, 43455);
+  			add_location(div4, file$6, 1223, 3, 46011);
+  			attr_dev(input3, "type", "checkbox");
+  			attr_dev(input3, "id", "ev1");
+  			input3.checked = input3_checked_value = /*evnt*/ ctx[17].ev1;
+  			attr_dev(input3, "name", "ev1");
+  			attr_dev(input3, "class", "svelte-1jsovbn");
+  			add_location(input3, file$6, 1225, 4, 46170);
+  			attr_dev(label2, "for", "ev1");
+  			attr_dev(label2, "class", "svelte-1jsovbn");
+  			add_location(label2, file$6, 1225, 92, 46258);
+  			attr_dev(input4, "type", "checkbox");
+  			attr_dev(input4, "id", "ev0");
+  			input4.checked = input4_checked_value = /*evnt*/ ctx[17].ev0;
+  			attr_dev(input4, "name", "ev0");
+  			attr_dev(input4, "class", "svelte-1jsovbn");
+  			add_location(input4, file$6, 1226, 4, 46306);
+  			attr_dev(label3, "for", "ev0");
+  			attr_dev(label3, "class", "svelte-1jsovbn");
+  			add_location(label3, file$6, 1226, 92, 46394);
+  			attr_dev(div5, "class", "pLine svelte-1jsovbn");
+  			add_location(div5, file$6, 1224, 3, 46146);
+  			attr_dev(div6, "class", "filtersCont svelte-1jsovbn");
+  			add_location(div6, file$6, 1214, 2, 45280);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -8878,33 +9922,42 @@ var dtp = (function () {
   			append_dev(div1, t1);
   			append_dev(div1, b);
   			insert_dev(target, t3, anchor);
-  			insert_dev(target, div5, anchor);
-  			append_dev(div5, div2);
+  			insert_dev(target, div6, anchor);
+  			append_dev(div6, div2);
   			append_dev(div2, t4);
   			append_dev(div2, input0);
-  			append_dev(div5, t5);
-  			append_dev(div5, div3);
+  			append_dev(div6, t5);
+  			append_dev(div6, div3);
   			append_dev(div3, input1);
   			append_dev(div3, label0);
-  			append_dev(div5, t7);
-  			if_block0.m(div5, null);
-  			append_dev(div5, t8);
-  			append_dev(div5, div4);
+  			append_dev(div6, t7);
+  			if_block0.m(div6, null);
+  			append_dev(div6, t8);
+  			append_dev(div6, div4);
   			append_dev(div4, input2);
   			append_dev(div4, label1);
-  			append_dev(div5, t10);
-  			if (if_block1) if_block1.m(div5, null);
+  			append_dev(div6, t10);
+  			append_dev(div6, div5);
+  			append_dev(div5, input3);
+  			append_dev(div5, label2);
+  			append_dev(div5, t12);
+  			append_dev(div5, input4);
+  			append_dev(div5, label3);
+  			append_dev(div6, t14);
+  			if (if_block1) if_block1.m(div6, null);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input1, "click", /*oncheck*/ ctx[90], false, false, false),
-  				listen_dev(input2, "click", /*oncheck*/ ctx[90], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "click", /*oncheck*/ ctx[99], false, false, false),
+  				listen_dev(input2, "click", /*oncheck*/ ctx[99], false, false, false),
+  				listen_dev(input3, "change", /*oncheckEvents*/ ctx[92], false, false, false),
+  				listen_dev(input4, "change", /*oncheckEvents*/ ctx[92], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input0.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
   			if (current_block_type === (current_block_type = select_block_type_1(ctx)) && if_block0) {
@@ -8915,18 +9968,26 @@ var dtp = (function () {
 
   				if (if_block0) {
   					if_block0.c();
-  					if_block0.m(div5, t8);
+  					if_block0.m(div6, t8);
   				}
   			}
 
-  			if (/*optData*/ ctx[55].collision_type) if_block1.p(ctx, dirty);
+  			if (dirty[0] & /*evnt*/ 131072 && input3_checked_value !== (input3_checked_value = /*evnt*/ ctx[17].ev1)) {
+  				prop_dev(input3, "checked", input3_checked_value);
+  			}
+
+  			if (dirty[0] & /*evnt*/ 131072 && input4_checked_value !== (input4_checked_value = /*evnt*/ ctx[17].ev0)) {
+  				prop_dev(input4, "checked", input4_checked_value);
+  			}
+
+  			if (/*optData*/ ctx[59].collision_type) if_block1.p(ctx, dirty);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t0);
   			if (detaching) detach_dev(div1);
   			if (detaching) detach_dev(t3);
-  			if (detaching) detach_dev(div5);
+  			if (detaching) detach_dev(div6);
   			if_block0.d();
   			if (if_block1) if_block1.d();
   			run_all(dispose);
@@ -8937,14 +9998,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_7$1.name,
   		type: "if",
-  		source: "(1147:2) {#if DtpVerifyed._map}",
+  		source: "(1212:2) {#if DtpVerifyed._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1155:3) {:else}
+  // (1220:3) {:else}
   function create_else_block$1(ctx) {
   	let div0;
   	let input0;
@@ -8971,23 +10032,23 @@ var dtp = (function () {
   			attr_dev(input0, "name", "drone");
   			input0.value = "1";
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 1155, 22, 43922);
+  			add_location(input0, file$6, 1220, 22, 45747);
   			attr_dev(label0, "for", "d1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 1155, 90, 43990);
+  			add_location(label0, file$6, 1220, 90, 45815);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1155, 3, 43903);
+  			add_location(div0, file$6, 1220, 3, 45728);
   			attr_dev(input1, "type", "radio");
   			attr_dev(input1, "id", "d2");
   			attr_dev(input1, "name", "drone");
   			input1.value = "2";
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$5, 1156, 22, 44061);
+  			add_location(input1, file$6, 1221, 22, 45886);
   			attr_dev(label1, "for", "d2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 1156, 92, 44131);
+  			add_location(label1, file$6, 1221, 92, 45956);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1156, 3, 44042);
+  			add_location(div1, file$6, 1221, 3, 45867);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -9000,8 +10061,8 @@ var dtp = (function () {
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "click", /*oncheck*/ ctx[90], false, false, false),
-  				listen_dev(input1, "click", /*oncheck*/ ctx[90], false, false, false)
+  				listen_dev(input0, "click", /*oncheck*/ ctx[99], false, false, false),
+  				listen_dev(input1, "click", /*oncheck*/ ctx[99], false, false, false)
   			];
   		},
   		p: noop,
@@ -9017,14 +10078,14 @@ var dtp = (function () {
   		block,
   		id: create_else_block$1.name,
   		type: "else",
-  		source: "(1155:3) {:else}",
+  		source: "(1220:3) {:else}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1153:3) {#if DtpVerifyed._arm}
+  // (1218:3) {#if DtpVerifyed._arm}
   function create_if_block_9(ctx) {
   	let div;
   	let input;
@@ -9042,19 +10103,19 @@ var dtp = (function () {
   			attr_dev(input, "name", "drone");
   			input.value = "1";
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 1153, 22, 43758);
+  			add_location(input, file$6, 1218, 22, 45583);
   			attr_dev(label, "for", "d1");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$5, 1153, 90, 43826);
+  			add_location(label, file$6, 1218, 90, 45651);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$5, 1153, 3, 43739);
+  			add_location(div, file$6, 1218, 3, 45564);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
   			append_dev(div, input);
   			append_dev(div, label);
   			if (remount) dispose();
-  			dispose = listen_dev(input, "click", /*oncheck*/ ctx[90], false, false, false);
+  			dispose = listen_dev(input, "click", /*oncheck*/ ctx[99], false, false, false);
   		},
   		p: noop,
   		d: function destroy(detaching) {
@@ -9067,25 +10128,25 @@ var dtp = (function () {
   		block,
   		id: create_if_block_9.name,
   		type: "if",
-  		source: "(1153:3) {#if DtpVerifyed._arm}",
+  		source: "(1218:3) {#if DtpVerifyed._arm}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1160:3) {#if optData.collision_type}
+  // (1229:3) {#if optData.collision_type}
   function create_if_block_8(ctx) {
   	let div;
   	let select;
   	let option;
   	let dispose;
-  	let each_value_3 = /*optCollisionKeys*/ ctx[56];
+  	let each_value_3 = /*optCollisionKeys*/ ctx[60];
   	validate_each_argument(each_value_3);
   	let each_blocks = [];
 
   	for (let i = 0; i < each_value_3.length; i += 1) {
-  		each_blocks[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
+  		each_blocks[i] = create_each_block_3$1(get_each_context_3$1(ctx, each_value_3, i));
   	}
 
   	const block = {
@@ -9095,7 +10156,7 @@ var dtp = (function () {
   			option = element("option");
 
   			option.textContent = `
-						Все типы (${/*optCollisionKeys*/ ctx[56].reduce(/*func_7*/ ctx[158], 0)})
+						Все типы (${/*optCollisionKeys*/ ctx[60].reduce(/*func_8*/ ctx[169], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -9105,13 +10166,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$5, 1162, 5, 44479);
+  			add_location(option, file$6, 1231, 5, 46609);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
-  			if (/*collision_type*/ ctx[18] === void 0) add_render_callback(() => /*select_change_handler_1*/ ctx[159].call(select));
-  			add_location(select, file$5, 1161, 4, 44377);
+  			if (/*collision_type*/ ctx[21] === void 0) add_render_callback(() => /*select_change_handler_2*/ ctx[170].call(select));
+  			add_location(select, file$6, 1230, 4, 46507);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$5, 1160, 3, 44353);
+  			add_location(div, file$6, 1229, 3, 46483);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -9122,27 +10183,27 @@ var dtp = (function () {
   				each_blocks[i].m(select, null);
   			}
 
-  			select_options(select, /*collision_type*/ ctx[18]);
+  			select_options(select, /*collision_type*/ ctx[21]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(select, "change", /*select_change_handler_1*/ ctx[159]),
-  				listen_dev(select, "change", /*setFilter*/ ctx[86], false, false, false)
+  				listen_dev(select, "change", /*select_change_handler_2*/ ctx[170]),
+  				listen_dev(select, "change", /*setFilter*/ ctx[95], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[1] & /*optCollisionKeys, optData*/ 50331648) {
-  				each_value_3 = /*optCollisionKeys*/ ctx[56];
+  			if (dirty[1] & /*optCollisionKeys, optData*/ 805306368) {
+  				each_value_3 = /*optCollisionKeys*/ ctx[60];
   				validate_each_argument(each_value_3);
   				let i;
 
   				for (i = 0; i < each_value_3.length; i += 1) {
-  					const child_ctx = get_each_context_3(ctx, each_value_3, i);
+  					const child_ctx = get_each_context_3$1(ctx, each_value_3, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_3(child_ctx);
+  						each_blocks[i] = create_each_block_3$1(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select, null);
   					}
@@ -9155,8 +10216,8 @@ var dtp = (function () {
   				each_blocks.length = each_value_3.length;
   			}
 
-  			if (dirty[0] & /*collision_type*/ 262144) {
-  				select_options(select, /*collision_type*/ ctx[18]);
+  			if (dirty[0] & /*collision_type*/ 2097152) {
+  				select_options(select, /*collision_type*/ ctx[21]);
   			}
   		},
   		d: function destroy(detaching) {
@@ -9170,21 +10231,21 @@ var dtp = (function () {
   		block,
   		id: create_if_block_8.name,
   		type: "if",
-  		source: "(1160:3) {#if optData.collision_type}",
+  		source: "(1229:3) {#if optData.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1166:5) {#each optCollisionKeys as key}
-  function create_each_block_3(ctx) {
+  // (1235:5) {#each optCollisionKeys as key}
+  function create_each_block_3$1(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optData*/ ctx[55].collision_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optData*/ ctx[59].collision_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -9198,10 +10259,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optData*/ ctx[55].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 1166, 6, 44658);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optData*/ ctx[59].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1235, 6, 46788);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -9219,16 +10280,16 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_3.name,
+  		id: create_each_block_3$1.name,
   		type: "each",
-  		source: "(1166:5) {#each optCollisionKeys as key}",
+  		source: "(1235:5) {#each optCollisionKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1177:2) {#if DtpSkpdi._map}
+  // (1246:2) {#if DtpSkpdi._map}
   function create_if_block_5$1(ctx) {
   	let div0;
   	let hr;
@@ -9237,13 +10298,22 @@ var dtp = (function () {
   	let t1;
   	let b;
   	let t3;
-  	let div3;
+  	let div4;
   	let div2;
   	let t4;
-  	let input;
+  	let input0;
   	let t5;
+  	let div3;
+  	let input1;
+  	let input1_checked_value;
+  	let label0;
+  	let t7;
+  	let input2;
+  	let input2_checked_value;
+  	let label1;
+  	let t9;
   	let dispose;
-  	let if_block = /*optDataSkpdi*/ ctx[57].collision_type && create_if_block_6$1(ctx);
+  	let if_block = /*optDataSkpdi*/ ctx[61].collision_type && create_if_block_6$1(ctx);
 
   	const block = {
   		c: function create() {
@@ -9255,27 +10325,56 @@ var dtp = (function () {
   			b = element("b");
   			b.textContent = "ДТП СКПДИ";
   			t3 = space();
-  			div3 = element("div");
+  			div4 = element("div");
   			div2 = element("div");
   			t4 = text("ID ДТП: ");
-  			input = element("input");
+  			input0 = element("input");
   			t5 = space();
+  			div3 = element("div");
+  			input1 = element("input");
+  			label0 = element("label");
+  			label0.textContent = "- с мероприятиями";
+  			t7 = space();
+  			input2 = element("input");
+  			label1 = element("label");
+  			label1.textContent = "- без мероприятий";
+  			t9 = space();
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$5, 1177, 21, 44891);
+  			add_location(hr, file$6, 1246, 21, 47021);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1177, 2, 44872);
-  			add_location(b, file$5, 1178, 31, 44933);
+  			add_location(div0, file$6, 1246, 2, 47002);
+  			add_location(b, file$6, 1247, 31, 47063);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1178, 2, 44904);
-  			attr_dev(input, "type", "text");
-  			input.value = /*id_dtp*/ ctx[14];
-  			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 1180, 30, 45014);
+  			add_location(div1, file$6, 1247, 2, 47034);
+  			attr_dev(input0, "type", "text");
+  			input0.value = /*id_dtp*/ ctx[15];
+  			attr_dev(input0, "class", "svelte-1jsovbn");
+  			add_location(input0, file$6, 1249, 30, 47144);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 1180, 3, 44987);
-  			attr_dev(div3, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div3, file$5, 1179, 2, 44958);
+  			add_location(div2, file$6, 1249, 3, 47117);
+  			attr_dev(input1, "type", "checkbox");
+  			attr_dev(input1, "id", "ev1");
+  			input1.checked = input1_checked_value = /*evnt*/ ctx[17].ev1;
+  			attr_dev(input1, "name", "ev1");
+  			attr_dev(input1, "class", "svelte-1jsovbn");
+  			add_location(input1, file$6, 1251, 4, 47238);
+  			attr_dev(label0, "for", "ev1");
+  			attr_dev(label0, "class", "svelte-1jsovbn");
+  			add_location(label0, file$6, 1251, 92, 47326);
+  			attr_dev(input2, "type", "checkbox");
+  			attr_dev(input2, "id", "ev0");
+  			input2.checked = input2_checked_value = /*evnt*/ ctx[17].ev0;
+  			attr_dev(input2, "name", "ev0");
+  			attr_dev(input2, "class", "svelte-1jsovbn");
+  			add_location(input2, file$6, 1252, 4, 47374);
+  			attr_dev(label1, "for", "ev0");
+  			attr_dev(label1, "class", "svelte-1jsovbn");
+  			add_location(label1, file$6, 1252, 92, 47462);
+  			attr_dev(div3, "class", "pLine svelte-1jsovbn");
+  			add_location(div3, file$6, 1250, 3, 47214);
+  			attr_dev(div4, "class", "filtersCont svelte-1jsovbn");
+  			add_location(div4, file$6, 1248, 2, 47088);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -9285,30 +10384,50 @@ var dtp = (function () {
   			append_dev(div1, t1);
   			append_dev(div1, b);
   			insert_dev(target, t3, anchor);
-  			insert_dev(target, div3, anchor);
-  			append_dev(div3, div2);
+  			insert_dev(target, div4, anchor);
+  			append_dev(div4, div2);
   			append_dev(div2, t4);
-  			append_dev(div2, input);
-  			append_dev(div3, t5);
-  			if (if_block) if_block.m(div3, null);
-  			if (remount) dispose();
-  			dispose = listen_dev(input, "input", /*oncheckIdDtp*/ ctx[81], false, false, false);
+  			append_dev(div2, input0);
+  			append_dev(div4, t5);
+  			append_dev(div4, div3);
+  			append_dev(div3, input1);
+  			append_dev(div3, label0);
+  			append_dev(div3, t7);
+  			append_dev(div3, input2);
+  			append_dev(div3, label1);
+  			append_dev(div4, t9);
+  			if (if_block) if_block.m(div4, null);
+  			if (remount) run_all(dispose);
+
+  			dispose = [
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*oncheckEvents*/ ctx[92], false, false, false),
+  				listen_dev(input2, "change", /*oncheckEvents*/ ctx[92], false, false, false)
+  			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (/*optDataSkpdi*/ ctx[57].collision_type) if_block.p(ctx, dirty);
+  			if (dirty[0] & /*evnt*/ 131072 && input1_checked_value !== (input1_checked_value = /*evnt*/ ctx[17].ev1)) {
+  				prop_dev(input1, "checked", input1_checked_value);
+  			}
+
+  			if (dirty[0] & /*evnt*/ 131072 && input2_checked_value !== (input2_checked_value = /*evnt*/ ctx[17].ev0)) {
+  				prop_dev(input2, "checked", input2_checked_value);
+  			}
+
+  			if (/*optDataSkpdi*/ ctx[61].collision_type) if_block.p(ctx, dirty);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t0);
   			if (detaching) detach_dev(div1);
   			if (detaching) detach_dev(t3);
-  			if (detaching) detach_dev(div3);
+  			if (detaching) detach_dev(div4);
   			if (if_block) if_block.d();
-  			dispose();
+  			run_all(dispose);
   		}
   	};
 
@@ -9316,25 +10435,25 @@ var dtp = (function () {
   		block,
   		id: create_if_block_5$1.name,
   		type: "if",
-  		source: "(1177:2) {#if DtpSkpdi._map}",
+  		source: "(1246:2) {#if DtpSkpdi._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1182:3) {#if optDataSkpdi.collision_type}
+  // (1255:3) {#if optDataSkpdi.collision_type}
   function create_if_block_6$1(ctx) {
   	let div;
   	let select;
   	let option;
   	let dispose;
-  	let each_value_2 = /*optCollisionSkpdiKeys*/ ctx[58];
+  	let each_value_2 = /*optCollisionSkpdiKeys*/ ctx[62];
   	validate_each_argument(each_value_2);
   	let each_blocks = [];
 
   	for (let i = 0; i < each_value_2.length; i += 1) {
-  		each_blocks[i] = create_each_block_2$1(get_each_context_2$1(ctx, each_value_2, i));
+  		each_blocks[i] = create_each_block_2$2(get_each_context_2$2(ctx, each_value_2, i));
   	}
 
   	const block = {
@@ -9344,7 +10463,7 @@ var dtp = (function () {
   			option = element("option");
 
   			option.textContent = `
-						Все типы (${/*optCollisionSkpdiKeys*/ ctx[58].reduce(/*func_8*/ ctx[160], 0)})
+						Все типы (${/*optCollisionSkpdiKeys*/ ctx[62].reduce(/*func_9*/ ctx[171], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -9354,13 +10473,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$5, 1184, 5, 45258);
+  			add_location(option, file$6, 1257, 5, 47693);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
-  			if (/*collision_type_skpdi*/ ctx[19] === void 0) add_render_callback(() => /*select_change_handler_2*/ ctx[161].call(select));
-  			add_location(select, file$5, 1183, 4, 45145);
+  			if (/*collision_type_skpdi*/ ctx[22] === void 0) add_render_callback(() => /*select_change_handler_3*/ ctx[172].call(select));
+  			add_location(select, file$6, 1256, 4, 47580);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$5, 1182, 3, 45121);
+  			add_location(div, file$6, 1255, 3, 47556);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -9371,27 +10490,27 @@ var dtp = (function () {
   				each_blocks[i].m(select, null);
   			}
 
-  			select_options(select, /*collision_type_skpdi*/ ctx[19]);
+  			select_options(select, /*collision_type_skpdi*/ ctx[22]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(select, "change", /*select_change_handler_2*/ ctx[161]),
-  				listen_dev(select, "change", /*setFilterSkpdi*/ ctx[89], false, false, false)
+  				listen_dev(select, "change", /*select_change_handler_3*/ ctx[172]),
+  				listen_dev(select, "change", /*setFilterSkpdi*/ ctx[98], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[1] & /*optCollisionSkpdiKeys, optDataSkpdi*/ 201326592) {
-  				each_value_2 = /*optCollisionSkpdiKeys*/ ctx[58];
+  			if (dirty[1] & /*optDataSkpdi*/ 1073741824 | dirty[2] & /*optCollisionSkpdiKeys*/ 1) {
+  				each_value_2 = /*optCollisionSkpdiKeys*/ ctx[62];
   				validate_each_argument(each_value_2);
   				let i;
 
   				for (i = 0; i < each_value_2.length; i += 1) {
-  					const child_ctx = get_each_context_2$1(ctx, each_value_2, i);
+  					const child_ctx = get_each_context_2$2(ctx, each_value_2, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_2$1(child_ctx);
+  						each_blocks[i] = create_each_block_2$2(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(select, null);
   					}
@@ -9404,8 +10523,8 @@ var dtp = (function () {
   				each_blocks.length = each_value_2.length;
   			}
 
-  			if (dirty[0] & /*collision_type_skpdi*/ 524288) {
-  				select_options(select, /*collision_type_skpdi*/ ctx[19]);
+  			if (dirty[0] & /*collision_type_skpdi*/ 4194304) {
+  				select_options(select, /*collision_type_skpdi*/ ctx[22]);
   			}
   		},
   		d: function destroy(detaching) {
@@ -9419,21 +10538,21 @@ var dtp = (function () {
   		block,
   		id: create_if_block_6$1.name,
   		type: "if",
-  		source: "(1182:3) {#if optDataSkpdi.collision_type}",
+  		source: "(1255:3) {#if optDataSkpdi.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1188:5) {#each optCollisionSkpdiKeys as key}
-  function create_each_block_2$1(ctx) {
+  // (1261:5) {#each optCollisionSkpdiKeys as key}
+  function create_each_block_2$2(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataSkpdi*/ ctx[57].collision_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataSkpdi*/ ctx[61].collision_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -9447,10 +10566,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataSkpdi*/ ctx[57].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 1188, 6, 45452);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataSkpdi*/ ctx[61].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1261, 6, 47887);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -9468,16 +10587,16 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_2$1.name,
+  		id: create_each_block_2$2.name,
   		type: "each",
-  		source: "(1188:5) {#each optCollisionSkpdiKeys as key}",
+  		source: "(1261:5) {#each optCollisionSkpdiKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1199:2) {#if DtpGibdd._map}
+  // (1272:2) {#if DtpGibdd._map}
   function create_if_block_3$1(ctx) {
   	let div0;
   	let hr;
@@ -9486,13 +10605,31 @@ var dtp = (function () {
   	let t1;
   	let b;
   	let t3;
-  	let div3;
+  	let div5;
   	let div2;
   	let t4;
-  	let input;
+  	let input0;
   	let t5;
+  	let div3;
+  	let input1;
+  	let input1_checked_value;
+  	let label0;
+  	let t7;
+  	let input2;
+  	let input2_checked_value;
+  	let label1;
+  	let t9;
+  	let div4;
+  	let input3;
+  	let input3_checked_value;
+  	let label2;
+  	let t11;
+  	let input4;
+  	let input4_checked_value;
+  	let label3;
+  	let t13;
   	let dispose;
-  	let if_block = /*optDataGibdd*/ ctx[59].collision_type && create_if_block_4$1(ctx);
+  	let if_block = /*optDataGibdd*/ ctx[63].collision_type && create_if_block_4$1(ctx);
 
   	const block = {
   		c: function create() {
@@ -9504,27 +10641,85 @@ var dtp = (function () {
   			b = element("b");
   			b.textContent = "ДТП ГИБДД";
   			t3 = space();
-  			div3 = element("div");
+  			div5 = element("div");
   			div2 = element("div");
   			t4 = text("ID ДТП: ");
-  			input = element("input");
+  			input0 = element("input");
   			t5 = space();
+  			div3 = element("div");
+  			input1 = element("input");
+  			label0 = element("label");
+  			label0.textContent = "- с батальонами ДПС";
+  			t7 = space();
+  			input2 = element("input");
+  			label1 = element("label");
+  			label1.textContent = "- без батальонов ДПС";
+  			t9 = space();
+  			div4 = element("div");
+  			input3 = element("input");
+  			label2 = element("label");
+  			label2.textContent = "- с мероприятиями";
+  			t11 = space();
+  			input4 = element("input");
+  			label3 = element("label");
+  			label3.textContent = "- без мероприятий";
+  			t13 = space();
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$5, 1199, 21, 45695);
+  			add_location(hr, file$6, 1272, 21, 48130);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1199, 2, 45676);
-  			add_location(b, file$5, 1200, 31, 45737);
+  			add_location(div0, file$6, 1272, 2, 48111);
+  			add_location(b, file$6, 1273, 31, 48172);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1200, 2, 45708);
-  			attr_dev(input, "type", "text");
-  			input.value = /*id_dtp*/ ctx[14];
-  			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$5, 1202, 30, 45818);
+  			add_location(div1, file$6, 1273, 2, 48143);
+  			attr_dev(input0, "type", "text");
+  			input0.value = /*id_dtp*/ ctx[15];
+  			attr_dev(input0, "class", "svelte-1jsovbn");
+  			add_location(input0, file$6, 1275, 30, 48253);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 1202, 3, 45791);
-  			attr_dev(div3, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div3, file$5, 1201, 2, 45762);
+  			add_location(div2, file$6, 1275, 3, 48226);
+  			attr_dev(input1, "type", "checkbox");
+  			attr_dev(input1, "id", "Dps1");
+  			input1.checked = input1_checked_value = /*dps*/ ctx[16].Dps1;
+  			attr_dev(input1, "name", "Dps1");
+  			attr_dev(input1, "class", "svelte-1jsovbn");
+  			add_location(input1, file$6, 1277, 4, 48347);
+  			attr_dev(label0, "for", "Dps1");
+  			attr_dev(label0, "class", "svelte-1jsovbn");
+  			add_location(label0, file$6, 1277, 91, 48434);
+  			attr_dev(input2, "type", "checkbox");
+  			attr_dev(input2, "id", "Dps0");
+  			input2.checked = input2_checked_value = /*dps*/ ctx[16].Dps0;
+  			attr_dev(input2, "name", "Dps0");
+  			attr_dev(input2, "class", "svelte-1jsovbn");
+  			add_location(input2, file$6, 1278, 4, 48485);
+  			attr_dev(label1, "for", "Dps0");
+  			attr_dev(label1, "class", "svelte-1jsovbn");
+  			add_location(label1, file$6, 1278, 91, 48572);
+  			attr_dev(div3, "class", "pLine svelte-1jsovbn");
+  			add_location(div3, file$6, 1276, 3, 48323);
+  			attr_dev(input3, "type", "checkbox");
+  			attr_dev(input3, "id", "ev1");
+  			input3.checked = input3_checked_value = /*evnt*/ ctx[17].ev1;
+  			attr_dev(input3, "name", "ev1");
+  			attr_dev(input3, "class", "svelte-1jsovbn");
+  			add_location(input3, file$6, 1281, 4, 48657);
+  			attr_dev(label2, "for", "ev1");
+  			attr_dev(label2, "class", "svelte-1jsovbn");
+  			add_location(label2, file$6, 1281, 92, 48745);
+  			attr_dev(input4, "type", "checkbox");
+  			attr_dev(input4, "id", "ev0");
+  			input4.checked = input4_checked_value = /*evnt*/ ctx[17].ev0;
+  			attr_dev(input4, "name", "ev0");
+  			attr_dev(input4, "class", "svelte-1jsovbn");
+  			add_location(input4, file$6, 1282, 4, 48793);
+  			attr_dev(label3, "for", "ev0");
+  			attr_dev(label3, "class", "svelte-1jsovbn");
+  			add_location(label3, file$6, 1282, 92, 48881);
+  			attr_dev(div4, "class", "pLine svelte-1jsovbn");
+  			add_location(div4, file$6, 1280, 3, 48633);
+  			attr_dev(div5, "class", "filtersCont svelte-1jsovbn");
+  			add_location(div5, file$6, 1274, 2, 48197);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -9534,30 +10729,67 @@ var dtp = (function () {
   			append_dev(div1, t1);
   			append_dev(div1, b);
   			insert_dev(target, t3, anchor);
-  			insert_dev(target, div3, anchor);
-  			append_dev(div3, div2);
+  			insert_dev(target, div5, anchor);
+  			append_dev(div5, div2);
   			append_dev(div2, t4);
-  			append_dev(div2, input);
-  			append_dev(div3, t5);
-  			if (if_block) if_block.m(div3, null);
-  			if (remount) dispose();
-  			dispose = listen_dev(input, "input", /*oncheckIdDtp*/ ctx[81], false, false, false);
+  			append_dev(div2, input0);
+  			append_dev(div5, t5);
+  			append_dev(div5, div3);
+  			append_dev(div3, input1);
+  			append_dev(div3, label0);
+  			append_dev(div3, t7);
+  			append_dev(div3, input2);
+  			append_dev(div3, label1);
+  			append_dev(div5, t9);
+  			append_dev(div5, div4);
+  			append_dev(div4, input3);
+  			append_dev(div4, label2);
+  			append_dev(div4, t11);
+  			append_dev(div4, input4);
+  			append_dev(div4, label3);
+  			append_dev(div5, t13);
+  			if (if_block) if_block.m(div5, null);
+  			if (remount) run_all(dispose);
+
+  			dispose = [
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*oncheckDps*/ ctx[91], false, false, false),
+  				listen_dev(input2, "change", /*oncheckDps*/ ctx[91], false, false, false),
+  				listen_dev(input3, "change", /*oncheckEvents*/ ctx[92], false, false, false),
+  				listen_dev(input4, "change", /*oncheckEvents*/ ctx[92], false, false, false)
+  			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (/*optDataGibdd*/ ctx[59].collision_type) if_block.p(ctx, dirty);
+  			if (dirty[0] & /*dps*/ 65536 && input1_checked_value !== (input1_checked_value = /*dps*/ ctx[16].Dps1)) {
+  				prop_dev(input1, "checked", input1_checked_value);
+  			}
+
+  			if (dirty[0] & /*dps*/ 65536 && input2_checked_value !== (input2_checked_value = /*dps*/ ctx[16].Dps0)) {
+  				prop_dev(input2, "checked", input2_checked_value);
+  			}
+
+  			if (dirty[0] & /*evnt*/ 131072 && input3_checked_value !== (input3_checked_value = /*evnt*/ ctx[17].ev1)) {
+  				prop_dev(input3, "checked", input3_checked_value);
+  			}
+
+  			if (dirty[0] & /*evnt*/ 131072 && input4_checked_value !== (input4_checked_value = /*evnt*/ ctx[17].ev0)) {
+  				prop_dev(input4, "checked", input4_checked_value);
+  			}
+
+  			if (/*optDataGibdd*/ ctx[63].collision_type) if_block.p(ctx, dirty);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t0);
   			if (detaching) detach_dev(div1);
   			if (detaching) detach_dev(t3);
-  			if (detaching) detach_dev(div3);
+  			if (detaching) detach_dev(div5);
   			if (if_block) if_block.d();
-  			dispose();
+  			run_all(dispose);
   		}
   	};
 
@@ -9565,20 +10797,20 @@ var dtp = (function () {
   		block,
   		id: create_if_block_3$1.name,
   		type: "if",
-  		source: "(1199:2) {#if DtpGibdd._map}",
+  		source: "(1272:2) {#if DtpGibdd._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1204:3) {#if optDataGibdd.collision_type}
+  // (1285:3) {#if optDataGibdd.collision_type}
   function create_if_block_4$1(ctx) {
   	let div;
   	let select;
   	let option;
   	let dispose;
-  	let each_value_1 = /*optCollisionGibddKeys*/ ctx[60];
+  	let each_value_1 = /*optCollisionGibddKeys*/ ctx[64];
   	validate_each_argument(each_value_1);
   	let each_blocks = [];
 
@@ -9593,7 +10825,7 @@ var dtp = (function () {
   			option = element("option");
 
   			option.textContent = `
-						Все типы (${/*optCollisionGibddKeys*/ ctx[60].reduce(/*func_9*/ ctx[162], 0)})
+						Все типы (${/*optCollisionGibddKeys*/ ctx[64].reduce(/*func_10*/ ctx[173], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -9603,13 +10835,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$5, 1206, 5, 46062);
+  			add_location(option, file$6, 1287, 5, 49112);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
-  			if (/*collision_type_gibdd*/ ctx[20] === void 0) add_render_callback(() => /*select_change_handler_3*/ ctx[163].call(select));
-  			add_location(select, file$5, 1205, 4, 45949);
+  			if (/*collision_type_gibdd*/ ctx[23] === void 0) add_render_callback(() => /*select_change_handler_4*/ ctx[174].call(select));
+  			add_location(select, file$6, 1286, 4, 48999);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$5, 1204, 3, 45925);
+  			add_location(div, file$6, 1285, 3, 48975);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -9620,17 +10852,17 @@ var dtp = (function () {
   				each_blocks[i].m(select, null);
   			}
 
-  			select_options(select, /*collision_type_gibdd*/ ctx[20]);
+  			select_options(select, /*collision_type_gibdd*/ ctx[23]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(select, "change", /*select_change_handler_3*/ ctx[163]),
-  				listen_dev(select, "change", /*setFilterGibdd*/ ctx[88], false, false, false)
+  				listen_dev(select, "change", /*select_change_handler_4*/ ctx[174]),
+  				listen_dev(select, "change", /*setFilterGibdd*/ ctx[97], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[1] & /*optCollisionGibddKeys, optDataGibdd*/ 805306368) {
-  				each_value_1 = /*optCollisionGibddKeys*/ ctx[60];
+  			if (dirty[2] & /*optCollisionGibddKeys, optDataGibdd*/ 6) {
+  				each_value_1 = /*optCollisionGibddKeys*/ ctx[64];
   				validate_each_argument(each_value_1);
   				let i;
 
@@ -9653,8 +10885,8 @@ var dtp = (function () {
   				each_blocks.length = each_value_1.length;
   			}
 
-  			if (dirty[0] & /*collision_type_gibdd*/ 1048576) {
-  				select_options(select, /*collision_type_gibdd*/ ctx[20]);
+  			if (dirty[0] & /*collision_type_gibdd*/ 8388608) {
+  				select_options(select, /*collision_type_gibdd*/ ctx[23]);
   			}
   		},
   		d: function destroy(detaching) {
@@ -9668,21 +10900,21 @@ var dtp = (function () {
   		block,
   		id: create_if_block_4$1.name,
   		type: "if",
-  		source: "(1204:3) {#if optDataGibdd.collision_type}",
+  		source: "(1285:3) {#if optDataGibdd.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1210:5) {#each optCollisionGibddKeys as key}
+  // (1291:5) {#each optCollisionGibddKeys as key}
   function create_each_block_1$2(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataGibdd*/ ctx[59].collision_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataGibdd*/ ctx[63].collision_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -9696,10 +10928,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibdd*/ ctx[59].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 1210, 6, 46256);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibdd*/ ctx[63].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1291, 6, 49306);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -9719,14 +10951,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_1$2.name,
   		type: "each",
-  		source: "(1210:5) {#each optCollisionGibddKeys as key}",
+  		source: "(1291:5) {#each optCollisionGibddKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1221:2) {#if DtpGibddRub._map}
+  // (1302:2) {#if DtpGibddRub._map}
   function create_if_block_1$2(ctx) {
   	let div0;
   	let hr;
@@ -9748,7 +10980,7 @@ var dtp = (function () {
   	let t9;
   	let div4;
   	let dispose;
-  	let if_block = /*optDataGibddRub*/ ctx[61].collision_type && create_if_block_2$1(ctx);
+  	let if_block = /*optDataGibddRub*/ ctx[65].collision_type && create_if_block_2$1(ctx);
 
   	const block = {
   		c: function create() {
@@ -9776,36 +11008,36 @@ var dtp = (function () {
   			div4 = element("div");
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$5, 1221, 21, 46502);
+  			add_location(hr, file$6, 1302, 21, 49552);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1221, 2, 46483);
-  			add_location(b, file$5, 1222, 31, 46544);
+  			add_location(div0, file$6, 1302, 2, 49533);
+  			add_location(b, file$6, 1303, 31, 49594);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1222, 2, 46515);
+  			add_location(div1, file$6, 1303, 2, 49565);
   			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[14];
+  			input0.value = /*id_dtp*/ ctx[15];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 1223, 30, 46606);
+  			add_location(input0, file$6, 1304, 30, 49656);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 1223, 3, 46579);
+  			add_location(div2, file$6, 1304, 3, 49629);
   			attr_dev(input1, "type", "checkbox");
   			attr_dev(input1, "name", "list_rubOn");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$5, 1225, 3, 46698);
+  			add_location(input1, file$6, 1306, 3, 49748);
   			attr_dev(label0, "for", "list_rubOn");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 1225, 100, 46795);
+  			add_location(label0, file$6, 1306, 100, 49845);
   			attr_dev(input2, "type", "checkbox");
   			attr_dev(input2, "name", "list_rubOff");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$5, 1226, 3, 46844);
+  			add_location(input2, file$6, 1307, 3, 49894);
   			attr_dev(label1, "for", "list_rubOff");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 1226, 102, 46943);
+  			add_location(label1, file$6, 1307, 102, 49993);
   			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$5, 1224, 2, 46675);
+  			add_location(div3, file$6, 1305, 2, 49725);
   			attr_dev(div4, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div4, file$5, 1228, 2, 47002);
+  			add_location(div4, file$6, 1309, 2, 50052);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -9821,11 +11053,11 @@ var dtp = (function () {
   			insert_dev(target, t5, anchor);
   			insert_dev(target, div3, anchor);
   			append_dev(div3, input1);
-  			input1.checked = /*list_rubOn*/ ctx[30];
+  			input1.checked = /*list_rubOn*/ ctx[34];
   			append_dev(div3, label0);
   			append_dev(div3, t7);
   			append_dev(div3, input2);
-  			input2.checked = /*list_rubOff*/ ctx[31];
+  			input2.checked = /*list_rubOff*/ ctx[35];
   			append_dev(div3, label1);
   			insert_dev(target, t9, anchor);
   			insert_dev(target, div4, anchor);
@@ -9833,27 +11065,27 @@ var dtp = (function () {
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[81], false, false, false),
-  				listen_dev(input1, "change", /*input1_change_handler_5*/ ctx[164]),
-  				listen_dev(input1, "change", /*setFilterGibddRub*/ ctx[87], false, false, false),
-  				listen_dev(input2, "change", /*input2_change_handler_4*/ ctx[165]),
-  				listen_dev(input2, "change", /*setFilterGibddRub*/ ctx[87], false, false, false)
+  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[88], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_handler_5*/ ctx[175]),
+  				listen_dev(input1, "change", /*setFilterGibddRub*/ ctx[96], false, false, false),
+  				listen_dev(input2, "change", /*input2_change_handler_4*/ ctx[176]),
+  				listen_dev(input2, "change", /*setFilterGibddRub*/ ctx[96], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 16384 && input0.value !== /*id_dtp*/ ctx[14]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[14]);
+  			if (dirty[0] & /*id_dtp*/ 32768 && input0.value !== /*id_dtp*/ ctx[15]) {
+  				prop_dev(input0, "value", /*id_dtp*/ ctx[15]);
   			}
 
-  			if (dirty[0] & /*list_rubOn*/ 1073741824) {
-  				input1.checked = /*list_rubOn*/ ctx[30];
+  			if (dirty[1] & /*list_rubOn*/ 8) {
+  				input1.checked = /*list_rubOn*/ ctx[34];
   			}
 
-  			if (dirty[1] & /*list_rubOff*/ 1) {
-  				input2.checked = /*list_rubOff*/ ctx[31];
+  			if (dirty[1] & /*list_rubOff*/ 16) {
+  				input2.checked = /*list_rubOff*/ ctx[35];
   			}
 
-  			if (/*optDataGibddRub*/ ctx[61].collision_type) if_block.p(ctx, dirty);
+  			if (/*optDataGibddRub*/ ctx[65].collision_type) if_block.p(ctx, dirty);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
@@ -9874,20 +11106,20 @@ var dtp = (function () {
   		block,
   		id: create_if_block_1$2.name,
   		type: "if",
-  		source: "(1221:2) {#if DtpGibddRub._map}",
+  		source: "(1302:2) {#if DtpGibddRub._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1230:3) {#if optDataGibddRub.collision_type}
+  // (1311:3) {#if optDataGibddRub.collision_type}
   function create_if_block_2$1(ctx) {
   	let div;
   	let select;
   	let option;
   	let dispose;
-  	let each_value = /*optCollisionGibddRubKeys*/ ctx[62];
+  	let each_value = /*optCollisionGibddRubKeys*/ ctx[66];
   	validate_each_argument(each_value);
   	let each_blocks = [];
 
@@ -9902,7 +11134,7 @@ var dtp = (function () {
   			option = element("option");
 
   			option.textContent = `
-						Все типы (${/*optCollisionGibddRubKeys*/ ctx[62].reduce(/*func_10*/ ctx[166], 0)})
+						Все типы (${/*optCollisionGibddRubKeys*/ ctx[66].reduce(/*func_11*/ ctx[177], 0)})
 					`;
 
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -9912,13 +11144,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$5, 1232, 5, 47214);
+  			add_location(option, file$6, 1313, 5, 50264);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
-  			if (/*collision_type_gibddRub*/ ctx[21] === void 0) add_render_callback(() => /*select_change_handler_4*/ ctx[167].call(select));
-  			add_location(select, file$5, 1231, 4, 47095);
+  			if (/*collision_type_gibddRub*/ ctx[24] === void 0) add_render_callback(() => /*select_change_handler_5*/ ctx[178].call(select));
+  			add_location(select, file$6, 1312, 4, 50145);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$5, 1230, 3, 47071);
+  			add_location(div, file$6, 1311, 3, 50121);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -9929,17 +11161,17 @@ var dtp = (function () {
   				each_blocks[i].m(select, null);
   			}
 
-  			select_options(select, /*collision_type_gibddRub*/ ctx[21]);
+  			select_options(select, /*collision_type_gibddRub*/ ctx[24]);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(select, "change", /*select_change_handler_4*/ ctx[167]),
-  				listen_dev(select, "change", /*setFilterGibddRub*/ ctx[87], false, false, false)
+  				listen_dev(select, "change", /*select_change_handler_5*/ ctx[178]),
+  				listen_dev(select, "change", /*setFilterGibddRub*/ ctx[96], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[1] & /*optDataGibddRub*/ 1073741824 | dirty[2] & /*optCollisionGibddRubKeys*/ 1) {
-  				each_value = /*optCollisionGibddRubKeys*/ ctx[62];
+  			if (dirty[2] & /*optCollisionGibddRubKeys, optDataGibddRub*/ 24) {
+  				each_value = /*optCollisionGibddRubKeys*/ ctx[66];
   				validate_each_argument(each_value);
   				let i;
 
@@ -9962,8 +11194,8 @@ var dtp = (function () {
   				each_blocks.length = each_value.length;
   			}
 
-  			if (dirty[0] & /*collision_type_gibddRub*/ 2097152) {
-  				select_options(select, /*collision_type_gibddRub*/ ctx[21]);
+  			if (dirty[0] & /*collision_type_gibddRub*/ 16777216) {
+  				select_options(select, /*collision_type_gibddRub*/ ctx[24]);
   			}
   		},
   		d: function destroy(detaching) {
@@ -9977,21 +11209,21 @@ var dtp = (function () {
   		block,
   		id: create_if_block_2$1.name,
   		type: "if",
-  		source: "(1230:3) {#if optDataGibddRub.collision_type}",
+  		source: "(1311:3) {#if optDataGibddRub.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1236:5) {#each optCollisionGibddRubKeys as key}
+  // (1317:5) {#each optCollisionGibddRubKeys as key}
   function create_each_block$4(ctx) {
   	let option;
   	let t0;
-  	let t1_value = /*optDataGibddRub*/ ctx[61].collision_type[/*key*/ ctx[170]] + "";
+  	let t1_value = /*optDataGibddRub*/ ctx[65].collision_type[/*key*/ ctx[181]] + "";
   	let t1;
   	let t2;
-  	let t3_value = /*key*/ ctx[170] + "";
+  	let t3_value = /*key*/ ctx[181] + "";
   	let t3;
   	let t4;
   	let option_value_value;
@@ -10005,10 +11237,10 @@ var dtp = (function () {
   			t2 = text(") - ");
   			t3 = text(t3_value);
   			t4 = space();
-  			option.__value = option_value_value = /*key*/ ctx[170];
+  			option.__value = option_value_value = /*key*/ ctx[181];
   			option.value = option.__value;
-  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibddRub*/ ctx[61].iconType[/*key*/ ctx[170]] + " svelte-1jsovbn");
-  			add_location(option, file$5, 1236, 6, 47417);
+  			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibddRub*/ ctx[65].iconType[/*key*/ ctx[181]] + " svelte-1jsovbn");
+  			add_location(option, file$6, 1317, 6, 50467);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -10028,14 +11260,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block$4.name,
   		type: "each",
-  		source: "(1236:5) {#each optCollisionGibddRubKeys as key}",
+  		source: "(1317:5) {#each optCollisionGibddRubKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1247:2) {#if Rub._map}
+  // (1328:2) {#if Rub._map}
   function create_if_block$3(ctx) {
   	let div0;
   	let hr;
@@ -10073,30 +11305,30 @@ var dtp = (function () {
   			label1 = element("label");
   			label1.textContent = "-  нет комплексов";
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$5, 1247, 21, 47661);
+  			add_location(hr, file$6, 1328, 21, 50711);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$5, 1247, 2, 47642);
-  			add_location(b, file$5, 1248, 31, 47703);
+  			add_location(div0, file$6, 1328, 2, 50692);
+  			add_location(b, file$6, 1329, 31, 50753);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$5, 1248, 2, 47674);
+  			add_location(div1, file$6, 1329, 2, 50724);
   			attr_dev(input0, "type", "checkbox");
   			attr_dev(input0, "name", "comp1");
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$5, 1251, 4, 47779);
+  			add_location(input0, file$6, 1332, 4, 50829);
   			attr_dev(label0, "for", "comp1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$5, 1251, 82, 47857);
+  			add_location(label0, file$6, 1332, 82, 50907);
   			attr_dev(input1, "type", "checkbox");
   			attr_dev(input1, "name", "comp");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$5, 1252, 4, 47906);
+  			add_location(input1, file$6, 1333, 4, 50956);
   			attr_dev(label1, "for", "comp");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$5, 1252, 82, 47984);
+  			add_location(label1, file$6, 1333, 82, 51034);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$5, 1250, 3, 47755);
+  			add_location(div2, file$6, 1331, 3, 50805);
   			attr_dev(div3, "class", "filtersCont");
-  			add_location(div3, file$5, 1249, 2, 47726);
+  			add_location(div3, file$6, 1330, 2, 50776);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -10109,28 +11341,28 @@ var dtp = (function () {
   			insert_dev(target, div3, anchor);
   			append_dev(div3, div2);
   			append_dev(div2, input0);
-  			input0.checked = /*compOn*/ ctx[26];
+  			input0.checked = /*compOn*/ ctx[29];
   			append_dev(div2, label0);
   			append_dev(div2, t5);
   			append_dev(div2, input1);
-  			input1.checked = /*comp1On*/ ctx[27];
+  			input1.checked = /*comp1On*/ ctx[30];
   			append_dev(div2, label1);
   			if (remount) run_all(dispose);
 
   			dispose = [
-  				listen_dev(input0, "change", /*input0_change_handler*/ ctx[168]),
-  				listen_dev(input0, "change", /*setComp*/ ctx[78], false, false, false),
-  				listen_dev(input1, "change", /*input1_change_handler_6*/ ctx[169]),
-  				listen_dev(input1, "change", /*setComp*/ ctx[78], false, false, false)
+  				listen_dev(input0, "change", /*input0_change_handler*/ ctx[179]),
+  				listen_dev(input0, "change", /*setComp*/ ctx[85], false, false, false),
+  				listen_dev(input1, "change", /*input1_change_handler_6*/ ctx[180]),
+  				listen_dev(input1, "change", /*setComp*/ ctx[85], false, false, false)
   			];
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*compOn*/ 67108864) {
-  				input0.checked = /*compOn*/ ctx[26];
+  			if (dirty[0] & /*compOn*/ 536870912) {
+  				input0.checked = /*compOn*/ ctx[29];
   			}
 
-  			if (dirty[0] & /*comp1On*/ 134217728) {
-  				input1.checked = /*comp1On*/ ctx[27];
+  			if (dirty[0] & /*comp1On*/ 1073741824) {
+  				input1.checked = /*comp1On*/ ctx[30];
   			}
   		},
   		d: function destroy(detaching) {
@@ -10147,14 +11379,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block$3.name,
   		type: "if",
-  		source: "(1247:2) {#if Rub._map}",
+  		source: "(1328:2) {#if Rub._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  function create_fragment$5(ctx) {
+  function create_fragment$6(ctx) {
   	let div;
   	let t0;
   	let t1;
@@ -10168,26 +11400,28 @@ var dtp = (function () {
   	let t9;
   	let t10;
   	let t11;
-  	let if_block0 = /*DtpHearthsPicket4*/ ctx[0]._map && /*DtpHearthsPicket4*/ ctx[0]._opt && /*DtpHearthsPicket4*/ ctx[0]._opt.years && create_if_block_18(ctx);
-  	let if_block1 = /*DtpHearthsPicket*/ ctx[1]._map && /*DtpHearthsPicket*/ ctx[1]._opt && /*DtpHearthsPicket*/ ctx[1]._opt.years && create_if_block_17(ctx);
-  	let if_block2 = /*DtpHearths5*/ ctx[2]._map && /*DtpHearths5*/ ctx[2]._opt && /*DtpHearths5*/ ctx[2]._opt.years && create_if_block_16(ctx);
-  	let if_block3 = /*DtpHearths3*/ ctx[3]._map && /*DtpHearths3*/ ctx[3]._opt && /*DtpHearths3*/ ctx[3]._opt.years && create_if_block_15(ctx);
-  	let if_block4 = /*DtpHearthsStat*/ ctx[9]._map && /*DtpHearthsStat*/ ctx[9]._opt && /*DtpHearthsStat*/ ctx[9]._opt.years && create_if_block_14(ctx);
-  	let if_block5 = /*DtpHearthsTmp*/ ctx[10]._map && /*DtpHearthsTmp*/ ctx[10]._opt && /*DtpHearthsTmp*/ ctx[10]._opt.years && create_if_block_13(ctx);
-  	let if_block6 = /*DtpHearths*/ ctx[11]._map && /*DtpHearths*/ ctx[11]._opt && /*DtpHearths*/ ctx[11]._opt.years && create_if_block_12(ctx);
+  	let t12;
+  	let if_block0 = /*DtpHearthsPicket4*/ ctx[0]._map && /*DtpHearthsPicket4*/ ctx[0]._opt && /*DtpHearthsPicket4*/ ctx[0]._opt.years && create_if_block_21(ctx);
+  	let if_block1 = /*DtpHearthsPicket*/ ctx[1]._map && /*DtpHearthsPicket*/ ctx[1]._opt && /*DtpHearthsPicket*/ ctx[1]._opt.years && create_if_block_20(ctx);
+  	let if_block2 = /*DtpHearths5*/ ctx[2]._map && /*DtpHearths5*/ ctx[2]._opt && /*DtpHearths5*/ ctx[2]._opt.years && create_if_block_19(ctx);
+  	let if_block3 = /*DtpHearths3*/ ctx[3]._map && /*DtpHearths3*/ ctx[3]._opt && /*DtpHearths3*/ ctx[3]._opt.years && create_if_block_18(ctx);
+  	let if_block4 = /*DtpHearthsStat*/ ctx[10]._map && /*DtpHearthsStat*/ ctx[10]._opt && /*DtpHearthsStat*/ ctx[10]._opt.years && create_if_block_17(ctx);
+  	let if_block5 = /*DtpHearthsTmp*/ ctx[11]._map && /*DtpHearthsTmp*/ ctx[11]._opt && /*DtpHearthsTmp*/ ctx[11]._opt.years && create_if_block_16(ctx);
+  	let if_block6 = /*DtpHearths*/ ctx[12]._map && /*DtpHearths*/ ctx[12]._opt && /*DtpHearths*/ ctx[12]._opt.years && create_if_block_15(ctx);
 
   	function select_block_type(ctx, dirty) {
-  		if (/*DtpVerifyed*/ ctx[4]._map || /*DtpSkpdi*/ ctx[5]._map || /*DtpGibdd*/ ctx[6]._map || /*DtpGibddRub*/ ctx[7]._map) return create_if_block_10;
-  		if (!/*DtpHearths*/ ctx[11]._map && !/*DtpHearthsStat*/ ctx[9]._map && !/*DtpHearthsTmp*/ ctx[10]._map && !/*DtpHearthsPicket4*/ ctx[0]._map && !/*DtpHearthsPicket*/ ctx[1]._map && !/*DtpHearths3*/ ctx[3]._map && !/*DtpHearths5*/ ctx[2]._map && !/*Rub*/ ctx[8]._map) return create_if_block_11;
+  		if (/*DtpVerifyed*/ ctx[4]._map || /*DtpSkpdi*/ ctx[5]._map || /*DtpGibdd*/ ctx[6]._map || /*DtpGibddRub*/ ctx[7]._map || /*Measures*/ ctx[9]._map) return create_if_block_12;
+  		if (!/*Measures*/ ctx[9]._map && !/*DtpHearths*/ ctx[12]._map && !/*DtpHearthsStat*/ ctx[10]._map && !/*DtpHearthsTmp*/ ctx[11]._map && !/*DtpHearthsPicket4*/ ctx[0]._map && !/*DtpHearthsPicket*/ ctx[1]._map && !/*DtpHearths3*/ ctx[3]._map && !/*DtpHearths5*/ ctx[2]._map && !/*Rub*/ ctx[8]._map) return create_if_block_14;
   	}
 
   	let current_block_type = select_block_type(ctx);
   	let if_block7 = current_block_type && current_block_type(ctx);
-  	let if_block8 = /*DtpVerifyed*/ ctx[4]._map && create_if_block_7$1(ctx);
-  	let if_block9 = /*DtpSkpdi*/ ctx[5]._map && create_if_block_5$1(ctx);
-  	let if_block10 = /*DtpGibdd*/ ctx[6]._map && create_if_block_3$1(ctx);
-  	let if_block11 = /*DtpGibddRub*/ ctx[7]._map && create_if_block_1$2(ctx);
-  	let if_block12 = /*Rub*/ ctx[8]._map && create_if_block$3(ctx);
+  	let if_block8 = /*Measures*/ ctx[9]._map && create_if_block_10(ctx);
+  	let if_block9 = /*DtpVerifyed*/ ctx[4]._map && create_if_block_7$1(ctx);
+  	let if_block10 = /*DtpSkpdi*/ ctx[5]._map && create_if_block_5$1(ctx);
+  	let if_block11 = /*DtpGibdd*/ ctx[6]._map && create_if_block_3$1(ctx);
+  	let if_block12 = /*DtpGibddRub*/ ctx[7]._map && create_if_block_1$2(ctx);
+  	let if_block13 = /*Rub*/ ctx[8]._map && create_if_block$3(ctx);
 
   	const block = {
   		c: function create() {
@@ -10217,8 +11451,10 @@ var dtp = (function () {
   			if (if_block11) if_block11.c();
   			t11 = space();
   			if (if_block12) if_block12.c();
+  			t12 = space();
+  			if (if_block13) if_block13.c();
   			attr_dev(div, "class", "mvsFilters");
-  			add_location(div, file$5, 792, 3, 24645);
+  			add_location(div, file$6, 834, 3, 25703);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -10250,13 +11486,15 @@ var dtp = (function () {
   			if (if_block11) if_block11.m(div, null);
   			append_dev(div, t11);
   			if (if_block12) if_block12.m(div, null);
+  			append_dev(div, t12);
+  			if (if_block13) if_block13.m(div, null);
   		},
   		p: function update(ctx, dirty) {
   			if (/*DtpHearthsPicket4*/ ctx[0]._map && /*DtpHearthsPicket4*/ ctx[0]._opt && /*DtpHearthsPicket4*/ ctx[0]._opt.years) {
   				if (if_block0) {
   					if_block0.p(ctx, dirty);
   				} else {
-  					if_block0 = create_if_block_18(ctx);
+  					if_block0 = create_if_block_21(ctx);
   					if_block0.c();
   					if_block0.m(div, t0);
   				}
@@ -10269,7 +11507,7 @@ var dtp = (function () {
   				if (if_block1) {
   					if_block1.p(ctx, dirty);
   				} else {
-  					if_block1 = create_if_block_17(ctx);
+  					if_block1 = create_if_block_20(ctx);
   					if_block1.c();
   					if_block1.m(div, t1);
   				}
@@ -10282,7 +11520,7 @@ var dtp = (function () {
   				if (if_block2) {
   					if_block2.p(ctx, dirty);
   				} else {
-  					if_block2 = create_if_block_16(ctx);
+  					if_block2 = create_if_block_19(ctx);
   					if_block2.c();
   					if_block2.m(div, t2);
   				}
@@ -10295,7 +11533,7 @@ var dtp = (function () {
   				if (if_block3) {
   					if_block3.p(ctx, dirty);
   				} else {
-  					if_block3 = create_if_block_15(ctx);
+  					if_block3 = create_if_block_18(ctx);
   					if_block3.c();
   					if_block3.m(div, t3);
   				}
@@ -10304,11 +11542,11 @@ var dtp = (function () {
   				if_block3 = null;
   			}
 
-  			if (/*DtpHearthsStat*/ ctx[9]._map && /*DtpHearthsStat*/ ctx[9]._opt && /*DtpHearthsStat*/ ctx[9]._opt.years) {
+  			if (/*DtpHearthsStat*/ ctx[10]._map && /*DtpHearthsStat*/ ctx[10]._opt && /*DtpHearthsStat*/ ctx[10]._opt.years) {
   				if (if_block4) {
   					if_block4.p(ctx, dirty);
   				} else {
-  					if_block4 = create_if_block_14(ctx);
+  					if_block4 = create_if_block_17(ctx);
   					if_block4.c();
   					if_block4.m(div, t4);
   				}
@@ -10317,11 +11555,11 @@ var dtp = (function () {
   				if_block4 = null;
   			}
 
-  			if (/*DtpHearthsTmp*/ ctx[10]._map && /*DtpHearthsTmp*/ ctx[10]._opt && /*DtpHearthsTmp*/ ctx[10]._opt.years) {
+  			if (/*DtpHearthsTmp*/ ctx[11]._map && /*DtpHearthsTmp*/ ctx[11]._opt && /*DtpHearthsTmp*/ ctx[11]._opt.years) {
   				if (if_block5) {
   					if_block5.p(ctx, dirty);
   				} else {
-  					if_block5 = create_if_block_13(ctx);
+  					if_block5 = create_if_block_16(ctx);
   					if_block5.c();
   					if_block5.m(div, t5);
   				}
@@ -10330,11 +11568,11 @@ var dtp = (function () {
   				if_block5 = null;
   			}
 
-  			if (/*DtpHearths*/ ctx[11]._map && /*DtpHearths*/ ctx[11]._opt && /*DtpHearths*/ ctx[11]._opt.years) {
+  			if (/*DtpHearths*/ ctx[12]._map && /*DtpHearths*/ ctx[12]._opt && /*DtpHearths*/ ctx[12]._opt.years) {
   				if (if_block6) {
   					if_block6.p(ctx, dirty);
   				} else {
-  					if_block6 = create_if_block_12(ctx);
+  					if_block6 = create_if_block_15(ctx);
   					if_block6.c();
   					if_block6.m(div, t6);
   				}
@@ -10355,11 +11593,11 @@ var dtp = (function () {
   				}
   			}
 
-  			if (/*DtpVerifyed*/ ctx[4]._map) {
+  			if (/*Measures*/ ctx[9]._map) {
   				if (if_block8) {
   					if_block8.p(ctx, dirty);
   				} else {
-  					if_block8 = create_if_block_7$1(ctx);
+  					if_block8 = create_if_block_10(ctx);
   					if_block8.c();
   					if_block8.m(div, t8);
   				}
@@ -10368,11 +11606,11 @@ var dtp = (function () {
   				if_block8 = null;
   			}
 
-  			if (/*DtpSkpdi*/ ctx[5]._map) {
+  			if (/*DtpVerifyed*/ ctx[4]._map) {
   				if (if_block9) {
   					if_block9.p(ctx, dirty);
   				} else {
-  					if_block9 = create_if_block_5$1(ctx);
+  					if_block9 = create_if_block_7$1(ctx);
   					if_block9.c();
   					if_block9.m(div, t9);
   				}
@@ -10381,11 +11619,11 @@ var dtp = (function () {
   				if_block9 = null;
   			}
 
-  			if (/*DtpGibdd*/ ctx[6]._map) {
+  			if (/*DtpSkpdi*/ ctx[5]._map) {
   				if (if_block10) {
   					if_block10.p(ctx, dirty);
   				} else {
-  					if_block10 = create_if_block_3$1(ctx);
+  					if_block10 = create_if_block_5$1(ctx);
   					if_block10.c();
   					if_block10.m(div, t10);
   				}
@@ -10394,11 +11632,11 @@ var dtp = (function () {
   				if_block10 = null;
   			}
 
-  			if (/*DtpGibddRub*/ ctx[7]._map) {
+  			if (/*DtpGibdd*/ ctx[6]._map) {
   				if (if_block11) {
   					if_block11.p(ctx, dirty);
   				} else {
-  					if_block11 = create_if_block_1$2(ctx);
+  					if_block11 = create_if_block_3$1(ctx);
   					if_block11.c();
   					if_block11.m(div, t11);
   				}
@@ -10407,17 +11645,30 @@ var dtp = (function () {
   				if_block11 = null;
   			}
 
-  			if (/*Rub*/ ctx[8]._map) {
+  			if (/*DtpGibddRub*/ ctx[7]._map) {
   				if (if_block12) {
   					if_block12.p(ctx, dirty);
   				} else {
-  					if_block12 = create_if_block$3(ctx);
+  					if_block12 = create_if_block_1$2(ctx);
   					if_block12.c();
-  					if_block12.m(div, null);
+  					if_block12.m(div, t12);
   				}
   			} else if (if_block12) {
   				if_block12.d(1);
   				if_block12 = null;
+  			}
+
+  			if (/*Rub*/ ctx[8]._map) {
+  				if (if_block13) {
+  					if_block13.p(ctx, dirty);
+  				} else {
+  					if_block13 = create_if_block$3(ctx);
+  					if_block13.c();
+  					if_block13.m(div, null);
+  				}
+  			} else if (if_block13) {
+  				if_block13.d(1);
+  				if_block13 = null;
   			}
   		},
   		i: noop,
@@ -10441,12 +11692,13 @@ var dtp = (function () {
   			if (if_block10) if_block10.d();
   			if (if_block11) if_block11.d();
   			if (if_block12) if_block12.d();
+  			if (if_block13) if_block13.d();
   		}
   	};
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$5.name,
+  		id: create_fragment$6.name,
   		type: "component",
   		source: "",
   		ctx
@@ -10455,7 +11707,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$5($$self, $$props, $$invalidate) {
+  function instance$6($$self, $$props, $$invalidate) {
   	let { DtpHearthsPicket4 } = $$props;
   	let { DtpHearthsPicket } = $$props;
   	let { DtpHearths5 } = $$props;
@@ -10468,7 +11720,14 @@ var dtp = (function () {
   	let { DtpGibdd } = $$props;
   	let { DtpGibddRub } = $$props;
   	let { Rub } = $$props;
+  	let { Measures } = $$props;
   	let { control } = $$props;
+
+  	if (!Measures) {
+  		Measures = {};
+  	}
+
+  	
 
   	if (!Rub) {
   		Rub = {};
@@ -10542,6 +11801,8 @@ var dtp = (function () {
   	? Object.keys(optDataGibdd.collision_type).sort((a, b) => optDataGibdd.collision_type[b] - optDataGibdd.collision_type[a])
   	: [];
 
+  	let dps = { "Dps1": true, "Dps0": true };
+  	let evnt = { "ev1": true, "ev0": true };
   	let optDataGibddRub = (DtpGibddRub || {})._opt || {};
 
   	let optCollisionGibddRubKeys = optDataGibddRub.collision_type
@@ -10590,6 +11851,12 @@ var dtp = (function () {
   	? Object.keys(optDataHearthsPicket4.road).sort((a, b) => optDataHearthsPicket4.road[b] - optDataHearthsPicket4.road[a])
   	: [];
 
+  	let optMeasures = Measures._opt || {};
+
+  	let optMeasuresKeys = optMeasures.type
+  	? Object.keys(optMeasures.type).sort((a, b) => optMeasures.type[b] - optMeasures.type[a])
+  	: [];
+
   	let roads = [""];
   	let ht = { "hearth3": true, "hearth5": true };
   	let id_hearth = null;
@@ -10624,8 +11891,27 @@ var dtp = (function () {
 
   	let compOn = _comps.zn.on;
   	let comp1On = _comps.zn.off;
+  	let measures_type = [];
 
-  	// console.log('optDataHearthsPicket', optRoadTypes, optDataHearthsPicket);
+  	const setFilterMeasures = () => {
+  		if (Measures._map) {
+  			let opt = [];
+
+  			if (measures_type.length) {
+  				opt.push({ type: "measures_type", zn: measures_type });
+  			}
+
+  			// if (id_dtp) {
+  			// opt.push({type: 'id_dtp', zn: id_dtp});
+  			// }
+  			if (dateInterval) {
+  				opt.push({ type: "date", zn: dateInterval });
+  			}
+
+  			Measures.setFilter(opt);
+  		}
+  	};
+
   	// const setListRub = (ev) => {
   	// let opt = [{type: 'comp', zn: {on: compOn, off: comp1On}}];
   	// Rub.setFilter(opt);
@@ -10668,7 +11954,7 @@ var dtp = (function () {
   	let hearths_year_Picket4 = {};
 
   	Object.keys(optDataHearthsPicket4.years || {}).sort().forEach(key => {
-  		$$invalidate(29, hearths_year_Picket4[key] = true, hearths_year_Picket4);
+  		$$invalidate(33, hearths_year_Picket4[key] = true, hearths_year_Picket4);
   	});
 
   	const setFilterHearthsPicket4 = ev => {
@@ -10682,7 +11968,7 @@ var dtp = (function () {
   				if (id !== "stricken") {
   					// hearths_stricken4 = 
   					// } else {
-  					$$invalidate(29, hearths_year_Picket4[name] = checked, hearths_year_Picket4);
+  					$$invalidate(33, hearths_year_Picket4[name] = checked, hearths_year_Picket4);
   				}
   			}
 
@@ -10729,28 +12015,43 @@ var dtp = (function () {
   		setFilterSkpdi();
   		setFilterGibdd();
   		setFilterGibddRub();
+  		setFilterMeasures();
   		setFilter();
   	};
 
   	const oncheckIdDtp = ev => {
   		let target = ev.target, value = target.value;
-  		$$invalidate(14, id_dtp = value ? value : null);
-  		$$invalidate(98, control._id_dtp = id_dtp, control);
+  		$$invalidate(15, id_dtp = value ? value : null);
+  		$$invalidate(107, control._id_dtp = id_dtp, control);
   		refresh();
   	};
 
   	const oncheckIdHearth = ev => {
   		let target = ev.target, value = target.value;
-  		$$invalidate(17, id_hearth = value ? value : null);
+  		$$invalidate(20, id_hearth = value ? value : null);
   		setFilterHearthsPicket();
   		setFilterHearthsPicket4();
   	};
 
   	const oncheckHt = ev => {
   		let target = ev.target;
-  		$$invalidate(16, ht[target.name] = target.checked, ht);
+  		$$invalidate(19, ht[target.name] = target.checked, ht);
   		setFilterHearthsPicket();
   		setFilterHearthsPicket4();
+  	};
+
+  	const oncheckDps = ev => {
+  		let target = ev.target;
+  		$$invalidate(16, dps[target.name] = target.checked, dps);
+  		setFilterGibdd();
+  	};
+
+  	const oncheckEvents = ev => {
+  		let target = ev.target;
+  		$$invalidate(17, evnt[target.name] = target.checked, evnt);
+  		setFilterGibdd();
+  		setFilterSkpdi();
+  		setFilter();
   	};
 
   	const setHeat = ev => {
@@ -10784,14 +12085,14 @@ var dtp = (function () {
 
   	const setFilter = () => {
   		if (DtpVerifyed._map) {
-  			let opt = [{ type: "itemType", zn: currentFilter }];
+  			let opt = [{ type: "evnt", zn: evnt }, { type: "itemType", zn: currentFilter }];
 
   			if (id_dtp) {
   				opt.push({ type: "id_dtp", zn: id_dtp });
   			}
 
   			if (dateInterval) {
-  				$$invalidate(98, control._dateInterval = dateInterval, control);
+  				$$invalidate(107, control._dateInterval = dateInterval, control);
   				opt.push({ type: "date", zn: dateInterval });
   			}
 
@@ -10848,7 +12149,7 @@ var dtp = (function () {
 
   	const setFilterGibdd = () => {
   		if (DtpGibdd._map) {
-  			let opt = [];
+  			let opt = [{ type: "dps", zn: dps }, { type: "evnt", zn: evnt }];
 
   			if (id_dtp) {
   				opt.push({ type: "id_dtp", zn: id_dtp });
@@ -10872,7 +12173,7 @@ var dtp = (function () {
 
   	const setFilterSkpdi = () => {
   		if (DtpSkpdi._map) {
-  			let opt = [];
+  			let opt = [{ type: "evnt", zn: evnt }];
 
   			if (id_dtp) {
   				opt.push({ type: "id_dtp", zn: id_dtp });
@@ -10948,6 +12249,7 @@ var dtp = (function () {
   				setFilter();
   				setFilterSkpdi();
   				setFilterGibdd();
+  				setFilterMeasures();
   				setFilterGibddRub();
   			},
   			toString(date, format) {
@@ -11065,7 +12367,7 @@ var dtp = (function () {
   	let last_quarter_5;
 
   	Object.keys(optDataHearths5.years || {}).sort().forEach(key => {
-  		$$invalidate(35, hearths_year_5[key] = true, hearths_year_5);
+  		$$invalidate(39, hearths_year_5[key] = true, hearths_year_5);
 
   		Object.keys(optDataHearths5.years[key]).sort().forEach(key1 => {
   			last_quarter_5 = {};
@@ -11089,12 +12391,12 @@ var dtp = (function () {
 
   			// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
   			if (id === "hearths_period_type_52") {
-  				$$invalidate(34, hearths_period_type_5 = 2);
+  				$$invalidate(38, hearths_period_type_5 = 2);
   			} else if (id === "hearths_period_type_51") {
-  				$$invalidate(34, hearths_period_type_5 = 1);
+  				$$invalidate(38, hearths_period_type_5 = 1);
   			} else if (id === "hearths_year_5") {
   				if (checked) {
-  					$$invalidate(35, hearths_year_5[name] = true, hearths_year_5);
+  					$$invalidate(39, hearths_year_5[name] = true, hearths_year_5);
   				} else {
   					delete hearths_year_5[name];
   				}
@@ -11161,7 +12463,7 @@ var dtp = (function () {
   	let last_quarter_3;
 
   	Object.keys(optDataHearths3.years || {}).sort().forEach(key => {
-  		$$invalidate(39, hearths_year_3[key] = true, hearths_year_3);
+  		$$invalidate(43, hearths_year_3[key] = true, hearths_year_3);
 
   		Object.keys(optDataHearths3.years[key]).sort().forEach(key1 => {
   			last_quarter_3 = {};
@@ -11185,12 +12487,12 @@ var dtp = (function () {
 
   			// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
   			if (id === "hearths_period_type_32") {
-  				$$invalidate(38, hearths_period_type_3 = 2);
+  				$$invalidate(42, hearths_period_type_3 = 2);
   			} else if (id === "hearths_period_type_31") {
-  				$$invalidate(38, hearths_period_type_3 = 1);
+  				$$invalidate(42, hearths_period_type_3 = 1);
   			} else if (id === "hearths_year_3") {
   				if (checked) {
-  					$$invalidate(39, hearths_year_3[name] = true, hearths_year_3);
+  					$$invalidate(43, hearths_year_3[name] = true, hearths_year_3);
   				} else {
   					delete hearths_year_3[name];
   				}
@@ -11257,7 +12559,7 @@ var dtp = (function () {
   	let last_quarter_Stat;
 
   	Object.keys(optDataHearthsStat.years || {}).sort().forEach(key => {
-  		$$invalidate(43, hearths_year_Stat[key] = true, hearths_year_Stat);
+  		$$invalidate(47, hearths_year_Stat[key] = true, hearths_year_Stat);
 
   		Object.keys(optDataHearthsStat.years[key]).sort().forEach(key1 => {
   			last_quarter_Stat = {};
@@ -11281,12 +12583,12 @@ var dtp = (function () {
 
   			// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
   			if (id === "hearths_period_type_Stat2") {
-  				$$invalidate(42, hearths_period_type_Stat = 2);
+  				$$invalidate(46, hearths_period_type_Stat = 2);
   			} else if (id === "hearths_period_type_Stat1") {
-  				$$invalidate(42, hearths_period_type_Stat = 1);
+  				$$invalidate(46, hearths_period_type_Stat = 1);
   			} else if (id === "hearths_year_Stat") {
   				if (checked) {
-  					$$invalidate(43, hearths_year_Stat[name] = true, hearths_year_Stat);
+  					$$invalidate(47, hearths_year_Stat[name] = true, hearths_year_Stat);
   				} else {
   					delete hearths_year_Stat[name];
   				}
@@ -11295,10 +12597,10 @@ var dtp = (function () {
 
   				if (checked) {
   					if (!hearths_quarter_Stat[arr[0]]) {
-  						$$invalidate(44, hearths_quarter_Stat[arr[0]] = {}, hearths_quarter_Stat);
+  						$$invalidate(48, hearths_quarter_Stat[arr[0]] = {}, hearths_quarter_Stat);
   					}
 
-  					$$invalidate(44, hearths_quarter_Stat[arr[0]][arr[1]] = true, hearths_quarter_Stat);
+  					$$invalidate(48, hearths_quarter_Stat[arr[0]][arr[1]] = true, hearths_quarter_Stat);
   				} else {
   					if (hearths_quarter_Stat[arr[0]]) {
   						delete hearths_quarter_Stat[arr[0]][arr[1]];
@@ -11353,7 +12655,7 @@ var dtp = (function () {
   	let last_quarter_tmp;
 
   	Object.keys(optDataHearthsTmp.years || {}).sort().forEach(key => {
-  		$$invalidate(48, hearths_year_tmp[key] = true, hearths_year_tmp);
+  		$$invalidate(52, hearths_year_tmp[key] = true, hearths_year_tmp);
 
   		Object.keys(optDataHearthsTmp.years[key]).sort().forEach(key1 => {
   			last_quarter_tmp = {};
@@ -11377,12 +12679,12 @@ var dtp = (function () {
 
   			// console.log('setFilterHearthsTmp', id, name, checked, hearths_period_type_tmp, hearths_year_tmp, last_quarter_tmp, ev);
   			if (id === "hearths_period_type_tmp2") {
-  				$$invalidate(47, hearths_period_type_tmp = 2);
+  				$$invalidate(51, hearths_period_type_tmp = 2);
   			} else if (id === "hearths_period_type_tmp1") {
-  				$$invalidate(47, hearths_period_type_tmp = 1);
+  				$$invalidate(51, hearths_period_type_tmp = 1);
   			} else if (id === "hearths_year_tmp") {
   				if (checked) {
-  					$$invalidate(48, hearths_year_tmp[name] = true, hearths_year_tmp);
+  					$$invalidate(52, hearths_year_tmp[name] = true, hearths_year_tmp);
   				} else {
   					delete hearths_year_tmp[name];
   				}
@@ -11391,10 +12693,10 @@ var dtp = (function () {
 
   				if (checked) {
   					if (!hearths_quarter_tmp[arr[0]]) {
-  						$$invalidate(49, hearths_quarter_tmp[arr[0]] = {}, hearths_quarter_tmp);
+  						$$invalidate(53, hearths_quarter_tmp[arr[0]] = {}, hearths_quarter_tmp);
   					}
 
-  					$$invalidate(49, hearths_quarter_tmp[arr[0]][arr[1]] = true, hearths_quarter_tmp);
+  					$$invalidate(53, hearths_quarter_tmp[arr[0]][arr[1]] = true, hearths_quarter_tmp);
   				} else {
   					if (hearths_quarter_tmp[arr[0]]) {
   						delete hearths_quarter_tmp[arr[0]][arr[1]];
@@ -11449,7 +12751,7 @@ var dtp = (function () {
   	let last_quarter;
 
   	Object.keys(optDataHearths.years || {}).sort().forEach(key => {
-  		$$invalidate(53, hearths_year[key] = true, hearths_year);
+  		$$invalidate(57, hearths_year[key] = true, hearths_year);
 
   		Object.keys(optDataHearths.years[key]).sort().forEach(key1 => {
   			last_quarter = {};
@@ -11470,12 +12772,12 @@ var dtp = (function () {
 
   			// console.log('setFilterHearths', checked, id, name, ev);
   			if (id === "hearths_period_type2") {
-  				$$invalidate(52, hearths_period_type = 2);
+  				$$invalidate(56, hearths_period_type = 2);
   			} else if (id === "hearths_period_type1") {
-  				$$invalidate(52, hearths_period_type = 1);
+  				$$invalidate(56, hearths_period_type = 1);
   			} else if (id === "hearths_year") {
   				if (checked) {
-  					$$invalidate(53, hearths_year[name] = true, hearths_year);
+  					$$invalidate(57, hearths_year[name] = true, hearths_year);
   				} else {
   					delete hearths_year[name];
   				}
@@ -11484,10 +12786,10 @@ var dtp = (function () {
 
   				if (checked) {
   					if (!hearths_quarter[arr[0]]) {
-  						$$invalidate(54, hearths_quarter[arr[0]] = {}, hearths_quarter);
+  						$$invalidate(58, hearths_quarter[arr[0]] = {}, hearths_quarter);
   					}
 
-  					$$invalidate(54, hearths_quarter[arr[0]][arr[1]] = true, hearths_quarter);
+  					$$invalidate(58, hearths_quarter[arr[0]][arr[1]] = true, hearths_quarter);
   				} else {
   					if (hearths_quarter[arr[0]]) {
   						delete hearths_quarter[arr[0]][arr[1]];
@@ -11538,6 +12840,7 @@ var dtp = (function () {
   		"DtpGibdd",
   		"DtpGibddRub",
   		"Rub",
+  		"Measures",
   		"control"
   	];
 
@@ -11551,7 +12854,7 @@ var dtp = (function () {
 
   	function input2_change_handler() {
   		hearths_period_type_Stat = this.__value;
-  		$$invalidate(42, hearths_period_type_Stat);
+  		$$invalidate(46, hearths_period_type_Stat);
   	}
 
   	const func = (p, c) => {
@@ -11561,13 +12864,13 @@ var dtp = (function () {
 
   	function select0_change_handler() {
   		roads = select_multiple_value(this);
-  		$$invalidate(15, roads);
-  		$$invalidate(76, optRoadTypes4);
+  		$$invalidate(18, roads);
+  		$$invalidate(80, optRoadTypes4);
   	}
 
   	function select1_change_handler() {
   		hearths_stricken4 = select_value(this);
-  		$$invalidate(28, hearths_stricken4);
+  		$$invalidate(32, hearths_stricken4);
   	}
 
   	const func_1 = (p, c) => {
@@ -11577,13 +12880,13 @@ var dtp = (function () {
 
   	function select_change_handler() {
   		roads = select_multiple_value(this);
-  		$$invalidate(15, roads);
-  		$$invalidate(76, optRoadTypes4);
+  		$$invalidate(18, roads);
+  		$$invalidate(80, optRoadTypes4);
   	}
 
   	function input1_change_handler() {
   		hearths_period_type_5 = this.__value;
-  		$$invalidate(34, hearths_period_type_5);
+  		$$invalidate(38, hearths_period_type_5);
   	}
 
   	const func_2 = (p, c) => {
@@ -11593,18 +12896,18 @@ var dtp = (function () {
 
   	function select0_change_handler_1() {
   		str_icon_type5 = select_multiple_value(this);
-  		$$invalidate(33, str_icon_type5);
-  		$$invalidate(72, optTypeHearths5Keys);
+  		$$invalidate(37, str_icon_type5);
+  		$$invalidate(76, optTypeHearths5Keys);
   	}
 
   	function select1_change_handler_1() {
   		hearths_stricken5 = select_value(this);
-  		$$invalidate(32, hearths_stricken5);
+  		$$invalidate(36, hearths_stricken5);
   	}
 
   	function input1_change_handler_1() {
   		hearths_period_type_3 = this.__value;
-  		$$invalidate(38, hearths_period_type_3);
+  		$$invalidate(42, hearths_period_type_3);
   	}
 
   	const func_3 = (p, c) => {
@@ -11614,23 +12917,23 @@ var dtp = (function () {
 
   	function select0_change_handler_2() {
   		str_icon_type3 = select_multiple_value(this);
-  		$$invalidate(37, str_icon_type3);
-  		$$invalidate(70, optTypeHearths3Keys);
+  		$$invalidate(41, str_icon_type3);
+  		$$invalidate(74, optTypeHearths3Keys);
   	}
 
   	function select1_change_handler_2() {
   		hearths_stricken3 = select_value(this);
-  		$$invalidate(36, hearths_stricken3);
+  		$$invalidate(40, hearths_stricken3);
   	}
 
   	function input1_change_handler_2() {
   		hearths_period_type_Stat = this.__value;
-  		$$invalidate(42, hearths_period_type_Stat);
+  		$$invalidate(46, hearths_period_type_Stat);
   	}
 
   	function input2_change_handler_1() {
   		hearths_period_type_Stat = this.__value;
-  		$$invalidate(42, hearths_period_type_Stat);
+  		$$invalidate(46, hearths_period_type_Stat);
   	}
 
   	const func_4 = (p, c) => {
@@ -11640,23 +12943,23 @@ var dtp = (function () {
 
   	function select0_change_handler_3() {
   		str_icon_typeStat = select_multiple_value(this);
-  		$$invalidate(41, str_icon_typeStat);
-  		$$invalidate(68, optTypeHearthsStatKeys);
+  		$$invalidate(45, str_icon_typeStat);
+  		$$invalidate(72, optTypeHearthsStatKeys);
   	}
 
   	function select1_change_handler_3() {
   		hearths_strickenStat = select_value(this);
-  		$$invalidate(40, hearths_strickenStat);
+  		$$invalidate(44, hearths_strickenStat);
   	}
 
   	function input1_change_handler_3() {
   		hearths_period_type_tmp = this.__value;
-  		$$invalidate(47, hearths_period_type_tmp);
+  		$$invalidate(51, hearths_period_type_tmp);
   	}
 
   	function input2_change_handler_2() {
   		hearths_period_type_tmp = this.__value;
-  		$$invalidate(47, hearths_period_type_tmp);
+  		$$invalidate(51, hearths_period_type_tmp);
   	}
 
   	const func_5 = (p, c) => {
@@ -11666,23 +12969,23 @@ var dtp = (function () {
 
   	function select0_change_handler_4() {
   		str_icon_typeTmp = select_multiple_value(this);
-  		$$invalidate(46, str_icon_typeTmp);
-  		$$invalidate(66, optTypeHearthsTmpKeys);
+  		$$invalidate(50, str_icon_typeTmp);
+  		$$invalidate(70, optTypeHearthsTmpKeys);
   	}
 
   	function select1_change_handler_4() {
   		hearths_strickenTmp = select_value(this);
-  		$$invalidate(45, hearths_strickenTmp);
+  		$$invalidate(49, hearths_strickenTmp);
   	}
 
   	function input1_change_handler_4() {
   		hearths_period_type = this.__value;
-  		$$invalidate(52, hearths_period_type);
+  		$$invalidate(56, hearths_period_type);
   	}
 
   	function input2_change_handler_3() {
   		hearths_period_type = this.__value;
-  		$$invalidate(52, hearths_period_type);
+  		$$invalidate(56, hearths_period_type);
   	}
 
   	const func_6 = (p, c) => {
@@ -11692,110 +12995,121 @@ var dtp = (function () {
 
   	function select0_change_handler_5() {
   		str_icon_type = select_multiple_value(this);
-  		$$invalidate(51, str_icon_type);
-  		$$invalidate(64, optTypeHearthsKeys);
+  		$$invalidate(55, str_icon_type);
+  		$$invalidate(68, optTypeHearthsKeys);
   	}
 
   	function select1_change_handler_5() {
   		hearths_stricken = select_value(this);
-  		$$invalidate(50, hearths_stricken);
+  		$$invalidate(54, hearths_stricken);
   	}
 
   	function input0_binding($$value) {
   		binding_callbacks[$$value ? "unshift" : "push"](() => {
-  			$$invalidate(12, begDate = $$value);
+  			$$invalidate(13, begDate = $$value);
   		});
   	}
 
   	function input1_binding($$value) {
   		binding_callbacks[$$value ? "unshift" : "push"](() => {
-  			$$invalidate(13, endDate = $$value);
+  			$$invalidate(14, endDate = $$value);
   		});
   	}
 
-  	function input2_change_input_handler() {
+  	function input0_change_input_handler() {
   		minOpacity = to_number(this.value);
-  		$$invalidate(24, minOpacity);
+  		$$invalidate(27, minOpacity);
   	}
 
-  	function input3_change_input_handler() {
+  	function input1_change_input_handler() {
   		radius = to_number(this.value);
-  		$$invalidate(22, radius);
+  		$$invalidate(25, radius);
   	}
 
-  	function input4_change_input_handler() {
+  	function input2_change_input_handler() {
   		blur = to_number(this.value);
-  		$$invalidate(23, blur);
+  		$$invalidate(26, blur);
   	}
 
-  	function input5_binding($$value) {
+  	function input3_binding($$value) {
   		binding_callbacks[$$value ? "unshift" : "push"](() => {
-  			$$invalidate(25, heatElement = $$value);
+  			$$invalidate(28, heatElement = $$value);
   		});
   	}
 
   	const func_7 = (p, c) => {
-  		p += optData.collision_type[c];
+  		p += optMeasures.type[c];
   		return p;
   	};
 
   	function select_change_handler_1() {
-  		collision_type = select_multiple_value(this);
-  		$$invalidate(18, collision_type);
-  		$$invalidate(56, optCollisionKeys);
+  		measures_type = select_multiple_value(this);
+  		$$invalidate(31, measures_type);
+  		$$invalidate(82, optMeasuresKeys);
   	}
 
   	const func_8 = (p, c) => {
-  		p += optDataSkpdi.collision_type[c];
+  		p += optData.collision_type[c];
   		return p;
   	};
 
   	function select_change_handler_2() {
-  		collision_type_skpdi = select_multiple_value(this);
-  		$$invalidate(19, collision_type_skpdi);
-  		$$invalidate(58, optCollisionSkpdiKeys);
+  		collision_type = select_multiple_value(this);
+  		$$invalidate(21, collision_type);
+  		$$invalidate(60, optCollisionKeys);
   	}
 
   	const func_9 = (p, c) => {
-  		p += optDataGibdd.collision_type[c];
+  		p += optDataSkpdi.collision_type[c];
   		return p;
   	};
 
   	function select_change_handler_3() {
-  		collision_type_gibdd = select_multiple_value(this);
-  		$$invalidate(20, collision_type_gibdd);
-  		$$invalidate(60, optCollisionGibddKeys);
-  	}
-
-  	function input1_change_handler_5() {
-  		list_rubOn = this.checked;
-  		$$invalidate(30, list_rubOn);
-  	}
-
-  	function input2_change_handler_4() {
-  		list_rubOff = this.checked;
-  		$$invalidate(31, list_rubOff);
+  		collision_type_skpdi = select_multiple_value(this);
+  		$$invalidate(22, collision_type_skpdi);
+  		$$invalidate(62, optCollisionSkpdiKeys);
   	}
 
   	const func_10 = (p, c) => {
-  		p += optDataGibddRub.collision_type[c];
+  		p += optDataGibdd.collision_type[c];
   		return p;
   	};
 
   	function select_change_handler_4() {
+  		collision_type_gibdd = select_multiple_value(this);
+  		$$invalidate(23, collision_type_gibdd);
+  		$$invalidate(64, optCollisionGibddKeys);
+  	}
+
+  	function input1_change_handler_5() {
+  		list_rubOn = this.checked;
+  		$$invalidate(34, list_rubOn);
+  	}
+
+  	function input2_change_handler_4() {
+  		list_rubOff = this.checked;
+  		$$invalidate(35, list_rubOff);
+  	}
+
+  	const func_11 = (p, c) => {
+  		p += optDataGibddRub.collision_type[c];
+  		return p;
+  	};
+
+  	function select_change_handler_5() {
   		collision_type_gibddRub = select_multiple_value(this);
-  		$$invalidate(21, collision_type_gibddRub);
-  		$$invalidate(62, optCollisionGibddRubKeys);
+  		$$invalidate(24, collision_type_gibddRub);
+  		$$invalidate(66, optCollisionGibddRubKeys);
   	}
 
   	function input0_change_handler() {
   		compOn = this.checked;
-  		$$invalidate(26, compOn);
+  		$$invalidate(29, compOn);
   	}
 
   	function input1_change_handler_6() {
   		comp1On = this.checked;
-  		$$invalidate(27, comp1On);
+  		$$invalidate(30, comp1On);
   	}
 
   	$$self.$set = $$props => {
@@ -11803,15 +13117,16 @@ var dtp = (function () {
   		if ("DtpHearthsPicket" in $$props) $$invalidate(1, DtpHearthsPicket = $$props.DtpHearthsPicket);
   		if ("DtpHearths5" in $$props) $$invalidate(2, DtpHearths5 = $$props.DtpHearths5);
   		if ("DtpHearths3" in $$props) $$invalidate(3, DtpHearths3 = $$props.DtpHearths3);
-  		if ("DtpHearthsStat" in $$props) $$invalidate(9, DtpHearthsStat = $$props.DtpHearthsStat);
-  		if ("DtpHearthsTmp" in $$props) $$invalidate(10, DtpHearthsTmp = $$props.DtpHearthsTmp);
-  		if ("DtpHearths" in $$props) $$invalidate(11, DtpHearths = $$props.DtpHearths);
+  		if ("DtpHearthsStat" in $$props) $$invalidate(10, DtpHearthsStat = $$props.DtpHearthsStat);
+  		if ("DtpHearthsTmp" in $$props) $$invalidate(11, DtpHearthsTmp = $$props.DtpHearthsTmp);
+  		if ("DtpHearths" in $$props) $$invalidate(12, DtpHearths = $$props.DtpHearths);
   		if ("DtpVerifyed" in $$props) $$invalidate(4, DtpVerifyed = $$props.DtpVerifyed);
   		if ("DtpSkpdi" in $$props) $$invalidate(5, DtpSkpdi = $$props.DtpSkpdi);
   		if ("DtpGibdd" in $$props) $$invalidate(6, DtpGibdd = $$props.DtpGibdd);
   		if ("DtpGibddRub" in $$props) $$invalidate(7, DtpGibddRub = $$props.DtpGibddRub);
   		if ("Rub" in $$props) $$invalidate(8, Rub = $$props.Rub);
-  		if ("control" in $$props) $$invalidate(98, control = $$props.control);
+  		if ("Measures" in $$props) $$invalidate(9, Measures = $$props.Measures);
+  		if ("control" in $$props) $$invalidate(107, control = $$props.control);
   	};
 
   	$$self.$capture_state = () => ({
@@ -11828,6 +13143,7 @@ var dtp = (function () {
   		DtpGibdd,
   		DtpGibddRub,
   		Rub,
+  		Measures,
   		control,
   		currentFilter,
   		currentFilterDtpHearths,
@@ -11845,6 +13161,8 @@ var dtp = (function () {
   		optCollisionSkpdiKeys,
   		optDataGibdd,
   		optCollisionGibddKeys,
+  		dps,
+  		evnt,
   		optDataGibddRub,
   		optCollisionGibddRubKeys,
   		optDataHearths,
@@ -11861,6 +13179,8 @@ var dtp = (function () {
   		optRoadTypes,
   		optDataHearthsPicket4,
   		optRoadTypes4,
+  		optMeasures,
+  		optMeasuresKeys,
   		roads,
   		ht,
   		id_hearth,
@@ -11882,6 +13202,8 @@ var dtp = (function () {
   		_comps,
   		compOn,
   		comp1On,
+  		measures_type,
+  		setFilterMeasures,
   		setComp,
   		setFilterHearthsPicket,
   		hearths_stricken4,
@@ -11891,6 +13213,8 @@ var dtp = (function () {
   		oncheckIdDtp,
   		oncheckIdHearth,
   		oncheckHt,
+  		oncheckDps,
+  		oncheckEvents,
   		setHeat,
   		setMinOpacity,
   		setFilter,
@@ -11945,98 +13269,104 @@ var dtp = (function () {
   		if ("DtpHearthsPicket" in $$props) $$invalidate(1, DtpHearthsPicket = $$props.DtpHearthsPicket);
   		if ("DtpHearths5" in $$props) $$invalidate(2, DtpHearths5 = $$props.DtpHearths5);
   		if ("DtpHearths3" in $$props) $$invalidate(3, DtpHearths3 = $$props.DtpHearths3);
-  		if ("DtpHearthsStat" in $$props) $$invalidate(9, DtpHearthsStat = $$props.DtpHearthsStat);
-  		if ("DtpHearthsTmp" in $$props) $$invalidate(10, DtpHearthsTmp = $$props.DtpHearthsTmp);
-  		if ("DtpHearths" in $$props) $$invalidate(11, DtpHearths = $$props.DtpHearths);
+  		if ("DtpHearthsStat" in $$props) $$invalidate(10, DtpHearthsStat = $$props.DtpHearthsStat);
+  		if ("DtpHearthsTmp" in $$props) $$invalidate(11, DtpHearthsTmp = $$props.DtpHearthsTmp);
+  		if ("DtpHearths" in $$props) $$invalidate(12, DtpHearths = $$props.DtpHearths);
   		if ("DtpVerifyed" in $$props) $$invalidate(4, DtpVerifyed = $$props.DtpVerifyed);
   		if ("DtpSkpdi" in $$props) $$invalidate(5, DtpSkpdi = $$props.DtpSkpdi);
   		if ("DtpGibdd" in $$props) $$invalidate(6, DtpGibdd = $$props.DtpGibdd);
   		if ("DtpGibddRub" in $$props) $$invalidate(7, DtpGibddRub = $$props.DtpGibddRub);
   		if ("Rub" in $$props) $$invalidate(8, Rub = $$props.Rub);
-  		if ("control" in $$props) $$invalidate(98, control = $$props.control);
+  		if ("Measures" in $$props) $$invalidate(9, Measures = $$props.Measures);
+  		if ("control" in $$props) $$invalidate(107, control = $$props.control);
   		if ("currentFilter" in $$props) currentFilter = $$props.currentFilter;
   		if ("currentFilterDtpHearths" in $$props) currentFilterDtpHearths = $$props.currentFilterDtpHearths;
-  		if ("begDate" in $$props) $$invalidate(12, begDate = $$props.begDate);
-  		if ("endDate" in $$props) $$invalidate(13, endDate = $$props.endDate);
-  		if ("id_dtp" in $$props) $$invalidate(14, id_dtp = $$props.id_dtp);
+  		if ("begDate" in $$props) $$invalidate(13, begDate = $$props.begDate);
+  		if ("endDate" in $$props) $$invalidate(14, endDate = $$props.endDate);
+  		if ("id_dtp" in $$props) $$invalidate(15, id_dtp = $$props.id_dtp);
   		if ("dateInterval" in $$props) dateInterval = $$props.dateInterval;
-  		if ("optData" in $$props) $$invalidate(55, optData = $$props.optData);
-  		if ("optCollisionKeys" in $$props) $$invalidate(56, optCollisionKeys = $$props.optCollisionKeys);
-  		if ("optDataSkpdi" in $$props) $$invalidate(57, optDataSkpdi = $$props.optDataSkpdi);
-  		if ("optCollisionSkpdiKeys" in $$props) $$invalidate(58, optCollisionSkpdiKeys = $$props.optCollisionSkpdiKeys);
-  		if ("optDataGibdd" in $$props) $$invalidate(59, optDataGibdd = $$props.optDataGibdd);
-  		if ("optCollisionGibddKeys" in $$props) $$invalidate(60, optCollisionGibddKeys = $$props.optCollisionGibddKeys);
-  		if ("optDataGibddRub" in $$props) $$invalidate(61, optDataGibddRub = $$props.optDataGibddRub);
-  		if ("optCollisionGibddRubKeys" in $$props) $$invalidate(62, optCollisionGibddRubKeys = $$props.optCollisionGibddRubKeys);
-  		if ("optDataHearths" in $$props) $$invalidate(63, optDataHearths = $$props.optDataHearths);
-  		if ("optTypeHearthsKeys" in $$props) $$invalidate(64, optTypeHearthsKeys = $$props.optTypeHearthsKeys);
-  		if ("optDataHearthsTmp" in $$props) $$invalidate(65, optDataHearthsTmp = $$props.optDataHearthsTmp);
-  		if ("optTypeHearthsTmpKeys" in $$props) $$invalidate(66, optTypeHearthsTmpKeys = $$props.optTypeHearthsTmpKeys);
-  		if ("optDataHearthsStat" in $$props) $$invalidate(67, optDataHearthsStat = $$props.optDataHearthsStat);
-  		if ("optTypeHearthsStatKeys" in $$props) $$invalidate(68, optTypeHearthsStatKeys = $$props.optTypeHearthsStatKeys);
-  		if ("optDataHearths3" in $$props) $$invalidate(69, optDataHearths3 = $$props.optDataHearths3);
-  		if ("optTypeHearths3Keys" in $$props) $$invalidate(70, optTypeHearths3Keys = $$props.optTypeHearths3Keys);
-  		if ("optDataHearths5" in $$props) $$invalidate(71, optDataHearths5 = $$props.optDataHearths5);
-  		if ("optTypeHearths5Keys" in $$props) $$invalidate(72, optTypeHearths5Keys = $$props.optTypeHearths5Keys);
-  		if ("optDataHearthsPicket" in $$props) $$invalidate(73, optDataHearthsPicket = $$props.optDataHearthsPicket);
-  		if ("optRoadTypes" in $$props) $$invalidate(74, optRoadTypes = $$props.optRoadTypes);
-  		if ("optDataHearthsPicket4" in $$props) $$invalidate(75, optDataHearthsPicket4 = $$props.optDataHearthsPicket4);
-  		if ("optRoadTypes4" in $$props) $$invalidate(76, optRoadTypes4 = $$props.optRoadTypes4);
-  		if ("roads" in $$props) $$invalidate(15, roads = $$props.roads);
-  		if ("ht" in $$props) $$invalidate(16, ht = $$props.ht);
-  		if ("id_hearth" in $$props) $$invalidate(17, id_hearth = $$props.id_hearth);
-  		if ("collision_type" in $$props) $$invalidate(18, collision_type = $$props.collision_type);
-  		if ("collision_type_skpdi" in $$props) $$invalidate(19, collision_type_skpdi = $$props.collision_type_skpdi);
-  		if ("collision_type_gibdd" in $$props) $$invalidate(20, collision_type_gibdd = $$props.collision_type_gibdd);
-  		if ("collision_type_gibddRub" in $$props) $$invalidate(21, collision_type_gibddRub = $$props.collision_type_gibddRub);
+  		if ("optData" in $$props) $$invalidate(59, optData = $$props.optData);
+  		if ("optCollisionKeys" in $$props) $$invalidate(60, optCollisionKeys = $$props.optCollisionKeys);
+  		if ("optDataSkpdi" in $$props) $$invalidate(61, optDataSkpdi = $$props.optDataSkpdi);
+  		if ("optCollisionSkpdiKeys" in $$props) $$invalidate(62, optCollisionSkpdiKeys = $$props.optCollisionSkpdiKeys);
+  		if ("optDataGibdd" in $$props) $$invalidate(63, optDataGibdd = $$props.optDataGibdd);
+  		if ("optCollisionGibddKeys" in $$props) $$invalidate(64, optCollisionGibddKeys = $$props.optCollisionGibddKeys);
+  		if ("dps" in $$props) $$invalidate(16, dps = $$props.dps);
+  		if ("evnt" in $$props) $$invalidate(17, evnt = $$props.evnt);
+  		if ("optDataGibddRub" in $$props) $$invalidate(65, optDataGibddRub = $$props.optDataGibddRub);
+  		if ("optCollisionGibddRubKeys" in $$props) $$invalidate(66, optCollisionGibddRubKeys = $$props.optCollisionGibddRubKeys);
+  		if ("optDataHearths" in $$props) $$invalidate(67, optDataHearths = $$props.optDataHearths);
+  		if ("optTypeHearthsKeys" in $$props) $$invalidate(68, optTypeHearthsKeys = $$props.optTypeHearthsKeys);
+  		if ("optDataHearthsTmp" in $$props) $$invalidate(69, optDataHearthsTmp = $$props.optDataHearthsTmp);
+  		if ("optTypeHearthsTmpKeys" in $$props) $$invalidate(70, optTypeHearthsTmpKeys = $$props.optTypeHearthsTmpKeys);
+  		if ("optDataHearthsStat" in $$props) $$invalidate(71, optDataHearthsStat = $$props.optDataHearthsStat);
+  		if ("optTypeHearthsStatKeys" in $$props) $$invalidate(72, optTypeHearthsStatKeys = $$props.optTypeHearthsStatKeys);
+  		if ("optDataHearths3" in $$props) $$invalidate(73, optDataHearths3 = $$props.optDataHearths3);
+  		if ("optTypeHearths3Keys" in $$props) $$invalidate(74, optTypeHearths3Keys = $$props.optTypeHearths3Keys);
+  		if ("optDataHearths5" in $$props) $$invalidate(75, optDataHearths5 = $$props.optDataHearths5);
+  		if ("optTypeHearths5Keys" in $$props) $$invalidate(76, optTypeHearths5Keys = $$props.optTypeHearths5Keys);
+  		if ("optDataHearthsPicket" in $$props) $$invalidate(77, optDataHearthsPicket = $$props.optDataHearthsPicket);
+  		if ("optRoadTypes" in $$props) $$invalidate(78, optRoadTypes = $$props.optRoadTypes);
+  		if ("optDataHearthsPicket4" in $$props) $$invalidate(79, optDataHearthsPicket4 = $$props.optDataHearthsPicket4);
+  		if ("optRoadTypes4" in $$props) $$invalidate(80, optRoadTypes4 = $$props.optRoadTypes4);
+  		if ("optMeasures" in $$props) $$invalidate(81, optMeasures = $$props.optMeasures);
+  		if ("optMeasuresKeys" in $$props) $$invalidate(82, optMeasuresKeys = $$props.optMeasuresKeys);
+  		if ("roads" in $$props) $$invalidate(18, roads = $$props.roads);
+  		if ("ht" in $$props) $$invalidate(19, ht = $$props.ht);
+  		if ("id_hearth" in $$props) $$invalidate(20, id_hearth = $$props.id_hearth);
+  		if ("collision_type" in $$props) $$invalidate(21, collision_type = $$props.collision_type);
+  		if ("collision_type_skpdi" in $$props) $$invalidate(22, collision_type_skpdi = $$props.collision_type_skpdi);
+  		if ("collision_type_gibdd" in $$props) $$invalidate(23, collision_type_gibdd = $$props.collision_type_gibdd);
+  		if ("collision_type_gibddRub" in $$props) $$invalidate(24, collision_type_gibddRub = $$props.collision_type_gibddRub);
   		if ("beg" in $$props) beg = $$props.beg;
   		if ("end" in $$props) end = $$props.end;
-  		if ("heat" in $$props) $$invalidate(77, heat = $$props.heat);
+  		if ("heat" in $$props) $$invalidate(83, heat = $$props.heat);
   		if ("heatName" in $$props) heatName = $$props.heatName;
-  		if ("radius" in $$props) $$invalidate(22, radius = $$props.radius);
-  		if ("blur" in $$props) $$invalidate(23, blur = $$props.blur);
-  		if ("minOpacity" in $$props) $$invalidate(24, minOpacity = $$props.minOpacity);
-  		if ("heatElement" in $$props) $$invalidate(25, heatElement = $$props.heatElement);
+  		if ("radius" in $$props) $$invalidate(25, radius = $$props.radius);
+  		if ("blur" in $$props) $$invalidate(26, blur = $$props.blur);
+  		if ("minOpacity" in $$props) $$invalidate(27, minOpacity = $$props.minOpacity);
+  		if ("heatElement" in $$props) $$invalidate(28, heatElement = $$props.heatElement);
   		if ("heatElementDtpGibdd" in $$props) heatElementDtpGibdd = $$props.heatElementDtpGibdd;
   		if ("heatElementDtpSkpdi" in $$props) heatElementDtpSkpdi = $$props.heatElementDtpSkpdi;
   		if ("heatElementDtpVerifyed" in $$props) heatElementDtpVerifyed = $$props.heatElementDtpVerifyed;
   		if ("_comps" in $$props) _comps = $$props._comps;
-  		if ("compOn" in $$props) $$invalidate(26, compOn = $$props.compOn);
-  		if ("comp1On" in $$props) $$invalidate(27, comp1On = $$props.comp1On);
-  		if ("hearths_stricken4" in $$props) $$invalidate(28, hearths_stricken4 = $$props.hearths_stricken4);
-  		if ("hearths_year_Picket4" in $$props) $$invalidate(29, hearths_year_Picket4 = $$props.hearths_year_Picket4);
+  		if ("compOn" in $$props) $$invalidate(29, compOn = $$props.compOn);
+  		if ("comp1On" in $$props) $$invalidate(30, comp1On = $$props.comp1On);
+  		if ("measures_type" in $$props) $$invalidate(31, measures_type = $$props.measures_type);
+  		if ("hearths_stricken4" in $$props) $$invalidate(32, hearths_stricken4 = $$props.hearths_stricken4);
+  		if ("hearths_year_Picket4" in $$props) $$invalidate(33, hearths_year_Picket4 = $$props.hearths_year_Picket4);
   		if ("_list_rub" in $$props) _list_rub = $$props._list_rub;
-  		if ("list_rubOn" in $$props) $$invalidate(30, list_rubOn = $$props.list_rubOn);
-  		if ("list_rubOff" in $$props) $$invalidate(31, list_rubOff = $$props.list_rubOff);
-  		if ("hearths_stricken5" in $$props) $$invalidate(32, hearths_stricken5 = $$props.hearths_stricken5);
-  		if ("str_icon_type5" in $$props) $$invalidate(33, str_icon_type5 = $$props.str_icon_type5);
-  		if ("hearths_period_type_5" in $$props) $$invalidate(34, hearths_period_type_5 = $$props.hearths_period_type_5);
-  		if ("hearths_year_5" in $$props) $$invalidate(35, hearths_year_5 = $$props.hearths_year_5);
+  		if ("list_rubOn" in $$props) $$invalidate(34, list_rubOn = $$props.list_rubOn);
+  		if ("list_rubOff" in $$props) $$invalidate(35, list_rubOff = $$props.list_rubOff);
+  		if ("hearths_stricken5" in $$props) $$invalidate(36, hearths_stricken5 = $$props.hearths_stricken5);
+  		if ("str_icon_type5" in $$props) $$invalidate(37, str_icon_type5 = $$props.str_icon_type5);
+  		if ("hearths_period_type_5" in $$props) $$invalidate(38, hearths_period_type_5 = $$props.hearths_period_type_5);
+  		if ("hearths_year_5" in $$props) $$invalidate(39, hearths_year_5 = $$props.hearths_year_5);
   		if ("hearths_quarter_5" in $$props) hearths_quarter_5 = $$props.hearths_quarter_5;
   		if ("last_quarter_5" in $$props) last_quarter_5 = $$props.last_quarter_5;
-  		if ("hearths_stricken3" in $$props) $$invalidate(36, hearths_stricken3 = $$props.hearths_stricken3);
-  		if ("str_icon_type3" in $$props) $$invalidate(37, str_icon_type3 = $$props.str_icon_type3);
-  		if ("hearths_period_type_3" in $$props) $$invalidate(38, hearths_period_type_3 = $$props.hearths_period_type_3);
-  		if ("hearths_year_3" in $$props) $$invalidate(39, hearths_year_3 = $$props.hearths_year_3);
+  		if ("hearths_stricken3" in $$props) $$invalidate(40, hearths_stricken3 = $$props.hearths_stricken3);
+  		if ("str_icon_type3" in $$props) $$invalidate(41, str_icon_type3 = $$props.str_icon_type3);
+  		if ("hearths_period_type_3" in $$props) $$invalidate(42, hearths_period_type_3 = $$props.hearths_period_type_3);
+  		if ("hearths_year_3" in $$props) $$invalidate(43, hearths_year_3 = $$props.hearths_year_3);
   		if ("hearths_quarter_3" in $$props) hearths_quarter_3 = $$props.hearths_quarter_3;
   		if ("last_quarter_3" in $$props) last_quarter_3 = $$props.last_quarter_3;
-  		if ("hearths_strickenStat" in $$props) $$invalidate(40, hearths_strickenStat = $$props.hearths_strickenStat);
-  		if ("str_icon_typeStat" in $$props) $$invalidate(41, str_icon_typeStat = $$props.str_icon_typeStat);
-  		if ("hearths_period_type_Stat" in $$props) $$invalidate(42, hearths_period_type_Stat = $$props.hearths_period_type_Stat);
-  		if ("hearths_year_Stat" in $$props) $$invalidate(43, hearths_year_Stat = $$props.hearths_year_Stat);
-  		if ("hearths_quarter_Stat" in $$props) $$invalidate(44, hearths_quarter_Stat = $$props.hearths_quarter_Stat);
+  		if ("hearths_strickenStat" in $$props) $$invalidate(44, hearths_strickenStat = $$props.hearths_strickenStat);
+  		if ("str_icon_typeStat" in $$props) $$invalidate(45, str_icon_typeStat = $$props.str_icon_typeStat);
+  		if ("hearths_period_type_Stat" in $$props) $$invalidate(46, hearths_period_type_Stat = $$props.hearths_period_type_Stat);
+  		if ("hearths_year_Stat" in $$props) $$invalidate(47, hearths_year_Stat = $$props.hearths_year_Stat);
+  		if ("hearths_quarter_Stat" in $$props) $$invalidate(48, hearths_quarter_Stat = $$props.hearths_quarter_Stat);
   		if ("last_quarter_Stat" in $$props) last_quarter_Stat = $$props.last_quarter_Stat;
-  		if ("hearths_strickenTmp" in $$props) $$invalidate(45, hearths_strickenTmp = $$props.hearths_strickenTmp);
-  		if ("str_icon_typeTmp" in $$props) $$invalidate(46, str_icon_typeTmp = $$props.str_icon_typeTmp);
-  		if ("hearths_period_type_tmp" in $$props) $$invalidate(47, hearths_period_type_tmp = $$props.hearths_period_type_tmp);
-  		if ("hearths_year_tmp" in $$props) $$invalidate(48, hearths_year_tmp = $$props.hearths_year_tmp);
-  		if ("hearths_quarter_tmp" in $$props) $$invalidate(49, hearths_quarter_tmp = $$props.hearths_quarter_tmp);
+  		if ("hearths_strickenTmp" in $$props) $$invalidate(49, hearths_strickenTmp = $$props.hearths_strickenTmp);
+  		if ("str_icon_typeTmp" in $$props) $$invalidate(50, str_icon_typeTmp = $$props.str_icon_typeTmp);
+  		if ("hearths_period_type_tmp" in $$props) $$invalidate(51, hearths_period_type_tmp = $$props.hearths_period_type_tmp);
+  		if ("hearths_year_tmp" in $$props) $$invalidate(52, hearths_year_tmp = $$props.hearths_year_tmp);
+  		if ("hearths_quarter_tmp" in $$props) $$invalidate(53, hearths_quarter_tmp = $$props.hearths_quarter_tmp);
   		if ("last_quarter_tmp" in $$props) last_quarter_tmp = $$props.last_quarter_tmp;
-  		if ("hearths_stricken" in $$props) $$invalidate(50, hearths_stricken = $$props.hearths_stricken);
-  		if ("str_icon_type" in $$props) $$invalidate(51, str_icon_type = $$props.str_icon_type);
-  		if ("hearths_period_type" in $$props) $$invalidate(52, hearths_period_type = $$props.hearths_period_type);
-  		if ("hearths_year" in $$props) $$invalidate(53, hearths_year = $$props.hearths_year);
-  		if ("hearths_quarter" in $$props) $$invalidate(54, hearths_quarter = $$props.hearths_quarter);
+  		if ("hearths_stricken" in $$props) $$invalidate(54, hearths_stricken = $$props.hearths_stricken);
+  		if ("str_icon_type" in $$props) $$invalidate(55, str_icon_type = $$props.str_icon_type);
+  		if ("hearths_period_type" in $$props) $$invalidate(56, hearths_period_type = $$props.hearths_period_type);
+  		if ("hearths_year" in $$props) $$invalidate(57, hearths_year = $$props.hearths_year);
+  		if ("hearths_quarter" in $$props) $$invalidate(58, hearths_quarter = $$props.hearths_quarter);
   		if ("last_quarter" in $$props) last_quarter = $$props.last_quarter;
   	};
 
@@ -12054,12 +13384,15 @@ var dtp = (function () {
   		DtpGibdd,
   		DtpGibddRub,
   		Rub,
+  		Measures,
   		DtpHearthsStat,
   		DtpHearthsTmp,
   		DtpHearths,
   		begDate,
   		endDate,
   		id_dtp,
+  		dps,
+  		evnt,
   		roads,
   		ht,
   		id_hearth,
@@ -12073,6 +13406,7 @@ var dtp = (function () {
   		heatElement,
   		compOn,
   		comp1On,
+  		measures_type,
   		hearths_stricken4,
   		hearths_year_Picket4,
   		list_rubOn,
@@ -12122,13 +13456,18 @@ var dtp = (function () {
   		optRoadTypes,
   		optDataHearthsPicket4,
   		optRoadTypes4,
+  		optMeasures,
+  		optMeasuresKeys,
   		heat,
+  		setFilterMeasures,
   		setComp,
   		setFilterHearthsPicket,
   		setFilterHearthsPicket4,
   		oncheckIdDtp,
   		oncheckIdHearth,
   		oncheckHt,
+  		oncheckDps,
+  		oncheckEvents,
   		setHeat,
   		setMinOpacity,
   		setFilter,
@@ -12199,20 +13538,22 @@ var dtp = (function () {
   		select1_change_handler_5,
   		input0_binding,
   		input1_binding,
+  		input0_change_input_handler,
+  		input1_change_input_handler,
   		input2_change_input_handler,
-  		input3_change_input_handler,
-  		input4_change_input_handler,
-  		input5_binding,
+  		input3_binding,
   		func_7,
   		select_change_handler_1,
   		func_8,
   		select_change_handler_2,
   		func_9,
   		select_change_handler_3,
-  		input1_change_handler_5,
-  		input2_change_handler_4,
   		func_10,
   		select_change_handler_4,
+  		input1_change_handler_5,
+  		input2_change_handler_4,
+  		func_11,
+  		select_change_handler_5,
   		input0_change_handler,
   		input1_change_handler_6
   	];
@@ -12225,23 +13566,24 @@ var dtp = (function () {
   		init(
   			this,
   			options,
-  			instance$5,
-  			create_fragment$5,
+  			instance$6,
+  			create_fragment$6,
   			safe_not_equal,
   			{
   				DtpHearthsPicket4: 0,
   				DtpHearthsPicket: 1,
   				DtpHearths5: 2,
   				DtpHearths3: 3,
-  				DtpHearthsStat: 9,
-  				DtpHearthsTmp: 10,
-  				DtpHearths: 11,
+  				DtpHearthsStat: 10,
+  				DtpHearthsTmp: 11,
+  				DtpHearths: 12,
   				DtpVerifyed: 4,
   				DtpSkpdi: 5,
   				DtpGibdd: 6,
   				DtpGibddRub: 7,
   				Rub: 8,
-  				control: 98
+  				Measures: 9,
+  				control: 107
   			},
   			[-1, -1, -1, -1, -1, -1, -1, -1]
   		);
@@ -12250,7 +13592,7 @@ var dtp = (function () {
   			component: this,
   			tagName: "DtpVerifyedFilters",
   			options,
-  			id: create_fragment$5.name
+  			id: create_fragment$6.name
   		});
 
   		const { ctx } = this.$$;
@@ -12272,15 +13614,15 @@ var dtp = (function () {
   			console.warn("<DtpVerifyedFilters> was created without expected prop 'DtpHearths3'");
   		}
 
-  		if (/*DtpHearthsStat*/ ctx[9] === undefined && !("DtpHearthsStat" in props)) {
+  		if (/*DtpHearthsStat*/ ctx[10] === undefined && !("DtpHearthsStat" in props)) {
   			console.warn("<DtpVerifyedFilters> was created without expected prop 'DtpHearthsStat'");
   		}
 
-  		if (/*DtpHearthsTmp*/ ctx[10] === undefined && !("DtpHearthsTmp" in props)) {
+  		if (/*DtpHearthsTmp*/ ctx[11] === undefined && !("DtpHearthsTmp" in props)) {
   			console.warn("<DtpVerifyedFilters> was created without expected prop 'DtpHearthsTmp'");
   		}
 
-  		if (/*DtpHearths*/ ctx[11] === undefined && !("DtpHearths" in props)) {
+  		if (/*DtpHearths*/ ctx[12] === undefined && !("DtpHearths" in props)) {
   			console.warn("<DtpVerifyedFilters> was created without expected prop 'DtpHearths'");
   		}
 
@@ -12304,7 +13646,11 @@ var dtp = (function () {
   			console.warn("<DtpVerifyedFilters> was created without expected prop 'Rub'");
   		}
 
-  		if (/*control*/ ctx[98] === undefined && !("control" in props)) {
+  		if (/*Measures*/ ctx[9] === undefined && !("Measures" in props)) {
+  			console.warn("<DtpVerifyedFilters> was created without expected prop 'Measures'");
+  		}
+
+  		if (/*control*/ ctx[107] === undefined && !("control" in props)) {
   			console.warn("<DtpVerifyedFilters> was created without expected prop 'control'");
   		}
   	}
@@ -12405,6 +13751,14 @@ var dtp = (function () {
   		throw new Error("<DtpVerifyedFilters>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
   	}
 
+  	get Measures() {
+  		throw new Error("<DtpVerifyedFilters>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  	}
+
+  	set Measures(value) {
+  		throw new Error("<DtpVerifyedFilters>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  	}
+
   	get control() {
   		throw new Error("<DtpVerifyedFilters>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
   	}
@@ -12416,8 +13770,8 @@ var dtp = (function () {
 
   /* src\DtpPopupHearths.svelte generated by Svelte v3.20.1 */
 
-  const { console: console_1$3 } = globals;
-  const file$6 = "src\\DtpPopupHearths.svelte";
+  const { console: console_1$4 } = globals;
+  const file$7 = "src\\DtpPopupHearths.svelte";
 
   function get_each_context$5(ctx, list, i) {
   	const child_ctx = ctx.slice();
@@ -12457,11 +13811,11 @@ var dtp = (function () {
   			t5 = text(t5_value);
   			t6 = text(" км.");
   			attr_dev(td0, "class", "first svelte-mnr9l0");
-  			add_location(td0, file$6, 26, 5, 646);
-  			add_location(b0, file$6, 27, 13, 691);
-  			add_location(b1, file$6, 27, 56, 734);
-  			add_location(td1, file$6, 27, 5, 683);
-  			add_location(tr, file$6, 25, 3, 636);
+  			add_location(td0, file$7, 26, 5, 646);
+  			add_location(b0, file$7, 27, 13, 691);
+  			add_location(b1, file$7, 27, 56, 734);
+  			add_location(td1, file$7, 27, 5, 683);
+  			add_location(tr, file$7, 25, 3, 636);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, tr, anchor);
@@ -12514,9 +13868,9 @@ var dtp = (function () {
   			td1 = element("td");
   			t2 = text(t2_value);
   			attr_dev(td0, "class", "first svelte-mnr9l0");
-  			add_location(td0, file$6, 32, 5, 839);
-  			add_location(td1, file$6, 33, 5, 876);
-  			add_location(tr, file$6, 31, 3, 829);
+  			add_location(td0, file$7, 32, 5, 839);
+  			add_location(td1, file$7, 33, 5, 876);
+  			add_location(tr, file$7, 31, 3, 829);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, tr, anchor);
@@ -12562,7 +13916,7 @@ var dtp = (function () {
   			div = element("div");
   			create_component(dtppopup.$$.fragment);
   			attr_dev(div, "class", "win leaflet-popup-content-wrapper  svelte-mnr9l0");
-  			add_location(div, file$6, 62, 4, 1751);
+  			add_location(div, file$7, 62, 4, 1751);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div, anchor);
@@ -12681,22 +14035,22 @@ var dtp = (function () {
   			if (if_block) if_block.c();
   			t17 = space();
   			attr_dev(li0, "class", "svelte-mnr9l0");
-  			add_location(li0, file$6, 52, 5, 1292);
+  			add_location(li0, file$7, 52, 5, 1292);
   			attr_dev(li1, "title", li1_title_value = "id: " + /*pt1*/ ctx[8].id);
   			attr_dev(li1, "class", "svelte-mnr9l0");
-  			add_location(li1, file$6, 53, 5, 1380);
-  			add_location(ul, file$6, 51, 4, 1282);
+  			add_location(li1, file$7, 53, 5, 1380);
+  			add_location(ul, file$7, 51, 4, 1282);
   			attr_dev(td0, "class", "first svelte-mnr9l0");
   			attr_dev(td0, "colspan", "2");
-  			add_location(td0, file$6, 50, 5, 1249);
-  			add_location(tr0, file$6, 49, 3, 1239);
+  			add_location(td0, file$7, 50, 5, 1249);
+  			add_location(tr0, file$7, 49, 3, 1239);
   			attr_dev(td1, "class", "first svelte-mnr9l0");
-  			add_location(td1, file$6, 59, 5, 1589);
-  			add_location(br, file$6, 60, 22, 1641);
+  			add_location(td1, file$7, 59, 5, 1589);
+  			add_location(br, file$7, 60, 22, 1641);
   			attr_dev(span, "class", "link svelte-mnr9l0");
-  			add_location(span, file$6, 60, 28, 1647);
-  			add_location(td2, file$6, 60, 5, 1624);
-  			add_location(tr1, file$6, 58, 3, 1579);
+  			add_location(span, file$7, 60, 28, 1647);
+  			add_location(td2, file$7, 60, 5, 1624);
+  			add_location(tr1, file$7, 58, 3, 1579);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, tr0, anchor);
@@ -12797,7 +14151,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function create_fragment$6(ctx) {
+  function create_fragment$7(ctx) {
   	let div3;
   	let div0;
   	let t0_value = (/*predochag*/ ctx[1] ? "Предочаг" : "Очаг") + "";
@@ -12909,28 +14263,28 @@ var dtp = (function () {
   			}
 
   			attr_dev(div0, "class", "pLine");
-  			add_location(div0, file$6, 19, 2, 361);
+  			add_location(div0, file$7, 19, 2, 361);
   			attr_dev(div1, "class", "pLine");
-  			add_location(div1, file$6, 20, 2, 458);
+  			add_location(div1, file$7, 20, 2, 458);
   			attr_dev(td0, "class", "first svelte-mnr9l0");
-  			add_location(td0, file$6, 37, 5, 943);
-  			add_location(td1, file$6, 38, 5, 982);
-  			add_location(tr0, file$6, 36, 3, 933);
+  			add_location(td0, file$7, 37, 5, 943);
+  			add_location(td1, file$7, 38, 5, 982);
+  			add_location(tr0, file$7, 36, 3, 933);
   			attr_dev(td2, "class", "first svelte-mnr9l0");
-  			add_location(td2, file$6, 41, 5, 1035);
-  			add_location(td3, file$6, 42, 5, 1073);
-  			add_location(tr1, file$6, 40, 3, 1025);
+  			add_location(td2, file$7, 41, 5, 1035);
+  			add_location(td3, file$7, 42, 5, 1073);
+  			add_location(tr1, file$7, 40, 3, 1025);
   			attr_dev(td4, "class", "first svelte-mnr9l0");
-  			add_location(td4, file$6, 45, 5, 1121);
-  			add_location(td5, file$6, 46, 5, 1158);
-  			add_location(tr2, file$6, 44, 3, 1111);
-  			add_location(tbody, file$6, 23, 3, 594);
+  			add_location(td4, file$7, 45, 5, 1121);
+  			add_location(td5, file$7, 46, 5, 1158);
+  			add_location(tr2, file$7, 44, 3, 1111);
+  			add_location(tbody, file$7, 23, 3, 594);
   			attr_dev(table, "class", "table svelte-mnr9l0");
-  			add_location(table, file$6, 22, 4, 569);
+  			add_location(table, file$7, 22, 4, 569);
   			attr_dev(div2, "class", "featureCont");
-  			add_location(div2, file$6, 21, 2, 539);
+  			add_location(div2, file$7, 21, 2, 539);
   			attr_dev(div3, "class", "mvsPopup svelte-mnr9l0");
-  			add_location(div3, file$6, 18, 1, 336);
+  			add_location(div3, file$7, 18, 1, 336);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -13077,7 +14431,7 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$6.name,
+  		id: create_fragment$7.name,
   		type: "component",
   		source: "",
   		ctx
@@ -13086,7 +14440,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$6($$self, $$props, $$invalidate) {
+  function instance$7($$self, $$props, $$invalidate) {
   	let { prp } = $$props;
   	let { predochag } = $$props;
   	let current;
@@ -13106,7 +14460,7 @@ var dtp = (function () {
   	const writable_props = ["prp", "predochag"];
 
   	Object.keys($$props).forEach(key => {
-  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$3.warn(`<DtpPopupHearths> was created with unknown prop '${key}'`);
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$4.warn(`<DtpPopupHearths> was created with unknown prop '${key}'`);
   	});
 
   	let { $$slots = {}, $$scope } = $$props;
@@ -13163,24 +14517,24 @@ var dtp = (function () {
   class DtpPopupHearths extends SvelteComponentDev {
   	constructor(options) {
   		super(options);
-  		init(this, options, instance$6, create_fragment$6, safe_not_equal, { prp: 0, predochag: 1 });
+  		init(this, options, instance$7, create_fragment$7, safe_not_equal, { prp: 0, predochag: 1 });
 
   		dispatch_dev("SvelteRegisterComponent", {
   			component: this,
   			tagName: "DtpPopupHearths",
   			options,
-  			id: create_fragment$6.name
+  			id: create_fragment$7.name
   		});
 
   		const { ctx } = this.$$;
   		const props = options.props || {};
 
   		if (/*prp*/ ctx[0] === undefined && !("prp" in props)) {
-  			console_1$3.warn("<DtpPopupHearths> was created without expected prop 'prp'");
+  			console_1$4.warn("<DtpPopupHearths> was created without expected prop 'prp'");
   		}
 
   		if (/*predochag*/ ctx[1] === undefined && !("predochag" in props)) {
-  			console_1$3.warn("<DtpPopupHearths> was created without expected prop 'predochag'");
+  			console_1$4.warn("<DtpPopupHearths> was created without expected prop 'predochag'");
   		}
   	}
 
@@ -14821,8 +16175,8 @@ var dtp = (function () {
 
   /* src\DtpPopupRub1.svelte generated by Svelte v3.20.1 */
 
-  const { console: console_1$4 } = globals;
-  const file$7 = "src\\DtpPopupRub1.svelte";
+  const { console: console_1$5 } = globals;
+  const file$8 = "src\\DtpPopupRub1.svelte";
 
   function get_each_context$6(ctx, list, i) {
   	const child_ctx = ctx.slice();
@@ -14851,7 +16205,7 @@ var dtp = (function () {
   			button = element("button");
   			t = text(t_value);
   			attr_dev(button, "class", button_class_value = "tab " + /*index*/ ctx[7] + " " + (/*index*/ ctx[7] === 0 ? "active" : "") + " svelte-h8luxq");
-  			add_location(button, file$7, 58, 5, 1720);
+  			add_location(button, file$8, 58, 5, 1720);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, button, anchor);
@@ -14965,31 +16319,31 @@ var dtp = (function () {
   			t19 = text(t19_value);
   			t20 = space();
   			attr_dev(td0, "class", "first svelte-h8luxq");
-  			add_location(td0, file$7, 62, 10, 1949);
-  			add_location(td1, file$7, 62, 42, 1981);
-  			add_location(tr0, file$7, 62, 6, 1945);
+  			add_location(td0, file$8, 62, 10, 1949);
+  			add_location(td1, file$8, 62, 42, 1981);
+  			add_location(tr0, file$8, 62, 6, 1945);
   			attr_dev(td2, "class", "first svelte-h8luxq");
-  			add_location(td2, file$7, 63, 10, 2046);
-  			add_location(td3, file$7, 63, 40, 2076);
-  			add_location(tr1, file$7, 63, 6, 2042);
+  			add_location(td2, file$8, 63, 10, 2046);
+  			add_location(td3, file$8, 63, 40, 2076);
+  			add_location(tr1, file$8, 63, 6, 2042);
   			attr_dev(td4, "class", "first svelte-h8luxq");
-  			add_location(td4, file$7, 64, 10, 2123);
-  			add_location(td5, file$7, 64, 37, 2150);
-  			add_location(tr2, file$7, 64, 6, 2119);
+  			add_location(td4, file$8, 64, 10, 2123);
+  			add_location(td5, file$8, 64, 37, 2150);
+  			add_location(tr2, file$8, 64, 6, 2119);
   			attr_dev(td6, "class", "first svelte-h8luxq");
-  			add_location(td6, file$7, 65, 10, 2196);
-  			add_location(td7, file$7, 65, 38, 2224);
-  			add_location(tr3, file$7, 65, 6, 2192);
+  			add_location(td6, file$8, 65, 10, 2196);
+  			add_location(td7, file$8, 65, 38, 2224);
+  			add_location(tr3, file$8, 65, 6, 2192);
   			attr_dev(td8, "class", "first svelte-h8luxq");
-  			add_location(td8, file$7, 66, 10, 2271);
-  			add_location(td9, file$7, 66, 51, 2312);
-  			add_location(tr4, file$7, 66, 6, 2267);
+  			add_location(td8, file$8, 66, 10, 2271);
+  			add_location(td9, file$8, 66, 51, 2312);
+  			add_location(tr4, file$8, 66, 6, 2267);
   			attr_dev(td10, "class", "first svelte-h8luxq");
-  			add_location(td10, file$7, 68, 10, 2544);
-  			add_location(td11, file$7, 68, 40, 2574);
-  			add_location(tr5, file$7, 68, 6, 2540);
+  			add_location(td10, file$8, 68, 10, 2544);
+  			add_location(td11, file$8, 68, 40, 2574);
+  			add_location(tr5, file$8, 68, 6, 2540);
   			attr_dev(table, "class", table_class_value = "tabCont " + /*index*/ ctx[7] + " " + (/*index*/ ctx[7] === 0 ? "" : "hidden") + " svelte-h8luxq");
-  			add_location(table, file$7, 61, 5, 1877);
+  			add_location(table, file$8, 61, 5, 1877);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, table, anchor);
@@ -15046,7 +16400,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function create_fragment$7(ctx) {
+  function create_fragment$8(ctx) {
   	let div2;
   	let div0;
   	let t0;
@@ -15165,37 +16519,37 @@ var dtp = (function () {
   			}
 
   			attr_dev(div0, "class", "pLine");
-  			add_location(div0, file$7, 35, 2, 1052);
+  			add_location(div0, file$8, 35, 2, 1052);
   			attr_dev(td0, "class", "first svelte-h8luxq");
-  			add_location(td0, file$7, 40, 5, 1191);
-  			add_location(td1, file$7, 41, 5, 1227);
-  			add_location(tr0, file$7, 39, 3, 1181);
+  			add_location(td0, file$8, 40, 5, 1191);
+  			add_location(td1, file$8, 41, 5, 1227);
+  			add_location(tr0, file$8, 39, 3, 1181);
   			attr_dev(td2, "class", "first svelte-h8luxq");
-  			add_location(td2, file$7, 44, 5, 1279);
+  			add_location(td2, file$8, 44, 5, 1279);
   			attr_dev(span, "title", "Скопировать в буфер обмена");
   			attr_dev(span, "class", "leaflet-gmx-icon-copy");
-  			add_location(span, file$7, 45, 29, 1343);
-  			add_location(td3, file$7, 45, 5, 1319);
-  			add_location(tr1, file$7, 43, 3, 1269);
+  			add_location(span, file$8, 45, 29, 1343);
+  			add_location(td3, file$8, 45, 5, 1319);
+  			add_location(tr1, file$8, 43, 3, 1269);
   			attr_dev(td4, "class", "first svelte-h8luxq");
-  			add_location(td4, file$7, 48, 5, 1471);
-  			add_location(td5, file$7, 49, 5, 1506);
-  			add_location(tr2, file$7, 47, 3, 1461);
+  			add_location(td4, file$8, 48, 5, 1471);
+  			add_location(td5, file$8, 49, 5, 1506);
+  			add_location(tr2, file$8, 47, 3, 1461);
   			attr_dev(td6, "class", "first svelte-h8luxq");
-  			add_location(td6, file$7, 52, 5, 1561);
-  			add_location(td7, file$7, 53, 5, 1601);
-  			add_location(tr3, file$7, 51, 3, 1551);
+  			add_location(td6, file$8, 52, 5, 1561);
+  			add_location(td7, file$8, 53, 5, 1601);
+  			add_location(tr3, file$8, 51, 3, 1551);
   			attr_dev(td8, "class", "tabs svelte-h8luxq");
   			attr_dev(td8, "colspan", "2");
-  			add_location(td8, file$7, 56, 5, 1651);
-  			add_location(tr4, file$7, 55, 3, 1641);
-  			add_location(tbody, file$7, 38, 3, 1170);
+  			add_location(td8, file$8, 56, 5, 1651);
+  			add_location(tr4, file$8, 55, 3, 1641);
+  			add_location(tbody, file$8, 38, 3, 1170);
   			attr_dev(table, "class", "table svelte-h8luxq");
-  			add_location(table, file$7, 37, 4, 1145);
+  			add_location(table, file$8, 37, 4, 1145);
   			attr_dev(div1, "class", "featureCont");
-  			add_location(div1, file$7, 36, 2, 1115);
+  			add_location(div1, file$8, 36, 2, 1115);
   			attr_dev(div2, "class", "mvsPopup svelte-h8luxq");
-  			add_location(div2, file$7, 34, 1, 1027);
+  			add_location(div2, file$8, 34, 1, 1027);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -15320,7 +16674,7 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$7.name,
+  		id: create_fragment$8.name,
   		type: "component",
   		source: "",
   		ctx
@@ -15329,7 +16683,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$7($$self, $$props, $$invalidate) {
+  function instance$8($$self, $$props, $$invalidate) {
   	let { prp } = $$props;
   	let current = 0;
 
@@ -15366,7 +16720,7 @@ var dtp = (function () {
   	const writable_props = ["prp"];
 
   	Object.keys($$props).forEach(key => {
-  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$4.warn(`<DtpPopupRub1> was created with unknown prop '${key}'`);
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$5.warn(`<DtpPopupRub1> was created with unknown prop '${key}'`);
   	});
 
   	let { $$slots = {}, $$scope } = $$props;
@@ -15401,20 +16755,20 @@ var dtp = (function () {
   class DtpPopupRub1 extends SvelteComponentDev {
   	constructor(options) {
   		super(options);
-  		init(this, options, instance$7, create_fragment$7, safe_not_equal, { prp: 0 });
+  		init(this, options, instance$8, create_fragment$8, safe_not_equal, { prp: 0 });
 
   		dispatch_dev("SvelteRegisterComponent", {
   			component: this,
   			tagName: "DtpPopupRub1",
   			options,
-  			id: create_fragment$7.name
+  			id: create_fragment$8.name
   		});
 
   		const { ctx } = this.$$;
   		const props = options.props || {};
 
   		if (/*prp*/ ctx[0] === undefined && !("prp" in props)) {
-  			console_1$4.warn("<DtpPopupRub1> was created without expected prop 'prp'");
+  			console_1$5.warn("<DtpPopupRub1> was created without expected prop 'prp'");
   		}
   	}
 
@@ -15563,8 +16917,8 @@ var dtp = (function () {
 
   /* src\DtpPopupRub.svelte generated by Svelte v3.20.1 */
 
-  const { console: console_1$5 } = globals;
-  const file$8 = "src\\DtpPopupRub.svelte";
+  const { console: console_1$6 } = globals;
+  const file$9 = "src\\DtpPopupRub.svelte";
 
   function get_each_context$7(ctx, list, i) {
   	const child_ctx = ctx.slice();
@@ -15593,7 +16947,7 @@ var dtp = (function () {
   			button = element("button");
   			t = text(t_value);
   			attr_dev(button, "class", button_class_value = "tab " + /*index*/ ctx[7] + " " + (/*index*/ ctx[7] === 0 ? "active" : "") + " svelte-h8luxq");
-  			add_location(button, file$8, 61, 5, 1760);
+  			add_location(button, file$9, 61, 5, 1760);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, button, anchor);
@@ -15683,23 +17037,23 @@ var dtp = (function () {
   			t13 = text(t13_value);
   			t14 = space();
   			attr_dev(td0, "class", "first svelte-h8luxq");
-  			add_location(td0, file$8, 65, 10, 1990);
-  			add_location(td1, file$8, 65, 42, 2022);
-  			add_location(tr0, file$8, 65, 6, 1986);
+  			add_location(td0, file$9, 65, 10, 1990);
+  			add_location(td1, file$9, 65, 42, 2022);
+  			add_location(tr0, file$9, 65, 6, 1986);
   			attr_dev(td2, "class", "first svelte-h8luxq");
-  			add_location(td2, file$8, 66, 10, 2089);
-  			add_location(td3, file$8, 66, 40, 2119);
-  			add_location(tr1, file$8, 66, 6, 2085);
+  			add_location(td2, file$9, 66, 10, 2089);
+  			add_location(td3, file$9, 66, 40, 2119);
+  			add_location(tr1, file$9, 66, 6, 2085);
   			attr_dev(td4, "class", "first svelte-h8luxq");
-  			add_location(td4, file$8, 67, 10, 2168);
-  			add_location(td5, file$8, 67, 37, 2195);
-  			add_location(tr2, file$8, 67, 6, 2164);
+  			add_location(td4, file$9, 67, 10, 2168);
+  			add_location(td5, file$9, 67, 37, 2195);
+  			add_location(tr2, file$9, 67, 6, 2164);
   			attr_dev(td6, "class", "first svelte-h8luxq");
-  			add_location(td6, file$8, 68, 10, 2243);
-  			add_location(td7, file$8, 68, 51, 2284);
-  			add_location(tr3, file$8, 68, 6, 2239);
+  			add_location(td6, file$9, 68, 10, 2243);
+  			add_location(td7, file$9, 68, 51, 2284);
+  			add_location(tr3, file$9, 68, 6, 2239);
   			attr_dev(table, "class", table_class_value = "tabCont " + /*index*/ ctx[7] + " " + (/*index*/ ctx[7] === 0 ? "" : "hidden") + " svelte-h8luxq");
-  			add_location(table, file$8, 64, 5, 1918);
+  			add_location(table, file$9, 64, 5, 1918);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, table, anchor);
@@ -15744,7 +17098,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function create_fragment$8(ctx) {
+  function create_fragment$9(ctx) {
   	let div2;
   	let div0;
   	let t0;
@@ -15877,41 +17231,41 @@ var dtp = (function () {
   			}
 
   			attr_dev(div0, "class", "pLine");
-  			add_location(div0, file$8, 34, 2, 1007);
+  			add_location(div0, file$9, 34, 2, 1007);
   			attr_dev(td0, "class", "first svelte-h8luxq");
-  			add_location(td0, file$8, 39, 5, 1146);
-  			add_location(td1, file$8, 40, 5, 1180);
-  			add_location(tr0, file$8, 38, 3, 1136);
+  			add_location(td0, file$9, 39, 5, 1146);
+  			add_location(td1, file$9, 40, 5, 1180);
+  			add_location(tr0, file$9, 38, 3, 1136);
   			attr_dev(td2, "class", "first svelte-h8luxq");
-  			add_location(td2, file$8, 43, 5, 1234);
-  			add_location(td3, file$8, 44, 5, 1270);
-  			add_location(tr1, file$8, 42, 3, 1224);
+  			add_location(td2, file$9, 43, 5, 1234);
+  			add_location(td3, file$9, 44, 5, 1270);
+  			add_location(tr1, file$9, 42, 3, 1224);
   			attr_dev(td4, "class", "first svelte-h8luxq");
-  			add_location(td4, file$8, 47, 5, 1323);
+  			add_location(td4, file$9, 47, 5, 1323);
   			attr_dev(span, "title", "Скопировать в буфер обмена");
   			attr_dev(span, "class", "leaflet-gmx-icon-copy");
-  			add_location(span, file$8, 48, 29, 1387);
-  			add_location(td5, file$8, 48, 5, 1363);
-  			add_location(tr2, file$8, 46, 3, 1313);
+  			add_location(span, file$9, 48, 29, 1387);
+  			add_location(td5, file$9, 48, 5, 1363);
+  			add_location(tr2, file$9, 46, 3, 1313);
   			attr_dev(td6, "class", "first svelte-h8luxq");
-  			add_location(td6, file$8, 51, 5, 1515);
-  			add_location(td7, file$8, 52, 5, 1550);
-  			add_location(tr3, file$8, 50, 3, 1505);
+  			add_location(td6, file$9, 51, 5, 1515);
+  			add_location(td7, file$9, 52, 5, 1550);
+  			add_location(tr3, file$9, 50, 3, 1505);
   			attr_dev(td8, "class", "first svelte-h8luxq");
-  			add_location(td8, file$8, 55, 5, 1601);
-  			add_location(td9, file$8, 56, 5, 1641);
-  			add_location(tr4, file$8, 54, 3, 1591);
+  			add_location(td8, file$9, 55, 5, 1601);
+  			add_location(td9, file$9, 56, 5, 1641);
+  			add_location(tr4, file$9, 54, 3, 1591);
   			attr_dev(td10, "class", "tabs svelte-h8luxq");
   			attr_dev(td10, "colspan", "2");
-  			add_location(td10, file$8, 59, 5, 1691);
-  			add_location(tr5, file$8, 58, 3, 1681);
-  			add_location(tbody, file$8, 37, 3, 1125);
+  			add_location(td10, file$9, 59, 5, 1691);
+  			add_location(tr5, file$9, 58, 3, 1681);
+  			add_location(tbody, file$9, 37, 3, 1125);
   			attr_dev(table, "class", "table svelte-h8luxq");
-  			add_location(table, file$8, 36, 4, 1100);
+  			add_location(table, file$9, 36, 4, 1100);
   			attr_dev(div1, "class", "featureCont");
-  			add_location(div1, file$8, 35, 2, 1070);
+  			add_location(div1, file$9, 35, 2, 1070);
   			attr_dev(div2, "class", "mvsPopup svelte-h8luxq");
-  			add_location(div2, file$8, 33, 1, 982);
+  			add_location(div2, file$9, 33, 1, 982);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -16043,7 +17397,7 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$8.name,
+  		id: create_fragment$9.name,
   		type: "component",
   		source: "",
   		ctx
@@ -16052,7 +17406,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$8($$self, $$props, $$invalidate) {
+  function instance$9($$self, $$props, $$invalidate) {
   	let { prp } = $$props;
   	let current = 0;
 
@@ -16089,7 +17443,7 @@ var dtp = (function () {
   	const writable_props = ["prp"];
 
   	Object.keys($$props).forEach(key => {
-  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$5.warn(`<DtpPopupRub> was created with unknown prop '${key}'`);
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$6.warn(`<DtpPopupRub> was created with unknown prop '${key}'`);
   	});
 
   	let { $$slots = {}, $$scope } = $$props;
@@ -16123,20 +17477,20 @@ var dtp = (function () {
   class DtpPopupRub extends SvelteComponentDev {
   	constructor(options) {
   		super(options);
-  		init(this, options, instance$8, create_fragment$8, safe_not_equal, { prp: 0 });
+  		init(this, options, instance$9, create_fragment$9, safe_not_equal, { prp: 0 });
 
   		dispatch_dev("SvelteRegisterComponent", {
   			component: this,
   			tagName: "DtpPopupRub",
   			options,
-  			id: create_fragment$8.name
+  			id: create_fragment$9.name
   		});
 
   		const { ctx } = this.$$;
   		const props = options.props || {};
 
   		if (/*prp*/ ctx[0] === undefined && !("prp" in props)) {
-  			console_1$5.warn("<DtpPopupRub> was created without expected prop 'prp'");
+  			console_1$6.warn("<DtpPopupRub> was created without expected prop 'prp'");
   		}
   	}
 
@@ -16279,10 +17633,546 @@ var dtp = (function () {
   		});
   });
 
+  /* src\MeasuresPopup.svelte generated by Svelte v3.20.1 */
+
+  const { console: console_1$7 } = globals;
+  const file$a = "src\\MeasuresPopup.svelte";
+
+  function create_fragment$a(ctx) {
+  	let div2;
+  	let div0;
+  	let t1;
+  	let div1;
+  	let table;
+  	let tbody;
+  	let tr0;
+  	let td0;
+  	let t3;
+  	let td1;
+  	let t4_value = (/*prp*/ ctx[0].type || "") + "";
+  	let t4;
+  	let t5;
+  	let tr1;
+  	let td2;
+  	let t7;
+  	let td3;
+  	let t8_value = (/*prp*/ ctx[0].id || "") + "";
+  	let t8;
+  	let t9;
+  	let tr2;
+  	let td4;
+  	let t11;
+  	let td5;
+  	let t12_value = (/*prp*/ ctx[0].dor || "") + "";
+  	let t12;
+  	let t13;
+  	let tr3;
+  	let td6;
+  	let t15;
+  	let td7;
+  	let t16_value = (/*prp*/ ctx[0].status || "") + "";
+  	let t16;
+  	let t17;
+  	let tr4;
+  	let td8;
+  	let t19;
+  	let td9;
+  	let t20_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_created) + "";
+  	let t20;
+  	let t21;
+  	let tr5;
+  	let td10;
+  	let t23;
+  	let td11;
+  	let t24_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_finish_fact) + "";
+  	let t24;
+  	let t25;
+  	let tr6;
+  	let td12;
+  	let t27;
+  	let td13;
+  	let t28_value = /*coords*/ ctx[2].lat + "";
+  	let t28;
+  	let t29;
+  	let t30_value = /*coords*/ ctx[2].lon + "";
+  	let t30;
+  	let t31;
+  	let span;
+  	let t32;
+  	let tr7;
+  	let td14;
+  	let t34;
+  	let td15;
+  	let t35_value = (/*prp*/ ctx[0].id_dtp || "") + "";
+  	let t35;
+  	let t36;
+  	let tr8;
+  	let td16;
+  	let t38;
+  	let td17;
+  	let t39_value = (/*prp*/ ctx[0].client || "") + "";
+  	let t39;
+  	let dispose;
+
+  	const block = {
+  		c: function create() {
+  			div2 = element("div");
+  			div0 = element("div");
+  			div0.textContent = "Мероприятие";
+  			t1 = space();
+  			div1 = element("div");
+  			table = element("table");
+  			tbody = element("tbody");
+  			tr0 = element("tr");
+  			td0 = element("td");
+  			td0.textContent = "Тип мероприятия:";
+  			t3 = space();
+  			td1 = element("td");
+  			t4 = text(t4_value);
+  			t5 = space();
+  			tr1 = element("tr");
+  			td2 = element("td");
+  			td2.textContent = "ID:";
+  			t7 = space();
+  			td3 = element("td");
+  			t8 = text(t8_value);
+  			t9 = space();
+  			tr2 = element("tr");
+  			td4 = element("td");
+  			td4.textContent = "Участок дороги:";
+  			t11 = space();
+  			td5 = element("td");
+  			t12 = text(t12_value);
+  			t13 = space();
+  			tr3 = element("tr");
+  			td6 = element("td");
+  			td6.textContent = "Статус:";
+  			t15 = space();
+  			td7 = element("td");
+  			t16 = text(t16_value);
+  			t17 = space();
+  			tr4 = element("tr");
+  			td8 = element("td");
+  			td8.textContent = "Дата добавления:";
+  			t19 = space();
+  			td9 = element("td");
+  			t20 = text(t20_value);
+  			t21 = space();
+  			tr5 = element("tr");
+  			td10 = element("td");
+  			td10.textContent = "Дата завершения:";
+  			t23 = space();
+  			td11 = element("td");
+  			t24 = text(t24_value);
+  			t25 = space();
+  			tr6 = element("tr");
+  			td12 = element("td");
+  			td12.textContent = "Координаты:";
+  			t27 = space();
+  			td13 = element("td");
+  			t28 = text(t28_value);
+  			t29 = space();
+  			t30 = text(t30_value);
+  			t31 = space();
+  			span = element("span");
+  			t32 = space();
+  			tr7 = element("tr");
+  			td14 = element("td");
+  			td14.textContent = "ID ДТП:";
+  			t34 = space();
+  			td15 = element("td");
+  			t35 = text(t35_value);
+  			t36 = space();
+  			tr8 = element("tr");
+  			td16 = element("td");
+  			td16.textContent = "Заказчик:";
+  			t38 = space();
+  			td17 = element("td");
+  			t39 = text(t39_value);
+  			attr_dev(div0, "class", "pLine");
+  			add_location(div0, file$a, 18, 2, 481);
+  			attr_dev(td0, "class", "first svelte-h8luxq");
+  			add_location(td0, file$a, 23, 5, 596);
+  			add_location(td1, file$a, 24, 5, 641);
+  			add_location(tr0, file$a, 22, 3, 586);
+  			attr_dev(td2, "class", "first svelte-h8luxq");
+  			add_location(td2, file$a, 27, 5, 689);
+  			add_location(td3, file$a, 28, 5, 721);
+  			add_location(tr1, file$a, 26, 3, 679);
+  			attr_dev(td4, "class", "first svelte-h8luxq");
+  			add_location(td4, file$a, 31, 5, 767);
+  			add_location(td5, file$a, 32, 5, 811);
+  			add_location(tr2, file$a, 30, 3, 757);
+  			attr_dev(td6, "class", "first svelte-h8luxq");
+  			add_location(td6, file$a, 35, 5, 858);
+  			add_location(td7, file$a, 36, 5, 894);
+  			add_location(tr3, file$a, 34, 3, 848);
+  			attr_dev(td8, "class", "first svelte-h8luxq");
+  			add_location(td8, file$a, 39, 5, 944);
+  			add_location(td9, file$a, 40, 5, 989);
+  			add_location(tr4, file$a, 38, 3, 934);
+  			attr_dev(td10, "class", "first svelte-h8luxq");
+  			add_location(td10, file$a, 43, 5, 1048);
+  			add_location(td11, file$a, 44, 5, 1093);
+  			add_location(tr5, file$a, 42, 3, 1038);
+  			attr_dev(td12, "class", "first svelte-h8luxq");
+  			add_location(td12, file$a, 47, 5, 1156);
+  			attr_dev(span, "title", "Скопировать в буфер обмена");
+  			attr_dev(span, "class", "leaflet-gmx-icon-copy");
+  			add_location(span, file$a, 48, 35, 1226);
+  			add_location(td13, file$a, 48, 5, 1196);
+  			add_location(tr6, file$a, 46, 3, 1146);
+  			attr_dev(td14, "class", "first svelte-h8luxq");
+  			add_location(td14, file$a, 51, 5, 1354);
+  			add_location(td15, file$a, 52, 5, 1390);
+  			add_location(tr7, file$a, 50, 3, 1344);
+  			attr_dev(td16, "class", "first svelte-h8luxq");
+  			add_location(td16, file$a, 55, 5, 1440);
+  			add_location(td17, file$a, 56, 5, 1478);
+  			add_location(tr8, file$a, 54, 3, 1430);
+  			add_location(tbody, file$a, 21, 3, 575);
+  			attr_dev(table, "class", "table svelte-h8luxq");
+  			add_location(table, file$a, 20, 4, 550);
+  			attr_dev(div1, "class", "featureCont");
+  			add_location(div1, file$a, 19, 2, 520);
+  			attr_dev(div2, "class", "mvsPopup svelte-h8luxq");
+  			add_location(div2, file$a, 17, 1, 456);
+  		},
+  		l: function claim(nodes) {
+  			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+  		},
+  		m: function mount(target, anchor, remount) {
+  			insert_dev(target, div2, anchor);
+  			append_dev(div2, div0);
+  			append_dev(div2, t1);
+  			append_dev(div2, div1);
+  			append_dev(div1, table);
+  			append_dev(table, tbody);
+  			append_dev(tbody, tr0);
+  			append_dev(tr0, td0);
+  			append_dev(tr0, t3);
+  			append_dev(tr0, td1);
+  			append_dev(td1, t4);
+  			append_dev(tbody, t5);
+  			append_dev(tbody, tr1);
+  			append_dev(tr1, td2);
+  			append_dev(tr1, t7);
+  			append_dev(tr1, td3);
+  			append_dev(td3, t8);
+  			append_dev(tbody, t9);
+  			append_dev(tbody, tr2);
+  			append_dev(tr2, td4);
+  			append_dev(tr2, t11);
+  			append_dev(tr2, td5);
+  			append_dev(td5, t12);
+  			append_dev(tbody, t13);
+  			append_dev(tbody, tr3);
+  			append_dev(tr3, td6);
+  			append_dev(tr3, t15);
+  			append_dev(tr3, td7);
+  			append_dev(td7, t16);
+  			append_dev(tbody, t17);
+  			append_dev(tbody, tr4);
+  			append_dev(tr4, td8);
+  			append_dev(tr4, t19);
+  			append_dev(tr4, td9);
+  			append_dev(td9, t20);
+  			append_dev(tbody, t21);
+  			append_dev(tbody, tr5);
+  			append_dev(tr5, td10);
+  			append_dev(tr5, t23);
+  			append_dev(tr5, td11);
+  			append_dev(td11, t24);
+  			append_dev(tbody, t25);
+  			append_dev(tbody, tr6);
+  			append_dev(tr6, td12);
+  			append_dev(tr6, t27);
+  			append_dev(tr6, td13);
+  			append_dev(td13, t28);
+  			append_dev(td13, t29);
+  			append_dev(td13, t30);
+  			append_dev(td13, t31);
+  			append_dev(td13, span);
+  			append_dev(tbody, t32);
+  			append_dev(tbody, tr7);
+  			append_dev(tr7, td14);
+  			append_dev(tr7, t34);
+  			append_dev(tr7, td15);
+  			append_dev(td15, t35);
+  			append_dev(tbody, t36);
+  			append_dev(tbody, tr8);
+  			append_dev(tr8, td16);
+  			append_dev(tr8, t38);
+  			append_dev(tr8, td17);
+  			append_dev(td17, t39);
+  			if (remount) dispose();
+  			dispose = listen_dev(span, "click", /*copyParent*/ ctx[1], false, false, false);
+  		},
+  		p: function update(ctx, [dirty]) {
+  			if (dirty & /*prp*/ 1 && t4_value !== (t4_value = (/*prp*/ ctx[0].type || "") + "")) set_data_dev(t4, t4_value);
+  			if (dirty & /*prp*/ 1 && t8_value !== (t8_value = (/*prp*/ ctx[0].id || "") + "")) set_data_dev(t8, t8_value);
+  			if (dirty & /*prp*/ 1 && t12_value !== (t12_value = (/*prp*/ ctx[0].dor || "") + "")) set_data_dev(t12, t12_value);
+  			if (dirty & /*prp*/ 1 && t16_value !== (t16_value = (/*prp*/ ctx[0].status || "") + "")) set_data_dev(t16, t16_value);
+  			if (dirty & /*prp*/ 1 && t20_value !== (t20_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_created) + "")) set_data_dev(t20, t20_value);
+  			if (dirty & /*prp*/ 1 && t24_value !== (t24_value = /*getDate*/ ctx[3](/*prp*/ ctx[0].date_finish_fact) + "")) set_data_dev(t24, t24_value);
+  			if (dirty & /*prp*/ 1 && t35_value !== (t35_value = (/*prp*/ ctx[0].id_dtp || "") + "")) set_data_dev(t35, t35_value);
+  			if (dirty & /*prp*/ 1 && t39_value !== (t39_value = (/*prp*/ ctx[0].client || "") + "")) set_data_dev(t39, t39_value);
+  		},
+  		i: noop,
+  		o: noop,
+  		d: function destroy(detaching) {
+  			if (detaching) detach_dev(div2);
+  			dispose();
+  		}
+  	};
+
+  	dispatch_dev("SvelteRegisterBlock", {
+  		block,
+  		id: create_fragment$a.name,
+  		type: "component",
+  		source: "",
+  		ctx
+  	});
+
+  	return block;
+  }
+
+  function instance$a($$self, $$props, $$invalidate) {
+  	let { prp } = $$props;
+
+  	const copyParent = ev => {
+  		navigator.clipboard.writeText(ev.target.parentNode.textContent).catch(err => {
+  			console.log("Something went wrong", err);
+  		});
+  	};
+
+  	let coords = prp.coords[0] || { lat: prp.lat, lon: prp.lon };
+
+  	const getDate = time => {
+  		if (!time) {
+  			return "";
+  		}
+
+  		let d = new Date(time * 1000);
+  		return d.toLocaleDateString() + " " + d.toLocaleTimeString();
+  	};
+
+  	console.log("prp ", prp);
+  	const writable_props = ["prp"];
+
+  	Object.keys($$props).forEach(key => {
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$7.warn(`<MeasuresPopup> was created with unknown prop '${key}'`);
+  	});
+
+  	let { $$slots = {}, $$scope } = $$props;
+  	validate_slots("MeasuresPopup", $$slots, []);
+
+  	$$self.$set = $$props => {
+  		if ("prp" in $$props) $$invalidate(0, prp = $$props.prp);
+  	};
+
+  	$$self.$capture_state = () => ({ prp, copyParent, coords, getDate });
+
+  	$$self.$inject_state = $$props => {
+  		if ("prp" in $$props) $$invalidate(0, prp = $$props.prp);
+  		if ("coords" in $$props) $$invalidate(2, coords = $$props.coords);
+  	};
+
+  	if ($$props && "$$inject" in $$props) {
+  		$$self.$inject_state($$props.$$inject);
+  	}
+
+  	return [prp, copyParent, coords, getDate];
+  }
+
+  class MeasuresPopup extends SvelteComponentDev {
+  	constructor(options) {
+  		super(options);
+  		init(this, options, instance$a, create_fragment$a, safe_not_equal, { prp: 0 });
+
+  		dispatch_dev("SvelteRegisterComponent", {
+  			component: this,
+  			tagName: "MeasuresPopup",
+  			options,
+  			id: create_fragment$a.name
+  		});
+
+  		const { ctx } = this.$$;
+  		const props = options.props || {};
+
+  		if (/*prp*/ ctx[0] === undefined && !("prp" in props)) {
+  			console_1$7.warn("<MeasuresPopup> was created without expected prop 'prp'");
+  		}
+  	}
+
+  	get prp() {
+  		throw new Error("<MeasuresPopup>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  	}
+
+  	set prp(value) {
+  		throw new Error("<MeasuresPopup>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+  	}
+  }
+
+  const L$g = window.L;
+
+  const popup$b = L$g.popup();
+  //const popup1 = L.popup({minWidth: 200});
+  let argFilters$b;
+  let prefix$3 = 'https://dtp.mvs.group/scripts/events_dev/get_event.txt';
+
+  const setPopup$b = function (props) {
+  	let cont = L$g.DomUtil.create('div'),
+  		id = props.id;
+  	new MeasuresPopup({
+  		target: cont,
+  		props: {
+  			prp: props
+  		}
+  	});
+  	popup$b.setContent(cont);
+  /*
+  	fetch(prefix + 'rubez-complex-' + id + '.txt', {}).then(req => req.json())
+  		.then(json => {
+  			// console.log('json', json);
+  			new MeasuresPopup({
+  				target: cont,
+  				props: {
+  					prp: json[0]
+  				}
+  			});
+  			popup.setContent(cont);
+  		});
+
+  	popup.setContent(cont);
+
+  */
+  	return cont;
+  };
+
+  // let renderer = L.canvas();
+  const Measures = L$g.featureGroup([]);
+  Measures.setFilter = arg => {
+  // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
+  	if (!Measures._map) { return; }
+  	Measures.clearLayers();
+  	// DtpHearths._heatData = [];
+  	argFilters$b = arg;
+  	Measures._argFilters = argFilters$b;
+
+  	let arr = [];
+  	if (Measures._group) {
+  		Measures._group.getLayers().forEach(it => {
+  			let prp = it.options.props,
+  				cnt = 0;
+  			argFilters$b.forEach(ft => {
+  				if (ft.type === 'measures_type') {
+  					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.type).length) {
+  						cnt++;
+  					}
+  				} else if (ft.type === 'id_dtp') {
+  					if (prp.id_dtp == ft.zn) {
+  						cnt++;
+  					}
+  				} else if (ft.type === 'date') {
+  					if (prp.date_created >= ft.zn[0] && prp.date_created < ft.zn[1]) {
+  						cnt++;
+  					}
+  				}
+  			});
+  			if (cnt === argFilters$b.length) {
+  				arr.push(it);
+  				// arr = arr.concat(it.options.items);
+  				// DtpHearths._heatData.push({lat: prp.lat, lng: prp.lon, count: prp.iconType});
+  			}
+  		});
+  		Measures.addLayer(L$g.layerGroup(arr));
+  		// DtpHearths._heat.setData({
+  			// max: 8,
+  			// data: DtpHearths._heatData
+  		// });
+  	}
+  };
+
+  Measures.on('remove', () => {
+  	Measures.clearLayers();
+  }).on('add', ev => {
+  	let opt = {type: {}, bad: []},
+  		arr = [],
+  		line_sid = {},
+  		parseItem = (prp) => {
+  			let list_bounds = L$g.latLngBounds(),
+  				// latlngs = [],
+  				stroke = false,
+  				fillColor = 'gray';
+
+  			if (prp.rub_flag) {
+  				fillColor = '#00FF00';
+  			}
+  			if (line_sid[prp.id]) {
+  				console.log('___Дубль____', prp);
+  			} else {
+  				line_sid[prp.id] = prp;
+  			}
+
+  			let coords = prp.coords[0] || {lat: prp.lat, lon: prp.lon},
+  				latlng = L$g.latLng(coords.lat, coords.lon);
+
+  			if (!coords.lat || !coords.lon || !prp.id_dtp) {
+  				opt.bad.push(prp);
+  				// console.log('_______', prp);
+  				return;
+  				// prp.lat = prp.lon = 0;
+  			}
+  			let ptype = prp.type || ' ';
+  prp.type = ptype;
+  			let type = opt.type[ptype] ;
+  			if (!type) {
+  				type = 1;
+  			} else {
+  				type++;
+  			}
+  			opt.type[ptype] = type;
+  			// list_bounds.extend(latlng);
+
+  			arr.push(new CirclePoint(latlng, {
+  					// cluster: it,
+  					props: prp,
+  					radius: 10,
+  					zIndexOffset: 50000,
+  					path: 'measures',
+  					stroke: stroke,
+  					fillColor: fillColor,
+  					// renderer: renderer
+  				}).bindPopup(popup$b)
+  				.on('popupopen', (ev) => {
+
+  					setPopup$b(ev.target.options.props);
+  					// console.log('popupopen', ev);
+  				}).on('popupclose', (ev) => {
+  					if (ev.popup._svObj) {
+  						ev.popup._svObj.$destroy();
+  						delete ev.popup._svObj;
+  					}
+  				})
+  			);
+  		};
+
+  	fetch(prefix$3, {}).then(req => req.json())
+  		.then(json => {
+  			json.forEach(parseItem);
+  			Measures._opt = opt;
+  			Measures._group = L$g.layerGroup(arr);
+  			Measures.addLayer(Measures._group);
+  			console.log('opt', opt);
+
+  		});
+  });
+
   /* src\DtpPopupGibddRub.svelte generated by Svelte v3.20.1 */
 
-  const { console: console_1$6 } = globals;
-  const file$9 = "src\\DtpPopupGibddRub.svelte";
+  const { console: console_1$8 } = globals;
+  const file$b = "src\\DtpPopupGibddRub.svelte";
 
   function get_each_context$8(ctx, list, i) {
   	const child_ctx = ctx.slice();
@@ -16291,7 +18181,7 @@ var dtp = (function () {
   	return child_ctx;
   }
 
-  function get_each_context_2$2(ctx, list, i) {
+  function get_each_context_2$3(ctx, list, i) {
   	const child_ctx = ctx.slice();
   	child_ctx[14] = list[i];
   	return child_ctx;
@@ -16313,7 +18203,7 @@ var dtp = (function () {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$9, 105, 17, 2586);
+  			add_location(li, file$b, 105, 17, 2586);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -16346,7 +18236,7 @@ var dtp = (function () {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$9, 107, 52, 2688);
+  			add_location(li, file$b, 107, 52, 2688);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -16379,7 +18269,7 @@ var dtp = (function () {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$9, 108, 21, 2735);
+  			add_location(li, file$b, 108, 21, 2735);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -16412,7 +18302,7 @@ var dtp = (function () {
   		c: function create() {
   			li = element("li");
   			t = text(t_value);
-  			add_location(li, file$9, 109, 25, 2785);
+  			add_location(li, file$b, 109, 25, 2785);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, li, anchor);
@@ -16436,7 +18326,7 @@ var dtp = (function () {
   }
 
   // (107:6) {#each pt.arr as pt1}
-  function create_each_block_2$2(ctx) {
+  function create_each_block_2$3(ctx) {
   	let t0;
   	let t1;
   	let if_block2_anchor;
@@ -16478,7 +18368,7 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_each_block_2$2.name,
+  		id: create_each_block_2$3.name,
   		type: "each",
   		source: "(107:6) {#each pt.arr as pt1}",
   		ctx
@@ -16497,7 +18387,7 @@ var dtp = (function () {
   	let each_blocks = [];
 
   	for (let i = 0; i < each_value_2.length; i += 1) {
-  		each_blocks[i] = create_each_block_2$2(get_each_context_2$2(ctx, each_value_2, i));
+  		each_blocks[i] = create_each_block_2$3(get_each_context_2$3(ctx, each_value_2, i));
   	}
 
   	const block = {
@@ -16530,12 +18420,12 @@ var dtp = (function () {
   				let i;
 
   				for (i = 0; i < each_value_2.length; i += 1) {
-  					const child_ctx = get_each_context_2$2(ctx, each_value_2, i);
+  					const child_ctx = get_each_context_2$3(ctx, each_value_2, i);
 
   					if (each_blocks[i]) {
   						each_blocks[i].p(child_ctx, dirty);
   					} else {
-  						each_blocks[i] = create_each_block_2$2(child_ctx);
+  						each_blocks[i] = create_each_block_2$3(child_ctx);
   						each_blocks[i].c();
   						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
   					}
@@ -16585,10 +18475,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$9, 120, 6, 2998);
+  			add_location(div0, file$b, 120, 6, 2998);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$9, 120, 40, 3032);
-  			add_location(div2, file$9, 119, 5, 2986);
+  			add_location(div1, file$b, 120, 40, 3032);
+  			add_location(div2, file$b, 119, 5, 2986);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -16634,10 +18524,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$9, 125, 6, 3126);
+  			add_location(div0, file$b, 125, 6, 3126);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$9, 125, 42, 3162);
-  			add_location(div2, file$9, 124, 5, 3114);
+  			add_location(div1, file$b, 125, 42, 3162);
+  			add_location(div2, file$b, 124, 5, 3114);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -16683,10 +18573,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$9, 130, 6, 3255);
+  			add_location(div0, file$b, 130, 6, 3255);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$9, 130, 46, 3295);
-  			add_location(div2, file$9, 129, 5, 3243);
+  			add_location(div1, file$b, 130, 46, 3295);
+  			add_location(div2, file$b, 129, 5, 3243);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -16732,10 +18622,10 @@ var dtp = (function () {
   			div1 = element("div");
   			t2 = text(t2_value);
   			attr_dev(div0, "class", "stitle");
-  			add_location(div0, file$9, 135, 6, 3386);
+  			add_location(div0, file$b, 135, 6, 3386);
   			attr_dev(div1, "class", "sval");
-  			add_location(div1, file$9, 135, 46, 3426);
-  			add_location(div2, file$9, 134, 5, 3374);
+  			add_location(div1, file$b, 135, 46, 3426);
+  			add_location(div2, file$b, 134, 5, 3374);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div2, anchor);
@@ -16784,7 +18674,7 @@ var dtp = (function () {
   			t3 = text(" м.)");
   			attr_dev(li, "class", "link svelte-vw4d3d");
   			li.value = li_value_value = /*pt*/ ctx[9].line_id;
-  			add_location(li, file$9, 150, 6, 3882);
+  			add_location(li, file$b, 150, 6, 3882);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, li, anchor);
@@ -16820,7 +18710,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function create_fragment$9(ctx) {
+  function create_fragment$b(ctx) {
   	let div3;
   	let div0;
   	let b0;
@@ -17050,66 +18940,66 @@ var dtp = (function () {
   				each_blocks[i].c();
   			}
 
-  			add_location(b0, file$9, 71, 4, 1617);
+  			add_location(b0, file$b, 71, 4, 1617);
   			attr_dev(div0, "class", "pLine");
-  			add_location(div0, file$9, 70, 2, 1593);
+  			add_location(div0, file$b, 70, 2, 1593);
   			attr_dev(td0, "class", "first svelte-vw4d3d");
-  			add_location(td0, file$9, 77, 5, 1740);
-  			add_location(td1, file$9, 78, 5, 1772);
-  			add_location(tr0, file$9, 76, 3, 1730);
+  			add_location(td0, file$b, 77, 5, 1740);
+  			add_location(td1, file$b, 78, 5, 1772);
+  			add_location(tr0, file$b, 76, 3, 1730);
   			attr_dev(td2, "class", "first svelte-vw4d3d");
-  			add_location(td2, file$9, 81, 5, 1850);
-  			add_location(td3, file$9, 82, 5, 1885);
-  			add_location(tr1, file$9, 80, 3, 1840);
+  			add_location(td2, file$b, 81, 5, 1850);
+  			add_location(td3, file$b, 82, 5, 1885);
+  			add_location(tr1, file$b, 80, 3, 1840);
   			attr_dev(td4, "class", "first svelte-vw4d3d");
-  			add_location(td4, file$9, 85, 5, 1953);
-  			add_location(b1, file$9, 86, 9, 1994);
-  			add_location(b2, file$9, 86, 34, 2019);
-  			add_location(td5, file$9, 86, 5, 1990);
-  			add_location(tr2, file$9, 84, 3, 1943);
+  			add_location(td4, file$b, 85, 5, 1953);
+  			add_location(b1, file$b, 86, 9, 1994);
+  			add_location(b2, file$b, 86, 34, 2019);
+  			add_location(td5, file$b, 86, 5, 1990);
+  			add_location(tr2, file$b, 84, 3, 1943);
   			attr_dev(td6, "class", "first svelte-vw4d3d");
-  			add_location(td6, file$9, 89, 5, 2069);
+  			add_location(td6, file$b, 89, 5, 2069);
   			attr_dev(span, "title", "Скопировать в буфер обмена");
   			attr_dev(span, "class", "leaflet-gmx-icon-copy");
-  			add_location(span, file$9, 90, 29, 2133);
-  			add_location(td7, file$9, 90, 5, 2109);
-  			add_location(tr3, file$9, 88, 3, 2059);
+  			add_location(span, file$b, 90, 29, 2133);
+  			add_location(td7, file$b, 90, 5, 2109);
+  			add_location(tr3, file$b, 88, 3, 2059);
   			attr_dev(td8, "class", "first svelte-vw4d3d");
-  			add_location(td8, file$9, 93, 5, 2261);
-  			add_location(td9, file$9, 94, 5, 2301);
-  			add_location(tr4, file$9, 92, 3, 2251);
+  			add_location(td8, file$b, 93, 5, 2261);
+  			add_location(td9, file$b, 94, 5, 2301);
+  			add_location(tr4, file$b, 92, 3, 2251);
   			attr_dev(td10, "class", "first svelte-vw4d3d");
-  			add_location(td10, file$9, 97, 5, 2375);
-  			add_location(td11, file$9, 98, 5, 2412);
-  			add_location(tr5, file$9, 96, 3, 2365);
+  			add_location(td10, file$b, 97, 5, 2375);
+  			add_location(td11, file$b, 98, 5, 2412);
+  			add_location(tr5, file$b, 96, 3, 2365);
   			attr_dev(td12, "class", "first svelte-vw4d3d");
-  			add_location(td12, file$9, 101, 14, 2478);
-  			add_location(ul0, file$9, 103, 4, 2535);
-  			add_location(td13, file$9, 102, 14, 2526);
-  			add_location(tr6, file$9, 100, 12, 2459);
+  			add_location(td12, file$b, 101, 14, 2478);
+  			add_location(ul0, file$b, 103, 4, 2535);
+  			add_location(td13, file$b, 102, 14, 2526);
+  			add_location(tr6, file$b, 100, 12, 2459);
   			attr_dev(td14, "class", "first svelte-vw4d3d");
-  			add_location(td14, file$9, 116, 14, 2911);
-  			add_location(td15, file$9, 117, 14, 2957);
-  			add_location(tr7, file$9, 115, 12, 2892);
+  			add_location(td14, file$b, 116, 14, 2911);
+  			add_location(td15, file$b, 117, 14, 2957);
+  			add_location(tr7, file$b, 115, 12, 2892);
   			attr_dev(td16, "class", "first svelte-vw4d3d");
-  			add_location(td16, file$9, 141, 14, 3542);
-  			add_location(b3, file$9, 142, 18, 3612);
-  			add_location(td17, file$9, 142, 14, 3608);
-  			add_location(tr8, file$9, 140, 12, 3523);
+  			add_location(td16, file$b, 141, 14, 3542);
+  			add_location(b3, file$b, 142, 18, 3612);
+  			add_location(td17, file$b, 142, 14, 3608);
+  			add_location(tr8, file$b, 140, 12, 3523);
   			attr_dev(td18, "class", "first svelte-vw4d3d");
-  			add_location(td18, file$9, 145, 14, 3693);
+  			add_location(td18, file$b, 145, 14, 3693);
   			attr_dev(div1, "class", "win leaflet-popup-content-wrapper  svelte-vw4d3d");
-  			add_location(div1, file$9, 147, 2, 3745);
-  			add_location(ul1, file$9, 148, 4, 3824);
-  			add_location(td19, file$9, 146, 14, 3738);
-  			add_location(tr9, file$9, 144, 12, 3674);
-  			add_location(tbody, file$9, 75, 3, 1719);
+  			add_location(div1, file$b, 147, 2, 3745);
+  			add_location(ul1, file$b, 148, 4, 3824);
+  			add_location(td19, file$b, 146, 14, 3738);
+  			add_location(tr9, file$b, 144, 12, 3674);
+  			add_location(tbody, file$b, 75, 3, 1719);
   			attr_dev(table, "class", "table");
-  			add_location(table, file$9, 74, 4, 1694);
+  			add_location(table, file$b, 74, 4, 1694);
   			attr_dev(div2, "class", "featureCont");
-  			add_location(div2, file$9, 73, 2, 1664);
+  			add_location(div2, file$b, 73, 2, 1664);
   			attr_dev(div3, "class", "mvsPopup svelte-vw4d3d");
-  			add_location(div3, file$9, 69, 3, 1568);
+  			add_location(div3, file$b, 69, 3, 1568);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -17350,7 +19240,7 @@ var dtp = (function () {
 
   	dispatch_dev("SvelteRegisterBlock", {
   		block,
-  		id: create_fragment$9.name,
+  		id: create_fragment$b.name,
   		type: "component",
   		source: "",
   		ctx
@@ -17359,7 +19249,7 @@ var dtp = (function () {
   	return block;
   }
 
-  function instance$9($$self, $$props, $$invalidate) {
+  function instance$b($$self, $$props, $$invalidate) {
   	let { showModal = false } = $$props;
   	let { prp } = $$props;
   	let modal;
@@ -17418,7 +19308,7 @@ var dtp = (function () {
   	const writable_props = ["showModal", "prp"];
 
   	Object.keys($$props).forEach(key => {
-  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$6.warn(`<DtpPopupGibddRub> was created with unknown prop '${key}'`);
+  		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console_1$8.warn(`<DtpPopupGibddRub> was created with unknown prop '${key}'`);
   	});
 
   	let { $$slots = {}, $$scope } = $$props;
@@ -17477,20 +19367,20 @@ var dtp = (function () {
   class DtpPopupGibddRub extends SvelteComponentDev {
   	constructor(options) {
   		super(options);
-  		init(this, options, instance$9, create_fragment$9, safe_not_equal, { showModal: 5, prp: 0 });
+  		init(this, options, instance$b, create_fragment$b, safe_not_equal, { showModal: 5, prp: 0 });
 
   		dispatch_dev("SvelteRegisterComponent", {
   			component: this,
   			tagName: "DtpPopupGibddRub",
   			options,
-  			id: create_fragment$9.name
+  			id: create_fragment$b.name
   		});
 
   		const { ctx } = this.$$;
   		const props = options.props || {};
 
   		if (/*prp*/ ctx[0] === undefined && !("prp" in props)) {
-  			console_1$6.warn("<DtpPopupGibddRub> was created without expected prop 'prp'");
+  			console_1$8.warn("<DtpPopupGibddRub> was created without expected prop 'prp'");
   		}
   	}
 
@@ -17511,54 +19401,54 @@ var dtp = (function () {
   	}
   }
 
-  const L$g = window.L;
+  const L$h = window.L;
 
-  const popup$b = L$g.popup();
-  let argFilters$b;
-  const setPopup$b = function (id) {
+  const popup$c = L$h.popup();
+  let argFilters$c;
+  const setPopup$c = function (id) {
   	let url = 'https://dtp.mvs.group/scripts/dtprubez_dev/get_stat_gipdd_with_rub_' + id + '.txt';
   	fetch(url, {})
   		.then(req => req.json())
   		.then(json => {
   // console.log('bindPopup', layer, json, DtpPopup);
-  			let cont = L$g.DomUtil.create('div');
+  			let cont = L$h.DomUtil.create('div');
   			const app = new DtpPopupGibddRub({
   				target: cont,
   				props: {
   					prp: json
   				}
   			});
-  			popup$b._svObj = app;
-  			popup$b.setContent(cont);
+  			popup$c._svObj = app;
+  			popup$c.setContent(cont);
   		});
   	return '';
   };
 
   // let renderer = L.canvas();
-  const DtpGibddRub = L$g.featureGroup([]);
+  const DtpGibddRub = L$h.featureGroup([]);
   DtpGibddRub._needHeat = {radius: 19, blur: 11.26, minOpacity: 0.34};
   DtpGibddRub.checkZoom = z => {
   	if (Object.keys(DtpGibddRub._layers).length) {
   		if (z < 12) {
-  			DtpGibddRub.setFilter(argFilters$b);
+  			DtpGibddRub.setFilter(argFilters$c);
   		}
   	} else if (z > 11) {
-  		DtpGibddRub.setFilter(argFilters$b);
+  		DtpGibddRub.setFilter(argFilters$c);
   	}
   };
   DtpGibddRub.setFilter = arg => {
   // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
   	if (!DtpGibddRub._map) { return; }
   	DtpGibddRub.clearLayers();
-  	argFilters$b = arg || [];
-  	DtpGibddRub._argFilters = argFilters$b;
+  	argFilters$c = arg || [];
+  	DtpGibddRub._argFilters = argFilters$c;
 
   	let arr = [], heat = [];
   	if (DtpGibddRub._group && DtpGibddRub._map) {
   		DtpGibddRub._group.getLayers().forEach(it => {
   			let prp = it.options.props,
   				cnt = 0;
-  			argFilters$b.forEach(ft => {
+  			argFilters$c.forEach(ft => {
   				if (ft.type === 'collision_type') {
   					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.collision_type).length) {
   					// if (prp.collision_type === ft.zn) {
@@ -17580,7 +19470,7 @@ var dtp = (function () {
   					}
   				}
   			});
-  			if (cnt === argFilters$b.length) {
+  			if (cnt === argFilters$c.length) {
   				arr.push(it);
   				heat.push(it._latlng);
   			}
@@ -17590,10 +19480,10 @@ var dtp = (function () {
   			DtpGibddRub._heat.setLatLngs(heat);
   			DtpGibddRub._heat.setOptions(DtpGibddRub._needHeat);
   			if (DtpGibddRub._map._zoom > 11) {
-  				DtpGibddRub.addLayer(L$g.layerGroup(arr));
+  				DtpGibddRub.addLayer(L$h.layerGroup(arr));
   			}
   		} else {
-  			DtpGibddRub.addLayer(L$g.layerGroup(arr));
+  			DtpGibddRub.addLayer(L$h.layerGroup(arr));
   			DtpGibddRub._map.removeLayer(DtpGibddRub._heat);
   		}
 
@@ -17606,11 +19496,11 @@ var dtp = (function () {
   	DtpGibddRub.clearLayers();
   }).on('add', ev => {
   	// console.log('/static/data/dtpskpdi.geojson', ev);
-  	DtpGibddRub._heat = L$g.heatLayer([], {
+  	DtpGibddRub._heat = L$h.heatLayer([], {
   		// blur: 50,
   		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
   	});
-  	argFilters$b = null;
+  	argFilters$c = null;
 
   	fetch('https://dtp.mvs.group/scripts/dtprubez_dev/get_stat_gipdd_with_rub.txt', {})
   		.then(req => req.json())
@@ -17650,7 +19540,7 @@ var dtp = (function () {
   				opt.collision_type[prp.collision_type] = cTypeCount;
   				opt.iconType[prp.collision_type] = iconType;
 
-  				let latLng = L$g.latLng(prp.lat, prp.lon, stroke ? 1 : 0.5);
+  				let latLng = L$h.latLng(prp.lat, prp.lon, stroke ? 1 : 0.5);
   				heat.push(latLng);
 
   				return new CirclePoint(latLng, {
@@ -17660,8 +19550,8 @@ var dtp = (function () {
   					stroke: stroke,
   					fillColor: fillColor,
   					// renderer: renderer
-  				}).bindPopup(popup$b).on('popupopen', (ev) => {
-  						setPopup$b(ev.target.options.props.id);
+  				}).bindPopup(popup$c).on('popupopen', (ev) => {
+  						setPopup$c(ev.target.options.props.id);
   						// console.log('popupopen', ev);
   					}).on('popupclose', (ev) => {
   						// console.log('popupclose', ev);
@@ -17682,7 +19572,7 @@ var dtp = (function () {
   			// }
 
   			DtpGibddRub._opt = opt;
-  			DtpGibddRub._group = L$g.layerGroup(arr);
+  			DtpGibddRub._group = L$h.layerGroup(arr);
 
   			// if (argFilters) {
   				DtpGibddRub.setFilter();
@@ -17694,36 +19584,36 @@ var dtp = (function () {
   		});
   });
 
-  const L$h = window.L;
+  const L$i = window.L;
 
-  const popup$c = L$h.popup();
-  let argFilters$c;
+  const popup$d = L$i.popup();
+  let argFilters$d;
 
   // let renderer = L.canvas();
-  const TestGraphQl = L$h.featureGroup([]);
+  const TestGraphQl = L$i.featureGroup([]);
   TestGraphQl._needHeat = {radius: 19, blur: 11.26, minOpacity: 0.34};
   TestGraphQl.checkZoom = z => {
   	if (Object.keys(TestGraphQl._layers).length) {
   		if (z < 12) {
-  			TestGraphQl.setFilter(argFilters$c);
+  			TestGraphQl.setFilter(argFilters$d);
   		}
   	} else if (z > 11) {
-  		TestGraphQl.setFilter(argFilters$c);
+  		TestGraphQl.setFilter(argFilters$d);
   	}
   };
   TestGraphQl.setFilter = arg => {
   // console.log('DtpVerifyed.setFilter ', arg, DtpVerifyed._group);
   	if (!TestGraphQl._map) { return; }
   	TestGraphQl.clearLayers();
-  	argFilters$c = arg || [];
-  	TestGraphQl._argFilters = argFilters$c;
+  	argFilters$d = arg || [];
+  	TestGraphQl._argFilters = argFilters$d;
 
   	let arr = [], heat = [];
   	if (TestGraphQl._group) {
   		TestGraphQl._group.getLayers().forEach(it => {
   			let prp = it.options.props,
   				cnt = 0;
-  			argFilters$c.forEach(ft => {
+  			argFilters$d.forEach(ft => {
   				if (ft.type === 'collision_type') {
   					if (ft.zn[0] === '' || ft.zn.filter(pt => pt === prp.collision_type).length) {
   					// if (prp.collision_type === ft.zn) {
@@ -17741,7 +19631,7 @@ var dtp = (function () {
   					}
   				}
   			});
-  			if (cnt === argFilters$c.length) {
+  			if (cnt === argFilters$d.length) {
   				arr.push(it);
   				heat.push(it._latlng);
   			}
@@ -17754,7 +19644,7 @@ var dtp = (function () {
   				// TestGraphQl.addLayer(L.layerGroup(arr));
   			// }
   		// } else {
-  			TestGraphQl.addLayer(L$h.layerGroup(arr));
+  			TestGraphQl.addLayer(L$i.layerGroup(arr));
   			// TestGraphQl._map.removeLayer(TestGraphQl._heat);
   		// }
 
@@ -17799,26 +19689,26 @@ var dtp = (function () {
   		});
   });
 
-  const L$i = window.L;
+  const L$j = window.L;
 
-  const popup$d = L$i.popup();
-  const popup1$8 = L$i.popup({minWidth: 200});
-  let argFilters$d;
+  const popup$e = L$j.popup();
+  const popup1$8 = L$j.popup({minWidth: 200});
+  let argFilters$e;
 
-  const setPopup$c = function (props) {
-  	let cont = L$i.DomUtil.create('div');
+  const setPopup$d = function (props) {
+  	let cont = L$j.DomUtil.create('div');
   	new DtpPopupVerifyed({
   		target: cont,
   		props: {
   			prp: props
   		}
   	});
-  	popup$d.setContent(cont);
+  	popup$e.setContent(cont);
   	return cont;
   };
 
   const setPopup1$6 = function (props) {
-  	let cont = L$i.DomUtil.create('div');
+  	let cont = L$j.DomUtil.create('div');
   	new DtpPopupHearths({
   		target: cont,
   		props: {
@@ -17831,20 +19721,20 @@ var dtp = (function () {
   };
 
   // let renderer = L.canvas();
-  const DtpHearthsPicket4 = L$i.featureGroup([]);
+  const DtpHearthsPicket4 = L$j.featureGroup([]);
   DtpHearthsPicket4.setFilter = arg => {
   	if (!DtpHearthsPicket4._map) { return; }
   // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
   	DtpHearthsPicket4.clearLayers();
   	// DtpHearths._heatData = [];
-  	argFilters$d = arg;
+  	argFilters$e = arg;
 
   	let arr = [];
   	if (DtpHearthsPicket4._group) {
   		DtpHearthsPicket4._group.getLayers().forEach(it => {
   			let prp = it.options.cluster,
   				cnt = 0;
-  			argFilters$d.forEach(ft => {
+  			argFilters$e.forEach(ft => {
   				if (ft.type === 'ht') {
   					if (ft.zn[prp.ht]) {
   						cnt++;
@@ -17880,13 +19770,13 @@ var dtp = (function () {
   					}
   				}
   			});
-  			if (cnt === argFilters$d.length) {
+  			if (cnt === argFilters$e.length) {
   				arr.push(it);
   				// arr = arr.concat(it.options.items);
   				// DtpHearths._heatData.push({lat: prp.lat, lng: prp.lon, count: prp.iconType});
   			}
   		});
-  		DtpHearthsPicket4.addLayer(L$i.layerGroup(arr));
+  		DtpHearthsPicket4.addLayer(L$j.layerGroup(arr));
   		// DtpHearths._heat.setData({
   			// max: 8,
   			// data: DtpHearths._heatData
@@ -17901,7 +19791,7 @@ var dtp = (function () {
   		arr = [],
   		parseItem = (it, ind) => {
   			let iconType = it.icon_type || 1,
-  				list_bounds = L$i.latLngBounds(),
+  				list_bounds = L$j.latLngBounds(),
   				latlngs = [],
   				list_dtp = it.list_dtp,
   				stroke = false,
@@ -17952,7 +19842,7 @@ var dtp = (function () {
   				let arr1 = list_dtp.map(prp => {
   					let iconType = prp.iconType || 0,
   						coords = prp.coords || {lat: 0, lon: 0},
-  						latlng = L$i.latLng(coords.lat, coords.lon),
+  						latlng = L$j.latLng(coords.lat, coords.lon),
   						cur = [];
 
   					list_bounds.extend(latlng);
@@ -17983,7 +19873,7 @@ var dtp = (function () {
   						stroke = true;
   					}
   					
-  					return new CirclePoint(L$i.latLng(coords.lat, coords.lon), {
+  					return new CirclePoint(L$j.latLng(coords.lat, coords.lon), {
   							cluster: it,
   							props: prp,
   							radius: 6,
@@ -17992,10 +19882,10 @@ var dtp = (function () {
   							stroke: stroke,
   							fillColor: fillColor,
   							// renderer: renderer
-  						}).bindPopup(popup$d)
+  						}).bindPopup(popup$e)
   						.on('popupopen', (ev) => {
 
-  							setPopup$c(ev.target.options.props);
+  							setPopup$d(ev.target.options.props);
   							// console.log('popupopen', ev);
   						}).on('popupclose', (ev) => {
   							if (ev.popup._svObj) {
@@ -18005,9 +19895,9 @@ var dtp = (function () {
   						});
   				});
   				if (latlngs.length) {
-  					it._bounds = L$i.polyline(latlngs, {items: arr1, cluster: it, color: fillColor, weight: 4});
+  					it._bounds = L$j.polyline(latlngs, {items: arr1, cluster: it, color: fillColor, weight: 4});
   				} else {
-  					it._bounds = L$i.rectangle(list_bounds, {items: arr1, cluster: it, fill: true, color: fillColor, dashArray: '8 3 1'});
+  					it._bounds = L$j.rectangle(list_bounds, {items: arr1, cluster: it, fill: true, color: fillColor, dashArray: '8 3 1'});
   				}
 
   				it._bounds
@@ -18026,7 +19916,7 @@ var dtp = (function () {
   						target._renderer._updateStyle(target);
   					})
   					.on('click', (ev) => {
-  						L$i.DomEvent.stopPropagation(ev);
+  						L$j.DomEvent.stopPropagation(ev);
   						let dist = 1000,
   							target = ev.target,
   							latlng = ev.latlng,
@@ -18042,8 +19932,8 @@ var dtp = (function () {
   							}
   						});
   						if (dist < 10) {
-  							setPopup$c(dtp.options.props);
-  							popup$d.setLatLng(dtp._latlng).openOn(DtpHearthsPicket4._map);
+  							setPopup$d(dtp.options.props);
+  							popup$e.setLatLng(dtp._latlng).openOn(DtpHearthsPicket4._map);
   						} else {
   							setPopup1$6(it);
   							popup1$8.setLatLng(latlng).openOn(DtpHearthsPicket4._map);
@@ -18080,9 +19970,9 @@ var dtp = (function () {
   				// argFilters = [{type: 'quarter', year: y, zn: q}];
   // console.log('opt', opt);
   				DtpHearthsPicket4._opt = opt;
-  				DtpHearthsPicket4._group = L$i.layerGroup(arr);
-  				if (argFilters$d) {
-  					DtpHearthsPicket4.setFilter(argFilters$d);
+  				DtpHearthsPicket4._group = L$j.layerGroup(arr);
+  				if (argFilters$e) {
+  					DtpHearthsPicket4.setFilter(argFilters$e);
   				} else {
   					DtpHearthsPicket4.addLayer(DtpHearthsPicket4._group);
   				}
@@ -18094,14 +19984,14 @@ var dtp = (function () {
 
   // import {MarkerPoint, CirclePoint} from './CirclePoint';
 
-  const L$j = window.L;
+  const L$k = window.L;
 
   // const popup = L.popup();
   let map;
   // let argFilters;
 
-  let renderer$1 = L$j.canvas();
-  const Roads = L$j.featureGroup([]);
+  let renderer$1 = L$k.canvas();
+  const Roads = L$k.featureGroup([]);
 
   Roads.on('remove', (ev) => {
   	Roads.clearLayers();
@@ -18115,7 +20005,7 @@ var dtp = (function () {
   	.then(req => req.json())
   	.then(json => {
   		let polyline;
-  		let geojson = L$j.geoJson(json, {
+  		let geojson = L$k.geoJson(json, {
   			// renderer: renderer,
   			style: () => {
   				// console.log('onEachFeature', it);
@@ -18138,7 +20028,7 @@ var dtp = (function () {
   				_rings = it._rings[0],
   				index;
   			for (let i = 0, len = _rings.length - 1; i < len; i++) {
-  				let d = L$j.LineUtil._sqClosestPointOnSegment(ep, _rings[i], _rings[i+1], true);
+  				let d = L$k.LineUtil._sqClosestPointOnSegment(ep, _rings[i], _rings[i+1], true);
   				if (d < min) {
   					min = d;
   					index = i;
@@ -18147,7 +20037,7 @@ var dtp = (function () {
   			let arr = it._latlngs.slice(0, index);
   			arr.push(latlng);
   			
-  			polyline = L$j.polyline(arr, {color: 'red', weight: 6, interactive: false}).bindTooltip('').addTo(map);
+  			polyline = L$k.polyline(arr, {color: 'red', weight: 6, interactive: false}).bindTooltip('').addTo(map);
   			polyline.openTooltip(latlng);
   			let sm = Math.floor(getLatLngsLength(arr)),
   				km = Math.floor(sm/1000),
@@ -18161,8 +20051,8 @@ var dtp = (function () {
 
   // import 'leaflet-sidebar-v2';
 
-  const L$k = window.L;
-  const map$1 = L$k.map(document.body, {
+  const L$l = window.L;
+  const map$1 = L$l.map(document.body, {
   	center: [55.758031, 37.611694],
   	minZoom: 1,
   	zoom: 8,
@@ -18193,19 +20083,19 @@ var dtp = (function () {
 
   for (var key in classNames) {
   	if (!corners[key]) {
-  		corners[key] = L$k.DomUtil.create('div', classNames[key], parent);
+  		corners[key] = L$l.DomUtil.create('div', classNames[key], parent);
   	}
   }
 
-  map$1.addControl(L$k.control.gmxCenter())
-  	.addControl(L$k.control.fitCenter());
+  map$1.addControl(L$l.control.gmxCenter())
+  	.addControl(L$l.control.fitCenter());
 
-  var Mercator = L$k.TileLayer.extend({
+  var Mercator = L$l.TileLayer.extend({
   	options: {
-  		tilesCRS: L$k.CRS.EPSG3395
+  		tilesCRS: L$l.CRS.EPSG3395
   	},
   	_getTiledPixelBounds: function (center) {
-  		var pixelBounds = L$k.TileLayer.prototype._getTiledPixelBounds.call(this, center);
+  		var pixelBounds = L$l.TileLayer.prototype._getTiledPixelBounds.call(this, center);
   		this._shiftY = this._getShiftY(this._tileZoom);
   		pixelBounds.min.y += this._shiftY;
   		pixelBounds.max.y += this._shiftY;
@@ -18220,7 +20110,7 @@ var dtp = (function () {
   				arr = file.substr(pos + 1).split('/'),
   				pItem  = proxy[arr[1]];
 
-  			tile.src = L$k.Util.template(pItem.errorTileUrlPrefix + pItem.postfix, {
+  			tile.src = L$l.Util.template(pItem.errorTileUrlPrefix + pItem.postfix, {
   				z: searchParams.get('z'),
   				x: searchParams.get('x'),
   				y: searchParams.get('y')
@@ -18229,7 +20119,7 @@ var dtp = (function () {
   		done(e, tile);
   	},
   	_getTilePos: function (coords) {
-  		var tilePos = L$k.TileLayer.prototype._getTilePos.call(this, coords);
+  		var tilePos = L$l.TileLayer.prototype._getTilePos.call(this, coords);
   		return tilePos.subtract([0, this._shiftY]);
   	},
 
@@ -18238,11 +20128,11 @@ var dtp = (function () {
   			pos = map.getCenter(),
   			shift = (map.options.crs.project(pos).y - this.options.tilesCRS.project(pos).y);
 
-  		return Math.floor(L$k.CRS.scale(zoom) * shift / 40075016.685578496);
+  		return Math.floor(L$l.CRS.scale(zoom) * shift / 40075016.685578496);
   	}
   });
-  L$k.TileLayer.Mercator = Mercator;
-  L$k.tileLayer.Mercator = function (url, options) {
+  L$l.TileLayer.Mercator = Mercator;
+  L$l.tileLayer.Mercator = function (url, options) {
   	return new Mercator(url, options);
   };
 
@@ -18250,11 +20140,11 @@ var dtp = (function () {
   if (!hrefParams.b) { hrefParams.b = 'm2'; }
   ['m2', 'm3'].forEach(key => {
   	let it = proxy[key],
-  		lit = L$k.tileLayer.Mercator(it.prefix + it.postfix, it.options);
+  		lit = L$l.tileLayer.Mercator(it.prefix + it.postfix, it.options);
   	baseLayers[it.title] = lit;
   	if (hrefParams.b === it.options.key) { lit.addTo(map$1); }
   });
-  baseLayers.OpenStreetMap = L$k.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  baseLayers.OpenStreetMap = L$l.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   	maxZoom: 21,
   	maxNativeZoom: 18
@@ -18268,6 +20158,7 @@ var dtp = (function () {
   	
   	// 'm4': m4,
   	'Трассы': Roads,
+  	'Мероприятия': Measures,
   	'Рубежи': Rub,
   	// 'Рубежи (test)': Rub1,
   	'Предочаги по пикетажу': DtpHearthsPicket4,
@@ -18292,13 +20183,13 @@ var dtp = (function () {
   let ovHash = hrefParams.o ? hrefParams.o.split(',').reduce((p, c) => {p[c] = true; return p;}, {}) : {};
   ['m1', 'm4', 'm5'].forEach(key => {
   	let it = proxy[key],
-  		lit = L$k.tileLayer.Mercator(it.prefix + it.postfix, it.options);
+  		lit = L$l.tileLayer.Mercator(it.prefix + it.postfix, it.options);
   	overlays[it.title] = lit;
   	if (ovHash[it.options.key]) { lit.addTo(map$1); }
   });
-  var lc = L$k.control.layers(baseLayers, overlays).addTo(map$1);
+  var lc = L$l.control.layers(baseLayers, overlays).addTo(map$1);
 
-  let filtersControl = L$k.control.gmxIcon({
+  let filtersControl = L$l.control.gmxIcon({
     id: 'filters',
     className: 'leaflet-bar',
     togglable: true,
@@ -18313,9 +20204,9 @@ var dtp = (function () {
   		
   	if (isActive) {
   		if (!cont1) {
-  			cont1 = target._win = L$k.DomUtil.create('div', 'win leaflet-control-layers', cont);
+  			cont1 = target._win = L$l.DomUtil.create('div', 'win leaflet-control-layers', cont);
   			// cont1.innerHTML = 'Слой "ДТП Сводный"';
-  			L$k.DomEvent.disableScrollPropagation(cont1);
+  			L$l.DomEvent.disableScrollPropagation(cont1);
   			cont1._Filters = new DtpVerifyedFilters({
   				target: cont1,
   				props: {
@@ -18323,6 +20214,7 @@ var dtp = (function () {
   					DtpGibddRub: DtpGibddRub,
   					DtpGibdd: DtpGibdd,
   					DtpSkpdi: DtpSkpdi,
+  					Measures: Measures,
   					Rub: Rub,
   					// Rub1: Rub1,
   					DtpHearthsPicket4: DtpHearthsPicket4,
@@ -18385,7 +20277,7 @@ var dtp = (function () {
   	}
   });
 
-  let measureControl = L$k.control.gmxIcon({
+  let measureControl = L$l.control.gmxIcon({
     id: 'measure',
     className: 'leaflet-bar',
     togglable: true,
@@ -18417,6 +20309,7 @@ var dtp = (function () {
   DtpGibddRub._refreshFilters =
   DtpGibdd._refreshFilters =
   DtpSkpdi._refreshFilters =
+  Measures._refreshFilters =
   DtpVerifyed._refreshFilters =
   DtpHearths._refreshFilters =
   DtpHearthsStat._refreshFilters =
@@ -18431,6 +20324,7 @@ var dtp = (function () {
   DtpGibddRub.on(eventsStr, refreshFilters);
   DtpGibdd.on(eventsStr, refreshFilters);
   DtpSkpdi.on(eventsStr, refreshFilters);
+  Measures.on(eventsStr, refreshFilters);
   DtpVerifyed.on(eventsStr, refreshFilters);
   DtpHearths.on(eventsStr, refreshFilters);
   DtpHearthsTmp.on(eventsStr, refreshFilters);

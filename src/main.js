@@ -19,6 +19,8 @@ import {DtpHearths5} from './DtpHearths5';
 import {DtpHearthsPicket} from './DtpHearthsPicket';
 import {Rub1} from './Rub1';
 import {Rub} from './Rub';
+import {Measures} from './Measures';
+
 import {DtpGibddRub} from './DtpGibddRub';
 import {TestGraphQl} from './TestGraphQl';
 import {DtpHearthsPicket4} from './DtpHearthsPicket4';
@@ -131,6 +133,7 @@ let overlays = {
 	
 	// 'm4': m4,
 	'Трассы': Roads,
+	'Мероприятия': Measures,
 	'Рубежи': Rub,
 	// 'Рубежи (test)': Rub1,
 	'Предочаги по пикетажу': DtpHearthsPicket4,
@@ -186,6 +189,7 @@ let filtersControl = L.control.gmxIcon({
 					DtpGibddRub: DtpGibddRub,
 					DtpGibdd: DtpGibdd,
 					DtpSkpdi: DtpSkpdi,
+					Measures: Measures,
 					Rub: Rub,
 					// Rub1: Rub1,
 					DtpHearthsPicket4: DtpHearthsPicket4,
@@ -280,6 +284,7 @@ const refreshFilters = () => {
 DtpGibddRub._refreshFilters =
 DtpGibdd._refreshFilters =
 DtpSkpdi._refreshFilters =
+Measures._refreshFilters =
 DtpVerifyed._refreshFilters =
 DtpHearths._refreshFilters =
 DtpHearthsStat._refreshFilters =
@@ -294,6 +299,7 @@ const eventsStr = 'remove';
 DtpGibddRub.on(eventsStr, refreshFilters);
 DtpGibdd.on(eventsStr, refreshFilters);
 DtpSkpdi.on(eventsStr, refreshFilters);
+Measures.on(eventsStr, refreshFilters);
 DtpVerifyed.on(eventsStr, refreshFilters);
 DtpHearths.on(eventsStr, refreshFilters);
 DtpHearthsTmp.on(eventsStr, refreshFilters);

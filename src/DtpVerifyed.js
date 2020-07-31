@@ -55,6 +55,12 @@ DtpVerifyed.setFilter = arg => {
 					} else if (ft.zn === 3 && (prp.id_stat && !prp.id_skpdi)) {
 						cnt++;
 					}
+				} else if (ft.type === 'evnt') {
+					if (prp.event) {
+						if (ft.zn.ev1) { cnt++; }
+					} else {
+						if (ft.zn.ev0) { cnt++; }
+					}
 				} else if (ft.type === 'id_dtp') {
 					if (prp.id_skpdi == ft.zn || prp.id_stat == ft.zn) {
 						cnt++;
@@ -100,7 +106,7 @@ DtpVerifyed.on('remove', () => {
 	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_collision', {})
 		.then(req => req.json())
 		.then(json => {
-			let opt = {collision_type: {}, iconType: {}};
+			let opt = {collision_type: {}, iconType: {}, event: {}};
 			// DtpVerifyed._heatData = [];
 			let heat = [];
 			let arr = json.map(prp => {
@@ -135,6 +141,14 @@ console.log('_______', prp);
 // if (cur.length > 1) {
 // console.log('___prp.id_skpdi && prp.id_stat____', prp);
 // }
+				let cnt = opt.event[prp.event];
+				if (!cnt) {
+					cnt = 1;
+				} else {
+					cnt++;
+				}
+				opt.event[prp.event] = cnt;
+
 				let cTypeCount = opt.collision_type[prp.collision_type];
 				if (!cTypeCount) {
 					cTypeCount = 1;

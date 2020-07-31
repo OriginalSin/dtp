@@ -1,6 +1,7 @@
 <script>
 	import { afterUpdate } from 'svelte';
 	import Modal from './Modal.svelte';
+	import DtpPopup from './DtpPopupEvnt.svelte';
 
 	export let showModal = false;
 
@@ -8,6 +9,24 @@
 	let modal;
 
 	let disabled = prp.files && prp.files.length ? '' : 'disabled';
+	let evnCont;
+   const showEvn = (ev) => {
+		let id = ev.target.value;
+		evnCont.innerHTML = '';
+
+		let url = 'https://dtp.mvs.group/scripts/events_dev/get_event_id_' + id + '.txt';
+		fetch(url, {})
+			.then(req => req.json())
+			.then(json => {
+				const app = new DtpPopup({
+					target: evnCont,
+					props: {
+						prp: json[0]
+					}
+				});
+			});
+
+	};
 
 	afterUpdate(() => {
 		// console.log('the component just updated', showModal, modal);
@@ -30,7 +49,6 @@
 			console.log('Something went wrong', err);
 		});
 	};
-//console.log('the component just updated', prp);
 
 </script>
 
@@ -88,6 +106,16 @@
 				</ul>
 			  </td>
             </tr>
+            <tr>
+              <td class="first" colspan=2>
+		<div class="win leaflet-popup-content-wrapper " bind:this={evnCont}></div>
+				<ul>
+			{#each (prp.event_list || []) as pt1}
+				<li class="link" on:click={showEvn} value={pt1}>Мероприятие</li>
+			{/each}
+				</ul>
+			  </td>
+            </tr>
 
 			<tr>
 			  <td class="center" colSpan="2">
@@ -100,6 +128,12 @@
 	  </div>
 
 <style>
+.win {
+    position: absolute;
+    min-width: 280px;
+    left: 360px;
+    top: 76px;
+}
 .primary {
     color: #fff;
     background-color: #1890ff;
@@ -139,6 +173,9 @@ button {
     color: rgba(0,0,0,.65);
     background-color: #fff;
     border: 1px solid #d9d9d9;
+}
+.link {
+    cursor: pointer;
 }
 
 </style>

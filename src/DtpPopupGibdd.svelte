@@ -2,6 +2,7 @@
 	import { afterUpdate } from 'svelte';
 	import Modal from './Modal.svelte';
 	import DtpPopup from './DtpPopupDps.svelte';
+	import DtpPopupEvnt from './DtpPopupEvnt.svelte';
 
 	export let showModal = false;
 
@@ -10,6 +11,24 @@
 
 	let disabled = prp.skpdiFiles ? '' : 'disabled';
 	let gpsCont;
+	let evnCont;
+   const showEvn = (ev) => {
+		let id = ev.target.value;
+		evnCont.innerHTML = '';
+
+		let url = 'https://dtp.mvs.group/scripts/events_dev/get_event_id_' + id + '.txt';
+		fetch(url, {})
+			.then(req => req.json())
+			.then(json => {
+				const app = new DtpPopupEvnt({
+					target: evnCont,
+					props: {
+						prp: json[0]
+					}
+				});
+			});
+
+	};
 
 	afterUpdate(() => {
 		// console.log('the component just updated', showModal, modal);
@@ -151,6 +170,16 @@ console.log('showBat', ev.target.value)
 				<ul>
 			{#each (prp.dps_plk || []) as pt1}
 				<li class="link" on:click={showBat} value={pt1}>батальон ДПС</li>
+			{/each}
+				</ul>
+			  </td>
+            </tr>
+            <tr>
+              <td class="first" colspan=2>
+		<div class="win leaflet-popup-content-wrapper " bind:this={evnCont}></div>
+				<ul>
+			{#each (prp.event_list || []) as pt1}
+				<li class="link" on:click={showEvn} value={pt1}>Мероприятие</li>
 			{/each}
 				</ul>
 			  </td>

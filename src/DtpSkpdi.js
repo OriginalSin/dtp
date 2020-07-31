@@ -55,6 +55,12 @@ DtpSkpdi.setFilter = arg => {
 					// if (prp.collision_type === ft.zn) {
 						cnt++;
 					}
+				} else if (ft.type === 'evnt') {
+					if (prp.event) {
+						if (ft.zn.ev1) { cnt++; }
+					} else {
+						if (ft.zn.ev0) { cnt++; }
+					}
 				} else if (ft.type === 'id_dtp') {
 					if (prp.id == ft.zn) {
 						cnt++;
@@ -96,7 +102,7 @@ DtpSkpdi.on('remove', () => {
 	fetch('https://dtp.mvs.group/scripts/index_dev.php?request=get_skpdi', {})
 		.then(req => req.json())
 		.then(json => {
-			let opt = {collision_type: {}, iconType: {}};
+			let opt = {collision_type: {}, iconType: {}, event: {}};
 			let heat = [];
 			let arr = json.map(prp => {
 				let iconType = prp.iconType || 0,
@@ -121,6 +127,14 @@ if (!prp.lat || !prp.lon) {
 console.log('_______', prp);
 	prp.lat = prp.lon = 0;
 }
+				let cnt = opt.event[prp.event];
+				if (!cnt) {
+					cnt = 1;
+				} else {
+					cnt++;
+				}
+				opt.event[prp.event] = cnt;
+
 				let cTypeCount = opt.collision_type[prp.collision_type];
 				if (!cTypeCount) {
 					cTypeCount = 1;
