@@ -6,7 +6,7 @@ const L = window.L;
 
 const popup = L.popup();
 const popup1 = L.popup({minWidth: 200});
-let argFilters;
+let argFilters = [];
 let collision_type;
 
 const setPopup = function (props) {
@@ -41,8 +41,9 @@ DtpHearthsPicket.setFilter = arg => {
 // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
 	DtpHearthsPicket.clearLayers();
 	// DtpHearths._heatData = [];
-	argFilters = arg;
+	argFilters = arg || [];
 
+	let fCnt = argFilters.length;
 	let arr = [];
 	if (DtpHearthsPicket._group) {
 		DtpHearthsPicket._group.getLayers().forEach(it => {
@@ -65,6 +66,10 @@ DtpHearthsPicket.setFilter = arg => {
 					if (ft.zn == prp.id_hearth) {
 						cnt++;
 					}
+				} else if (ft.type === 'year') {
+					if (ft.zn[prp.year]) {
+						cnt++;
+					}
 				} else if (ft.type === 'stricken') {
 					let zn = ft.zn;
 					if (!zn) {
@@ -80,17 +85,11 @@ DtpHearthsPicket.setFilter = arg => {
 					}
 				}
 			});
-			if (cnt === argFilters.length) {
+			if (cnt === fCnt) {
 				arr.push(it);
-				// arr = arr.concat(it.options.items);
-				// DtpHearths._heatData.push({lat: prp.lat, lng: prp.lon, count: prp.iconType});
 			}
 		});
 		DtpHearthsPicket.addLayer(L.layerGroup(arr));
-		// DtpHearths._heat.setData({
-			// max: 8,
-			// data: DtpHearths._heatData
-		// });
 	}
 };
 
@@ -270,7 +269,7 @@ DtpHearthsPicket.on('remove', () => {
 			}
 		};
 
-	Promise.all([2019].map(key => fetch(prefix + key + '.txt', {}).then(req => req.json())))
+	Promise.all([2019, 2020].map(key => fetch(prefix + key + '.txt', {}).then(req => req.json())))
 	// Promise.all([2019, 2020].map(key => fetch(prefix + key + '.txt', {}).then(req => req.json())))
 		.then(allJson => {
 			allJson.forEach(json => {

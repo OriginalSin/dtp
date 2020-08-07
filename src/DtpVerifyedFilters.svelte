@@ -128,9 +128,24 @@
 		Rub.setFilter(opt);
 	};
 
-    const setFilterHearthsPicket = () => {
+	let hearths_year_Picket = {};
+	Object.keys(optDataHearthsPicket.years || {}).sort().forEach(key => {
+		hearths_year_Picket[key] = true;
+	});
+    const setFilterHearthsPicket = (ev) => {
 		if (DtpHearthsPicket._map) {
-			let opt = [];
+			if (ev) {
+				let target = ev.target || {},
+					checked = target.checked,
+					id = target.id,
+					name = target.name;
+				if (id !== 'stricken') {
+					hearths_year_Picket[name] = checked;
+				}
+			}
+			let opt = [
+				{type: 'year', zn: hearths_year_Picket}
+			];
 			if (id_dtp) {
 				opt.push({type: 'id_dtp', zn: id_dtp});
 			}
@@ -885,6 +900,18 @@
 		<div class="filtersCont">
 			<div class="pLine">ID Очага: <input type="text" on:input={oncheckIdHearth} value={id_hearth} /></div>
 			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine nowrap">
+				<fieldset>
+					<legend>Фильтрация по годам:</legend>
+					<div class="pLine type">
+						<div class="pLine margin">
+						{#each Object.keys(DtpHearthsPicket._opt.years).sort() as key}
+							<input type="checkbox" on:change={setFilterHearthsPicket} id="hearths_year_Picket" checked={hearths_year_Picket[key]} name="{key}"><label for="hearths_year_Picket">{key}</label>
+						{/each}
+						</div>
+					</div>
+				</fieldset>
+			</div>
 			<div class="pLine">
 				<input type="checkbox" on:change={oncheckHt} id="ht_3" checked={ht.hearth3} name="hearth3"><label for="ht_3">одного типа</label>
 				<input type="checkbox" on:change={oncheckHt} id="ht_5" checked={ht.hearth5} name="hearth5"><label for="ht_5">разного типа</label>

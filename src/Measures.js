@@ -128,9 +128,9 @@ prp.type = ptype;
 			arr.push(new CirclePoint(latlng, {
 					// cluster: it,
 					props: prp,
-					radius: 10,
+					radius: 9,
 					zIndexOffset: 50000,
-					path: 'measures',
+					// path: 'measures',
 					stroke: stroke,
 					fillColor: fillColor,
 					// renderer: renderer

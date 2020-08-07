@@ -48,7 +48,7 @@
 			  <td>{coords.lat} {coords.lon} <span on:click={copyParent} title="Скопировать в буфер обмена" class="leaflet-gmx-icon-copy"></span></td>
 			</tr>
 			<tr>
-			  <td class="first">ID ДТП:</td>
+			  <td class="first">ID ДТП СКПДИ:</td>
 			  <td>{prp.id_dtp || ''}</td>
 			</tr>
 			<tr>
