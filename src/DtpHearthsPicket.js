@@ -41,7 +41,7 @@ DtpHearthsPicket.setFilter = arg => {
 // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
 	DtpHearthsPicket.clearLayers();
 	// DtpHearths._heatData = [];
-	argFilters = arg || [];
+	argFilters = arg.length ? arg : [];
 
 	let fCnt = argFilters.length;
 	let arr = [];
@@ -274,6 +274,7 @@ DtpHearthsPicket.on('remove', () => {
 		.then(allJson => {
 			allJson.forEach(json => {
 				json.forEach(pt => {
+					// parseItem(pt, 'hearth3');
 					(pt.hearth3 || []).forEach(it => {
 						parseItem(it, 'hearth3');
 					});

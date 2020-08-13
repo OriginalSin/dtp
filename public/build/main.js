@@ -16079,7 +16079,7 @@ var dtp = (function () {
   // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
   	DtpHearthsPicket.clearLayers();
   	// DtpHearths._heatData = [];
-  	argFilters$8 = arg || [];
+  	argFilters$8 = arg.length ? arg : [];
 
   	let fCnt = argFilters$8.length;
   	let arr = [];
@@ -16307,6 +16307,7 @@ var dtp = (function () {
   		.then(allJson => {
   			allJson.forEach(json => {
   				json.forEach(pt => {
+  					// parseItem(pt, 'hearth3');
   					(pt.hearth3 || []).forEach(it => {
   						parseItem(it, 'hearth3');
   					});
