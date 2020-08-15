@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	export let DtpHearthsPicket4;
+	export let DtpHearthsSettlements;
 	export let DtpHearthsPicket;
 	export let DtpHearths5;
 	export let DtpHearths3;
@@ -20,6 +21,7 @@
 	if (!DtpGibddRub) { DtpGibddRub = {}; };
 	if (!DtpHearthsPicket4) { DtpHearthsPicket4 = {}; };
 	if (!DtpHearthsPicket) { DtpHearthsPicket = {}; };
+	if (!DtpHearthsSettlements) { DtpHearthsSettlements = {}; };
 	if (!DtpHearths5) { DtpHearths5 = {}; };
 	if (!DtpHearths3) { DtpHearths3 = {}; };
 
@@ -66,6 +68,9 @@
 
 	let optDataHearths5 = (DtpHearths5 || {})._opt || {};
 	let optTypeHearths5Keys = optDataHearths5.str_icon_type ? Object.keys(optDataHearths5.str_icon_type).sort((a, b) => optDataHearths5.str_icon_type[b] - optDataHearths5.str_icon_type[a]) : [];
+
+	let optDataHearthsSettlements = (DtpHearthsSettlements || {})._opt || {};
+	let optRoadTypes5 = optDataHearthsSettlements.road ? Object.keys(optDataHearthsSettlements.road).sort((a, b) => optDataHearthsSettlements.road[b] - optDataHearthsSettlements.road[a]) : [];
 
 	let optDataHearthsPicket = (DtpHearthsPicket || {})._opt || {};
 	let optRoadTypes = optDataHearthsPicket.road ? Object.keys(optDataHearthsPicket.road).sort((a, b) => optDataHearthsPicket.road[b] - optDataHearthsPicket.road[a]) : [];
@@ -126,6 +131,43 @@
 	const setComp = (ev) => {
 		let opt = [{type: 'comp', zn: {on: compOn, off: comp1On}}];
 		Rub.setFilter(opt);
+	};
+
+	let hearths_year_Settlements = {};
+	Object.keys(optDataHearthsSettlements.years || {}).sort().forEach(key => {
+		hearths_year_Settlements[key] = true;
+	});
+	let id_city;
+    const setFilterHearthsSettlements = (ev) => {
+		if (DtpHearthsSettlements._map) {
+			if (ev) {
+				let target = ev.target || {},
+					checked = target.checked,
+					id = target.id,
+					name = target.name;
+				if (id !== 'stricken') {
+					hearths_year_Settlements[name] = checked;
+				}
+			}
+			let opt = [
+				{type: 'year', zn: hearths_year_Settlements}
+			];
+			if (id_city) {
+				opt.push({type: 'id_city', zn: id_city});
+			}
+			if (id_dtp) {
+				opt.push({type: 'id_dtp', zn: id_dtp});
+			}
+			if (id_hearth) {
+				opt.push({type: 'id_hearth', zn: id_hearth});
+			}
+			if (roads) {
+				opt.push({type: 'roads', zn: roads});
+			}
+			opt.push({type: 'ht', zn: ht});
+			// console.log('opt', opt);
+			DtpHearthsSettlements.setFilter(opt);
+		}
 	};
 
 	let hearths_year_Picket = {};
@@ -203,6 +245,7 @@
 
 	const refresh = () => {
 		setFilterHearthsPicket4();
+		setFilterHearthsSettlements();
 		setFilterHearthsPicket();
 		setFilterHearths5({});
 		setFilterHearths3({});
@@ -216,6 +259,13 @@
 		setFilter();
 	};
 
+	const oncheckIdCity = (ev) => {
+		let target = ev.target,
+			value = target.value;
+		id_city = value ? value : null;
+		control._id_city = id_city;
+		refresh();
+	};
 	const oncheckIdDtp = (ev) => {
 		let target = ev.target,
 			value = target.value;
@@ -228,12 +278,14 @@
 		let target = ev.target,
 			value = target.value;
 		id_hearth = value ? value : null;
+		setFilterHearthsSettlements();
 		setFilterHearthsPicket();
 		setFilterHearthsPicket4();
 	};
 	const oncheckHt = (ev) => {
 		let target = ev.target;
 		ht[target.name] = target.checked;
+		setFilterHearthsSettlements();
 		setFilterHearthsPicket();
 		setFilterHearthsPicket4();
 	};
@@ -895,6 +947,44 @@
 		</div>
 		{/if}
 
+		{#if DtpHearthsSettlements._map && DtpHearthsSettlements._opt && DtpHearthsSettlements._opt.years}
+		<div class="pLine">Фильтры - <b>Очаги с привязкой к городам</b></div>
+		<div class="filtersCont">
+			<div class="pLine">ID Очага: <input type="text" on:input={oncheckIdHearth} value={id_hearth} /></div>
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine">ID города: <input type="text" on:input={oncheckIdCity} value={id_city || ''} /></div>
+			
+			<div class="pLine nowrap">
+				<fieldset>
+					<legend>Фильтрация по годам:</legend>
+					<div class="pLine type">
+						<div class="pLine margin">
+						{#each Object.keys(DtpHearthsSettlements._opt.years).sort() as key}
+							<input type="checkbox" on:change={setFilterHearthsSettlements} id="hearths_year_Settlements" checked={hearths_year_Settlements[key]} name="{key}"><label for="hearths_year_Settlements">{key}</label>
+						{/each}
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckHt} id="ht_3" checked={ht.hearth3} name="hearth3"><label for="ht_3">одного типа</label>
+				<input type="checkbox" on:change={oncheckHt} id="ht_5" checked={ht.hearth5} name="hearth5"><label for="ht_5">разного типа</label>
+			</div>
+			<div class="pLine">
+				<select class="multiple_icon_typeTmp" bind:value={roads} on:change="{setFilterHearthsSettlements}" multiple>
+					<option value=''>
+						Все дороги ({optRoadTypes5.reduce((p, c) => { p += optDataHearthsSettlements.road[c]; return p; }, 0)})
+					</option>
+					{#each optRoadTypes5 as key}
+						<option value={key} class="road_{key}">
+							({optDataHearthsSettlements.road[key]}) - {key}
+						</option>
+					{/each}
+				</select>
+			</div>
+		</div>
+		{/if}
+		
 		{#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги(Picket)</b></div>
 		<div class="filtersCont">
@@ -930,7 +1020,7 @@
 			</div>
 		</div>
 		{/if}
-		
+
 		{#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги (5)</b></div>
 		<div class="filtersCont">
@@ -1211,7 +1301,7 @@
 				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={DtpGibddRub._needHeat || DtpGibdd._needHeat || DtpSkpdi._needHeat || DtpVerifyed._needHeat} name="heat"><label for="heat"> - тепловая карта</label>
 			</div>
 		{/if}
-		{:else if !Measures._map && !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket4._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
+		{:else if !Measures._map && !DtpHearthsSettlements._map && !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket4._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
 			<div class="pLine">Нет включенных слоев</div>
 		{/if}
 
