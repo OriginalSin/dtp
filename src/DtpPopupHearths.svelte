@@ -14,10 +14,11 @@
     const showDtpInfo = (ev) => {
 console.log('showDtpInfo ', ev);
 	};
+	let city = 'city' in prp ? ' (city: ' + prp.city + ')' : '';
 
 </script>
 	<div class="mvsPopup">
-		<div class="pLine">{predochag ? 'Предочаг' : 'Очаг'} ДТП (id: {prp.id || prp.id_hearth})</div>
+		<div class="pLine">{predochag ? 'Предочаг' : 'Очаг'} ДТП (id: {prp.id || prp.id_hearth}){city}</div>
 		<div class="pLine">{prp.quarter ? prp.quarter + ' кв.': ''} {prp.year}г.</div>
 		<div class="featureCont">
 		  <table class="table">

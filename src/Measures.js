@@ -19,22 +19,6 @@ const setPopup = function (props) {
 		}
 	});
 	popup.setContent(cont);
-/*
-	fetch(prefix + 'rubez-complex-' + id + '.txt', {}).then(req => req.json())
-		.then(json => {
-			// console.log('json', json);
-			new MeasuresPopup({
-				target: cont,
-				props: {
-					prp: json[0]
-				}
-			});
-			popup.setContent(cont);
-		});
-
-	popup.setContent(cont);
-
-*/
 	return cont;
 }
 

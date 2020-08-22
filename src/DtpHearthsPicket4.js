@@ -200,16 +200,15 @@ DtpHearthsPicket4.on('remove', () => {
 							stroke: stroke,
 							fillColor: fillColor,
 							// renderer: renderer
-						}).bindPopup(popup)
-						.on('popupopen', (ev) => {
+						// }).bindPopup(popup)
+						// .on('popupopen', (ev) => {
 
-							setPopup(ev.target.options.props);
-							// console.log('popupopen', ev);
-						}).on('popupclose', (ev) => {
-							if (ev.popup._svObj) {
-								ev.popup._svObj.$destroy();
-								delete ev.popup._svObj;
-							}
+							// setPopup(ev.target.options.props);
+						// }).on('popupclose', (ev) => {
+							// if (ev.popup._svObj) {
+								// ev.popup._svObj.$destroy();
+								// delete ev.popup._svObj;
+							// }
 						});
 				});
 				if (head) {
@@ -244,20 +243,20 @@ DtpHearthsPicket4.on('remove', () => {
 							ctrlKey = ev.originalEvent.ctrlKey,
 							dtp;
 						if (ctrlKey) { target.bringToBack(); }
-						target.options.items.forEach(pt => {
-							let cd = pt._point.distanceTo(layerPoint);
-							if (cd < dist) {
-								dist = cd;
-								dtp = pt;
-							}
-						});
-						if (dist < 10) {
-							setPopup(dtp.options.props);
-							popup.setLatLng(dtp._latlng).openOn(DtpHearthsPicket4._map);
-						} else {
+						// target.options.items.forEach(pt => {
+							// let cd = pt._point.distanceTo(layerPoint);
+							// if (cd < dist) {
+								// dist = cd;
+								// dtp = pt;
+							// }
+						// });
+						// if (dist < 10) {
+							// setPopup(dtp.options.props);
+							// popup.setLatLng(dtp._latlng).openOn(DtpHearthsPicket4._map);
+						// } else {
 							setPopup1(it);
 							popup1.setLatLng(latlng).openOn(DtpHearthsPicket4._map);
-						}
+						// }
 						
 						// console.log('popu666popen', dist, dtp);
 					});

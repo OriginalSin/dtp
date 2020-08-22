@@ -26,6 +26,7 @@ import {DtpGibddRub} from './DtpGibddRub';
 import {TestGraphQl} from './TestGraphQl';
 import {DtpHearthsPicket4} from './DtpHearthsPicket4';
 import {Roads} from './Roads';
+import {Settlements} from './Settlements';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -134,6 +135,7 @@ let overlays = {
 	
 	// 'm4': m4,
 	'Трассы': Roads,
+	'Населенные пункты': Settlements,
 	'Мероприятия': Measures,
 	'Рубежи': Rub,
 	// 'Рубежи (test)': Rub1,

@@ -62,8 +62,8 @@ DtpHearthsSettlements.setFilter = arg => {
 					if (prp.list_dtp.filter(pt => pt.id == ft.zn).length || !ft.zn.length) {
 						cnt++;
 					}
-				} else if (ft.type === 'id_city') {
-					if (prp.list_dtp.filter(pt => pt.id_city == ft.zn).length || !ft.zn.length) {
+				} else if (ft.type === 'city') {
+					if (ft.zn[prp.city]) {
 						cnt++;
 					}
 				} else if (ft.type === 'id_hearth') {
@@ -100,7 +100,7 @@ DtpHearthsSettlements.setFilter = arg => {
 DtpHearthsSettlements.on('remove', () => {
 	DtpHearthsSettlements.clearLayers();
 }).on('add', ev => {
-	let opt = {road: {}, str_icon_type: {}, iconType: {}, id_city: {}, years: {}, dtps: {}},
+	let opt = {road: {}, str_icon_type: {}, iconType: {}, id_city: {}, city: {}, years: {}, dtps: {}},
 		arr = [],
 		max_quarter = 0,
 		prefix = 'https://dtp.mvs.group/scripts/hearthssettlements_dev/',
@@ -148,6 +148,10 @@ DtpHearthsSettlements.on('remove', () => {
 				} else {
 					opt.road[it.road] = 1;
 				}
+
+					let cityp = it.city || 0;
+					let city = opt.city[cityp] || 0;
+					opt.city[cityp] = city + 1;
 
 				if (iconType) {
 					stroke = iconType % 2 === 0 ? true : false; //  - смертельные ДТП
@@ -210,16 +214,14 @@ DtpHearthsSettlements.on('remove', () => {
 							stroke: stroke,
 							fillColor: fillColor,
 							// renderer: renderer
-						}).bindPopup(popup)
-						.on('popupopen', (ev) => {
-
-							setPopup(ev.target.options.props);
-							// console.log('popupopen', ev);
-						}).on('popupclose', (ev) => {
-							if (ev.popup._svObj) {
-								ev.popup._svObj.$destroy();
-								delete ev.popup._svObj;
-							}
+						// }).bindPopup(popup)
+						// .on('popupopen', (ev) => {
+							// setPopup(ev.target.options.props);
+						// }).on('popupclose', (ev) => {
+							// if (ev.popup._svObj) {
+								// ev.popup._svObj.$destroy();
+								// delete ev.popup._svObj;
+							// }
 						});
 				});
 				if (head) {
@@ -254,20 +256,20 @@ DtpHearthsSettlements.on('remove', () => {
 							ctrlKey = ev.originalEvent.ctrlKey,
 							dtp;
 						if (ctrlKey) { target.bringToBack(); }
-						target.options.items.forEach(pt => {
-							let cd = pt._point.distanceTo(layerPoint);
-							if (cd < dist) {
-								dist = cd;
-								dtp = pt;
-							}
-						});
-						if (dist < 10) {
-							setPopup(dtp.options.props);
-							popup.setLatLng(dtp._latlng).openOn(DtpHearthsSettlements._map);
-						} else {
+						// target.options.items.forEach(pt => {
+							// let cd = pt._point.distanceTo(layerPoint);
+							// if (cd < dist) {
+								// dist = cd;
+								// dtp = pt;
+							// }
+						// });
+						// if (dist < 10) {
+							// setPopup(dtp.options.props);
+							// popup.setLatLng(dtp._latlng).openOn(DtpHearthsSettlements._map);
+						// } else {
 							setPopup1(it);
 							popup1.setLatLng(latlng).openOn(DtpHearthsSettlements._map);
-						}
+						// }
 						
 						// console.log('popu666popen', dist, dtp);
 					});

@@ -105,6 +105,10 @@ console.log('showBat', ev.target.value)
 			  <td>{prp.district || ''} {prp.dor || ''}</td>
 			</tr>
 			<tr>
+			  <td class="first">Населенный пункт:</td>
+			  <td>{prp.name_city || 'вне населенного пункта'}</td>
+			</tr>
+			<tr>
 			  <td class="first">Пикетаж:</td>
 			  <td><b>{prp.km || 0}</b> км. <b>{prp.m || 0}</b> м.</td>
 			</tr>

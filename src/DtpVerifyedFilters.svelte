@@ -137,7 +137,7 @@
 	Object.keys(optDataHearthsSettlements.years || {}).sort().forEach(key => {
 		hearths_year_Settlements[key] = true;
 	});
-	let id_city;
+	let city = {0: true, 1: true, 2: true};
     const setFilterHearthsSettlements = (ev) => {
 		if (DtpHearthsSettlements._map) {
 			if (ev) {
@@ -152,8 +152,8 @@
 			let opt = [
 				{type: 'year', zn: hearths_year_Settlements}
 			];
-			if (id_city) {
-				opt.push({type: 'id_city', zn: id_city});
+			if (city) {
+				opt.push({type: 'city', zn: city});
 			}
 			if (id_dtp) {
 				opt.push({type: 'id_dtp', zn: id_dtp});
@@ -261,9 +261,9 @@
 
 	const oncheckIdCity = (ev) => {
 		let target = ev.target,
-			value = target.value;
-		id_city = value ? value : null;
-		control._id_city = id_city;
+			name = target.name;
+		city[name] = target.checked;
+		control.city = city;
 		refresh();
 	};
 	const oncheckIdDtp = (ev) => {
@@ -952,7 +952,18 @@
 		<div class="filtersCont">
 			<div class="pLine">ID Очага: <input type="text" on:input={oncheckIdHearth} value={id_hearth} /></div>
 			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
-			<div class="pLine">ID города: <input type="text" on:input={oncheckIdCity} value={id_city || ''} /></div>
+			<div class="pLine">
+				<fieldset>
+					<legend>Расположение очага:</legend>
+					<div class="pLine type">
+						<div class="pLine margin">
+							<input type="checkbox" on:change={oncheckIdCity} id="city_1" checked={city[1]} name="1"><label for="city_1">в населенном пункте</label>
+							<input type="checkbox" on:change={oncheckIdCity} id="city_0" checked={city[0]} name="0"><label for="city_0">вне населенного пункта</label><br/>
+							<input type="checkbox" on:change={oncheckIdCity} id="city_2" checked={city[2]} name="2"><label for="city_2">на границе населенного пункта</label>
+						</div>
+					</div>
+				</fieldset>
+			</div>
 			
 			<div class="pLine nowrap">
 				<fieldset>

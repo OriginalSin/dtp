@@ -15,7 +15,7 @@
 
 </script>
 	<div class="mvsPopup">
-		<div class="pLine">Мероприятие</div>
+		<div class="pLine">Мероприятие<br />({prp.kind || ''})</div>
 		<div class="featureCont">
 		  <table class="table">
 			<tbody>
@@ -26,10 +26,6 @@
 			<tr>
 			  <td class="first">ID:</td>
 			  <td>{prp.id || ''}</td>
-			</tr>
-			<tr>
-			  <td class="first">Участок дороги:</td>
-			  <td>{prp.dor || ''}</td>
 			</tr>
 			<tr>
 			  <td class="first">Статус:</td>
@@ -52,8 +48,8 @@
 			  <td>{prp.id_dtp || ''}</td>
 			</tr>
 			<tr>
-			  <td class="first">Заказчик:</td>
-			  <td>{prp.client || ''}</td>
+			  <td class="first">Описание:</td>
+			  <td>{prp.description || ''}</td>
 			</tr>
 		   </tbody>
 		  </table>
