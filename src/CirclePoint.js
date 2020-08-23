@@ -1,3 +1,5 @@
+import {myRenderer} from './MapUtils';
+
 const L = window.L;
 
 let renderer = L.canvas();
@@ -70,7 +72,7 @@ const icons = {
 	camera: icon2path('M864 260H728l-32.4-90.8a32.07 32.07 0 0 0-30.2-21.2H358.6c-13.5 0-25.6 8.5-30.1 21.2L296 260H160c-44.2 0-80 35.8-80 80v456c0 44.2 35.8 80 80 80h704c44.2 0 80-35.8 80-80V340c0-44.2-35.8-80-80-80zM512 716c-88.4 0-160-71.6-160-160s71.6-160 160-160 160 71.6 160 160-71.6 160-160 160zm-96-160a96 96 0 1 0 192 0 96 96 0 1 0-192 0z', -12, -13)
 };
 
-const myRenderer = L.canvas({padding: 0.5});
+// const myRenderer = L.canvas({padding: 0.5});
 L.Canvas.include({
   _updateMarkerPoint: function (layer) {
     if (!this._drawing || layer._empty() || (layer.feature && layer.feature.properties._isHidden)) {
@@ -217,7 +219,7 @@ export const MarkerPoint = L.CircleMarker.extend({
 });
 export const CirclePoint = L.CircleMarker.extend({
 	options: {
-		renderer: renderer
+		renderer: myRenderer
 	},
   _updatePath: function () {
     this._renderer._updateCirclePoint(this);
@@ -225,6 +227,6 @@ export const CirclePoint = L.CircleMarker.extend({
 });
 export const Bbox = L.Rectangle.extend({
 	options: {
-		renderer: renderer
+		renderer: myRenderer
 	}
 });

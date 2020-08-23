@@ -72,4 +72,6 @@ const getLatLngsLength = (latlngs) => {
 	return dist;
 };
 
-export {chkStricken, getLatLngsLength};
+const myRenderer = L.canvas();
+
+export {chkStricken, getLatLngsLength, myRenderer};

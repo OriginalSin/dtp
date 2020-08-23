@@ -5,7 +5,7 @@ import './GmxIcon';
 import './GmxCenter';
 import './FitCenter';
 import {proxy, hrefParams} from './Config';
-import {getLatLngsLength} from './MapUtils';
+import {getLatLngsLength, myRenderer} from './MapUtils';
 import {MarkerPoint, CirclePoint} from './CirclePoint';
 import {DtpGibdd} from './DtpGibdd';
 import {DtpSkpdi} from './DtpSkpdi';
@@ -27,6 +27,7 @@ import {TestGraphQl} from './TestGraphQl';
 import {DtpHearthsPicket4} from './DtpHearthsPicket4';
 import {Roads} from './Roads';
 import {Settlements} from './Settlements';
+// import {GeoJsonStatic} from './GeoJsonStatic';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -127,6 +128,27 @@ baseLayers.OpenStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{
 	maxNativeZoom: 18
 });
 
+// let renderer = L.canvas();
+let geoJsonStatic = (pt) => {
+	const geoJsonStatic = L.featureGroup([]);
+	geoJsonStatic.on('add', ev => {
+		if (geoJsonStatic.getLayers().length === 0) {
+			fetch(pt.file, {
+			}).then(req => req.json())
+			.then(json => {
+				// console.log('ggggg', json);
+				let geojson = L.geoJson(json, {
+					renderer: myRenderer,
+					style: () => pt.style || {weight: 1}
+				});
+				geoJsonStatic.clearLayers();
+				geoJsonStatic.addLayer(geojson);
+			});
+		}
+	});
+	return geoJsonStatic;
+};
+
 let overlays = {
 	// Marker: L.marker([55.758031, 37.611694])
 		// .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
@@ -151,8 +173,12 @@ let overlays = {
 	'ДТП СКПДИ + тепловая карта': DtpSkpdi,
 	'ДТП ГИБДД + тепловая карта': DtpGibdd,
 	'ДТП ГИБДД + тепловая карта + Рубежи': DtpGibddRub,
+	'Москва': geoJsonStatic({file:"/static/moscow.geojson", style: {color:"purple", interactive: false}}),
+	'Московская область': geoJsonStatic({file:"/static/moscowObl.geojson", style: {color:"gray", fill: false, interactive: false}}),
+	'А-108 Большая бетонка': geoJsonStatic({file:"/static/a108.geojson", style: {color:"green", fill: false, interactive: false}}),
+	'А-107 Малая бетонка': geoJsonStatic({file:"/static/a107.geojson", style: {color:"blue", fill: false, interactive: false}})
 };
-
+L.featureGroup([])
 // let comp = L.DomUtil.create('div', 'layerInfo');
 // comp.innerHTML = 'df<b>df</b>df';
 // let info = L.DomUtil.create('div', '', comp);

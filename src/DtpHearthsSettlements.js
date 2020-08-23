@@ -1,6 +1,7 @@
 import {Bbox, CirclePoint} from './CirclePoint';
 import DtpPopup from './DtpPopupVerifyed.svelte';
 import DtpPopupHearths from './DtpPopupHearths.svelte';
+import {myRenderer} from './MapUtils';
 
 const L = window.L;
 
@@ -35,7 +36,7 @@ const setPopup1 = function (props) {
 }
 
 // let renderer = L.canvas();
-export const DtpHearthsSettlements = L.featureGroup([]);
+export const DtpHearthsSettlements = L.featureGroup([], {renderer: myRenderer});
 DtpHearthsSettlements.setFilter = arg => {
 	if (!DtpHearthsSettlements._map) { return; }
 // console.log('DtpHearths.setFilter ', arg, DtpHearths._group);
@@ -227,7 +228,7 @@ DtpHearthsSettlements.on('remove', () => {
 				if (head) {
 					it._bounds = L.circle(L.latLng(head.coords.lat, head.coords.lon), {radius: it.radius || 500, items: arr1, cluster: it, color: fillColor, });
 				} else if (latlngs.length) {
-					it._bounds = L.polyline(latlngs, {items: arr1, cluster: it, color: fillColor, weight: 4});
+					it._bounds = L.polyline(latlngs, {items: arr1, cluster: it, renderer: myRenderer, color: fillColor, weight: 4});
 				} else {
 					it._bounds = L.rectangle(list_bounds, {items: arr1, cluster: it, fill: true, color: fillColor, dashArray: '8 3 1'})
 				}

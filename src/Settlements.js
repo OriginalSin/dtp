@@ -1,6 +1,6 @@
 // import {MarkerPoint, CirclePoint} from './CirclePoint';
 // import DtpPopup from './DtpPopupGibdd.svelte';
-// import {getLatLngsLength} from './MapUtils';
+import {myRenderer} from './MapUtils';
 
 const L = window.L;
 
@@ -8,7 +8,7 @@ const L = window.L;
 let map;
 // let argFilters;
 
-let renderer = L.canvas();
+// let renderer = L.canvas();
 export const Settlements = L.featureGroup([]);
 
 Settlements.on('remove', (ev) => {
@@ -23,16 +23,17 @@ Settlements.on('remove', (ev) => {
 	.then(req => req.json())
 	.then(json => {
 		let geojson = L.geoJson(json, {
-			renderer: renderer,
+			renderer: myRenderer,
 			style: (feature) => {
-				// console.log('onEachFeature', it);
 				return {weight: 1};
 			}
 		})
 		.bindPopup(function (layer) {
+			layer.bringToBack();
 			return layer.feature.properties.name;
 		});
 		Settlements.clearLayers();
+		Settlements.bringToBack();
 		Settlements.addLayer(geojson);
 	});
 });
