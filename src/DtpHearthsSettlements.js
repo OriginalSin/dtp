@@ -223,6 +223,10 @@ DtpHearthsSettlements.on('remove', () => {
 								// ev.popup._svObj.$destroy();
 								// delete ev.popup._svObj;
 							// }
+						})
+						.on('click', (ev) => {
+							setPopup1(it);
+							popup1.setLatLng(ev.latlng).openOn(DtpHearthsSettlements._map);
 						});
 				});
 				if (head) {
