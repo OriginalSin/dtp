@@ -1,4 +1,5 @@
 /node_modules/
 /bak/
+/package-lock.json
 
 .DS_Store
