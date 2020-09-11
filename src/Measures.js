@@ -122,6 +122,7 @@ prp.type = ptype;
 				.on('popupopen', (ev) => {
 
 					setPopup(ev.target.options.props);
+					ev.target.bringToBack();
 					// console.log('popupopen', ev);
 				}).on('popupclose', (ev) => {
 					if (ev.popup._svObj) {

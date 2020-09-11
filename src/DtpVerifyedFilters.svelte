@@ -12,6 +12,8 @@
 	export let DtpSkpdi;
 	export let DtpGibdd;
 	export let DtpGibddRub;
+	export let DtpGibddSpt;
+	export let DtpGibddLo;
 	export let Rub;
 	export let Measures;
 	export let control;
@@ -46,8 +48,13 @@
 
 	let optDataSkpdi = DtpSkpdi._opt || {};
 	let optCollisionSkpdiKeys = optDataSkpdi.collision_type ? Object.keys(optDataSkpdi.collision_type).sort((a, b) => optDataSkpdi.collision_type[b] - optDataSkpdi.collision_type[a]) : [];
+
 	let optDataGibdd = DtpGibdd._opt || {};
 	let optCollisionGibddKeys = optDataGibdd.collision_type ? Object.keys(optDataGibdd.collision_type).sort((a, b) => optDataGibdd.collision_type[b] - optDataGibdd.collision_type[a]) : [];
+	let optDataGibddSpt = DtpGibddSpt._opt || {};
+	let optCollisionGibddSptKeys = optDataGibddSpt.collision_type ? Object.keys(optDataGibddSpt.collision_type).sort((a, b) => optDataGibddSpt.collision_type[b] - optDataGibddSpt.collision_type[a]) : [];
+	let optDataGibddLo = DtpGibddLo._opt || {};
+	let optCollisionGibddLoKeys = optDataGibddLo.collision_type ? Object.keys(optDataGibddLo.collision_type).sort((a, b) => optDataGibddLo.collision_type[b] - optDataGibddLo.collision_type[a]) : [];
 	let dps = {'Dps1': true, 'Dps0': true};
 	let evnt = {'ev1': true, 'ev0': true};
 
@@ -98,6 +105,8 @@
 	let blur = 11.26; // 15;
 	let minOpacity = 0.34; // 0.05;
 	let heatElement;
+	let heatElementDtpGibddLo;
+	let heatElementDtpGibddSpt;
 	let heatElementDtpGibdd;
 	let heatElementDtpSkpdi;
 	let heatElementDtpVerifyed;
@@ -254,6 +263,7 @@
 		setFilterHearthsStat({});
 		setFilterSkpdi();
 		setFilterGibdd();
+		setFilterGibddSpt();
 		setFilterGibddRub();
 		setFilterMeasures();
 		setFilter();
@@ -293,28 +303,37 @@
 		let target = ev.target;
 		dps[target.name] = target.checked;
 		setFilterGibdd();
+		setFilterGibddSpt();
 	};
 	const oncheckEvents = (ev) => {
 		let target = ev.target;
 		evnt[target.name] = target.checked;
 		setFilterGibdd();
 		setFilterSkpdi();
+		setFilterGibddSpt();
 		setFilter();
 	};
 
 	const setHeat = (ev) => {
 		let target = ev.target;
 
-		DtpGibddRub._needHeat = DtpGibdd._needHeat = DtpSkpdi._needHeat = DtpVerifyed._needHeat = target.checked ? heat : false;
+		DtpGibddRub._needHeat = DtpGibddLo._needHeat = DtpGibddSpt._needHeat = DtpGibdd._needHeat = DtpSkpdi._needHeat = DtpVerifyed._needHeat = target.checked ? heat : false;
 		setFilterGibddRub();
 		setFilterGibdd();
 		// DtpSkpdi._needHeat = _needHeat;
 		setFilterSkpdi();
 		// DtpVerifyed._needHeat = _needHeat;
+		setFilterGibddSpt();
 		setFilter();
 	};
 	const setMinOpacity = () => {
 		let opt = {radius: radius, blur: blur, minOpacity: minOpacity};
+		if (DtpGibddLo._heat) {
+			DtpGibddLo._heat.setOptions(opt);
+		}
+		if (DtpGibddSpt._heat) {
+			DtpGibddSpt._heat.setOptions(opt);
+		}
 		if (DtpGibdd._heat) {
 			DtpGibdd._heat.setOptions(opt);
 		}
@@ -390,6 +409,46 @@
 		}
 	};
 
+    const setFilterGibddLo = () => {
+		if (DtpGibddLo._map) {
+		let opt = [
+			{type: 'dps', zn: dps},
+			{type: 'evnt', zn: evnt}
+		];
+		if (id_dtp) {
+			opt.push({type: 'id_dtp', zn: id_dtp});
+		}
+		if (dateInterval) {
+			opt.push({type: 'date', zn: dateInterval});
+		}
+		if (collision_type_gibdd) {
+			opt.push({type: 'collision_type', zn: collision_type_gibdd});
+		}
+		// console.log('opt', collision_type, opt);
+		DtpGibddLo.setFilter(opt);
+		}
+	};
+
+    const setFilterGibddSpt = () => {
+		if (DtpGibddSpt._map) {
+		let opt = [
+			{type: 'dps', zn: dps},
+			{type: 'evnt', zn: evnt}
+		];
+		if (id_dtp) {
+			opt.push({type: 'id_dtp', zn: id_dtp});
+		}
+		if (dateInterval) {
+			opt.push({type: 'date', zn: dateInterval});
+		}
+		if (collision_type_gibdd) {
+			opt.push({type: 'collision_type', zn: collision_type_gibdd});
+		}
+		// console.log('opt', collision_type, opt);
+		DtpGibddSpt.setFilter(opt);
+		}
+	};
+
     const setFilterSkpdi = () => {
 		if (DtpSkpdi._map) {
 		let opt = [
@@ -438,6 +497,7 @@
 				setFilter();
 				setFilterSkpdi();
 				setFilterGibdd();
+				setFilterGibddSpt();
 				setFilterMeasures();
 				setFilterGibddRub();
 			},
@@ -501,6 +561,7 @@
 		setFilter();
 		setFilterSkpdi();
 		setFilterGibdd();
+		setFilterGibddSpt();
 		setFilterGibddRub();
 // console.log('ssssss', dateInterval, beg.getDate(), end.getDate())
 	};
@@ -519,6 +580,7 @@
 		setFilter();
 		setFilterSkpdi();
 		setFilterGibdd();
+		setFilterGibddSpt();
  		setFilterGibddRub();
 // console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
 	};
@@ -1285,7 +1347,7 @@
 		</div>
 		{/if}
 
-		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}
+		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}
 		<div class="pLine"><hr></div>
 		<div class="pikaday pLine">
 			<button class="pika-prev" on:click={onPrev}></button>
@@ -1293,7 +1355,7 @@
 			<input type="text" class="endDate" bind:this={endDate} />
 			<button class="pika-next" on:click={onNext}></button>
 		</div>
-		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddRub._map}
+		{#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibddRub._map}
 			<div class="pLine">
 				<br />
 				<label>
@@ -1309,7 +1371,7 @@
 				</label>
 			</div>
 			<div class="pLine">
-				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={DtpGibddRub._needHeat || DtpGibdd._needHeat || DtpSkpdi._needHeat || DtpVerifyed._needHeat} name="heat"><label for="heat"> - тепловая карта</label>
+				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={DtpGibddRub._needHeat || DtpGibddLo._needHeat || DtpGibddSpt._needHeat || DtpSkpdi._needHeat || DtpVerifyed._needHeat} name="heat"><label for="heat"> - тепловая карта</label>
 			</div>
 		{/if}
 		{:else if !Measures._map && !DtpHearthsSettlements._map && !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket4._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}
@@ -1419,6 +1481,66 @@
 					{#each optCollisionGibddKeys as key}
 						<option value={key} class="icon_type_{optDataGibdd.iconType[key]}">
 							({optDataGibdd.collision_type[key]}) - {key}
+						</option>
+					{/each}
+				</select>
+			</div>
+			{/if}
+		</div>
+		{/if}
+
+		{#if DtpGibddLo._map}
+		<div class="pLine"><hr></div>
+		<div class="pLine">Фильтры - <b>ДТП ГИБДД (Ленинградская область)</b></div>
+		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckDps} id="Dps1" checked={dps.Dps1} name="Dps1"><label for="Dps1"> - с батальонами ДПС</label>
+				<input type="checkbox" on:change={oncheckDps} id="Dps0" checked={dps.Dps0} name="Dps0"><label for="Dps0"> - без батальонов ДПС</label>
+			</div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckEvents} id="ev1" checked={evnt.ev1} name="ev1"><label for="ev1"> - с мероприятиями</label>
+				<input type="checkbox" on:change={oncheckEvents} id="ev0" checked={evnt.ev0} name="ev0"><label for="ev0"> - без мероприятий</label>
+			</div>
+			{#if optDataGibddSpt.collision_type}
+			<div class="pLine">
+				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibddLo}" multiple>
+					<option value=''>
+						Все типы ({optCollisionGibddLoKeys.reduce((p, c) => { p += optDataGibddLo.collision_type[c]; return p; }, 0)})
+					</option>
+					{#each optCollisionGibddLoKeys as key}
+						<option value={key} class="icon_type_{optDataGibddLo.iconType[key]}">
+							({optDataGibddLo.collision_type[key]}) - {key}
+						</option>
+					{/each}
+				</select>
+			</div>
+			{/if}
+		</div>
+		{/if}
+
+		{#if DtpGibddSpt._map}
+		<div class="pLine"><hr></div>
+		<div class="pLine">Фильтры - <b>ДТП ГИБДД (Санкт-Петербург)</b></div>
+		<div class="filtersCont">
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckDps} id="Dps1" checked={dps.Dps1} name="Dps1"><label for="Dps1"> - с батальонами ДПС</label>
+				<input type="checkbox" on:change={oncheckDps} id="Dps0" checked={dps.Dps0} name="Dps0"><label for="Dps0"> - без батальонов ДПС</label>
+			</div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckEvents} id="ev1" checked={evnt.ev1} name="ev1"><label for="ev1"> - с мероприятиями</label>
+				<input type="checkbox" on:change={oncheckEvents} id="ev0" checked={evnt.ev0} name="ev0"><label for="ev0"> - без мероприятий</label>
+			</div>
+			{#if optDataGibddSpt.collision_type}
+			<div class="pLine">
+				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibddSpt}" multiple>
+					<option value=''>
+						Все типы ({optCollisionGibddSptKeys.reduce((p, c) => { p += optDataGibddSpt.collision_type[c]; return p; }, 0)})
+					</option>
+					{#each optCollisionGibddSptKeys as key}
+						<option value={key} class="icon_type_{optDataGibddSpt.iconType[key]}">
+							({optDataGibddSpt.collision_type[key]}) - {key}
 						</option>
 					{/each}
 				</select>

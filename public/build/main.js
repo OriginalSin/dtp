@@ -3702,6 +3702,7 @@ var dtp = (function () {
   					// renderer: renderer
   				}).bindPopup(popup).on('popupopen', (ev) => {
   						setPopup(ev.target.options.props.id);
+  						ev.target.bringToBack();
   						// console.log('popupopen', ev);
   					}).on('popupclose', (ev) => {
   						// console.log('popupclose', ev);
@@ -4759,6 +4760,7 @@ var dtp = (function () {
   					// renderer: renderer
   				}).bindPopup(popup$1).on('popupopen', (ev) => {
   						setPopup$1(ev.target.options.props.id);
+  						ev.target.bringToBack();
   						// console.log('popupopen', ev);
   					}).on('popupclose', (ev) => {
   						console.log('popupclose', ev);
@@ -5379,6 +5381,7 @@ var dtp = (function () {
   				.on('popupopen', (ev) => {
 
   					setPopup$2(ev.target.options.props);
+  					ev.target.bringToBack();
   					// console.log('popupopen', ev);
   				}).on('popupclose', (ev) => {
   					// console.log('popupclose', ev);
@@ -18689,6 +18692,7 @@ var dtp = (function () {
   				.on('popupopen', (ev) => {
 
   					setPopup$4(ev.target.options.props);
+  					ev.target.bringToBack();
   					// console.log('popupopen', ev);
   				}).on('popupclose', (ev) => {
   					if (ev.popup._svObj) {
@@ -19199,6 +19203,7 @@ var dtp = (function () {
   				.on('popupopen', (ev) => {
 
   					setPopup$5(ev.target.options.props);
+  					ev.target.bringToBack();
   					// console.log('popupopen', ev);
   				}).on('popupclose', (ev) => {
   					if (ev.popup._svObj) {
@@ -20603,6 +20608,7 @@ var dtp = (function () {
   					// renderer: renderer
   				}).bindPopup(popup$d).on('popupopen', (ev) => {
   						setPopup$6(ev.target.options.props.id);
+  						ev.target.bringToBack();
   						// console.log('popupopen', ev);
   					}).on('popupclose', (ev) => {
   						// console.log('popupclose', ev);
@@ -21273,7 +21279,9 @@ var dtp = (function () {
   	'Москва': geoJsonStatic({file:"/static/moscow.geojson", style: {color:"purple", interactive: false}}),
   	'Московская область': geoJsonStatic({file:"/static/moscowObl.geojson", style: {color:"gray", fill: false, interactive: false}}),
   	'А-108 Большая бетонка': geoJsonStatic({file:"/static/a108.geojson", style: {color:"green", fill: false, interactive: false}}),
-  	'А-107 Малая бетонка': geoJsonStatic({file:"/static/a107.geojson", style: {color:"blue", fill: false, interactive: false}})
+  	'А-107 Малая бетонка': geoJsonStatic({file:"/static/a107.geojson", style: {color:"blue", fill: false, interactive: false}}),
+  	'Санкт-Петербург': geoJsonStatic({file:"/static/sp.geojson", style: {color:"purple", interactive: false}}),
+  	'Ленинградская область': geoJsonStatic({file:"/static/spobl.geojson", style: {color:"gray", fill: false, interactive: false}})
   };
   L$n.featureGroup([]);
   // let comp = L.DomUtil.create('div', 'layerInfo');

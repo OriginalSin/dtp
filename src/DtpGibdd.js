@@ -168,6 +168,7 @@ console.log('_______', prp);
 					// renderer: renderer
 				}).bindPopup(popup).on('popupopen', (ev) => {
 						setPopup(ev.target.options.props.id);
+						ev.target.bringToBack();
 						// console.log('popupopen', ev);
 					}).on('popupclose', (ev) => {
 						// console.log('popupclose', ev);
