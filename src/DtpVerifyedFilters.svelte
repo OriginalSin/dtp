@@ -303,14 +303,14 @@
 		let target = ev.target;
 		dps[target.name] = target.checked;
 		setFilterGibdd();
-		setFilterGibddSpt();
+		// setFilterGibddSpt();
 	};
 	const oncheckEvents = (ev) => {
 		let target = ev.target;
 		evnt[target.name] = target.checked;
 		setFilterGibdd();
 		setFilterSkpdi();
-		setFilterGibddSpt();
+		// setFilterGibddSpt();
 		setFilter();
 	};
 
@@ -412,8 +412,8 @@
     const setFilterGibddLo = () => {
 		if (DtpGibddLo._map) {
 		let opt = [
-			{type: 'dps', zn: dps},
-			{type: 'evnt', zn: evnt}
+			// {type: 'dps', zn: dps},
+			// {type: 'evnt', zn: evnt}
 		];
 		if (id_dtp) {
 			opt.push({type: 'id_dtp', zn: id_dtp});
@@ -432,8 +432,8 @@
     const setFilterGibddSpt = () => {
 		if (DtpGibddSpt._map) {
 		let opt = [
-			{type: 'dps', zn: dps},
-			{type: 'evnt', zn: evnt}
+			// {type: 'dps', zn: dps},
+			// {type: 'evnt', zn: evnt}
 		];
 		if (id_dtp) {
 			opt.push({type: 'id_dtp', zn: id_dtp});
@@ -497,6 +497,7 @@
 				setFilter();
 				setFilterSkpdi();
 				setFilterGibdd();
+				setFilterGibddLo();
 				setFilterGibddSpt();
 				setFilterMeasures();
 				setFilterGibddRub();
@@ -561,6 +562,7 @@
 		setFilter();
 		setFilterSkpdi();
 		setFilterGibdd();
+		setFilterGibddLo();
 		setFilterGibddSpt();
 		setFilterGibddRub();
 // console.log('ssssss', dateInterval, beg.getDate(), end.getDate())
@@ -580,6 +582,7 @@
 		setFilter();
 		setFilterSkpdi();
 		setFilterGibdd();
+		setFilterGibddLo();
 		setFilterGibddSpt();
  		setFilterGibddRub();
 // console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
@@ -1494,15 +1497,15 @@
 		<div class="pLine">Фильтры - <b>ДТП ГИБДД (Ленинградская область)</b></div>
 		<div class="filtersCont">
 			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
-			<div class="pLine">
+			<!-- div class="pLine">
 				<input type="checkbox" on:change={oncheckDps} id="Dps1" checked={dps.Dps1} name="Dps1"><label for="Dps1"> - с батальонами ДПС</label>
 				<input type="checkbox" on:change={oncheckDps} id="Dps0" checked={dps.Dps0} name="Dps0"><label for="Dps0"> - без батальонов ДПС</label>
 			</div>
 			<div class="pLine">
 				<input type="checkbox" on:change={oncheckEvents} id="ev1" checked={evnt.ev1} name="ev1"><label for="ev1"> - с мероприятиями</label>
 				<input type="checkbox" on:change={oncheckEvents} id="ev0" checked={evnt.ev0} name="ev0"><label for="ev0"> - без мероприятий</label>
-			</div>
-			{#if optDataGibddSpt.collision_type}
+			</div -->
+			{#if optDataGibddLo.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibddLo}" multiple>
 					<option value=''>
@@ -1524,14 +1527,14 @@
 		<div class="pLine">Фильтры - <b>ДТП ГИБДД (Санкт-Петербург)</b></div>
 		<div class="filtersCont">
 			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
-			<div class="pLine">
+			<!-- div class="pLine">
 				<input type="checkbox" on:change={oncheckDps} id="Dps1" checked={dps.Dps1} name="Dps1"><label for="Dps1"> - с батальонами ДПС</label>
 				<input type="checkbox" on:change={oncheckDps} id="Dps0" checked={dps.Dps0} name="Dps0"><label for="Dps0"> - без батальонов ДПС</label>
 			</div>
 			<div class="pLine">
 				<input type="checkbox" on:change={oncheckEvents} id="ev1" checked={evnt.ev1} name="ev1"><label for="ev1"> - с мероприятиями</label>
 				<input type="checkbox" on:change={oncheckEvents} id="ev0" checked={evnt.ev0} name="ev0"><label for="ev0"> - без мероприятий</label>
-			</div>
+			</div -->
 			{#if optDataGibddSpt.collision_type}
 			<div class="pLine">
 				<select class="multiple_icon_type" bind:value={collision_type_gibdd} on:change="{setFilterGibddSpt}" multiple>

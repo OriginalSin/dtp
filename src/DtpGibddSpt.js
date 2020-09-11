@@ -78,6 +78,9 @@ DtpGibddSpt.setFilter = arg => {
 			if (cnt === argFilters.length) {
 				arr.push(it);
 				heat.push(it._latlng);
+			} else {
+				var tt = 1;
+				// console.log(tt);
 			}
 		});
 		if (DtpGibddSpt._needHeat) {

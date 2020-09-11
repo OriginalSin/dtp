@@ -7017,7 +7017,7 @@ var dtp = (function () {
   	return child_ctx;
   }
 
-  // (966:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}
+  // (969:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}
   function create_if_block_26(ctx) {
   	let div0;
   	let t0;
@@ -7148,22 +7148,22 @@ var dtp = (function () {
   			option4.textContent = `(${/*optDataHearthsPicket4*/ ctx[91].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
   			option5.textContent = `(${/*optDataHearthsPicket4*/ ctx[91].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$7, 966, 31, 29662);
+  			add_location(b, file$7, 969, 31, 29748);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 966, 2, 29633);
+  			add_location(div0, file$7, 969, 2, 29719);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_hearth*/ ctx[23];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 968, 32, 29757);
+  			add_location(input0, file$7, 971, 32, 29843);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 968, 3, 29728);
+  			add_location(div1, file$7, 971, 3, 29814);
   			attr_dev(input1, "type", "text");
   			input1.value = /*id_dtp*/ ctx[18];
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 969, 30, 29860);
+  			add_location(input1, file$7, 972, 30, 29946);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 969, 3, 29833);
-  			add_location(legend, file$7, 972, 5, 29977);
+  			add_location(div2, file$7, 972, 3, 29919);
+  			add_location(legend, file$7, 975, 5, 30063);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 1;
   			input2.value = input2.__value;
@@ -7172,70 +7172,70 @@ var dtp = (function () {
   			attr_dev(input2, "name", "hearths_period_type_Stat");
   			attr_dev(input2, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][2].push(input2);
-  			add_location(input2, file$7, 974, 6, 30054);
+  			add_location(input2, file$7, 977, 6, 30140);
   			attr_dev(label0, "for", "hearths_period_type_Stat1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 974, 214, 30262);
+  			add_location(label0, file$7, 977, 214, 30348);
   			attr_dev(div3, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div3, file$7, 975, 6, 30335);
+  			add_location(div3, file$7, 978, 6, 30421);
   			attr_dev(div4, "class", "pLine type svelte-1jsovbn");
-  			add_location(div4, file$7, 973, 5, 30023);
-  			add_location(fieldset, file$7, 971, 4, 29961);
+  			add_location(div4, file$7, 976, 5, 30109);
+  			add_location(fieldset, file$7, 974, 4, 30047);
   			attr_dev(div5, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div5, file$7, 970, 3, 29930);
+  			add_location(div5, file$7, 973, 3, 30016);
   			attr_dev(input3, "type", "checkbox");
   			attr_dev(input3, "id", "ht_3");
   			input3.checked = input3_checked_value = /*ht*/ ctx[22].hearth3;
   			attr_dev(input3, "name", "hearth3");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 984, 4, 30755);
+  			add_location(input3, file$7, 987, 4, 30841);
   			attr_dev(label1, "for", "ht_3");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 984, 95, 30846);
+  			add_location(label1, file$7, 987, 95, 30932);
   			attr_dev(input4, "type", "checkbox");
   			attr_dev(input4, "id", "ht_5");
   			input4.checked = input4_checked_value = /*ht*/ ctx[22].hearth5;
   			attr_dev(input4, "name", "hearth5");
   			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$7, 985, 4, 30888);
+  			add_location(input4, file$7, 988, 4, 30974);
   			attr_dev(label2, "for", "ht_5");
   			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$7, 985, 95, 30979);
+  			add_location(label2, file$7, 988, 95, 31065);
   			attr_dev(div6, "class", "pLine svelte-1jsovbn");
-  			add_location(div6, file$7, 983, 3, 30731);
+  			add_location(div6, file$7, 986, 3, 30817);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$7, 989, 5, 31165);
+  			add_location(option0, file$7, 992, 5, 31251);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
   			if (/*roads*/ ctx[21] === void 0) add_render_callback(() => /*select0_change_handler*/ ctx[152].call(select0));
-  			add_location(select0, file$7, 988, 4, 31055);
+  			add_location(select0, file$7, 991, 4, 31141);
   			attr_dev(div7, "class", "pLine svelte-1jsovbn");
-  			add_location(div7, file$7, 987, 3, 31031);
+  			add_location(div7, file$7, 990, 3, 31117);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$7, 1001, 5, 31614);
+  			add_location(option1, file$7, 1004, 5, 31700);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$7, 1002, 5, 31698);
+  			add_location(option2, file$7, 1005, 5, 31784);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$7, 1003, 5, 31790);
+  			add_location(option3, file$7, 1006, 5, 31876);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$7, 1004, 5, 31886);
+  			add_location(option4, file$7, 1007, 5, 31972);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$7, 1005, 5, 31989);
+  			add_location(option5, file$7, 1008, 5, 32075);
   			attr_dev(select1, "name", "stricken");
   			attr_dev(select1, "class", "svelte-1jsovbn");
   			if (/*hearths_stricken4*/ ctx[38] === void 0) add_render_callback(() => /*select1_change_handler*/ ctx[153].call(select1));
-  			add_location(select1, file$7, 1000, 4, 31515);
+  			add_location(select1, file$7, 1003, 4, 31601);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$7, 999, 3, 31491);
+  			add_location(div8, file$7, 1002, 3, 31577);
   			attr_dev(div9, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div9, file$7, 967, 2, 29699);
+  			add_location(div9, file$7, 970, 2, 29785);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -7403,14 +7403,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_26.name,
   		type: "if",
-  		source: "(966:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}",
+  		source: "(969:2) {#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (977:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}
+  // (980:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}
   function create_each_block_28(ctx) {
   	let input;
   	let input_checked_value;
@@ -7432,10 +7432,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[52] === 2;
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 977, 7, 30439);
+  			add_location(input, file$7, 980, 7, 30525);
   			attr_dev(label, "for", "hearths_year_Picket4");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 977, 183, 30615);
+  			add_location(label, file$7, 980, 183, 30701);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -7470,14 +7470,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_28.name,
   		type: "each",
-  		source: "(977:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}",
+  		source: "(980:6) {#each Object.keys(DtpHearthsPicket4._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (993:5) {#each optRoadTypes4 as key}
+  // (996:5) {#each optRoadTypes4 as key}
   function create_each_block_27(ctx) {
   	let option;
   	let t0;
@@ -7501,7 +7501,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "road_" + /*key*/ ctx[205] + " svelte-1jsovbn");
-  			add_location(option, file$7, 993, 6, 31344);
+  			add_location(option, file$7, 996, 6, 31430);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -7521,14 +7521,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_27.name,
   		type: "each",
-  		source: "(993:5) {#each optRoadTypes4 as key}",
+  		source: "(996:5) {#each optRoadTypes4 as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1012:2) {#if DtpHearthsSettlements._map && DtpHearthsSettlements._opt && DtpHearthsSettlements._opt.years}
+  // (1015:2) {#if DtpHearthsSettlements._map && DtpHearthsSettlements._opt && DtpHearthsSettlements._opt.years}
   function create_if_block_25(ctx) {
   	let div0;
   	let t0;
@@ -7668,97 +7668,97 @@ var dtp = (function () {
   				each_blocks[i].c();
   			}
 
-  			add_location(b, file$7, 1012, 31, 32259);
+  			add_location(b, file$7, 1015, 31, 32345);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1012, 2, 32230);
+  			add_location(div0, file$7, 1015, 2, 32316);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_hearth*/ ctx[23];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1014, 32, 32360);
+  			add_location(input0, file$7, 1017, 32, 32446);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1014, 3, 32331);
+  			add_location(div1, file$7, 1017, 3, 32417);
   			attr_dev(input1, "type", "text");
   			input1.value = /*id_dtp*/ ctx[18];
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1015, 30, 32463);
+  			add_location(input1, file$7, 1018, 30, 32549);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1015, 3, 32436);
-  			add_location(legend0, file$7, 1018, 5, 32573);
+  			add_location(div2, file$7, 1018, 3, 32522);
+  			add_location(legend0, file$7, 1021, 5, 32659);
   			attr_dev(input2, "type", "checkbox");
   			attr_dev(input2, "id", "city_1");
   			input2.checked = input2_checked_value = /*city*/ ctx[36][1];
   			attr_dev(input2, "name", "1");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1021, 7, 32680);
+  			add_location(input2, file$7, 1024, 7, 32766);
   			attr_dev(label0, "for", "city_1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1021, 95, 32768);
+  			add_location(label0, file$7, 1024, 95, 32854);
   			attr_dev(input3, "type", "checkbox");
   			attr_dev(input3, "id", "city_0");
   			input3.checked = input3_checked_value = /*city*/ ctx[36][0];
   			attr_dev(input3, "name", "0");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 1022, 7, 32823);
+  			add_location(input3, file$7, 1025, 7, 32909);
   			attr_dev(label1, "for", "city_0");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1022, 95, 32911);
-  			add_location(br, file$7, 1022, 145, 32961);
+  			add_location(label1, file$7, 1025, 95, 32997);
+  			add_location(br, file$7, 1025, 145, 33047);
   			attr_dev(input4, "type", "checkbox");
   			attr_dev(input4, "id", "city_2");
   			input4.checked = input4_checked_value = /*city*/ ctx[36][2];
   			attr_dev(input4, "name", "2");
   			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$7, 1023, 7, 32974);
+  			add_location(input4, file$7, 1026, 7, 33060);
   			attr_dev(label2, "for", "city_2");
   			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$7, 1023, 95, 33062);
+  			add_location(label2, file$7, 1026, 95, 33148);
   			attr_dev(div3, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div3, file$7, 1020, 6, 32646);
+  			add_location(div3, file$7, 1023, 6, 32732);
   			attr_dev(div4, "class", "pLine type svelte-1jsovbn");
-  			add_location(div4, file$7, 1019, 5, 32615);
-  			add_location(fieldset0, file$7, 1017, 4, 32557);
+  			add_location(div4, file$7, 1022, 5, 32701);
+  			add_location(fieldset0, file$7, 1020, 4, 32643);
   			attr_dev(div5, "class", "pLine svelte-1jsovbn");
-  			add_location(div5, file$7, 1016, 3, 32533);
-  			add_location(legend1, file$7, 1031, 5, 33225);
+  			add_location(div5, file$7, 1019, 3, 32619);
+  			add_location(legend1, file$7, 1034, 5, 33311);
   			attr_dev(div6, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div6, file$7, 1033, 6, 33299);
+  			add_location(div6, file$7, 1036, 6, 33385);
   			attr_dev(div7, "class", "pLine type svelte-1jsovbn");
-  			add_location(div7, file$7, 1032, 5, 33268);
-  			add_location(fieldset1, file$7, 1030, 4, 33209);
+  			add_location(div7, file$7, 1035, 5, 33354);
+  			add_location(fieldset1, file$7, 1033, 4, 33295);
   			attr_dev(div8, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div8, file$7, 1029, 3, 33178);
+  			add_location(div8, file$7, 1032, 3, 33264);
   			attr_dev(input5, "type", "checkbox");
   			attr_dev(input5, "id", "ht_3");
   			input5.checked = input5_checked_value = /*ht*/ ctx[22].hearth3;
   			attr_dev(input5, "name", "hearth3");
   			attr_dev(input5, "class", "svelte-1jsovbn");
-  			add_location(input5, file$7, 1042, 4, 33697);
+  			add_location(input5, file$7, 1045, 4, 33783);
   			attr_dev(label3, "for", "ht_3");
   			attr_dev(label3, "class", "svelte-1jsovbn");
-  			add_location(label3, file$7, 1042, 95, 33788);
+  			add_location(label3, file$7, 1045, 95, 33874);
   			attr_dev(input6, "type", "checkbox");
   			attr_dev(input6, "id", "ht_5");
   			input6.checked = input6_checked_value = /*ht*/ ctx[22].hearth5;
   			attr_dev(input6, "name", "hearth5");
   			attr_dev(input6, "class", "svelte-1jsovbn");
-  			add_location(input6, file$7, 1043, 4, 33830);
+  			add_location(input6, file$7, 1046, 4, 33916);
   			attr_dev(label4, "for", "ht_5");
   			attr_dev(label4, "class", "svelte-1jsovbn");
-  			add_location(label4, file$7, 1043, 95, 33921);
+  			add_location(label4, file$7, 1046, 95, 34007);
   			attr_dev(div9, "class", "pLine svelte-1jsovbn");
-  			add_location(div9, file$7, 1041, 3, 33673);
+  			add_location(div9, file$7, 1044, 3, 33759);
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1047, 5, 34111);
+  			add_location(option, file$7, 1050, 5, 34197);
   			attr_dev(select, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select.multiple = true;
   			if (/*roads*/ ctx[21] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[155].call(select));
-  			add_location(select, file$7, 1046, 4, 33997);
+  			add_location(select, file$7, 1049, 4, 34083);
   			attr_dev(div10, "class", "pLine svelte-1jsovbn");
-  			add_location(div10, file$7, 1045, 3, 33973);
+  			add_location(div10, file$7, 1048, 3, 34059);
   			attr_dev(div11, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div11, file$7, 1013, 2, 32302);
+  			add_location(div11, file$7, 1016, 2, 32388);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -7927,14 +7927,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_25.name,
   		type: "if",
-  		source: "(1012:2) {#if DtpHearthsSettlements._map && DtpHearthsSettlements._opt && DtpHearthsSettlements._opt.years}",
+  		source: "(1015:2) {#if DtpHearthsSettlements._map && DtpHearthsSettlements._opt && DtpHearthsSettlements._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1035:6) {#each Object.keys(DtpHearthsSettlements._opt.years).sort() as key}
+  // (1038:6) {#each Object.keys(DtpHearthsSettlements._opt.years).sort() as key}
   function create_each_block_26(ctx) {
   	let input;
   	let input_checked_value;
@@ -7954,10 +7954,10 @@ var dtp = (function () {
   			input.checked = input_checked_value = /*hearths_year_Settlements*/ ctx[35][/*key*/ ctx[205]];
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1035, 7, 33407);
+  			add_location(input, file$7, 1038, 7, 33493);
   			attr_dev(label, "for", "hearths_year_Settlements");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1035, 153, 33553);
+  			add_location(label, file$7, 1038, 153, 33639);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -7988,14 +7988,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_26.name,
   		type: "each",
-  		source: "(1035:6) {#each Object.keys(DtpHearthsSettlements._opt.years).sort() as key}",
+  		source: "(1038:6) {#each Object.keys(DtpHearthsSettlements._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1051:5) {#each optRoadTypes5 as key}
+  // (1054:5) {#each optRoadTypes5 as key}
   function create_each_block_25(ctx) {
   	let option;
   	let t0;
@@ -8019,7 +8019,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "road_" + /*key*/ ctx[205] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1051, 6, 34294);
+  			add_location(option, file$7, 1054, 6, 34380);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -8039,14 +8039,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_25.name,
   		type: "each",
-  		source: "(1051:5) {#each optRoadTypes5 as key}",
+  		source: "(1054:5) {#each optRoadTypes5 as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1061:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
+  // (1064:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
   function create_if_block_24(ctx) {
   	let div0;
   	let t0;
@@ -8147,61 +8147,61 @@ var dtp = (function () {
   				each_blocks[i].c();
   			}
 
-  			add_location(b, file$7, 1061, 31, 34579);
+  			add_location(b, file$7, 1064, 31, 34665);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1061, 2, 34550);
+  			add_location(div0, file$7, 1064, 2, 34636);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_hearth*/ ctx[23];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1063, 32, 34670);
+  			add_location(input0, file$7, 1066, 32, 34756);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1063, 3, 34641);
+  			add_location(div1, file$7, 1066, 3, 34727);
   			attr_dev(input1, "type", "text");
   			input1.value = /*id_dtp*/ ctx[18];
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1064, 30, 34773);
+  			add_location(input1, file$7, 1067, 30, 34859);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1064, 3, 34746);
-  			add_location(legend, file$7, 1067, 5, 34890);
+  			add_location(div2, file$7, 1067, 3, 34832);
+  			add_location(legend, file$7, 1070, 5, 34976);
   			attr_dev(div3, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div3, file$7, 1069, 6, 34964);
+  			add_location(div3, file$7, 1072, 6, 35050);
   			attr_dev(div4, "class", "pLine type svelte-1jsovbn");
-  			add_location(div4, file$7, 1068, 5, 34933);
-  			add_location(fieldset, file$7, 1066, 4, 34874);
+  			add_location(div4, file$7, 1071, 5, 35019);
+  			add_location(fieldset, file$7, 1069, 4, 34960);
   			attr_dev(div5, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div5, file$7, 1065, 3, 34843);
+  			add_location(div5, file$7, 1068, 3, 34929);
   			attr_dev(input2, "type", "checkbox");
   			attr_dev(input2, "id", "ht_3");
   			input2.checked = input2_checked_value = /*ht*/ ctx[22].hearth3;
   			attr_dev(input2, "name", "hearth3");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1078, 4, 35337);
+  			add_location(input2, file$7, 1081, 4, 35423);
   			attr_dev(label0, "for", "ht_3");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1078, 95, 35428);
+  			add_location(label0, file$7, 1081, 95, 35514);
   			attr_dev(input3, "type", "checkbox");
   			attr_dev(input3, "id", "ht_5");
   			input3.checked = input3_checked_value = /*ht*/ ctx[22].hearth5;
   			attr_dev(input3, "name", "hearth5");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 1079, 4, 35470);
+  			add_location(input3, file$7, 1082, 4, 35556);
   			attr_dev(label1, "for", "ht_5");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1079, 95, 35561);
+  			add_location(label1, file$7, 1082, 95, 35647);
   			attr_dev(div6, "class", "pLine svelte-1jsovbn");
-  			add_location(div6, file$7, 1077, 3, 35313);
+  			add_location(div6, file$7, 1080, 3, 35399);
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1083, 5, 35746);
+  			add_location(option, file$7, 1086, 5, 35832);
   			attr_dev(select, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select.multiple = true;
   			if (/*roads*/ ctx[21] === void 0) add_render_callback(() => /*select_change_handler_1*/ ctx[157].call(select));
-  			add_location(select, file$7, 1082, 4, 35637);
+  			add_location(select, file$7, 1085, 4, 35723);
   			attr_dev(div7, "class", "pLine svelte-1jsovbn");
-  			add_location(div7, file$7, 1081, 3, 35613);
+  			add_location(div7, file$7, 1084, 3, 35699);
   			attr_dev(div8, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div8, file$7, 1062, 2, 34612);
+  			add_location(div8, file$7, 1065, 2, 34698);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -8339,14 +8339,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_24.name,
   		type: "if",
-  		source: "(1061:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}",
+  		source: "(1064:2) {#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1071:6) {#each Object.keys(DtpHearthsPicket._opt.years).sort() as key}
+  // (1074:6) {#each Object.keys(DtpHearthsPicket._opt.years).sort() as key}
   function create_each_block_24(ctx) {
   	let input;
   	let input_checked_value;
@@ -8366,10 +8366,10 @@ var dtp = (function () {
   			input.checked = input_checked_value = /*hearths_year_Picket*/ ctx[37][/*key*/ ctx[205]];
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1071, 7, 35067);
+  			add_location(input, file$7, 1074, 7, 35153);
   			attr_dev(label, "for", "hearths_year_Picket");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1071, 138, 35198);
+  			add_location(label, file$7, 1074, 138, 35284);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -8400,14 +8400,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_24.name,
   		type: "each",
-  		source: "(1071:6) {#each Object.keys(DtpHearthsPicket._opt.years).sort() as key}",
+  		source: "(1074:6) {#each Object.keys(DtpHearthsPicket._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1087:5) {#each optRoadTypes as key}
+  // (1090:5) {#each optRoadTypes as key}
   function create_each_block_23(ctx) {
   	let option;
   	let t0;
@@ -8431,7 +8431,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "road_" + /*key*/ ctx[205] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1087, 6, 35922);
+  			add_location(option, file$7, 1090, 6, 36008);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -8451,14 +8451,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_23.name,
   		type: "each",
-  		source: "(1087:5) {#each optRoadTypes as key}",
+  		source: "(1090:5) {#each optRoadTypes as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1097:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}
+  // (1100:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}
   function create_if_block_23(ctx) {
   	let div0;
   	let t0;
@@ -8563,16 +8563,16 @@ var dtp = (function () {
   			option4.textContent = `(${/*optDataHearths5*/ ctx[85].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
   			option5.textContent = `(${/*optDataHearths5*/ ctx[85].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$7, 1097, 31, 36185);
+  			add_location(b, file$7, 1100, 31, 36271);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1097, 2, 36156);
+  			add_location(div0, file$7, 1100, 2, 36242);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1099, 30, 36270);
+  			add_location(input0, file$7, 1102, 30, 36356);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1099, 3, 36243);
-  			add_location(legend, file$7, 1102, 4, 36385);
+  			add_location(div1, file$7, 1102, 3, 36329);
+  			add_location(legend, file$7, 1105, 4, 36471);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
@@ -8581,49 +8581,49 @@ var dtp = (function () {
   			attr_dev(input1, "name", "hearths_period_type_5");
   			attr_dev(input1, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][4].push(input1);
-  			add_location(input1, file$7, 1104, 5, 36460);
+  			add_location(input1, file$7, 1107, 5, 36546);
   			attr_dev(label, "for", "hearths_period_type_51");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1104, 195, 36650);
+  			add_location(label, file$7, 1107, 195, 36736);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$7, 1105, 5, 36719);
+  			add_location(div2, file$7, 1108, 5, 36805);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$7, 1103, 4, 36430);
-  			add_location(fieldset, file$7, 1101, 3, 36370);
+  			add_location(div3, file$7, 1106, 4, 36516);
+  			add_location(fieldset, file$7, 1104, 3, 36456);
   			attr_dev(div4, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div4, file$7, 1100, 3, 36340);
+  			add_location(div4, file$7, 1103, 3, 36426);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$7, 1115, 5, 37213);
+  			add_location(option0, file$7, 1118, 5, 37299);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
   			if (/*str_icon_type5*/ ctx[43] === void 0) add_render_callback(() => /*select0_change_handler_1*/ ctx[160].call(select0));
-  			add_location(select0, file$7, 1114, 4, 37100);
+  			add_location(select0, file$7, 1117, 4, 37186);
   			attr_dev(div5, "class", "pLine svelte-1jsovbn");
-  			add_location(div5, file$7, 1113, 3, 37076);
+  			add_location(div5, file$7, 1116, 3, 37162);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$7, 1127, 5, 37687);
+  			add_location(option1, file$7, 1130, 5, 37773);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$7, 1128, 5, 37765);
+  			add_location(option2, file$7, 1131, 5, 37851);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$7, 1129, 5, 37851);
+  			add_location(option3, file$7, 1132, 5, 37937);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$7, 1130, 5, 37941);
+  			add_location(option4, file$7, 1133, 5, 38027);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$7, 1131, 5, 38038);
+  			add_location(option5, file$7, 1134, 5, 38124);
   			attr_dev(select1, "class", "svelte-1jsovbn");
   			if (/*hearths_stricken5*/ ctx[42] === void 0) add_render_callback(() => /*select1_change_handler_1*/ ctx[161].call(select1));
-  			add_location(select1, file$7, 1126, 4, 37610);
+  			add_location(select1, file$7, 1129, 4, 37696);
   			attr_dev(div6, "class", "pLine svelte-1jsovbn");
-  			add_location(div6, file$7, 1125, 3, 37586);
+  			add_location(div6, file$7, 1128, 3, 37672);
   			attr_dev(div7, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div7, file$7, 1098, 2, 36214);
+  			add_location(div7, file$7, 1101, 2, 36300);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -8765,14 +8765,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_23.name,
   		type: "if",
-  		source: "(1097:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}",
+  		source: "(1100:2) {#if DtpHearths5._map && DtpHearths5._opt && DtpHearths5._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1107:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}
+  // (1110:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}
   function create_each_block_22(ctx) {
   	let input;
   	let input_checked_value;
@@ -8794,10 +8794,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type_5*/ ctx[44] === 2;
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1107, 6, 36815);
+  			add_location(input, file$7, 1110, 6, 36901);
   			attr_dev(label, "for", "hearths_year_5");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1107, 161, 36970);
+  			add_location(label, file$7, 1110, 161, 37056);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -8832,14 +8832,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_22.name,
   		type: "each",
-  		source: "(1107:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}",
+  		source: "(1110:5) {#each Object.keys(DtpHearths5._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1119:5) {#each optTypeHearths5Keys as key}
+  // (1122:5) {#each optTypeHearths5Keys as key}
   function create_each_block_21(ctx) {
   	let option;
   	let t0;
@@ -8863,7 +8863,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths5*/ ctx[85].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1119, 6, 37405);
+  			add_location(option, file$7, 1122, 6, 37491);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -8883,14 +8883,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_21.name,
   		type: "each",
-  		source: "(1119:5) {#each optTypeHearths5Keys as key}",
+  		source: "(1122:5) {#each optTypeHearths5Keys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1138:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}
+  // (1141:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}
   function create_if_block_22(ctx) {
   	let div0;
   	let t0;
@@ -8995,16 +8995,16 @@ var dtp = (function () {
   			option4.textContent = `(${/*optDataHearths3*/ ctx[83].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
   			option5.textContent = `(${/*optDataHearths3*/ ctx[83].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$7, 1138, 31, 38272);
+  			add_location(b, file$7, 1141, 31, 38358);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1138, 2, 38243);
+  			add_location(div0, file$7, 1141, 2, 38329);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1140, 30, 38357);
+  			add_location(input0, file$7, 1143, 30, 38443);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1140, 3, 38330);
-  			add_location(legend, file$7, 1143, 4, 38472);
+  			add_location(div1, file$7, 1143, 3, 38416);
+  			add_location(legend, file$7, 1146, 4, 38558);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
@@ -9013,49 +9013,49 @@ var dtp = (function () {
   			attr_dev(input1, "name", "hearths_period_type_3");
   			attr_dev(input1, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][3].push(input1);
-  			add_location(input1, file$7, 1145, 5, 38547);
+  			add_location(input1, file$7, 1148, 5, 38633);
   			attr_dev(label, "for", "hearths_period_type_31");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1145, 195, 38737);
+  			add_location(label, file$7, 1148, 195, 38823);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$7, 1146, 5, 38806);
+  			add_location(div2, file$7, 1149, 5, 38892);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$7, 1144, 4, 38517);
-  			add_location(fieldset, file$7, 1142, 3, 38457);
+  			add_location(div3, file$7, 1147, 4, 38603);
+  			add_location(fieldset, file$7, 1145, 3, 38543);
   			attr_dev(div4, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div4, file$7, 1141, 3, 38427);
+  			add_location(div4, file$7, 1144, 3, 38513);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$7, 1156, 5, 39300);
+  			add_location(option0, file$7, 1159, 5, 39386);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
   			if (/*str_icon_type3*/ ctx[47] === void 0) add_render_callback(() => /*select0_change_handler_2*/ ctx[164].call(select0));
-  			add_location(select0, file$7, 1155, 4, 39187);
+  			add_location(select0, file$7, 1158, 4, 39273);
   			attr_dev(div5, "class", "pLine svelte-1jsovbn");
-  			add_location(div5, file$7, 1154, 3, 39163);
+  			add_location(div5, file$7, 1157, 3, 39249);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$7, 1168, 5, 39774);
+  			add_location(option1, file$7, 1171, 5, 39860);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$7, 1169, 5, 39852);
+  			add_location(option2, file$7, 1172, 5, 39938);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$7, 1170, 5, 39938);
+  			add_location(option3, file$7, 1173, 5, 40024);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$7, 1171, 5, 40028);
+  			add_location(option4, file$7, 1174, 5, 40114);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$7, 1172, 5, 40125);
+  			add_location(option5, file$7, 1175, 5, 40211);
   			attr_dev(select1, "class", "svelte-1jsovbn");
   			if (/*hearths_stricken3*/ ctx[46] === void 0) add_render_callback(() => /*select1_change_handler_2*/ ctx[165].call(select1));
-  			add_location(select1, file$7, 1167, 4, 39697);
+  			add_location(select1, file$7, 1170, 4, 39783);
   			attr_dev(div6, "class", "pLine svelte-1jsovbn");
-  			add_location(div6, file$7, 1166, 3, 39673);
+  			add_location(div6, file$7, 1169, 3, 39759);
   			attr_dev(div7, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div7, file$7, 1139, 2, 38301);
+  			add_location(div7, file$7, 1142, 2, 38387);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -9197,14 +9197,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_22.name,
   		type: "if",
-  		source: "(1138:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}",
+  		source: "(1141:2) {#if DtpHearths3._map && DtpHearths3._opt && DtpHearths3._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1148:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}
+  // (1151:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}
   function create_each_block_20(ctx) {
   	let input;
   	let input_checked_value;
@@ -9226,10 +9226,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type_3*/ ctx[48] === 2;
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1148, 6, 38902);
+  			add_location(input, file$7, 1151, 6, 38988);
   			attr_dev(label, "for", "hearths_year_3");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1148, 161, 39057);
+  			add_location(label, file$7, 1151, 161, 39143);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -9264,14 +9264,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_20.name,
   		type: "each",
-  		source: "(1148:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}",
+  		source: "(1151:5) {#each Object.keys(DtpHearths3._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1160:5) {#each optTypeHearths3Keys as key}
+  // (1163:5) {#each optTypeHearths3Keys as key}
   function create_each_block_19(ctx) {
   	let option;
   	let t0;
@@ -9295,7 +9295,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths3*/ ctx[83].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1160, 6, 39492);
+  			add_location(option, file$7, 1163, 6, 39578);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -9315,14 +9315,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_19.name,
   		type: "each",
-  		source: "(1160:5) {#each optTypeHearths3Keys as key}",
+  		source: "(1163:5) {#each optTypeHearths3Keys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1179:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}
+  // (1182:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}
   function create_if_block_21(ctx) {
   	let div0;
   	let t0;
@@ -9454,16 +9454,16 @@ var dtp = (function () {
   			option4.textContent = `(${/*optDataHearthsStat*/ ctx[81].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
   			option5.textContent = `(${/*optDataHearthsStat*/ ctx[81].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$7, 1179, 31, 40368);
+  			add_location(b, file$7, 1182, 31, 40454);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1179, 2, 40339);
+  			add_location(div0, file$7, 1182, 2, 40425);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1181, 30, 40456);
+  			add_location(input0, file$7, 1184, 30, 40542);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1181, 3, 40429);
-  			add_location(legend, file$7, 1184, 4, 40571);
+  			add_location(div1, file$7, 1184, 3, 40515);
+  			add_location(legend, file$7, 1187, 4, 40657);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
@@ -9472,14 +9472,14 @@ var dtp = (function () {
   			attr_dev(input1, "name", "hearths_period_type_Stat");
   			attr_dev(input1, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][2].push(input1);
-  			add_location(input1, file$7, 1186, 5, 40646);
+  			add_location(input1, file$7, 1189, 5, 40732);
   			attr_dev(label0, "for", "hearths_period_type_Stat1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1186, 210, 40851);
+  			add_location(label0, file$7, 1189, 210, 40937);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$7, 1187, 5, 40923);
+  			add_location(div2, file$7, 1190, 5, 41009);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$7, 1185, 4, 40616);
+  			add_location(div3, file$7, 1188, 4, 40702);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 2;
   			input2.value = input2.__value;
@@ -9487,49 +9487,49 @@ var dtp = (function () {
   			attr_dev(input2, "name", "hearths_period_type_Stat");
   			attr_dev(input2, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][2].push(input2);
-  			add_location(input2, file$7, 1194, 4, 41303);
+  			add_location(input2, file$7, 1197, 4, 41389);
   			attr_dev(label1, "for", "hearths_period_type_Stat2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1194, 168, 41467);
+  			add_location(label1, file$7, 1197, 168, 41553);
   			attr_dev(div4, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div4, file$7, 1195, 5, 41543);
+  			add_location(div4, file$7, 1198, 5, 41629);
   			attr_dev(div5, "class", "pLine type svelte-1jsovbn");
-  			add_location(div5, file$7, 1193, 4, 41274);
-  			add_location(fieldset, file$7, 1183, 3, 40556);
+  			add_location(div5, file$7, 1196, 4, 41360);
+  			add_location(fieldset, file$7, 1186, 3, 40642);
   			attr_dev(div6, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div6, file$7, 1182, 3, 40526);
+  			add_location(div6, file$7, 1185, 3, 40612);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$7, 1208, 5, 42237);
+  			add_location(option0, file$7, 1211, 5, 42323);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
   			if (/*str_icon_typeStat*/ ctx[51] === void 0) add_render_callback(() => /*select0_change_handler_3*/ ctx[169].call(select0));
-  			add_location(select0, file$7, 1207, 4, 42118);
+  			add_location(select0, file$7, 1210, 4, 42204);
   			attr_dev(div7, "class", "pLine svelte-1jsovbn");
-  			add_location(div7, file$7, 1206, 3, 42094);
+  			add_location(div7, file$7, 1209, 3, 42180);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$7, 1220, 5, 42732);
+  			add_location(option1, file$7, 1223, 5, 42818);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$7, 1221, 5, 42813);
+  			add_location(option2, file$7, 1224, 5, 42899);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$7, 1222, 5, 42902);
+  			add_location(option3, file$7, 1225, 5, 42988);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$7, 1223, 5, 42995);
+  			add_location(option4, file$7, 1226, 5, 43081);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$7, 1224, 5, 43095);
+  			add_location(option5, file$7, 1227, 5, 43181);
   			attr_dev(select1, "class", "svelte-1jsovbn");
   			if (/*hearths_strickenStat*/ ctx[50] === void 0) add_render_callback(() => /*select1_change_handler_3*/ ctx[170].call(select1));
-  			add_location(select1, file$7, 1219, 4, 42649);
+  			add_location(select1, file$7, 1222, 4, 42735);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$7, 1218, 3, 42625);
+  			add_location(div8, file$7, 1221, 3, 42711);
   			attr_dev(div9, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div9, file$7, 1180, 2, 40400);
+  			add_location(div9, file$7, 1183, 2, 40486);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -9715,14 +9715,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_21.name,
   		type: "if",
-  		source: "(1179:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}",
+  		source: "(1182:2) {#if DtpHearthsStat._map && DtpHearthsStat._opt && DtpHearthsStat._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1189:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
+  // (1192:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
   function create_each_block_18(ctx) {
   	let input;
   	let input_checked_value;
@@ -9744,10 +9744,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[52] === 2;
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1189, 6, 41022);
+  			add_location(input, file$7, 1192, 6, 41108);
   			attr_dev(label, "for", "hearths_year_Stat");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1189, 173, 41189);
+  			add_location(label, file$7, 1192, 173, 41275);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -9782,14 +9782,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_18.name,
   		type: "each",
-  		source: "(1189:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
+  		source: "(1192:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1198:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}
+  // (1201:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}
   function create_each_block_17(ctx) {
   	let input;
   	let input_checked_value;
@@ -9817,10 +9817,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type_Stat*/ ctx[52] === 1;
   			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[205] + "_" + /*key1*/ ctx[224]));
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1198, 7, 41716);
+  			add_location(input, file$7, 1201, 7, 41802);
   			attr_dev(label, "for", label_for_value = "hearths_quarter_Stat_" + /*key*/ ctx[205] + "_" + /*key1*/ ctx[224]);
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1198, 222, 41931);
+  			add_location(label, file$7, 1201, 222, 42017);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -9862,14 +9862,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_17.name,
   		type: "each",
-  		source: "(1198:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}",
+  		source: "(1201:6) {#each Object.keys(DtpHearthsStat._opt.years[key]).sort() as key1}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1197:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
+  // (1200:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}
   function create_each_block_16(ctx) {
   	let t;
   	let br;
@@ -9889,7 +9889,7 @@ var dtp = (function () {
 
   			t = space();
   			br = element("br");
-  			add_location(br, file$7, 1200, 6, 42023);
+  			add_location(br, file$7, 1203, 6, 42109);
   		},
   		m: function mount(target, anchor) {
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -9935,14 +9935,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_16.name,
   		type: "each",
-  		source: "(1197:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
+  		source: "(1200:5) {#each Object.keys(DtpHearthsStat._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1212:5) {#each optTypeHearthsStatKeys as key}
+  // (1215:5) {#each optTypeHearthsStatKeys as key}
   function create_each_block_15(ctx) {
   	let option;
   	let t0;
@@ -9966,7 +9966,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearthsStat*/ ctx[81].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1212, 6, 42438);
+  			add_location(option, file$7, 1215, 6, 42524);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -9986,14 +9986,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_15.name,
   		type: "each",
-  		source: "(1212:5) {#each optTypeHearthsStatKeys as key}",
+  		source: "(1215:5) {#each optTypeHearthsStatKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1231:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}
+  // (1234:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}
   function create_if_block_20(ctx) {
   	let div0;
   	let t0;
@@ -10125,16 +10125,16 @@ var dtp = (function () {
   			option4.textContent = `(${/*optDataHearthsTmp*/ ctx[79].stricken[3] || 0}) С пострадавшими или погибшими`;
   			option5 = element("option");
   			option5.textContent = `(${/*optDataHearthsTmp*/ ctx[79].stricken[4] || 0}) С пострадавшими и погибшими`;
-  			add_location(b, file$7, 1231, 31, 43338);
+  			add_location(b, file$7, 1234, 31, 43424);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1231, 2, 43309);
+  			add_location(div0, file$7, 1234, 2, 43395);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1233, 30, 43425);
+  			add_location(input0, file$7, 1236, 30, 43511);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1233, 3, 43398);
-  			add_location(legend, file$7, 1236, 4, 43540);
+  			add_location(div1, file$7, 1236, 3, 43484);
+  			add_location(legend, file$7, 1239, 4, 43626);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
@@ -10143,14 +10143,14 @@ var dtp = (function () {
   			attr_dev(input1, "name", "hearths_period_type_tmp");
   			attr_dev(input1, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][1].push(input1);
-  			add_location(input1, file$7, 1238, 5, 43615);
+  			add_location(input1, file$7, 1241, 5, 43701);
   			attr_dev(label0, "for", "hearths_period_type_tmp1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1238, 205, 43815);
+  			add_location(label0, file$7, 1241, 205, 43901);
   			attr_dev(div2, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div2, file$7, 1239, 5, 43886);
+  			add_location(div2, file$7, 1242, 5, 43972);
   			attr_dev(div3, "class", "pLine type svelte-1jsovbn");
-  			add_location(div3, file$7, 1237, 4, 43585);
+  			add_location(div3, file$7, 1240, 4, 43671);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 2;
   			input2.value = input2.__value;
@@ -10158,49 +10158,49 @@ var dtp = (function () {
   			attr_dev(input2, "name", "hearths_period_type_tmp");
   			attr_dev(input2, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][1].push(input2);
-  			add_location(input2, file$7, 1246, 4, 44260);
+  			add_location(input2, file$7, 1249, 4, 44346);
   			attr_dev(label1, "for", "hearths_period_type_tmp2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1246, 164, 44420);
+  			add_location(label1, file$7, 1249, 164, 44506);
   			attr_dev(div4, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div4, file$7, 1247, 5, 44495);
+  			add_location(div4, file$7, 1250, 5, 44581);
   			attr_dev(div5, "class", "pLine type svelte-1jsovbn");
-  			add_location(div5, file$7, 1245, 4, 44231);
-  			add_location(fieldset, file$7, 1235, 3, 43525);
+  			add_location(div5, file$7, 1248, 4, 44317);
+  			add_location(fieldset, file$7, 1238, 3, 43611);
   			attr_dev(div6, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div6, file$7, 1234, 3, 43495);
+  			add_location(div6, file$7, 1237, 3, 43581);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$7, 1274, 5, 45733);
+  			add_location(option0, file$7, 1277, 5, 45819);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
   			if (/*str_icon_typeTmp*/ ctx[56] === void 0) add_render_callback(() => /*select0_change_handler_4*/ ctx[174].call(select0));
-  			add_location(select0, file$7, 1273, 4, 45616);
+  			add_location(select0, file$7, 1276, 4, 45702);
   			attr_dev(div7, "class", "pLine svelte-1jsovbn");
-  			add_location(div7, file$7, 1272, 3, 45592);
+  			add_location(div7, file$7, 1275, 3, 45678);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$7, 1286, 5, 46221);
+  			add_location(option1, file$7, 1289, 5, 46307);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$7, 1287, 5, 46301);
+  			add_location(option2, file$7, 1290, 5, 46387);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$7, 1288, 5, 46389);
+  			add_location(option3, file$7, 1291, 5, 46475);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$7, 1289, 5, 46481);
+  			add_location(option4, file$7, 1292, 5, 46567);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$7, 1290, 5, 46580);
+  			add_location(option5, file$7, 1293, 5, 46666);
   			attr_dev(select1, "class", "svelte-1jsovbn");
   			if (/*hearths_strickenTmp*/ ctx[55] === void 0) add_render_callback(() => /*select1_change_handler_4*/ ctx[175].call(select1));
-  			add_location(select1, file$7, 1285, 4, 46140);
+  			add_location(select1, file$7, 1288, 4, 46226);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$7, 1284, 3, 46116);
+  			add_location(div8, file$7, 1287, 3, 46202);
   			attr_dev(div9, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div9, file$7, 1232, 2, 43369);
+  			add_location(div9, file$7, 1235, 2, 43455);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -10386,14 +10386,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_20.name,
   		type: "if",
-  		source: "(1231:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}",
+  		source: "(1234:2) {#if DtpHearthsTmp._map && DtpHearthsTmp._opt && DtpHearthsTmp._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1241:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
+  // (1244:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
   function create_each_block_14(ctx) {
   	let input;
   	let input_checked_value;
@@ -10415,10 +10415,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type_tmp*/ ctx[57] === 2;
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1241, 6, 43984);
+  			add_location(input, file$7, 1244, 6, 44070);
   			attr_dev(label, "for", "hearths_year_tmp");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1241, 169, 44147);
+  			add_location(label, file$7, 1244, 169, 44233);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -10453,14 +10453,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_14.name,
   		type: "each",
-  		source: "(1241:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
+  		source: "(1244:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1250:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}
+  // (1253:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}
   function create_each_block_13(ctx) {
   	let input;
   	let input_checked_value;
@@ -10488,10 +10488,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type_tmp*/ ctx[57] === 1;
   			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[205] + "_" + /*key1*/ ctx[224]));
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1250, 7, 44666);
+  			add_location(input, file$7, 1253, 7, 44752);
   			attr_dev(label, "for", label_for_value = "hearths_quarter_tmp_" + /*key*/ ctx[205] + "_" + /*key1*/ ctx[224]);
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1250, 217, 44876);
+  			add_location(label, file$7, 1253, 217, 44962);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -10533,14 +10533,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_13.name,
   		type: "each",
-  		source: "(1250:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}",
+  		source: "(1253:6) {#each Object.keys(DtpHearthsTmp._opt.years[key]).sort() as key1}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1249:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
+  // (1252:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}
   function create_each_block_12(ctx) {
   	let t;
   	let br;
@@ -10560,7 +10560,7 @@ var dtp = (function () {
 
   			t = space();
   			br = element("br");
-  			add_location(br, file$7, 1252, 6, 44967);
+  			add_location(br, file$7, 1255, 6, 45053);
   		},
   		m: function mount(target, anchor) {
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -10606,14 +10606,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_12.name,
   		type: "each",
-  		source: "(1249:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
+  		source: "(1252:5) {#each Object.keys(DtpHearthsTmp._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1278:5) {#each optTypeHearthsTmpKeys as key}
+  // (1281:5) {#each optTypeHearthsTmpKeys as key}
   function create_each_block_11(ctx) {
   	let option;
   	let t0;
@@ -10637,7 +10637,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearthsTmp*/ ctx[79].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1278, 6, 45931);
+  			add_location(option, file$7, 1281, 6, 46017);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -10657,14 +10657,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_11.name,
   		type: "each",
-  		source: "(1278:5) {#each optTypeHearthsTmpKeys as key}",
+  		source: "(1281:5) {#each optTypeHearthsTmpKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1297:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}
+  // (1300:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}
   function create_if_block_19(ctx) {
   	let div0;
   	let hr;
@@ -10803,19 +10803,19 @@ var dtp = (function () {
   			option5 = element("option");
   			option5.textContent = `(${/*optDataHearths*/ ctx[77].stricken[4] || 0}) С пострадавшими и погибшими`;
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1297, 21, 46803);
+  			add_location(hr, file$7, 1300, 21, 46889);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1297, 2, 46784);
-  			add_location(b, file$7, 1298, 31, 46845);
+  			add_location(div0, file$7, 1300, 2, 46870);
+  			add_location(b, file$7, 1301, 31, 46931);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1298, 2, 46816);
+  			add_location(div1, file$7, 1301, 2, 46902);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1300, 30, 46926);
+  			add_location(input0, file$7, 1303, 30, 47012);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1300, 3, 46899);
-  			add_location(legend, file$7, 1303, 4, 47041);
+  			add_location(div2, file$7, 1303, 3, 46985);
+  			add_location(legend, file$7, 1306, 4, 47127);
   			attr_dev(input1, "type", "radio");
   			input1.__value = input1_value_value = 1;
   			input1.value = input1.__value;
@@ -10824,14 +10824,14 @@ var dtp = (function () {
   			attr_dev(input1, "name", "hearths_period_type");
   			attr_dev(input1, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][0].push(input1);
-  			add_location(input1, file$7, 1305, 5, 47116);
+  			add_location(input1, file$7, 1308, 5, 47202);
   			attr_dev(label0, "for", "hearths_period_type1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1305, 186, 47297);
+  			add_location(label0, file$7, 1308, 186, 47383);
   			attr_dev(div3, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div3, file$7, 1306, 5, 47364);
+  			add_location(div3, file$7, 1309, 5, 47450);
   			attr_dev(div4, "class", "pLine type svelte-1jsovbn");
-  			add_location(div4, file$7, 1304, 4, 47086);
+  			add_location(div4, file$7, 1307, 4, 47172);
   			attr_dev(input2, "type", "radio");
   			input2.__value = input2_value_value = 2;
   			input2.value = input2.__value;
@@ -10839,49 +10839,49 @@ var dtp = (function () {
   			attr_dev(input2, "name", "hearths_period_type");
   			attr_dev(input2, "class", "svelte-1jsovbn");
   			/*$$binding_groups*/ ctx[150][0].push(input2);
-  			add_location(input2, file$7, 1313, 4, 47721);
+  			add_location(input2, file$7, 1316, 4, 47807);
   			attr_dev(label1, "for", "hearths_period_type2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1313, 149, 47866);
+  			add_location(label1, file$7, 1316, 149, 47952);
   			attr_dev(div5, "class", "pLine margin svelte-1jsovbn");
-  			add_location(div5, file$7, 1314, 5, 47937);
+  			add_location(div5, file$7, 1317, 5, 48023);
   			attr_dev(div6, "class", "pLine type svelte-1jsovbn");
-  			add_location(div6, file$7, 1312, 4, 47692);
-  			add_location(fieldset, file$7, 1302, 3, 47026);
+  			add_location(div6, file$7, 1315, 4, 47778);
+  			add_location(fieldset, file$7, 1305, 3, 47112);
   			attr_dev(div7, "class", "pLine nowrap svelte-1jsovbn");
-  			add_location(div7, file$7, 1301, 3, 46996);
+  			add_location(div7, file$7, 1304, 3, 47082);
   			option0.__value = "";
   			option0.value = option0.__value;
   			attr_dev(option0, "class", "svelte-1jsovbn");
-  			add_location(option0, file$7, 1327, 5, 48586);
+  			add_location(option0, file$7, 1330, 5, 48672);
   			attr_dev(select0, "class", "multiple_icon_typeTmp svelte-1jsovbn");
   			select0.multiple = true;
   			if (/*str_icon_type*/ ctx[61] === void 0) add_render_callback(() => /*select0_change_handler_5*/ ctx[179].call(select0));
-  			add_location(select0, file$7, 1326, 4, 48475);
+  			add_location(select0, file$7, 1329, 4, 48561);
   			attr_dev(div8, "class", "pLine svelte-1jsovbn");
-  			add_location(div8, file$7, 1325, 3, 48451);
+  			add_location(div8, file$7, 1328, 3, 48537);
   			option1.__value = "";
   			option1.value = option1.__value;
-  			add_location(option1, file$7, 1339, 5, 49053);
+  			add_location(option1, file$7, 1342, 5, 49139);
   			option2.__value = "1";
   			option2.value = option2.__value;
-  			add_location(option2, file$7, 1340, 5, 49130);
+  			add_location(option2, file$7, 1343, 5, 49216);
   			option3.__value = "2";
   			option3.value = option3.__value;
-  			add_location(option3, file$7, 1341, 5, 49215);
+  			add_location(option3, file$7, 1344, 5, 49301);
   			option4.__value = "3";
   			option4.value = option4.__value;
-  			add_location(option4, file$7, 1342, 5, 49304);
+  			add_location(option4, file$7, 1345, 5, 49390);
   			option5.__value = "4";
   			option5.value = option5.__value;
-  			add_location(option5, file$7, 1343, 5, 49400);
+  			add_location(option5, file$7, 1346, 5, 49486);
   			attr_dev(select1, "class", "svelte-1jsovbn");
   			if (/*hearths_stricken*/ ctx[60] === void 0) add_render_callback(() => /*select1_change_handler_5*/ ctx[180].call(select1));
-  			add_location(select1, file$7, 1338, 4, 48978);
+  			add_location(select1, file$7, 1341, 4, 49064);
   			attr_dev(div9, "class", "pLine svelte-1jsovbn");
-  			add_location(div9, file$7, 1337, 3, 48954);
+  			add_location(div9, file$7, 1340, 3, 49040);
   			attr_dev(div10, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div10, file$7, 1299, 2, 46870);
+  			add_location(div10, file$7, 1302, 2, 46956);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -11072,14 +11072,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_19.name,
   		type: "if",
-  		source: "(1297:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}",
+  		source: "(1300:2) {#if DtpHearths._map && DtpHearths._opt && DtpHearths._opt.years}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1308:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
+  // (1311:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
   function create_each_block_10(ctx) {
   	let input;
   	let input_checked_value;
@@ -11102,10 +11102,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type*/ ctx[62] === 2;
   			attr_dev(input, "name", input_name_value = /*key*/ ctx[205]);
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1308, 6, 47459);
+  			add_location(input, file$7, 1311, 6, 47545);
   			attr_dev(label, "for", label_for_value = "hearths_year" + /*key*/ ctx[205]);
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1308, 154, 47607);
+  			add_location(label, file$7, 1311, 154, 47693);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -11144,14 +11144,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_10.name,
   		type: "each",
-  		source: "(1308:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
+  		source: "(1311:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1317:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}
+  // (1320:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}
   function create_each_block_9(ctx) {
   	let input;
   	let input_checked_value;
@@ -11179,10 +11179,10 @@ var dtp = (function () {
   			input.disabled = input_disabled_value = /*hearths_period_type*/ ctx[62] === 1;
   			attr_dev(input, "name", input_name_value = "" + (/*key*/ ctx[205] + "_" + /*key1*/ ctx[224]));
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1317, 7, 48102);
+  			add_location(input, file$7, 1320, 7, 48188);
   			attr_dev(label, "for", label_for_value = "hearths_quarter_" + /*key*/ ctx[205] + "_" + /*key1*/ ctx[224]);
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1317, 198, 48293);
+  			add_location(label, file$7, 1320, 198, 48379);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, input, anchor);
@@ -11224,14 +11224,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_9.name,
   		type: "each",
-  		source: "(1317:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}",
+  		source: "(1320:6) {#each Object.keys(DtpHearths._opt.years[key]).sort() as key1}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1316:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
+  // (1319:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}
   function create_each_block_8(ctx) {
   	let t;
   	let br;
@@ -11251,7 +11251,7 @@ var dtp = (function () {
 
   			t = space();
   			br = element("br");
-  			add_location(br, file$7, 1319, 6, 48380);
+  			add_location(br, file$7, 1322, 6, 48466);
   		},
   		m: function mount(target, anchor) {
   			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -11297,14 +11297,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_8.name,
   		type: "each",
-  		source: "(1316:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
+  		source: "(1319:5) {#each Object.keys(DtpHearths._opt.years).sort() as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1331:5) {#each optTypeHearthsKeys as key}
+  // (1334:5) {#each optTypeHearthsKeys as key}
   function create_each_block_7(ctx) {
   	let option;
   	let t0;
@@ -11328,7 +11328,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataHearths*/ ctx[77].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1331, 6, 48775);
+  			add_location(option, file$7, 1334, 6, 48861);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -11348,14 +11348,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_7.name,
   		type: "each",
-  		source: "(1331:5) {#each optTypeHearthsKeys as key}",
+  		source: "(1334:5) {#each optTypeHearthsKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1377:233) 
+  // (1380:233) 
   function create_if_block_18(ctx) {
   	let div;
 
@@ -11364,7 +11364,7 @@ var dtp = (function () {
   			div = element("div");
   			div.textContent = "Нет включенных слоев";
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1377, 3, 51217);
+  			add_location(div, file$7, 1380, 3, 51303);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div, anchor);
@@ -11379,14 +11379,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_18.name,
   		type: "if",
-  		source: "(1377:233) ",
+  		source: "(1380:233) ",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1350:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}
+  // (1353:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}
   function create_if_block_16(ctx) {
   	let div0;
   	let hr;
@@ -11421,21 +11421,21 @@ var dtp = (function () {
   			if (if_block) if_block.c();
   			if_block_anchor = empty();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1350, 21, 49687);
+  			add_location(hr, file$7, 1353, 21, 49773);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1350, 2, 49668);
+  			add_location(div0, file$7, 1353, 2, 49754);
   			attr_dev(button0, "class", "pika-prev");
-  			add_location(button0, file$7, 1352, 3, 49731);
+  			add_location(button0, file$7, 1355, 3, 49817);
   			attr_dev(input0, "type", "text");
   			attr_dev(input0, "class", "begDate svelte-1jsovbn");
-  			add_location(input0, file$7, 1353, 3, 49788);
+  			add_location(input0, file$7, 1356, 3, 49874);
   			attr_dev(input1, "type", "text");
   			attr_dev(input1, "class", "endDate svelte-1jsovbn");
-  			add_location(input1, file$7, 1354, 3, 49849);
+  			add_location(input1, file$7, 1357, 3, 49935);
   			attr_dev(button1, "class", "pika-next");
-  			add_location(button1, file$7, 1355, 3, 49910);
+  			add_location(button1, file$7, 1358, 3, 49996);
   			attr_dev(div1, "class", "pikaday pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1351, 2, 49700);
+  			add_location(div1, file$7, 1354, 2, 49786);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -11492,14 +11492,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_16.name,
   		type: "if",
-  		source: "(1350:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}",
+  		source: "(1353:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibdd._map || DtpGibddRub._map || Measures._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1358:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibddRub._map}
+  // (1361:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibddRub._map}
   function create_if_block_17(ctx) {
   	let div0;
   	let br0;
@@ -11572,51 +11572,51 @@ var dtp = (function () {
   			input3 = element("input");
   			label3 = element("label");
   			label3.textContent = "- тепловая карта";
-  			add_location(br0, file$7, 1359, 4, 50118);
+  			add_location(br0, file$7, 1362, 4, 50204);
   			attr_dev(input0, "type", "range");
   			attr_dev(input0, "min", "0.05");
   			attr_dev(input0, "max", "1");
   			attr_dev(input0, "step", "0.01");
   			input0.disabled = input0_disabled_value = !/*heat*/ ctx[95];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1361, 5, 50142);
-  			add_location(span0, file$7, 1361, 122, 50259);
+  			add_location(input0, file$7, 1364, 5, 50228);
+  			add_location(span0, file$7, 1364, 122, 50345);
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1360, 4, 50129);
-  			add_location(br1, file$7, 1363, 4, 50316);
+  			add_location(label0, file$7, 1363, 4, 50215);
+  			add_location(br1, file$7, 1366, 4, 50402);
   			attr_dev(input1, "type", "range");
   			attr_dev(input1, "min", "0");
   			attr_dev(input1, "max", "100");
   			attr_dev(input1, "step", "1");
   			input1.disabled = input1_disabled_value = !/*heat*/ ctx[95];
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1365, 5, 50340);
-  			add_location(span1, file$7, 1365, 114, 50449);
+  			add_location(input1, file$7, 1368, 5, 50426);
+  			add_location(span1, file$7, 1368, 114, 50535);
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1364, 4, 50327);
-  			add_location(br2, file$7, 1367, 4, 50497);
+  			add_location(label1, file$7, 1367, 4, 50413);
+  			add_location(br2, file$7, 1370, 4, 50583);
   			attr_dev(input2, "type", "range");
   			attr_dev(input2, "min", "0");
   			attr_dev(input2, "max", "15");
   			attr_dev(input2, "step", "0.01");
   			input2.disabled = input2_disabled_value = !/*heat*/ ctx[95];
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1369, 5, 50521);
-  			add_location(span2, file$7, 1369, 114, 50630);
+  			add_location(input2, file$7, 1372, 5, 50607);
+  			add_location(span2, file$7, 1372, 114, 50716);
   			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$7, 1368, 4, 50508);
+  			add_location(label2, file$7, 1371, 4, 50594);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1358, 3, 50094);
+  			add_location(div0, file$7, 1361, 3, 50180);
   			attr_dev(input3, "type", "checkbox");
   			input3.checked = input3_checked_value = /*DtpGibddRub*/ ctx[8]._needHeat || /*DtpGibddLo*/ ctx[10]._needHeat || /*DtpGibddSpt*/ ctx[9]._needHeat || /*DtpSkpdi*/ ctx[6]._needHeat || /*DtpVerifyed*/ ctx[5]._needHeat;
   			attr_dev(input3, "name", "heat");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 1373, 4, 50711);
+  			add_location(input3, file$7, 1376, 4, 50797);
   			attr_dev(label3, "for", "heat");
   			attr_dev(label3, "class", "svelte-1jsovbn");
-  			add_location(label3, file$7, 1373, 211, 50918);
+  			add_location(label3, file$7, 1376, 211, 51004);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1372, 3, 50687);
+  			add_location(div1, file$7, 1375, 3, 50773);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -11705,14 +11705,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_17.name,
   		type: "if",
-  		source: "(1358:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibddRub._map}",
+  		source: "(1361:2) {#if DtpVerifyed._map || DtpSkpdi._map || DtpGibdd._map || DtpGibddLo._map || DtpGibddSpt._map || DtpGibddRub._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1381:2) {#if Measures._map}
+  // (1384:2) {#if Measures._map}
   function create_if_block_14(ctx) {
   	let div0;
   	let hr;
@@ -11737,14 +11737,14 @@ var dtp = (function () {
   			div2 = element("div");
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1381, 21, 51315);
+  			add_location(hr, file$7, 1384, 21, 51401);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1381, 2, 51296);
-  			add_location(b, file$7, 1382, 31, 51357);
+  			add_location(div0, file$7, 1384, 2, 51382);
+  			add_location(b, file$7, 1385, 31, 51443);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1382, 2, 51328);
+  			add_location(div1, file$7, 1385, 2, 51414);
   			attr_dev(div2, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div2, file$7, 1383, 2, 51384);
+  			add_location(div2, file$7, 1386, 2, 51470);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, div0, anchor);
@@ -11774,14 +11774,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_14.name,
   		type: "if",
-  		source: "(1381:2) {#if Measures._map}",
+  		source: "(1384:2) {#if Measures._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1385:3) {#if optMeasures.type}
+  // (1388:3) {#if optMeasures.type}
   function create_if_block_15(ctx) {
   	let div;
   	let select;
@@ -11811,13 +11811,13 @@ var dtp = (function () {
 
   			option.__value = "";
   			option.value = option.__value;
-  			add_location(option, file$7, 1387, 5, 51567);
+  			add_location(option, file$7, 1390, 5, 51653);
   			attr_dev(select, "class", "multiple_type svelte-1jsovbn");
   			select.multiple = true;
   			if (/*measures_type*/ ctx[34] === void 0) add_render_callback(() => /*select_change_handler_2*/ ctx[188].call(select));
-  			add_location(select, file$7, 1386, 4, 51463);
+  			add_location(select, file$7, 1389, 4, 51549);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1385, 3, 51439);
+  			add_location(div, file$7, 1388, 3, 51525);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -11876,14 +11876,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_15.name,
   		type: "if",
-  		source: "(1385:3) {#if optMeasures.type}",
+  		source: "(1388:3) {#if optMeasures.type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1391:5) {#each optMeasuresKeys as key}
+  // (1394:5) {#each optMeasuresKeys as key}
   function create_each_block_6(ctx) {
   	let option;
   	let t0;
@@ -11907,7 +11907,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "type_" + /*optMeasures*/ ctx[93].type[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1391, 6, 51738);
+  			add_location(option, file$7, 1394, 6, 51824);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -11927,14 +11927,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_6.name,
   		type: "each",
-  		source: "(1391:5) {#each optMeasuresKeys as key}",
+  		source: "(1394:5) {#each optMeasuresKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1402:2) {#if DtpVerifyed._map}
+  // (1405:2) {#if DtpVerifyed._map}
   function create_if_block_11(ctx) {
   	let div0;
   	let hr;
@@ -12015,63 +12015,63 @@ var dtp = (function () {
   			t14 = space();
   			if (if_block1) if_block1.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1402, 21, 51963);
+  			add_location(hr, file$7, 1405, 21, 52049);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1402, 2, 51944);
-  			add_location(b, file$7, 1403, 31, 52005);
+  			add_location(div0, file$7, 1405, 2, 52030);
+  			add_location(b, file$7, 1406, 31, 52091);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1403, 2, 51976);
+  			add_location(div1, file$7, 1406, 2, 52062);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1405, 30, 52088);
+  			add_location(input0, file$7, 1408, 30, 52174);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1405, 3, 52061);
+  			add_location(div2, file$7, 1408, 3, 52147);
   			attr_dev(input1, "type", "radio");
   			attr_dev(input1, "id", "d0");
   			attr_dev(input1, "name", "drone");
   			input1.value = "0";
   			input1.checked = true;
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1406, 22, 52177);
+  			add_location(input1, file$7, 1409, 22, 52263);
   			attr_dev(label0, "for", "d0");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1406, 98, 52253);
+  			add_location(label0, file$7, 1409, 98, 52339);
   			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$7, 1406, 3, 52158);
+  			add_location(div3, file$7, 1409, 3, 52244);
   			attr_dev(input2, "type", "radio");
   			attr_dev(input2, "id", "d3");
   			attr_dev(input2, "name", "drone");
   			input2.value = "3";
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1413, 22, 52782);
+  			add_location(input2, file$7, 1416, 22, 52868);
   			attr_dev(label1, "for", "d3");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1413, 92, 52852);
+  			add_location(label1, file$7, 1416, 92, 52938);
   			attr_dev(div4, "class", "pLine svelte-1jsovbn");
-  			add_location(div4, file$7, 1413, 3, 52763);
+  			add_location(div4, file$7, 1416, 3, 52849);
   			attr_dev(input3, "type", "checkbox");
   			attr_dev(input3, "id", "ev1");
   			input3.checked = input3_checked_value = /*evnt*/ ctx[20].ev1;
   			attr_dev(input3, "name", "ev1");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 1415, 4, 52922);
+  			add_location(input3, file$7, 1418, 4, 53008);
   			attr_dev(label2, "for", "ev1");
   			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$7, 1415, 92, 53010);
+  			add_location(label2, file$7, 1418, 92, 53096);
   			attr_dev(input4, "type", "checkbox");
   			attr_dev(input4, "id", "ev0");
   			input4.checked = input4_checked_value = /*evnt*/ ctx[20].ev0;
   			attr_dev(input4, "name", "ev0");
   			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$7, 1416, 4, 53058);
+  			add_location(input4, file$7, 1419, 4, 53144);
   			attr_dev(label3, "for", "ev0");
   			attr_dev(label3, "class", "svelte-1jsovbn");
-  			add_location(label3, file$7, 1416, 92, 53146);
+  			add_location(label3, file$7, 1419, 92, 53232);
   			attr_dev(div5, "class", "pLine svelte-1jsovbn");
-  			add_location(div5, file$7, 1414, 3, 52898);
+  			add_location(div5, file$7, 1417, 3, 52984);
   			attr_dev(div6, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div6, file$7, 1404, 2, 52032);
+  			add_location(div6, file$7, 1407, 2, 52118);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -12157,14 +12157,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_11.name,
   		type: "if",
-  		source: "(1402:2) {#if DtpVerifyed._map}",
+  		source: "(1405:2) {#if DtpVerifyed._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1410:3) {:else}
+  // (1413:3) {:else}
   function create_else_block$1(ctx) {
   	let div0;
   	let input0;
@@ -12191,23 +12191,23 @@ var dtp = (function () {
   			attr_dev(input0, "name", "drone");
   			input0.value = "1";
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1410, 22, 52499);
+  			add_location(input0, file$7, 1413, 22, 52585);
   			attr_dev(label0, "for", "d1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1410, 90, 52567);
+  			add_location(label0, file$7, 1413, 90, 52653);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1410, 3, 52480);
+  			add_location(div0, file$7, 1413, 3, 52566);
   			attr_dev(input1, "type", "radio");
   			attr_dev(input1, "id", "d2");
   			attr_dev(input1, "name", "drone");
   			input1.value = "2";
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1411, 22, 52638);
+  			add_location(input1, file$7, 1414, 22, 52724);
   			attr_dev(label1, "for", "d2");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1411, 92, 52708);
+  			add_location(label1, file$7, 1414, 92, 52794);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1411, 3, 52619);
+  			add_location(div1, file$7, 1414, 3, 52705);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -12237,14 +12237,14 @@ var dtp = (function () {
   		block,
   		id: create_else_block$1.name,
   		type: "else",
-  		source: "(1410:3) {:else}",
+  		source: "(1413:3) {:else}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1408:3) {#if DtpVerifyed._arm}
+  // (1411:3) {#if DtpVerifyed._arm}
   function create_if_block_13(ctx) {
   	let div;
   	let input;
@@ -12262,12 +12262,12 @@ var dtp = (function () {
   			attr_dev(input, "name", "drone");
   			input.value = "1";
   			attr_dev(input, "class", "svelte-1jsovbn");
-  			add_location(input, file$7, 1408, 22, 52335);
+  			add_location(input, file$7, 1411, 22, 52421);
   			attr_dev(label, "for", "d1");
   			attr_dev(label, "class", "svelte-1jsovbn");
-  			add_location(label, file$7, 1408, 90, 52403);
+  			add_location(label, file$7, 1411, 90, 52489);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1408, 3, 52316);
+  			add_location(div, file$7, 1411, 3, 52402);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -12287,14 +12287,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_13.name,
   		type: "if",
-  		source: "(1408:3) {#if DtpVerifyed._arm}",
+  		source: "(1411:3) {#if DtpVerifyed._arm}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1419:3) {#if optData.collision_type}
+  // (1422:3) {#if optData.collision_type}
   function create_if_block_12(ctx) {
   	let div;
   	let select;
@@ -12325,13 +12325,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1421, 5, 53361);
+  			add_location(option, file$7, 1424, 5, 53447);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
   			if (/*collision_type*/ ctx[24] === void 0) add_render_callback(() => /*select_change_handler_3*/ ctx[190].call(select));
-  			add_location(select, file$7, 1420, 4, 53259);
+  			add_location(select, file$7, 1423, 4, 53345);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1419, 3, 53235);
+  			add_location(div, file$7, 1422, 3, 53321);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -12390,14 +12390,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_12.name,
   		type: "if",
-  		source: "(1419:3) {#if optData.collision_type}",
+  		source: "(1422:3) {#if optData.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1425:5) {#each optCollisionKeys as key}
+  // (1428:5) {#each optCollisionKeys as key}
   function create_each_block_5(ctx) {
   	let option;
   	let t0;
@@ -12421,7 +12421,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optData*/ ctx[65].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1425, 6, 53540);
+  			add_location(option, file$7, 1428, 6, 53626);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -12441,14 +12441,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_5.name,
   		type: "each",
-  		source: "(1425:5) {#each optCollisionKeys as key}",
+  		source: "(1428:5) {#each optCollisionKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1436:2) {#if DtpSkpdi._map}
+  // (1439:2) {#if DtpSkpdi._map}
   function create_if_block_9(ctx) {
   	let div0;
   	let hr;
@@ -12500,40 +12500,40 @@ var dtp = (function () {
   			t9 = space();
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1436, 21, 53773);
+  			add_location(hr, file$7, 1439, 21, 53859);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1436, 2, 53754);
-  			add_location(b, file$7, 1437, 31, 53815);
+  			add_location(div0, file$7, 1439, 2, 53840);
+  			add_location(b, file$7, 1440, 31, 53901);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1437, 2, 53786);
+  			add_location(div1, file$7, 1440, 2, 53872);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1439, 30, 53896);
+  			add_location(input0, file$7, 1442, 30, 53982);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1439, 3, 53869);
+  			add_location(div2, file$7, 1442, 3, 53955);
   			attr_dev(input1, "type", "checkbox");
   			attr_dev(input1, "id", "ev1");
   			input1.checked = input1_checked_value = /*evnt*/ ctx[20].ev1;
   			attr_dev(input1, "name", "ev1");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1441, 4, 53990);
+  			add_location(input1, file$7, 1444, 4, 54076);
   			attr_dev(label0, "for", "ev1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1441, 92, 54078);
+  			add_location(label0, file$7, 1444, 92, 54164);
   			attr_dev(input2, "type", "checkbox");
   			attr_dev(input2, "id", "ev0");
   			input2.checked = input2_checked_value = /*evnt*/ ctx[20].ev0;
   			attr_dev(input2, "name", "ev0");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1442, 4, 54126);
+  			add_location(input2, file$7, 1445, 4, 54212);
   			attr_dev(label1, "for", "ev0");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1442, 92, 54214);
+  			add_location(label1, file$7, 1445, 92, 54300);
   			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$7, 1440, 3, 53966);
+  			add_location(div3, file$7, 1443, 3, 54052);
   			attr_dev(div4, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div4, file$7, 1438, 2, 53840);
+  			add_location(div4, file$7, 1441, 2, 53926);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -12594,14 +12594,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_9.name,
   		type: "if",
-  		source: "(1436:2) {#if DtpSkpdi._map}",
+  		source: "(1439:2) {#if DtpSkpdi._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1445:3) {#if optDataSkpdi.collision_type}
+  // (1448:3) {#if optDataSkpdi.collision_type}
   function create_if_block_10(ctx) {
   	let div;
   	let select;
@@ -12632,13 +12632,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1447, 5, 54445);
+  			add_location(option, file$7, 1450, 5, 54531);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
   			if (/*collision_type_skpdi*/ ctx[25] === void 0) add_render_callback(() => /*select_change_handler_4*/ ctx[192].call(select));
-  			add_location(select, file$7, 1446, 4, 54332);
+  			add_location(select, file$7, 1449, 4, 54418);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1445, 3, 54308);
+  			add_location(div, file$7, 1448, 3, 54394);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -12697,14 +12697,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_10.name,
   		type: "if",
-  		source: "(1445:3) {#if optDataSkpdi.collision_type}",
+  		source: "(1448:3) {#if optDataSkpdi.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1451:5) {#each optCollisionSkpdiKeys as key}
+  // (1454:5) {#each optCollisionSkpdiKeys as key}
   function create_each_block_4(ctx) {
   	let option;
   	let t0;
@@ -12728,7 +12728,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataSkpdi*/ ctx[67].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1451, 6, 54639);
+  			add_location(option, file$7, 1454, 6, 54725);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -12748,14 +12748,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_4.name,
   		type: "each",
-  		source: "(1451:5) {#each optCollisionSkpdiKeys as key}",
+  		source: "(1454:5) {#each optCollisionSkpdiKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1462:2) {#if DtpGibdd._map}
+  // (1465:2) {#if DtpGibdd._map}
   function create_if_block_7$1(ctx) {
   	let div0;
   	let hr;
@@ -12825,60 +12825,60 @@ var dtp = (function () {
   			t13 = space();
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1462, 21, 54882);
+  			add_location(hr, file$7, 1465, 21, 54968);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1462, 2, 54863);
-  			add_location(b, file$7, 1463, 31, 54924);
+  			add_location(div0, file$7, 1465, 2, 54949);
+  			add_location(b, file$7, 1466, 31, 55010);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1463, 2, 54895);
+  			add_location(div1, file$7, 1466, 2, 54981);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1465, 30, 55005);
+  			add_location(input0, file$7, 1468, 30, 55091);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1465, 3, 54978);
+  			add_location(div2, file$7, 1468, 3, 55064);
   			attr_dev(input1, "type", "checkbox");
   			attr_dev(input1, "id", "Dps1");
   			input1.checked = input1_checked_value = /*dps*/ ctx[19].Dps1;
   			attr_dev(input1, "name", "Dps1");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1467, 4, 55099);
+  			add_location(input1, file$7, 1470, 4, 55185);
   			attr_dev(label0, "for", "Dps1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1467, 91, 55186);
+  			add_location(label0, file$7, 1470, 91, 55272);
   			attr_dev(input2, "type", "checkbox");
   			attr_dev(input2, "id", "Dps0");
   			input2.checked = input2_checked_value = /*dps*/ ctx[19].Dps0;
   			attr_dev(input2, "name", "Dps0");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1468, 4, 55237);
+  			add_location(input2, file$7, 1471, 4, 55323);
   			attr_dev(label1, "for", "Dps0");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1468, 91, 55324);
+  			add_location(label1, file$7, 1471, 91, 55410);
   			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$7, 1466, 3, 55075);
+  			add_location(div3, file$7, 1469, 3, 55161);
   			attr_dev(input3, "type", "checkbox");
   			attr_dev(input3, "id", "ev1");
   			input3.checked = input3_checked_value = /*evnt*/ ctx[20].ev1;
   			attr_dev(input3, "name", "ev1");
   			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 1471, 4, 55409);
+  			add_location(input3, file$7, 1474, 4, 55495);
   			attr_dev(label2, "for", "ev1");
   			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$7, 1471, 92, 55497);
+  			add_location(label2, file$7, 1474, 92, 55583);
   			attr_dev(input4, "type", "checkbox");
   			attr_dev(input4, "id", "ev0");
   			input4.checked = input4_checked_value = /*evnt*/ ctx[20].ev0;
   			attr_dev(input4, "name", "ev0");
   			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$7, 1472, 4, 55545);
+  			add_location(input4, file$7, 1475, 4, 55631);
   			attr_dev(label3, "for", "ev0");
   			attr_dev(label3, "class", "svelte-1jsovbn");
-  			add_location(label3, file$7, 1472, 92, 55633);
+  			add_location(label3, file$7, 1475, 92, 55719);
   			attr_dev(div4, "class", "pLine svelte-1jsovbn");
-  			add_location(div4, file$7, 1470, 3, 55385);
+  			add_location(div4, file$7, 1473, 3, 55471);
   			attr_dev(div5, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div5, file$7, 1464, 2, 54949);
+  			add_location(div5, file$7, 1467, 2, 55035);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -12956,14 +12956,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_7$1.name,
   		type: "if",
-  		source: "(1462:2) {#if DtpGibdd._map}",
+  		source: "(1465:2) {#if DtpGibdd._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1475:3) {#if optDataGibdd.collision_type}
+  // (1478:3) {#if optDataGibdd.collision_type}
   function create_if_block_8(ctx) {
   	let div;
   	let select;
@@ -12994,13 +12994,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1477, 5, 55864);
+  			add_location(option, file$7, 1480, 5, 55950);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
   			if (/*collision_type_gibdd*/ ctx[26] === void 0) add_render_callback(() => /*select_change_handler_5*/ ctx[194].call(select));
-  			add_location(select, file$7, 1476, 4, 55751);
+  			add_location(select, file$7, 1479, 4, 55837);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1475, 3, 55727);
+  			add_location(div, file$7, 1478, 3, 55813);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -13059,14 +13059,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_8.name,
   		type: "if",
-  		source: "(1475:3) {#if optDataGibdd.collision_type}",
+  		source: "(1478:3) {#if optDataGibdd.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1481:5) {#each optCollisionGibddKeys as key}
+  // (1484:5) {#each optCollisionGibddKeys as key}
   function create_each_block_3$1(ctx) {
   	let option;
   	let t0;
@@ -13090,7 +13090,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibdd*/ ctx[69].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1481, 6, 56058);
+  			add_location(option, file$7, 1484, 6, 56144);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -13110,14 +13110,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_3$1.name,
   		type: "each",
-  		source: "(1481:5) {#each optCollisionGibddKeys as key}",
+  		source: "(1484:5) {#each optCollisionGibddKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1492:2) {#if DtpGibddLo._map}
+  // (1495:2) {#if DtpGibddLo._map}
   function create_if_block_5$1(ctx) {
   	let div0;
   	let hr;
@@ -13126,31 +13126,13 @@ var dtp = (function () {
   	let t1;
   	let b;
   	let t3;
-  	let div5;
+  	let div3;
   	let div2;
   	let t4;
-  	let input0;
+  	let input;
   	let t5;
-  	let div3;
-  	let input1;
-  	let input1_checked_value;
-  	let label0;
-  	let t7;
-  	let input2;
-  	let input2_checked_value;
-  	let label1;
-  	let t9;
-  	let div4;
-  	let input3;
-  	let input3_checked_value;
-  	let label2;
-  	let t11;
-  	let input4;
-  	let input4_checked_value;
-  	let label3;
-  	let t13;
   	let dispose;
-  	let if_block = /*optDataGibddSpt*/ ctx[71].collision_type && create_if_block_6$1(ctx);
+  	let if_block = /*optDataGibddLo*/ ctx[73].collision_type && create_if_block_6$1(ctx);
 
   	const block = {
   		c: function create() {
@@ -13162,85 +13144,27 @@ var dtp = (function () {
   			b = element("b");
   			b.textContent = "ДТП ГИБДД (Ленинградская область)";
   			t3 = space();
-  			div5 = element("div");
+  			div3 = element("div");
   			div2 = element("div");
   			t4 = text("ID ДТП: ");
-  			input0 = element("input");
+  			input = element("input");
   			t5 = space();
-  			div3 = element("div");
-  			input1 = element("input");
-  			label0 = element("label");
-  			label0.textContent = "- с батальонами ДПС";
-  			t7 = space();
-  			input2 = element("input");
-  			label1 = element("label");
-  			label1.textContent = "- без батальонов ДПС";
-  			t9 = space();
-  			div4 = element("div");
-  			input3 = element("input");
-  			label2 = element("label");
-  			label2.textContent = "- с мероприятиями";
-  			t11 = space();
-  			input4 = element("input");
-  			label3 = element("label");
-  			label3.textContent = "- без мероприятий";
-  			t13 = space();
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1492, 21, 56303);
+  			add_location(hr, file$7, 1495, 21, 56389);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1492, 2, 56284);
-  			add_location(b, file$7, 1493, 31, 56345);
+  			add_location(div0, file$7, 1495, 2, 56370);
+  			add_location(b, file$7, 1496, 31, 56431);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1493, 2, 56316);
-  			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[18];
-  			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1495, 30, 56450);
+  			add_location(div1, file$7, 1496, 2, 56402);
+  			attr_dev(input, "type", "text");
+  			input.value = /*id_dtp*/ ctx[18];
+  			attr_dev(input, "class", "svelte-1jsovbn");
+  			add_location(input, file$7, 1498, 30, 56536);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1495, 3, 56423);
-  			attr_dev(input1, "type", "checkbox");
-  			attr_dev(input1, "id", "Dps1");
-  			input1.checked = input1_checked_value = /*dps*/ ctx[19].Dps1;
-  			attr_dev(input1, "name", "Dps1");
-  			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1497, 4, 56544);
-  			attr_dev(label0, "for", "Dps1");
-  			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1497, 91, 56631);
-  			attr_dev(input2, "type", "checkbox");
-  			attr_dev(input2, "id", "Dps0");
-  			input2.checked = input2_checked_value = /*dps*/ ctx[19].Dps0;
-  			attr_dev(input2, "name", "Dps0");
-  			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1498, 4, 56682);
-  			attr_dev(label1, "for", "Dps0");
-  			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1498, 91, 56769);
-  			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$7, 1496, 3, 56520);
-  			attr_dev(input3, "type", "checkbox");
-  			attr_dev(input3, "id", "ev1");
-  			input3.checked = input3_checked_value = /*evnt*/ ctx[20].ev1;
-  			attr_dev(input3, "name", "ev1");
-  			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 1501, 4, 56854);
-  			attr_dev(label2, "for", "ev1");
-  			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$7, 1501, 92, 56942);
-  			attr_dev(input4, "type", "checkbox");
-  			attr_dev(input4, "id", "ev0");
-  			input4.checked = input4_checked_value = /*evnt*/ ctx[20].ev0;
-  			attr_dev(input4, "name", "ev0");
-  			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$7, 1502, 4, 56990);
-  			attr_dev(label3, "for", "ev0");
-  			attr_dev(label3, "class", "svelte-1jsovbn");
-  			add_location(label3, file$7, 1502, 92, 57078);
-  			attr_dev(div4, "class", "pLine svelte-1jsovbn");
-  			add_location(div4, file$7, 1500, 3, 56830);
-  			attr_dev(div5, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div5, file$7, 1494, 2, 56394);
+  			add_location(div2, file$7, 1498, 3, 56509);
+  			attr_dev(div3, "class", "filtersCont svelte-1jsovbn");
+  			add_location(div3, file$7, 1497, 2, 56480);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -13250,67 +13174,30 @@ var dtp = (function () {
   			append_dev(div1, t1);
   			append_dev(div1, b);
   			insert_dev(target, t3, anchor);
-  			insert_dev(target, div5, anchor);
-  			append_dev(div5, div2);
+  			insert_dev(target, div3, anchor);
+  			append_dev(div3, div2);
   			append_dev(div2, t4);
-  			append_dev(div2, input0);
-  			append_dev(div5, t5);
-  			append_dev(div5, div3);
-  			append_dev(div3, input1);
-  			append_dev(div3, label0);
-  			append_dev(div3, t7);
-  			append_dev(div3, input2);
-  			append_dev(div3, label1);
-  			append_dev(div5, t9);
-  			append_dev(div5, div4);
-  			append_dev(div4, input3);
-  			append_dev(div4, label2);
-  			append_dev(div4, t11);
-  			append_dev(div4, input4);
-  			append_dev(div4, label3);
-  			append_dev(div5, t13);
-  			if (if_block) if_block.m(div5, null);
-  			if (remount) run_all(dispose);
-
-  			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[102], false, false, false),
-  				listen_dev(input1, "change", /*oncheckDps*/ ctx[105], false, false, false),
-  				listen_dev(input2, "change", /*oncheckDps*/ ctx[105], false, false, false),
-  				listen_dev(input3, "change", /*oncheckEvents*/ ctx[106], false, false, false),
-  				listen_dev(input4, "change", /*oncheckEvents*/ ctx[106], false, false, false)
-  			];
+  			append_dev(div2, input);
+  			append_dev(div3, t5);
+  			if (if_block) if_block.m(div3, null);
+  			if (remount) dispose();
+  			dispose = listen_dev(input, "input", /*oncheckIdDtp*/ ctx[102], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 262144 && input0.value !== /*id_dtp*/ ctx[18]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[18]);
+  			if (dirty[0] & /*id_dtp*/ 262144 && input.value !== /*id_dtp*/ ctx[18]) {
+  				prop_dev(input, "value", /*id_dtp*/ ctx[18]);
   			}
 
-  			if (dirty[0] & /*dps*/ 524288 && input1_checked_value !== (input1_checked_value = /*dps*/ ctx[19].Dps1)) {
-  				prop_dev(input1, "checked", input1_checked_value);
-  			}
-
-  			if (dirty[0] & /*dps*/ 524288 && input2_checked_value !== (input2_checked_value = /*dps*/ ctx[19].Dps0)) {
-  				prop_dev(input2, "checked", input2_checked_value);
-  			}
-
-  			if (dirty[0] & /*evnt*/ 1048576 && input3_checked_value !== (input3_checked_value = /*evnt*/ ctx[20].ev1)) {
-  				prop_dev(input3, "checked", input3_checked_value);
-  			}
-
-  			if (dirty[0] & /*evnt*/ 1048576 && input4_checked_value !== (input4_checked_value = /*evnt*/ ctx[20].ev0)) {
-  				prop_dev(input4, "checked", input4_checked_value);
-  			}
-
-  			if (/*optDataGibddSpt*/ ctx[71].collision_type) if_block.p(ctx, dirty);
+  			if (/*optDataGibddLo*/ ctx[73].collision_type) if_block.p(ctx, dirty);
   		},
   		d: function destroy(detaching) {
   			if (detaching) detach_dev(div0);
   			if (detaching) detach_dev(t0);
   			if (detaching) detach_dev(div1);
   			if (detaching) detach_dev(t3);
-  			if (detaching) detach_dev(div5);
+  			if (detaching) detach_dev(div3);
   			if (if_block) if_block.d();
-  			run_all(dispose);
+  			dispose();
   		}
   	};
 
@@ -13318,14 +13205,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_5$1.name,
   		type: "if",
-  		source: "(1492:2) {#if DtpGibddLo._map}",
+  		source: "(1495:2) {#if DtpGibddLo._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1505:3) {#if optDataGibddSpt.collision_type}
+  // (1508:3) {#if optDataGibddLo.collision_type}
   function create_if_block_6$1(ctx) {
   	let div;
   	let select;
@@ -13356,13 +13243,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1507, 5, 57314);
+  			add_location(option, file$7, 1510, 5, 57406);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
   			if (/*collision_type_gibdd*/ ctx[26] === void 0) add_render_callback(() => /*select_change_handler_6*/ ctx[196].call(select));
-  			add_location(select, file$7, 1506, 4, 57199);
+  			add_location(select, file$7, 1509, 4, 57291);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1505, 3, 57175);
+  			add_location(div, file$7, 1508, 3, 57267);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -13421,14 +13308,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_6$1.name,
   		type: "if",
-  		source: "(1505:3) {#if optDataGibddSpt.collision_type}",
+  		source: "(1508:3) {#if optDataGibddLo.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1511:5) {#each optCollisionGibddLoKeys as key}
+  // (1514:5) {#each optCollisionGibddLoKeys as key}
   function create_each_block_2$2(ctx) {
   	let option;
   	let t0;
@@ -13452,7 +13339,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibddLo*/ ctx[73].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1511, 6, 57514);
+  			add_location(option, file$7, 1514, 6, 57606);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -13472,14 +13359,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_2$2.name,
   		type: "each",
-  		source: "(1511:5) {#each optCollisionGibddLoKeys as key}",
+  		source: "(1514:5) {#each optCollisionGibddLoKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1522:2) {#if DtpGibddSpt._map}
+  // (1525:2) {#if DtpGibddSpt._map}
   function create_if_block_3$1(ctx) {
   	let div0;
   	let hr;
@@ -13488,29 +13375,11 @@ var dtp = (function () {
   	let t1;
   	let b;
   	let t3;
-  	let div5;
+  	let div3;
   	let div2;
   	let t4;
-  	let input0;
+  	let input;
   	let t5;
-  	let div3;
-  	let input1;
-  	let input1_checked_value;
-  	let label0;
-  	let t7;
-  	let input2;
-  	let input2_checked_value;
-  	let label1;
-  	let t9;
-  	let div4;
-  	let input3;
-  	let input3_checked_value;
-  	let label2;
-  	let t11;
-  	let input4;
-  	let input4_checked_value;
-  	let label3;
-  	let t13;
   	let dispose;
   	let if_block = /*optDataGibddSpt*/ ctx[71].collision_type && create_if_block_4$1(ctx);
 
@@ -13524,85 +13393,27 @@ var dtp = (function () {
   			b = element("b");
   			b.textContent = "ДТП ГИБДД (Санкт-Петербург)";
   			t3 = space();
-  			div5 = element("div");
+  			div3 = element("div");
   			div2 = element("div");
   			t4 = text("ID ДТП: ");
-  			input0 = element("input");
+  			input = element("input");
   			t5 = space();
-  			div3 = element("div");
-  			input1 = element("input");
-  			label0 = element("label");
-  			label0.textContent = "- с батальонами ДПС";
-  			t7 = space();
-  			input2 = element("input");
-  			label1 = element("label");
-  			label1.textContent = "- без батальонов ДПС";
-  			t9 = space();
-  			div4 = element("div");
-  			input3 = element("input");
-  			label2 = element("label");
-  			label2.textContent = "- с мероприятиями";
-  			t11 = space();
-  			input4 = element("input");
-  			label3 = element("label");
-  			label3.textContent = "- без мероприятий";
-  			t13 = space();
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1522, 21, 57764);
+  			add_location(hr, file$7, 1525, 21, 57856);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1522, 2, 57745);
-  			add_location(b, file$7, 1523, 31, 57806);
+  			add_location(div0, file$7, 1525, 2, 57837);
+  			add_location(b, file$7, 1526, 31, 57898);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1523, 2, 57777);
-  			attr_dev(input0, "type", "text");
-  			input0.value = /*id_dtp*/ ctx[18];
-  			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1525, 30, 57905);
+  			add_location(div1, file$7, 1526, 2, 57869);
+  			attr_dev(input, "type", "text");
+  			input.value = /*id_dtp*/ ctx[18];
+  			attr_dev(input, "class", "svelte-1jsovbn");
+  			add_location(input, file$7, 1528, 30, 57997);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1525, 3, 57878);
-  			attr_dev(input1, "type", "checkbox");
-  			attr_dev(input1, "id", "Dps1");
-  			input1.checked = input1_checked_value = /*dps*/ ctx[19].Dps1;
-  			attr_dev(input1, "name", "Dps1");
-  			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1527, 4, 57999);
-  			attr_dev(label0, "for", "Dps1");
-  			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1527, 91, 58086);
-  			attr_dev(input2, "type", "checkbox");
-  			attr_dev(input2, "id", "Dps0");
-  			input2.checked = input2_checked_value = /*dps*/ ctx[19].Dps0;
-  			attr_dev(input2, "name", "Dps0");
-  			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1528, 4, 58137);
-  			attr_dev(label1, "for", "Dps0");
-  			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1528, 91, 58224);
-  			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$7, 1526, 3, 57975);
-  			attr_dev(input3, "type", "checkbox");
-  			attr_dev(input3, "id", "ev1");
-  			input3.checked = input3_checked_value = /*evnt*/ ctx[20].ev1;
-  			attr_dev(input3, "name", "ev1");
-  			attr_dev(input3, "class", "svelte-1jsovbn");
-  			add_location(input3, file$7, 1531, 4, 58309);
-  			attr_dev(label2, "for", "ev1");
-  			attr_dev(label2, "class", "svelte-1jsovbn");
-  			add_location(label2, file$7, 1531, 92, 58397);
-  			attr_dev(input4, "type", "checkbox");
-  			attr_dev(input4, "id", "ev0");
-  			input4.checked = input4_checked_value = /*evnt*/ ctx[20].ev0;
-  			attr_dev(input4, "name", "ev0");
-  			attr_dev(input4, "class", "svelte-1jsovbn");
-  			add_location(input4, file$7, 1532, 4, 58445);
-  			attr_dev(label3, "for", "ev0");
-  			attr_dev(label3, "class", "svelte-1jsovbn");
-  			add_location(label3, file$7, 1532, 92, 58533);
-  			attr_dev(div4, "class", "pLine svelte-1jsovbn");
-  			add_location(div4, file$7, 1530, 3, 58285);
-  			attr_dev(div5, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div5, file$7, 1524, 2, 57849);
+  			add_location(div2, file$7, 1528, 3, 57970);
+  			attr_dev(div3, "class", "filtersCont svelte-1jsovbn");
+  			add_location(div3, file$7, 1527, 2, 57941);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -13612,55 +13423,18 @@ var dtp = (function () {
   			append_dev(div1, t1);
   			append_dev(div1, b);
   			insert_dev(target, t3, anchor);
-  			insert_dev(target, div5, anchor);
-  			append_dev(div5, div2);
+  			insert_dev(target, div3, anchor);
+  			append_dev(div3, div2);
   			append_dev(div2, t4);
-  			append_dev(div2, input0);
-  			append_dev(div5, t5);
-  			append_dev(div5, div3);
-  			append_dev(div3, input1);
-  			append_dev(div3, label0);
-  			append_dev(div3, t7);
-  			append_dev(div3, input2);
-  			append_dev(div3, label1);
-  			append_dev(div5, t9);
-  			append_dev(div5, div4);
-  			append_dev(div4, input3);
-  			append_dev(div4, label2);
-  			append_dev(div4, t11);
-  			append_dev(div4, input4);
-  			append_dev(div4, label3);
-  			append_dev(div5, t13);
-  			if (if_block) if_block.m(div5, null);
-  			if (remount) run_all(dispose);
-
-  			dispose = [
-  				listen_dev(input0, "input", /*oncheckIdDtp*/ ctx[102], false, false, false),
-  				listen_dev(input1, "change", /*oncheckDps*/ ctx[105], false, false, false),
-  				listen_dev(input2, "change", /*oncheckDps*/ ctx[105], false, false, false),
-  				listen_dev(input3, "change", /*oncheckEvents*/ ctx[106], false, false, false),
-  				listen_dev(input4, "change", /*oncheckEvents*/ ctx[106], false, false, false)
-  			];
+  			append_dev(div2, input);
+  			append_dev(div3, t5);
+  			if (if_block) if_block.m(div3, null);
+  			if (remount) dispose();
+  			dispose = listen_dev(input, "input", /*oncheckIdDtp*/ ctx[102], false, false, false);
   		},
   		p: function update(ctx, dirty) {
-  			if (dirty[0] & /*id_dtp*/ 262144 && input0.value !== /*id_dtp*/ ctx[18]) {
-  				prop_dev(input0, "value", /*id_dtp*/ ctx[18]);
-  			}
-
-  			if (dirty[0] & /*dps*/ 524288 && input1_checked_value !== (input1_checked_value = /*dps*/ ctx[19].Dps1)) {
-  				prop_dev(input1, "checked", input1_checked_value);
-  			}
-
-  			if (dirty[0] & /*dps*/ 524288 && input2_checked_value !== (input2_checked_value = /*dps*/ ctx[19].Dps0)) {
-  				prop_dev(input2, "checked", input2_checked_value);
-  			}
-
-  			if (dirty[0] & /*evnt*/ 1048576 && input3_checked_value !== (input3_checked_value = /*evnt*/ ctx[20].ev1)) {
-  				prop_dev(input3, "checked", input3_checked_value);
-  			}
-
-  			if (dirty[0] & /*evnt*/ 1048576 && input4_checked_value !== (input4_checked_value = /*evnt*/ ctx[20].ev0)) {
-  				prop_dev(input4, "checked", input4_checked_value);
+  			if (dirty[0] & /*id_dtp*/ 262144 && input.value !== /*id_dtp*/ ctx[18]) {
+  				prop_dev(input, "value", /*id_dtp*/ ctx[18]);
   			}
 
   			if (/*optDataGibddSpt*/ ctx[71].collision_type) if_block.p(ctx, dirty);
@@ -13670,9 +13444,9 @@ var dtp = (function () {
   			if (detaching) detach_dev(t0);
   			if (detaching) detach_dev(div1);
   			if (detaching) detach_dev(t3);
-  			if (detaching) detach_dev(div5);
+  			if (detaching) detach_dev(div3);
   			if (if_block) if_block.d();
-  			run_all(dispose);
+  			dispose();
   		}
   	};
 
@@ -13680,14 +13454,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_3$1.name,
   		type: "if",
-  		source: "(1522:2) {#if DtpGibddSpt._map}",
+  		source: "(1525:2) {#if DtpGibddSpt._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1535:3) {#if optDataGibddSpt.collision_type}
+  // (1538:3) {#if optDataGibddSpt.collision_type}
   function create_if_block_4$1(ctx) {
   	let div;
   	let select;
@@ -13718,13 +13492,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1537, 5, 58770);
+  			add_location(option, file$7, 1540, 5, 58869);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
   			if (/*collision_type_gibdd*/ ctx[26] === void 0) add_render_callback(() => /*select_change_handler_7*/ ctx[198].call(select));
-  			add_location(select, file$7, 1536, 4, 58654);
+  			add_location(select, file$7, 1539, 4, 58753);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1535, 3, 58630);
+  			add_location(div, file$7, 1538, 3, 58729);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -13783,14 +13557,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_4$1.name,
   		type: "if",
-  		source: "(1535:3) {#if optDataGibddSpt.collision_type}",
+  		source: "(1538:3) {#if optDataGibddSpt.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1541:5) {#each optCollisionGibddSptKeys as key}
+  // (1544:5) {#each optCollisionGibddSptKeys as key}
   function create_each_block_1$2(ctx) {
   	let option;
   	let t0;
@@ -13814,7 +13588,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibddSpt*/ ctx[71].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1541, 6, 58973);
+  			add_location(option, file$7, 1544, 6, 59072);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -13834,14 +13608,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block_1$2.name,
   		type: "each",
-  		source: "(1541:5) {#each optCollisionGibddSptKeys as key}",
+  		source: "(1544:5) {#each optCollisionGibddSptKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1552:2) {#if DtpGibddRub._map}
+  // (1555:2) {#if DtpGibddRub._map}
   function create_if_block_1$3(ctx) {
   	let div0;
   	let hr;
@@ -13891,36 +13665,36 @@ var dtp = (function () {
   			div4 = element("div");
   			if (if_block) if_block.c();
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1552, 21, 59225);
+  			add_location(hr, file$7, 1555, 21, 59324);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1552, 2, 59206);
-  			add_location(b, file$7, 1553, 31, 59267);
+  			add_location(div0, file$7, 1555, 2, 59305);
+  			add_location(b, file$7, 1556, 31, 59366);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1553, 2, 59238);
+  			add_location(div1, file$7, 1556, 2, 59337);
   			attr_dev(input0, "type", "text");
   			input0.value = /*id_dtp*/ ctx[18];
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1554, 30, 59329);
+  			add_location(input0, file$7, 1557, 30, 59428);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1554, 3, 59302);
+  			add_location(div2, file$7, 1557, 3, 59401);
   			attr_dev(input1, "type", "checkbox");
   			attr_dev(input1, "name", "list_rubOn");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1556, 3, 59421);
+  			add_location(input1, file$7, 1559, 3, 59520);
   			attr_dev(label0, "for", "list_rubOn");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1556, 100, 59518);
+  			add_location(label0, file$7, 1559, 100, 59617);
   			attr_dev(input2, "type", "checkbox");
   			attr_dev(input2, "name", "list_rubOff");
   			attr_dev(input2, "class", "svelte-1jsovbn");
-  			add_location(input2, file$7, 1557, 3, 59567);
+  			add_location(input2, file$7, 1560, 3, 59666);
   			attr_dev(label1, "for", "list_rubOff");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1557, 102, 59666);
+  			add_location(label1, file$7, 1560, 102, 59765);
   			attr_dev(div3, "class", "pLine svelte-1jsovbn");
-  			add_location(div3, file$7, 1555, 2, 59398);
+  			add_location(div3, file$7, 1558, 2, 59497);
   			attr_dev(div4, "class", "filtersCont svelte-1jsovbn");
-  			add_location(div4, file$7, 1559, 2, 59725);
+  			add_location(div4, file$7, 1562, 2, 59824);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -13989,14 +13763,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_1$3.name,
   		type: "if",
-  		source: "(1552:2) {#if DtpGibddRub._map}",
+  		source: "(1555:2) {#if DtpGibddRub._map}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1561:3) {#if optDataGibddRub.collision_type}
+  // (1564:3) {#if optDataGibddRub.collision_type}
   function create_if_block_2$2(ctx) {
   	let div;
   	let select;
@@ -14027,13 +13801,13 @@ var dtp = (function () {
   			option.__value = "";
   			option.value = option.__value;
   			attr_dev(option, "class", "svelte-1jsovbn");
-  			add_location(option, file$7, 1563, 5, 59937);
+  			add_location(option, file$7, 1566, 5, 60036);
   			attr_dev(select, "class", "multiple_icon_type svelte-1jsovbn");
   			select.multiple = true;
   			if (/*collision_type_gibddRub*/ ctx[27] === void 0) add_render_callback(() => /*select_change_handler_8*/ ctx[202].call(select));
-  			add_location(select, file$7, 1562, 4, 59818);
+  			add_location(select, file$7, 1565, 4, 59917);
   			attr_dev(div, "class", "pLine svelte-1jsovbn");
-  			add_location(div, file$7, 1561, 3, 59794);
+  			add_location(div, file$7, 1564, 3, 59893);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div, anchor);
@@ -14092,14 +13866,14 @@ var dtp = (function () {
   		block,
   		id: create_if_block_2$2.name,
   		type: "if",
-  		source: "(1561:3) {#if optDataGibddRub.collision_type}",
+  		source: "(1564:3) {#if optDataGibddRub.collision_type}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1567:5) {#each optCollisionGibddRubKeys as key}
+  // (1570:5) {#each optCollisionGibddRubKeys as key}
   function create_each_block$5(ctx) {
   	let option;
   	let t0;
@@ -14123,7 +13897,7 @@ var dtp = (function () {
   			option.__value = option_value_value = /*key*/ ctx[205];
   			option.value = option.__value;
   			attr_dev(option, "class", option_class_value = "icon_type_" + /*optDataGibddRub*/ ctx[75].iconType[/*key*/ ctx[205]] + " svelte-1jsovbn");
-  			add_location(option, file$7, 1567, 6, 60140);
+  			add_location(option, file$7, 1570, 6, 60239);
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, option, anchor);
@@ -14143,14 +13917,14 @@ var dtp = (function () {
   		block,
   		id: create_each_block$5.name,
   		type: "each",
-  		source: "(1567:5) {#each optCollisionGibddRubKeys as key}",
+  		source: "(1570:5) {#each optCollisionGibddRubKeys as key}",
   		ctx
   	});
 
   	return block;
   }
 
-  // (1578:2) {#if Rub._map}
+  // (1581:2) {#if Rub._map}
   function create_if_block$4(ctx) {
   	let div0;
   	let hr;
@@ -14188,30 +13962,30 @@ var dtp = (function () {
   			label1 = element("label");
   			label1.textContent = "-  нет комплексов";
   			attr_dev(hr, "class", "svelte-1jsovbn");
-  			add_location(hr, file$7, 1578, 21, 60384);
+  			add_location(hr, file$7, 1581, 21, 60483);
   			attr_dev(div0, "class", "pLine svelte-1jsovbn");
-  			add_location(div0, file$7, 1578, 2, 60365);
-  			add_location(b, file$7, 1579, 31, 60426);
+  			add_location(div0, file$7, 1581, 2, 60464);
+  			add_location(b, file$7, 1582, 31, 60525);
   			attr_dev(div1, "class", "pLine svelte-1jsovbn");
-  			add_location(div1, file$7, 1579, 2, 60397);
+  			add_location(div1, file$7, 1582, 2, 60496);
   			attr_dev(input0, "type", "checkbox");
   			attr_dev(input0, "name", "comp1");
   			attr_dev(input0, "class", "svelte-1jsovbn");
-  			add_location(input0, file$7, 1582, 4, 60502);
+  			add_location(input0, file$7, 1585, 4, 60601);
   			attr_dev(label0, "for", "comp1");
   			attr_dev(label0, "class", "svelte-1jsovbn");
-  			add_location(label0, file$7, 1582, 82, 60580);
+  			add_location(label0, file$7, 1585, 82, 60679);
   			attr_dev(input1, "type", "checkbox");
   			attr_dev(input1, "name", "comp");
   			attr_dev(input1, "class", "svelte-1jsovbn");
-  			add_location(input1, file$7, 1583, 4, 60629);
+  			add_location(input1, file$7, 1586, 4, 60728);
   			attr_dev(label1, "for", "comp");
   			attr_dev(label1, "class", "svelte-1jsovbn");
-  			add_location(label1, file$7, 1583, 82, 60707);
+  			add_location(label1, file$7, 1586, 82, 60806);
   			attr_dev(div2, "class", "pLine svelte-1jsovbn");
-  			add_location(div2, file$7, 1581, 3, 60478);
+  			add_location(div2, file$7, 1584, 3, 60577);
   			attr_dev(div3, "class", "filtersCont");
-  			add_location(div3, file$7, 1580, 2, 60449);
+  			add_location(div3, file$7, 1583, 2, 60548);
   		},
   		m: function mount(target, anchor, remount) {
   			insert_dev(target, div0, anchor);
@@ -14262,7 +14036,7 @@ var dtp = (function () {
   		block,
   		id: create_if_block$4.name,
   		type: "if",
-  		source: "(1578:2) {#if Rub._map}",
+  		source: "(1581:2) {#if Rub._map}",
   		ctx
   	});
 
@@ -14349,7 +14123,7 @@ var dtp = (function () {
   			t15 = space();
   			if (if_block16) if_block16.c();
   			attr_dev(div, "class", "mvsFilters");
-  			add_location(div, file$7, 963, 3, 29516);
+  			add_location(div, file$7, 966, 3, 29602);
   		},
   		l: function claim(nodes) {
   			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -15095,15 +14869,15 @@ var dtp = (function () {
   		let target = ev.target;
   		$$invalidate(19, dps[target.name] = target.checked, dps);
   		setFilterGibdd();
-  		setFilterGibddSpt();
-  	};
+  	}; // setFilterGibddSpt();
 
   	const oncheckEvents = ev => {
   		let target = ev.target;
   		$$invalidate(20, evnt[target.name] = target.checked, evnt);
   		setFilterGibdd();
   		setFilterSkpdi();
-  		setFilterGibddSpt();
+
+  		// setFilterGibddSpt();
   		setFilter();
   	};
 
@@ -15236,7 +15010,8 @@ var dtp = (function () {
 
   	const setFilterGibddLo = () => {
   		if (DtpGibddLo._map) {
-  			let opt = [{ type: "dps", zn: dps }, { type: "evnt", zn: evnt }];
+  			let opt = []; // {type: 'dps', zn: dps},
+  			// {type: 'evnt', zn: evnt}
 
   			if (id_dtp) {
   				opt.push({ type: "id_dtp", zn: id_dtp });
@@ -15260,7 +15035,8 @@ var dtp = (function () {
 
   	const setFilterGibddSpt = () => {
   		if (DtpGibddSpt._map) {
-  			let opt = [{ type: "dps", zn: dps }, { type: "evnt", zn: evnt }];
+  			let opt = []; // {type: 'dps', zn: dps},
+  			// {type: 'evnt', zn: evnt}
 
   			if (id_dtp) {
   				opt.push({ type: "id_dtp", zn: id_dtp });
@@ -15360,6 +15136,7 @@ var dtp = (function () {
   				setFilter();
   				setFilterSkpdi();
   				setFilterGibdd();
+  				setFilterGibddLo();
   				setFilterGibddSpt();
   				setFilterMeasures();
   				setFilterGibddRub();
@@ -15442,6 +15219,7 @@ var dtp = (function () {
   		setFilter();
   		setFilterSkpdi();
   		setFilterGibdd();
+  		setFilterGibddLo();
   		setFilterGibddSpt();
   		setFilterGibddRub();
   	}; // console.log('ssssss', dateInterval, beg.getDate(), end.getDate())
@@ -15467,6 +15245,7 @@ var dtp = (function () {
   		setFilter();
   		setFilterSkpdi();
   		setFilterGibdd();
+  		setFilterGibddLo();
   		setFilterGibddSpt();
   		setFilterGibddRub();
   	}; // console.log('ss1ssss', dateInterval, beg.getDate(), end.getDate())
