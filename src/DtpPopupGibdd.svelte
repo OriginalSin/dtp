@@ -102,7 +102,11 @@ console.log('showBat', ev.target.value)
 			</tr>
 			<tr>
 			  <td class="first">Адрес:</td>
-			  <td>{prp.district || ''} {prp.dor || ''}</td>
+			  <td>{prp.district || ''}</td>
+			</tr>
+			<tr>
+			  <td class="first">Дорога:</td>
+			  <td>{prp.dor || ''}</td>
 			</tr>
 			<tr>
 			  <td class="first">Населенный пункт:</td>
@@ -170,7 +174,7 @@ console.log('showBat', ev.target.value)
             </tr>
             <tr>
               <td class="first" colspan=2>
-		<div class="win leaflet-popup-content-wrapper " bind:this={gpsCont}></div>
+		<div class="win leaflet-popup-content-wrapper hidden" bind:this={gpsCont}></div>
 				<ul>
 			{#each (prp.dps_plk || []) as pt1}
 				<li class="link" on:click={showBat} value={pt1}>батальон ДПС</li>
@@ -180,7 +184,7 @@ console.log('showBat', ev.target.value)
             </tr>
             <tr>
               <td class="first" colspan=2>
-		<div class="win leaflet-popup-content-wrapper " bind:this={evnCont}></div>
+		<div class="win leaflet-popup-content-wrapper hidden" bind:this={evnCont}></div>
 				<ul>
 			{#each (prp.event_list || []) as pt1}
 				<li class="link" on:click={showEvn} value={pt1}>Мероприятие</li>
@@ -200,7 +204,9 @@ console.log('showBat', ev.target.value)
     left: 360px;
     top: 76px;
 }
-
+.hidden {
+	display: none;
+}
 .mvsPopup .featureCont .first {
     max-width: 100px;
 }

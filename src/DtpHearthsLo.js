@@ -1,15 +1,15 @@
 import {Bbox, CirclePoint} from './CirclePoint';
 import DtpPopup from './DtpPopupVerifyed.svelte';
-import DtpPopupHearths from './DtpPopupHearths.svelte';
+import DtpPopupHearthsLo from './DtpPopupHearthsLo.svelte';
 import {myRenderer} from './MapUtils';
 
 const L = window.L;
 
-const popup = L.popup();
-const popup1 = L.popup({minWidth: 200});
+// const popup = L.popup();
+const popup1 = L.popup({minWidth: 360});
 let argFilters = [];
 let collision_type;
-
+/*
 const setPopup = function (props) {
 	let cont = L.DomUtil.create('div');
 	new DtpPopup({
@@ -22,10 +22,10 @@ const setPopup = function (props) {
 	popup.setContent(cont);
 	return cont;
 }
-
+*/
 const setPopup1 = function (props) {
 	let cont = L.DomUtil.create('div');
-	new DtpPopupHearths({
+	new DtpPopupHearthsLo({
 		target: cont,
 		props: {
 			prp: props

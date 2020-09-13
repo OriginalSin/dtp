@@ -167,7 +167,7 @@ let geoJsonStatic = (pt) => {
 let overlays = {
 	'ДТП ГИБДД (Санкт-Петербург)': DtpGibddSpt,
 	'ДТП ГИБДД (Ленинградская область)': DtpGibddLo,
-	// 'Очаги (Ленинградская область)': DtpHearthsLo,
+	'Очаги по пикетажу Ленинградская область': DtpHearthsLo,
 	'Санкт-Петербург': geoJsonStatic({file:"/static/sp.geojson", style: {color:"purple", interactive: false}}),
 	'Ленинградская область': geoJsonStatic({file:"/static/spobl.geojson", style: {color:"gray", fill: false, interactive: false}})
 	
@@ -189,7 +189,7 @@ let filtersControl = L.control.gmxIcon({
   title: 'Фильтры'
 })
 .on('statechange', function (ev) {
-	console.log({filtersIcon: ev.target.options.isActive});
+	// console.log({filtersIcon: ev.target.options.isActive});
 	let target = ev.target,
 		cont = target._container,
 		cont1 = target._win,

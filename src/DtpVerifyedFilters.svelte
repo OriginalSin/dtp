@@ -14,6 +14,7 @@
 	export let DtpGibddRub;
 	export let DtpGibddSpt;
 	export let DtpGibddLo;
+	export let DtpHearthsLo;
 	export let Rub;
 	export let Measures;
 	export let control;
@@ -26,6 +27,7 @@
 	if (!DtpHearthsSettlements) { DtpHearthsSettlements = {}; };
 	if (!DtpHearths5) { DtpHearths5 = {}; };
 	if (!DtpHearths3) { DtpHearths3 = {}; };
+	if (!DtpHearthsLo) { DtpHearthsLo = {}; };
 
 	let currentFilter = 0;
 	let currentFilterDtpHearths = 0;
@@ -51,10 +53,15 @@
 
 	let optDataGibdd = DtpGibdd._opt || {};
 	let optCollisionGibddKeys = optDataGibdd.collision_type ? Object.keys(optDataGibdd.collision_type).sort((a, b) => optDataGibdd.collision_type[b] - optDataGibdd.collision_type[a]) : [];
+
 	let optDataGibddSpt = DtpGibddSpt._opt || {};
 	let optCollisionGibddSptKeys = optDataGibddSpt.collision_type ? Object.keys(optDataGibddSpt.collision_type).sort((a, b) => optDataGibddSpt.collision_type[b] - optDataGibddSpt.collision_type[a]) : [];
 	let optDataGibddLo = DtpGibddLo._opt || {};
 	let optCollisionGibddLoKeys = optDataGibddLo.collision_type ? Object.keys(optDataGibddLo.collision_type).sort((a, b) => optDataGibddLo.collision_type[b] - optDataGibddLo.collision_type[a]) : [];
+
+	let optDataHearthsLo = (DtpHearthsLo || {})._opt || {};
+	let optRoadTypesLo = optDataHearthsLo.road ? Object.keys(optDataHearthsLo.road).sort((a, b) => optDataHearthsLo.road[b] - optDataHearthsLo.road[a]) : [];
+
 	let dps = {'Dps1': true, 'Dps0': true};
 	let evnt = {'ev1': true, 'ev0': true};
 
@@ -110,6 +117,13 @@
 	let heatElementDtpGibdd;
 	let heatElementDtpSkpdi;
 	let heatElementDtpVerifyed;
+
+	let isHeatChecked = (DtpGibddRub._map && DtpGibddRub._needHeat) ||
+		(DtpVerifyed._map && DtpVerifyed._needHeat) ||
+		(DtpSkpdi._map && DtpSkpdi._needHeat) ||
+		(DtpGibdd._map && DtpGibdd._needHeat) ||
+		(DtpGibddSpt._map && DtpGibddSpt._needHeat) ||
+		(DtpGibddLo._map && DtpGibddLo._needHeat);
 
 	let _comps = Rub && Rub._argFilters ? Rub._argFilters[0] : {type: 'comp', zn: {on: true, off: true}};
 	let compOn = _comps.zn.on;
@@ -176,6 +190,38 @@
 			opt.push({type: 'ht', zn: ht});
 			// console.log('opt', opt);
 			DtpHearthsSettlements.setFilter(opt);
+		}
+	};
+
+	let hearths_year_Lo = {};
+	Object.keys(optDataHearthsLo.years || {}).sort().forEach(key => {
+		hearths_year_Lo[key] = true;
+	});
+    const setFilterHearthsLo = (ev) => {
+		if (DtpHearthsLo._map) {
+			if (ev) {
+				let target = ev.target || {},
+					checked = target.checked,
+					id = target.id,
+					name = target.name;
+				if (id !== 'stricken') {
+					hearths_year_Lo[name] = checked;
+				}
+			}
+			let opt = [
+				{type: 'year', zn: hearths_year_Lo}
+			];
+			if (id_dtp) {
+				opt.push({type: 'id_dtp', zn: id_dtp});
+			}
+			if (id_hearth) {
+				opt.push({type: 'id_hearth', zn: id_hearth});
+			}
+			if (roads) {
+				opt.push({type: 'roads', zn: roads});
+			}
+			opt.push({type: 'ht', zn: ht});
+			DtpHearthsLo.setFilter(opt);
 		}
 	};
 
@@ -253,6 +299,7 @@
 	};
 
 	const refresh = () => {
+		setFilterHearthsLo();
 		setFilterHearthsPicket4();
 		setFilterHearthsSettlements();
 		setFilterHearthsPicket();
@@ -264,6 +311,7 @@
 		setFilterSkpdi();
 		setFilterGibdd();
 		setFilterGibddSpt();
+		setFilterGibddLo();
 		setFilterGibddRub();
 		setFilterMeasures();
 		setFilter();
@@ -288,6 +336,7 @@
 		let target = ev.target,
 			value = target.value;
 		id_hearth = value ? value : null;
+		setFilterHearthsLo();
 		setFilterHearthsSettlements();
 		setFilterHearthsPicket();
 		setFilterHearthsPicket4();
@@ -295,6 +344,7 @@
 	const oncheckHt = (ev) => {
 		let target = ev.target;
 		ht[target.name] = target.checked;
+		setFilterHearthsLo();
 		setFilterHearthsSettlements();
 		setFilterHearthsPicket();
 		setFilterHearthsPicket4();
@@ -324,6 +374,7 @@
 		setFilterSkpdi();
 		// DtpVerifyed._needHeat = _needHeat;
 		setFilterGibddSpt();
+		setFilterGibddLo();
 		setFilter();
 	};
 	const setMinOpacity = () => {
@@ -966,6 +1017,42 @@
 
 	  <div class="mvsFilters">
 
+		{#if DtpHearthsLo._map && DtpHearthsLo._opt && DtpHearthsLo._opt.years}
+		<div class="pLine">Фильтры - <b>Очаги по пикетажу Ленинградская область</b></div>
+		<div class="filtersCont">
+			<div class="pLine">ID Очага: <input type="text" on:input={oncheckIdHearth} value={id_hearth} /></div>
+			<div class="pLine">ID ДТП: <input type="text" on:input={oncheckIdDtp} value={id_dtp} /></div>
+			<div class="pLine nowrap">
+				<fieldset>
+					<legend>Фильтрация по годам:</legend>
+					<div class="pLine type">
+						<div class="pLine margin">
+						{#each Object.keys(DtpHearthsLo._opt.years).sort() as key}
+							<input type="checkbox" on:change={setFilterHearthsLo} id="hearths_year_Lo" checked={hearths_year_Lo[key]} name="{key}"><label for="hearths_year_Lo">{key}</label>
+						{/each}
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div class="pLine">
+				<input type="checkbox" on:change={oncheckHt} id="ht_3" checked={ht.hearth3} name="hearth3"><label for="ht_3">одного типа</label>
+				<input type="checkbox" on:change={oncheckHt} id="ht_5" checked={ht.hearth5} name="hearth5"><label for="ht_5">разного типа</label>
+			</div>
+			<div class="pLine">
+				<select class="multiple_icon_typeTmp" bind:value={roads} on:change="{setFilterHearthsLo}" multiple>
+					<option value=''>
+						Все дороги ({optRoadTypesLo.reduce((p, c) => { p += optDataHearthsLo.road[c]; return p; }, 0)})
+					</option>
+					{#each optRoadTypesLo as key}
+						<option value={key} class="road_{key}">
+							({optDataHearthsLo.road[key]}) - {key}
+						</option>
+					{/each}
+				</select>
+			</div>
+		</div>
+		{/if}
+
 		{#if DtpHearthsPicket4._map && DtpHearthsPicket4._opt && DtpHearthsPicket4._opt.years}
 		<div class="pLine">Фильтры - <b>Предочаги по пикетажу</b></div>
 		<div class="filtersCont">
@@ -1060,7 +1147,7 @@
 			</div>
 		</div>
 		{/if}
-		
+
 		{#if DtpHearthsPicket._map && DtpHearthsPicket._opt && DtpHearthsPicket._opt.years}
 		<div class="pLine">Фильтры - <b>ДТП Очаги(Picket)</b></div>
 		<div class="filtersCont">
@@ -1374,7 +1461,7 @@
 				</label>
 			</div>
 			<div class="pLine">
-				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={DtpGibddRub._needHeat || DtpGibddLo._needHeat || DtpGibddSpt._needHeat || DtpSkpdi._needHeat || DtpVerifyed._needHeat} name="heat"><label for="heat"> - тепловая карта</label>
+				<input type="checkbox" bind:this={heatElement} on:change={setHeat} checked={isHeatChecked} name="heat"><label for="heat"> - тепловая карта</label>
 			</div>
 		{/if}
 		{:else if !Measures._map && !DtpHearthsSettlements._map && !DtpHearths._map && !DtpHearthsStat._map && !DtpHearthsTmp._map && !DtpHearthsPicket4._map && !DtpHearthsPicket._map && !DtpHearths3._map && !DtpHearths5._map && !Rub._map}

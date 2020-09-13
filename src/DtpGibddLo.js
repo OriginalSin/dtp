@@ -3,7 +3,7 @@ import DtpPopup from './DtpPopupGibdd.svelte';
 
 const L = window.L;
 
-const popup = L.popup();
+const popup = L.popup({minWidth: 360});
 let argFilters;
 const setPopup = function (id) {
 	let url = 'https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_lo_' + id + '.txt';
