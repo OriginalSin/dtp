@@ -5,6 +5,7 @@ const L = window.L;
 
 const popup = L.popup({minWidth: 360});
 let argFilters;
+
 const setPopup = function (id) {
 	let url = 'https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_lo_' + id + '.txt';
 	fetch(url, {})
@@ -105,7 +106,9 @@ DtpGibddLo.on('remove', (ev) => {
 		// blur: 50,
 		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
 	});
-	argFilters = [];
+	argFilters = [
+		{type: 'date', zn: [(new Date(2019, 0, 1)).getTime()/1000, (new Date()).getTime()/1000]}
+	];
 
 	fetch('https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_lo.txt', {})
 	// fetch('https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_spb.txt', {})
