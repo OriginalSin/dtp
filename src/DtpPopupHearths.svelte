@@ -1,5 +1,6 @@
 <script>
 	import DtpPopup from './DtpPopupVerifyed.svelte';
+	import DtpPopupEvnt from './DtpPopupEvnt.svelte';
 	export let prp;
 	export let predochag;
 	let current;
@@ -10,11 +11,33 @@
 			obj._map.panTo(obj._latlng);
 		}
 	};
+	let evnCont;
+	const showEvn = (ev) => {
+		let id = ev.target.getAttribute('data');
+		evnCont.innerHTML = '';
+
+		let url = 'https://dtp.mvs.group/scripts/events_dev/get_event_id_' + id + '.txt';
+		fetch(url, {})
+			.then(req => req.json())
+			.then(json => {
+				evnCont.classList.remove('hidden');
+				const app = new DtpPopupEvnt({
+					target: evnCont,
+					props: {
+						prp: json[0]
+					}
+				});
+			});
+
+	};
+// console.log('prp ', prp);
 
     const showDtpInfo = (ev) => {
 console.log('showDtpInfo ', ev);
 	};
 	let city = 'city' in prp ? ' (city: ' + prp.city + ')' : '';
+	let event_h = prp.event_h && prp.event_h.length > 1 ? prp.event_h : null; 
+	let event_lo = prp.event_lo && prp.event_lo.length > 1 ? prp.event_lo : null; 
 
 </script>
 	<div class="mvsPopup">
@@ -69,9 +92,37 @@ console.log('showDtpInfo ', ev);
 			  </td>
 			</tr>
 				{/each}
+            <tr>
+              <td class="first" colspan=2>
+		<div class="win leaflet-popup-content-wrapper hidden" bind:this={evnCont}></div>
+			  </td>
+            </tr>
 		   </tbody>
 		  </table>
 		</div>
+		<div class="events">
+			{#if event_h}
+			<div class="event_h">
+				<div class="title">Привязанные мероприятия</div>
+				<ol start="1">
+				{#each event_h as pt1}
+					<li class="link" on:click={showEvn} data={pt1.id_event}>Мероприятие</li>
+				{/each}
+				</ol>
+			</div>
+			{/if}
+			{#if event_lo}
+			<div class="event_lo">
+				<div class="title">Мероприятия в районе очага</div>
+				<ol start="1">
+				{#each event_lo as pt1}
+					<li class="link" on:click={showEvn} data={pt1.id_event}>Мероприятие</li>
+				{/each}
+				</ol>
+			</div>
+			{/if}
+		</div>
+
 	</div>
 
 <style>

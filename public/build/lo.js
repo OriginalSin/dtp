@@ -5805,6 +5805,7 @@ var dtp = (function () {
 
   const popup = L$6.popup({minWidth: 360});
   let argFilters$1;
+
   const setPopup = function (id) {
   	let url = 'https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_lo_' + id + '.txt';
   	fetch(url, {})
@@ -5905,7 +5906,9 @@ var dtp = (function () {
   		// blur: 50,
   		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
   	});
-  	argFilters$1 = [];
+  	argFilters$1 = [
+  		{type: 'date', zn: [(new Date(2019, 0, 1)).getTime()/1000, (new Date()).getTime()/1000]}
+  	];
 
   	fetch('https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_lo.txt', {})
   	// fetch('https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_spb.txt', {})
@@ -6105,7 +6108,9 @@ var dtp = (function () {
   		// blur: 50,
   		gradient: {0.1: 'blue', 0.4: 'lime', 1: 'red'}
   	});
-  	argFilters$2 = [];
+  	argFilters$2 = [
+  		{type: 'date', zn: [(new Date(2019, 0, 1)).getTime()/1000, (new Date()).getTime()/1000]}
+  	];
 
   	fetch('https://dtp.mvs.group/scripts/dtp_spb_lo_dev/get_stat_gipdd_spb.txt', {})
   		.then(req => req.json())
