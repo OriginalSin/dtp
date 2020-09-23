@@ -28,6 +28,8 @@
 	if (!DtpHearths5) { DtpHearths5 = {}; };
 	if (!DtpHearths3) { DtpHearths3 = {}; };
 	if (!DtpHearthsLo) { DtpHearthsLo = {}; };
+	if (!DtpGibddLo) { DtpGibddLo = {}; };
+	if (!DtpGibddSpt) { DtpGibddSpt = {}; };
 
 	let currentFilter = 0;
 	let currentFilterDtpHearths = 0;
@@ -122,8 +124,8 @@
 		(DtpVerifyed._map && DtpVerifyed._needHeat) ||
 		(DtpSkpdi._map && DtpSkpdi._needHeat) ||
 		(DtpGibdd._map && DtpGibdd._needHeat) ||
-		(DtpGibddSpt._map && DtpGibddSpt._needHeat) ||
-		(DtpGibddLo._map && DtpGibddLo._needHeat);
+		(DtpGibddSpt && DtpGibddSpt._map && DtpGibddSpt._needHeat) ||
+		(DtpGibddLo && DtpGibddLo._map && DtpGibddLo._needHeat);
 
 	let _comps = Rub && Rub._argFilters ? Rub._argFilters[0] : {type: 'comp', zn: {on: true, off: true}};
 	let compOn = _comps.zn.on;

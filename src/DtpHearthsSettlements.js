@@ -64,9 +64,9 @@ DtpHearthsSettlements.setFilter = arg => {
 						cnt++;
 					}
 				} else if (ft.type === 'city') {
-					if (ft.zn[prp.city]) {
+					// if (ft.zn[prp.city]) {
 						cnt++;
-					}
+					// }
 				} else if (ft.type === 'id_hearth') {
 					if (ft.zn == prp.id_hearth) {
 						cnt++;

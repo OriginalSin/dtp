@@ -63,7 +63,6 @@ const proxy = {
 		prefix: prefix + 'm5/',
 		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=301750',
 		errorTileUrlPrefix: '//04.core-nmaps-renderer-nmaps.maps.yandex.net/tile',
-		// errorTileUrlPrefix: '//01.core-nmaps-renderer-nmaps.maps.yandex.net/',
 		options: {
 			key: 'm4',
 			minZoom: 12,
@@ -73,10 +72,9 @@ const proxy = {
 	},
 	m6: {
 		title: 'Дороги в стадии строительства',
-		// prefix: prefix + 'm6/',
-		prefix: '//03.core-nmaps-renderer-nmaps.maps.yandex.net/',
-		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=70300289',
-		errorTileUrlPrefix: '//03.core-nmaps-renderer-nmaps.maps.yandex.net/',
+		prefix: prefix + 'm6/',
+		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=301142,301135,70300289',
+		errorTileUrlPrefix: '//03.core-nmaps-renderer-nmaps.maps.yandex.net/tile',
 		options: {
 			key: 'm6',
 			minZoom: 10,
