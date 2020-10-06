@@ -28,6 +28,7 @@ import {DtpHearthsPicket4} from './DtpHearthsPicket4';
 import {Roads} from './Roads';
 import {Settlements} from './Settlements';
 // import {GeoJsonStatic} from './GeoJsonStatic';
+import {Crosswalk} from './Crosswalk';
 
 const L = window.L;
 const map = L.map(document.body, {
@@ -156,6 +157,7 @@ let overlays = {
 	// 'TestGraphQl': TestGraphQl,
 	
 	// 'm4': m4,
+	'Пешеходные переходы у ДОУ': Crosswalk,
 	'Трассы': Roads,
 	'Населенные пункты': Settlements,
 	'Мероприятия': Measures,

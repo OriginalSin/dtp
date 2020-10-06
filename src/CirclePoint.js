@@ -140,10 +140,18 @@ L.Canvas.include({
     var p = layer._point,
 		options = layer.options,
 		// cr = options.cluster && options.cluster.radius || 500,
+		img = options.image,
 		r = options.radius || 14,
 		r2 = 2 * r,
 		map = layer._map,
 		ctx = this._ctx;
+
+	if (img) {
+		let w = layer.options.w || 20,
+			h = layer.options.h || 20;
+		ctx.drawImage(img, p.x - w/2, p.y - h/2, w, h);
+		return;
+	}
 /*
 	if (
 		// (options.props.id_stat && options.props.id_skpdi) &&
