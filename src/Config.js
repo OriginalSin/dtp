@@ -60,7 +60,7 @@ const proxy = {
 	},
 	m5: {
 		title: 'Светофоры',
-		prefix: prefix + 'm5/',
+		prefix: prefix + 'm5',
 		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=301750',
 		errorTileUrlPrefix: '//04.core-nmaps-renderer-nmaps.maps.yandex.net/tile',
 		options: {
@@ -72,7 +72,7 @@ const proxy = {
 	},
 	m6: {
 		title: 'Дороги в стадии строительства',
-		prefix: prefix + 'm6/',
+		prefix: prefix + 'm6',
 		postfix: '?x={x}&y={y}&z={z}&l=mpskl&sl=301142,301135,70300289',
 		errorTileUrlPrefix: '//03.core-nmaps-renderer-nmaps.maps.yandex.net/tile',
 		options: {
