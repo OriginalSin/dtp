@@ -117,6 +117,8 @@ prp.type = ptype;
 
 			arr.push(new CirclePoint(latlng, {
 					// cluster: it,
+					w: 30,
+					h: 30,
 					image: canvas,
 					props: prp,
 					radius: 9,
